@@ -1,2 +1,7 @@
 # Specify files that shouldn't be modified by Fern
 README.md
+
+# Hand-written webhook signature verifier (Fern's generated verifier can't parse
+# the compound `t=...,v0=...` header).
+src/ElevenLabs/Webhooks/WebhookVerifier.cs
+src/ElevenLabs.Test/Unit/WebhookVerifierTest.cs
