@@ -1,0 +1,35 @@
+using NUnit.Framework;
+
+namespace ElevenLabs.Tests;
+
+/// <summary>
+/// Round-trip coverage for <c>global::ElevenLabs.GetAgentsPageResponseModel</c>.
+/// </summary>
+/// <remarks>
+/// Asserts the wire document the model was built from comes back out of it unchanged — not merely
+/// that serialization runs. Starting from JSON rather than from a constructed instance is what
+/// makes one emitter cover both output modes: the legacy positional record and the fernMode
+/// `required`/`init` record are constructed differently but deserialize from the same document, so
+/// nothing here has to know which shape it is looking at. It is also the stronger assertion, since
+/// a property whose C# name diverges from its wire name fails this and would pass a test that only
+/// compared an instance to itself.
+/// </remarks>
+[TestFixture]
+public class GetAgentsPageResponseModelTest
+{
+    [Test]
+    public void RoundTripsThroughTheWireDocument()
+    {
+        const string wire =
+            "{\"agents\":[{\"agent_id\":\"agent_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"tags\":[\"tags\"],\"created_at_unix_secs\":9,\"updated_at_unix_secs\":0,\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"last_call_time_unix_secs\":6,\"archived\":false}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
+
+        var instance = TestJson.Deserialize<global::ElevenLabs.GetAgentsPageResponseModel>(wire);
+        var serialized = TestJson.Serialize(instance);
+
+        JsonAssert.AreEquivalent(
+            wire,
+            serialized,
+            "global::ElevenLabs.GetAgentsPageResponseModel did not round-trip."
+        );
+    }
+}

@@ -1,0 +1,156 @@
+using ElevenLabs.Agents;
+using ElevenLabs.Agents.Conversations;
+using ElevenLabs.Agents.Dashboard;
+using ElevenLabs.Agents.KnowledgeBase;
+using ElevenLabs.Agents.McpServers;
+using ElevenLabs.Agents.OutboundCampaigns;
+using ElevenLabs.Agents.Procedures;
+using ElevenLabs.Agents.Tests;
+using ElevenLabs.Agents.Widget;
+using ElevenLabs.Core;
+using ElevenLabs.Dubbing;
+using ElevenLabs.Dubbing.Project;
+using ElevenLabs.Dubbing.Project.Language;
+using ElevenLabs.EnvironmentVariables;
+using ElevenLabs.Flows;
+using ElevenLabs.Flows.Templates;
+using ElevenLabs.History;
+using ElevenLabs.Music;
+using ElevenLabs.Productions;
+using ElevenLabs.Productions.Orders;
+using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.ServiceAccounts;
+using ElevenLabs.SpeechEngine;
+using ElevenLabs.Studio;
+using ElevenLabs.Studio.Projects;
+using ElevenLabs.Studio.Projects.Chapters;
+using ElevenLabs.Tokens;
+using ElevenLabs.Voices;
+using ElevenLabs.Voices.Pvc;
+using ElevenLabs.Voices.Pvc.Verification;
+using ElevenLabs.Workspace;
+using ElevenLabs.Workspace.Analytics;
+using ElevenLabs.Workspace.Groups;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+
+namespace ElevenLabs;
+
+[Serializable]
+public record ConversationConfigWorkflowOverrideInput : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <value>If enabled audio will not be processed and only text will be used, use to avoid audio pricing.</value>
+    [JsonPropertyName("text_only")]
+    public bool? TextOnly { get; set; }
+
+    /// <value>The maximum duration of a conversation in seconds</value>
+    [JsonPropertyName("max_duration_seconds")]
+    public int? MaxDurationSeconds { get; set; }
+
+    /// <value>The events that will be sent to the client</value>
+    [JsonPropertyName("client_events")]
+    public IEnumerable<ClientEvent>? ClientEvents { get; set; }
+
+    /// <value>Configuration for file input (image/PDF uploads) during conversations.</value>
+    [JsonPropertyName("file_input")]
+    public FileInputConfigWorkflowOverride? FileInput { get; set; }
+
+    /// <value>Enable real-time monitoring of conversations via WebSocket</value>
+    [JsonPropertyName("monitoring_enabled")]
+    public bool? MonitoringEnabled { get; set; }
+
+    /// <value>The events that will be sent to monitoring connections.</value>
+    [JsonPropertyName("monitoring_events")]
+    public IEnumerable<ClientEvent>? MonitoringEvents { get; set; }
+
+    /// <value>Configure DTMF (keypad) input collection during phone calls</value>
+    [JsonPropertyName("dtmf_input_settings")]
+    public DtmfInputConfig? DtmfInputSettings { get; set; }
+
+    /// <value>Configuration for background sound during conversations.</value>
+    [JsonPropertyName("background_sound")]
+    public BackgroundSoundConfigWorkflowOverride? BackgroundSound { get; set; }
+
+    /// <value>When enabled and knowledge base content is present, the LLM is instructed to report which sources it used.</value>
+    [JsonPropertyName("source_attribution")]
+    public bool? SourceAttribution { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// Written out rather than synthesized. A record's generated Equals compares every instance
+    /// field, and `_extensionData` is a fresh Dictionary per instance compared by REFERENCE, so two
+    /// identical models were never equal — silently defeating ==, Distinct(), HashSet membership,
+    /// dictionary keys and test assertions for every model in the SDK. Excluding it loses nothing:
+    /// it is a transient deserialization sink whose contents are copied into
+    /// AdditionalProperties, which IS compared here.
+    /// </remarks>
+    public virtual bool Equals(ConversationConfigWorkflowOverrideInput? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+        // The synthesized record Equals compares EqualityContract, so a base instance never equals a
+        // derived one. Hand-writing Equals drops that unless it is restated.
+        if (EqualityContract != other.EqualityContract)
+        {
+            return false;
+        }
+        // Declared properties first: the additional-properties comparison walks a dictionary and
+        // allocates a string per entry, and is the least likely of the three to differ, so letting
+        // the cheap scalar comparisons short-circuit ahead of it matters for Distinct/HashSet over
+        // large collections. Anchored on `true` so a model with no declared properties still emits
+        // a valid expression.
+        return true
+            && ValueEquality.AreEqual(TextOnly, other.TextOnly)
+            && ValueEquality.AreEqual(MaxDurationSeconds, other.MaxDurationSeconds)
+            && ValueEquality.AreEqual(ClientEvents, other.ClientEvents)
+            && ValueEquality.AreEqual(FileInput, other.FileInput)
+            && ValueEquality.AreEqual(MonitoringEnabled, other.MonitoringEnabled)
+            && ValueEquality.AreEqual(MonitoringEvents, other.MonitoringEvents)
+            && ValueEquality.AreEqual(DtmfInputSettings, other.DtmfInputSettings)
+            && ValueEquality.AreEqual(BackgroundSound, other.BackgroundSound)
+            && ValueEquality.AreEqual(SourceAttribution, other.SourceAttribution)
+            && AdditionalProperties.Equals(other.AdditionalProperties);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            var hash = 17;
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TextOnly);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MaxDurationSeconds);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ClientEvents);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(FileInput);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MonitoringEnabled);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MonitoringEvents);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(DtmfInputSettings);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(BackgroundSound);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SourceAttribution);
+            hash = (hash * 31) + AdditionalProperties.GetHashCode();
+            return hash;
+        }
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/ElevenLabs.Test/ElevenLabs.Test.csproj" />
+  <Project Path="src/ElevenLabs/ElevenLabs.csproj" />
+</Solution>
