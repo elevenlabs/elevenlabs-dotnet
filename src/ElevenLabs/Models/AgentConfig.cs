@@ -1,0 +1,154 @@
+using ElevenLabs.Agents;
+using ElevenLabs.Agents.Conversations;
+using ElevenLabs.Agents.Dashboard;
+using ElevenLabs.Agents.KnowledgeBase;
+using ElevenLabs.Agents.McpServers;
+using ElevenLabs.Agents.OutboundCampaigns;
+using ElevenLabs.Agents.Procedures;
+using ElevenLabs.Agents.Tests;
+using ElevenLabs.Agents.Widget;
+using ElevenLabs.Core;
+using ElevenLabs.Dubbing;
+using ElevenLabs.Dubbing.Project;
+using ElevenLabs.Dubbing.Project.Language;
+using ElevenLabs.EnvironmentVariables;
+using ElevenLabs.Flows;
+using ElevenLabs.Flows.Templates;
+using ElevenLabs.History;
+using ElevenLabs.Music;
+using ElevenLabs.Productions;
+using ElevenLabs.Productions.Orders;
+using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.ServiceAccounts;
+using ElevenLabs.SpeechEngine;
+using ElevenLabs.Studio;
+using ElevenLabs.Studio.Projects;
+using ElevenLabs.Studio.Projects.Chapters;
+using ElevenLabs.Tokens;
+using ElevenLabs.Voices;
+using ElevenLabs.Voices.Pvc;
+using ElevenLabs.Voices.Pvc.Verification;
+using ElevenLabs.Workspace;
+using ElevenLabs.Workspace.Analytics;
+using ElevenLabs.Workspace.Groups;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+
+namespace ElevenLabs;
+
+[Serializable]
+public record AgentConfig : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <value>If non-empty, the first message the agent will say. If empty, the agent waits for the user to start the discussion.</value>
+    [JsonPropertyName("first_message")]
+    public string? FirstMessage { get; set; }
+
+    /// <value>Language of the agent - used for ASR and TTS</value>
+    [JsonPropertyName("language")]
+    public string? Language { get; set; }
+
+    /// <value>When enabled, the agent mixes English words and phrases into responses in Hindi, Malayalam, Telugu, or Kannada.</value>
+    [JsonPropertyName("hinglish_mode")]
+    public bool? HinglishMode { get; set; }
+
+    [JsonPropertyName("dynamic_variables")]
+    public object? DynamicVariables { get; set; }
+
+    /// <value>If true, the user will not be able to interrupt the agent while the first message is being delivered.</value>
+    [JsonPropertyName("disable_first_message_interruptions")]
+    public bool? DisableFirstMessageInterruptions { get; set; }
+
+    /// <value>If non-empty, the message the agent will send when max conversation duration is reached.</value>
+    [JsonPropertyName("max_conversation_duration_message")]
+    public string? MaxConversationDurationMessage { get; set; }
+
+    /// <value>Per-channel response behavior overrides for text conversations. Built-in channel defaults apply when unset.</value>
+    [JsonPropertyName("text_behavior_overrides")]
+    public Dictionary<string, BehaviorOverride>? TextBehaviorOverrides { get; set; }
+
+    [JsonPropertyName("prompt")]
+    public PromptAgentApiModelInput? Prompt { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// Written out rather than synthesized. A record's generated Equals compares every instance
+    /// field, and `_extensionData` is a fresh Dictionary per instance compared by REFERENCE, so two
+    /// identical models were never equal — silently defeating ==, Distinct(), HashSet membership,
+    /// dictionary keys and test assertions for every model in the SDK. Excluding it loses nothing:
+    /// it is a transient deserialization sink whose contents are copied into
+    /// AdditionalProperties, which IS compared here.
+    /// </remarks>
+    public virtual bool Equals(AgentConfig? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+        // The synthesized record Equals compares EqualityContract, so a base instance never equals a
+        // derived one. Hand-writing Equals drops that unless it is restated.
+        if (EqualityContract != other.EqualityContract)
+        {
+            return false;
+        }
+        // Declared properties first: the additional-properties comparison walks a dictionary and
+        // allocates a string per entry, and is the least likely of the three to differ, so letting
+        // the cheap scalar comparisons short-circuit ahead of it matters for Distinct/HashSet over
+        // large collections. Anchored on `true` so a model with no declared properties still emits
+        // a valid expression.
+        return true
+            && ValueEquality.AreEqual(FirstMessage, other.FirstMessage)
+            && ValueEquality.AreEqual(Language, other.Language)
+            && ValueEquality.AreEqual(HinglishMode, other.HinglishMode)
+            && ValueEquality.AreEqual(DynamicVariables, other.DynamicVariables)
+            && ValueEquality.AreEqual(
+                DisableFirstMessageInterruptions,
+                other.DisableFirstMessageInterruptions
+            )
+            && ValueEquality.AreEqual(
+                MaxConversationDurationMessage,
+                other.MaxConversationDurationMessage
+            )
+            && ValueEquality.AreEqual(TextBehaviorOverrides, other.TextBehaviorOverrides)
+            && ValueEquality.AreEqual(Prompt, other.Prompt)
+            && AdditionalProperties.Equals(other.AdditionalProperties);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            var hash = 17;
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(FirstMessage);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Language);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(HinglishMode);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(DynamicVariables);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(DisableFirstMessageInterruptions);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MaxConversationDurationMessage);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TextBehaviorOverrides);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Prompt);
+            hash = (hash * 31) + AdditionalProperties.GetHashCode();
+            return hash;
+        }
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

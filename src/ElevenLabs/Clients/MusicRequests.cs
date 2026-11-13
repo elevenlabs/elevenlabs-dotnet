@@ -1,0 +1,185 @@
+using ElevenLabs.Agents;
+using ElevenLabs.Agents.Conversations;
+using ElevenLabs.Agents.Dashboard;
+using ElevenLabs.Agents.KnowledgeBase;
+using ElevenLabs.Agents.McpServers;
+using ElevenLabs.Agents.OutboundCampaigns;
+using ElevenLabs.Agents.Procedures;
+using ElevenLabs.Agents.Tests;
+using ElevenLabs.Agents.Widget;
+using ElevenLabs.Core;
+using ElevenLabs.Dubbing;
+using ElevenLabs.Dubbing.Project;
+using ElevenLabs.Dubbing.Project.Language;
+using ElevenLabs.EnvironmentVariables;
+using ElevenLabs.Flows;
+using ElevenLabs.Flows.Templates;
+using ElevenLabs.History;
+using ElevenLabs.Music;
+using ElevenLabs.Productions;
+using ElevenLabs.Productions.Orders;
+using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.ServiceAccounts;
+using ElevenLabs.SpeechEngine;
+using ElevenLabs.Studio;
+using ElevenLabs.Studio.Projects;
+using ElevenLabs.Studio.Projects.Chapters;
+using ElevenLabs.Tokens;
+using ElevenLabs.Voices;
+using ElevenLabs.Voices.Pvc;
+using ElevenLabs.Voices.Pvc.Verification;
+using ElevenLabs.Workspace;
+using ElevenLabs.Workspace.Analytics;
+using ElevenLabs.Workspace.Groups;
+using global::System.Text.Json.Serialization;
+using OneOf;
+
+namespace ElevenLabs;
+
+[Serializable]
+public record VideoToMusicMusicRequest
+{
+    [JsonIgnore]
+    public AllowedOutputFormats? OutputFormat { get; set; }
+
+    [JsonIgnore]
+    public bool? EnableLogging { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyVideoToMusicV1MusicVideoToMusicPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record ComposeMusicRequest
+{
+    [JsonIgnore]
+    public ComposeMusicRequestOutputFormat? OutputFormat { get; set; }
+
+    [JsonIgnore]
+    public bool? EnableLogging { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyComposeMusicV1MusicPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record ComposeDetailedMusicRequest
+{
+    [JsonIgnore]
+    public ComposeDetailedMusicRequestOutputFormat? OutputFormat { get; set; }
+
+    [JsonIgnore]
+    public bool? EnableLogging { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyComposeMusicWithADetailedResponseV1MusicDetailedPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record StreamMusicRequest
+{
+    [JsonIgnore]
+    public StreamMusicRequestOutputFormat? OutputFormat { get; set; }
+
+    [JsonIgnore]
+    public bool? EnableLogging { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyStreamComposedMusicV1MusicStreamPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record UploadMusicRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyUploadMusicV1MusicUploadPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record SeparateStemsMusicRequest
+{
+    [JsonIgnore]
+    public AllowedOutputFormats? OutputFormat { get; set; }
+
+    [JsonIgnore]
+    public bool? EnableLogging { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyStemSeparationV1MusicStemSeparationPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record ComposeDetailedStreamMusicRequest
+{
+    [JsonIgnore]
+    public ComposeDetailedStreamMusicRequestOutputFormat? OutputFormat { get; set; }
+
+    [JsonIgnore]
+    public bool? EnableLogging { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPost Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

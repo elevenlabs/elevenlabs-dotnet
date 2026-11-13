@@ -1,0 +1,172 @@
+using ElevenLabs.Agents;
+using ElevenLabs.Agents.Conversations;
+using ElevenLabs.Agents.Dashboard;
+using ElevenLabs.Agents.KnowledgeBase;
+using ElevenLabs.Agents.McpServers;
+using ElevenLabs.Agents.OutboundCampaigns;
+using ElevenLabs.Agents.Procedures;
+using ElevenLabs.Agents.Tests;
+using ElevenLabs.Agents.Widget;
+using ElevenLabs.Core;
+using ElevenLabs.Dubbing;
+using ElevenLabs.Dubbing.Project;
+using ElevenLabs.Dubbing.Project.Language;
+using ElevenLabs.EnvironmentVariables;
+using ElevenLabs.Flows;
+using ElevenLabs.Flows.Templates;
+using ElevenLabs.History;
+using ElevenLabs.Music;
+using ElevenLabs.Productions;
+using ElevenLabs.Productions.Orders;
+using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.ServiceAccounts;
+using ElevenLabs.SpeechEngine;
+using ElevenLabs.Studio;
+using ElevenLabs.Studio.Projects;
+using ElevenLabs.Studio.Projects.Chapters;
+using ElevenLabs.Tokens;
+using ElevenLabs.Voices;
+using ElevenLabs.Voices.Pvc;
+using ElevenLabs.Voices.Pvc.Verification;
+using ElevenLabs.Workspace;
+using ElevenLabs.Workspace.Analytics;
+using ElevenLabs.Workspace.Groups;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+
+namespace ElevenLabs;
+
+[Serializable]
+public record GetPhoneNumberSipTrunkResponseModel : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <value>Phone number</value>
+    [JsonPropertyName("phone_number")]
+    public required string PhoneNumber { get; set; }
+
+    /// <value>Label for the phone number</value>
+    [JsonPropertyName("label")]
+    public required string Label { get; set; }
+
+    /// <value>This field is deprecated and will be removed in the future. Whether this phone number supports inbound calls</value>
+    [JsonPropertyName("supports_inbound")]
+    public bool? SupportsInbound { get; set; }
+
+    /// <value>This field is deprecated and will be removed in the future. Whether this phone number supports outbound calls</value>
+    [JsonPropertyName("supports_outbound")]
+    public bool? SupportsOutbound { get; set; }
+
+    /// <value>The ID of the phone number</value>
+    [JsonPropertyName("phone_number_id")]
+    public required string PhoneNumberId { get; set; }
+
+    /// <value>The agent that is assigned to the phone number</value>
+    [JsonPropertyName("assigned_agent")]
+    public PhoneNumberAgentInfo? AssignedAgent { get; set; }
+
+    /// <value>Phone provider</value>
+    [JsonPropertyName("provider")]
+    public GetPhoneNumberSipTrunkResponseModelProvider? Provider { get; set; }
+
+    [JsonPropertyName("provider_config")]
+    public GetPhoneNumberOutboundSipTrunkConfigResponseModel? ProviderConfig { get; set; }
+
+    /// <value>Configuration of the Outbound SIP trunk - if configured.</value>
+    [JsonPropertyName("outbound_trunk")]
+    public GetPhoneNumberOutboundSipTrunkConfigResponseModel? OutboundTrunk { get; set; }
+
+    /// <value>Configuration of the Inbound SIP trunk - if configured.</value>
+    [JsonPropertyName("inbound_trunk")]
+    public GetPhoneNumberInboundSipTrunkConfigResponseModel? InboundTrunk { get; set; }
+
+    [JsonPropertyName("livekit_stack")]
+    public required LivekitStackType LivekitStack { get; set; }
+
+    /// <value>Whether to store SIP messages for this phone number.</value>
+    [JsonPropertyName("store_sip_messages")]
+    public bool? StoreSipMessages { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// Written out rather than synthesized. A record's generated Equals compares every instance
+    /// field, and `_extensionData` is a fresh Dictionary per instance compared by REFERENCE, so two
+    /// identical models were never equal — silently defeating ==, Distinct(), HashSet membership,
+    /// dictionary keys and test assertions for every model in the SDK. Excluding it loses nothing:
+    /// it is a transient deserialization sink whose contents are copied into
+    /// AdditionalProperties, which IS compared here.
+    /// </remarks>
+    public virtual bool Equals(GetPhoneNumberSipTrunkResponseModel? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+        // The synthesized record Equals compares EqualityContract, so a base instance never equals a
+        // derived one. Hand-writing Equals drops that unless it is restated.
+        if (EqualityContract != other.EqualityContract)
+        {
+            return false;
+        }
+        // Declared properties first: the additional-properties comparison walks a dictionary and
+        // allocates a string per entry, and is the least likely of the three to differ, so letting
+        // the cheap scalar comparisons short-circuit ahead of it matters for Distinct/HashSet over
+        // large collections. Anchored on `true` so a model with no declared properties still emits
+        // a valid expression.
+        return true
+            && ValueEquality.AreEqual(PhoneNumber, other.PhoneNumber)
+            && ValueEquality.AreEqual(Label, other.Label)
+            && ValueEquality.AreEqual(SupportsInbound, other.SupportsInbound)
+            && ValueEquality.AreEqual(SupportsOutbound, other.SupportsOutbound)
+            && ValueEquality.AreEqual(PhoneNumberId, other.PhoneNumberId)
+            && ValueEquality.AreEqual(AssignedAgent, other.AssignedAgent)
+            && ValueEquality.AreEqual(Provider, other.Provider)
+            && ValueEquality.AreEqual(ProviderConfig, other.ProviderConfig)
+            && ValueEquality.AreEqual(OutboundTrunk, other.OutboundTrunk)
+            && ValueEquality.AreEqual(InboundTrunk, other.InboundTrunk)
+            && ValueEquality.AreEqual(LivekitStack, other.LivekitStack)
+            && ValueEquality.AreEqual(StoreSipMessages, other.StoreSipMessages)
+            && AdditionalProperties.Equals(other.AdditionalProperties);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            var hash = 17;
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumber);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Label);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SupportsInbound);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SupportsOutbound);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumberId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(AssignedAgent);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Provider);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ProviderConfig);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(OutboundTrunk);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(InboundTrunk);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(LivekitStack);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(StoreSipMessages);
+            hash = (hash * 31) + AdditionalProperties.GetHashCode();
+            return hash;
+        }
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
