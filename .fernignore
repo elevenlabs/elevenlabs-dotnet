@@ -1,2 +1,10 @@
 # Specify files that shouldn't be modified by Fern
 README.md
+
+# Hand-written agent workflows-as-code builder (see docs/agents-as-code/workflow-spec.md)
+src/ElevenLabs/AgentWorkflows/
+src/ElevenLabs.Test/Unit/WorkflowFixtures/
+src/ElevenLabs.Test/Unit/WorkflowFixtureRunner.cs
+src/ElevenLabs.Test/Unit/WorkflowFixtureTest.cs
+src/ElevenLabs.Test/Unit/WorkflowBuilderTest.cs
+src/ElevenLabs.Test/ElevenLabs.Test.csproj
