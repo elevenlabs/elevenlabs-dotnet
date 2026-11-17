@@ -89,6 +89,20 @@ public sealed class SpeechEngineServer
         listener.Prefixes.Add($"http://+:{_port}/");
         _listener = listener;
         _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        // HttpListener.GetContextAsync() does not observe a CancellationToken, so an idle server
+        // would never return when the token passed to StartAsync is cancelled. Closing the listener
+        // on cancellation makes the pending GetContextAsync throw, which breaks the accept loop.
+        _cts.Token.Register(() =>
+        {
+            try
+            {
+                listener.Close();
+            }
+            catch (Exception)
+            {
+                // Already closed.
+            }
+        });
 
         try
         {

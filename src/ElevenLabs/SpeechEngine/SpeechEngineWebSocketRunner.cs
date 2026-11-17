@@ -70,7 +70,10 @@ internal static class SpeechEngineWebSocketRunner
         configure(session);
 
         var buffer = new byte[8192];
-        var message = new StringBuilder();
+        // Accumulate raw bytes and decode once per complete message: a multi-byte UTF-8 character can
+        // straddle two receives (including at the 8 KiB buffer boundary), and decoding each receive
+        // on its own would turn the split bytes into replacement characters.
+        using var messageBytes = new MemoryStream();
         try
         {
             while (socket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
@@ -92,14 +95,14 @@ internal static class SpeechEngineWebSocketRunner
                     break;
                 }
 
-                message.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
+                messageBytes.Write(buffer, 0, result.Count);
                 if (!result.EndOfMessage)
                 {
                     continue;
                 }
 
-                var raw = message.ToString();
-                message.Clear();
+                var raw = Encoding.UTF8.GetString(messageBytes.ToArray());
+                messageBytes.SetLength(0);
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
                     session.HandleRawMessage(raw);
@@ -109,7 +112,43 @@ internal static class SpeechEngineWebSocketRunner
         finally
         {
             session.HandleDisconnect();
+            // Complete the close-output handshake and release the socket on every exit — a
+            // peer-initiated close, a disconnect, or cancellation — so the peer is not left waiting
+            // and the connection's resources are deterministically freed.
+            await CompleteCloseHandshakeAsync(socket, sendGate).ConfigureAwait(false);
+            socket.Dispose();
             sendGate.Dispose();
+        }
+    }
+
+    private static async Task CompleteCloseHandshakeAsync(WebSocket socket, SemaphoreSlim sendGate)
+    {
+        if (socket.State != WebSocketState.Open && socket.State != WebSocketState.CloseReceived)
+        {
+            return;
+        }
+        try
+        {
+            await sendGate.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                await socket
+                    .CloseOutputAsync(
+                        WebSocketCloseStatus.NormalClosure,
+                        string.Empty,
+                        timeout.Token
+                    )
+                    .ConfigureAwait(false);
+            }
+            finally
+            {
+                sendGate.Release();
+            }
+        }
+        catch (Exception)
+        {
+            // Peer already gone — nothing to hand-shake.
         }
     }
 }

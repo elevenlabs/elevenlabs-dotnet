@@ -40,8 +40,21 @@ public sealed class SpeechEngineSession
     private string? _conversationId;
     private long? _currentEventId;
     private CancellationTokenSource? _currentCts;
-    private bool _inTranscriptHandler;
     private bool _closed;
+
+    // Carries the running transcript turn's state (its event ID, and the permission to send) down
+    // each handler's own asynchronous execution flow. Using AsyncLocal rather than a shared field
+    // means an older handler awaiting an LLM result still tags its responses with its own turn's
+    // event ID after a newer transcript arrives, and that send permission ends with the handler
+    // rather than lingering as a field that is never reset.
+    private sealed class TranscriptScope
+    {
+        public TranscriptScope(long? eventId) => EventId = eventId;
+
+        public long? EventId { get; }
+    }
+
+    private readonly AsyncLocal<TranscriptScope?> _activeScope = new();
 
     /// <param name="send">Writes a text frame to the connection.</param>
     /// <param name="close">Closes the connection. No-op if omitted.</param>
@@ -133,7 +146,7 @@ public sealed class SpeechEngineSession
         {
             return;
         }
-        var eventId = _currentEventId;
+        var eventId = _activeScope.Value?.EventId;
         SendAgentResponse(response, false, eventId);
         SendAgentResponse(string.Empty, true, eventId);
     }
@@ -149,7 +162,7 @@ public sealed class SpeechEngineSession
         {
             return;
         }
-        var eventId = _currentEventId;
+        var eventId = _activeScope.Value?.EventId;
         foreach (var chunk in response)
         {
             if (_closed)
@@ -181,7 +194,7 @@ public sealed class SpeechEngineSession
         {
             return;
         }
-        var eventId = _currentEventId;
+        var eventId = _activeScope.Value?.EventId;
         await foreach (var chunk in response.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             if (_closed || cancellationToken.IsCancellationRequested)
@@ -212,7 +225,6 @@ public sealed class SpeechEngineSession
             return;
         }
         _closed = true;
-        _inTranscriptHandler = false;
         AbortCurrent();
         foreach (var h in _disconnectedHandlers.ToArray())
         {
@@ -228,7 +240,6 @@ public sealed class SpeechEngineSession
             return;
         }
         _closed = true;
-        _inTranscriptHandler = false;
         AbortCurrent();
         _closeConnection();
     }
@@ -239,7 +250,7 @@ public sealed class SpeechEngineSession
         {
             throw new InvalidOperationException("Cannot send response: session is closed");
         }
-        if (!_inTranscriptHandler)
+        if (_activeScope.Value == null)
         {
             _log(
                 "sendResponse() called outside an OnTranscript handler; responses can only be sent in "
@@ -274,7 +285,6 @@ public sealed class SpeechEngineSession
 
             case "close":
                 _closed = true;
-                _inTranscriptHandler = false;
                 AbortCurrent();
                 foreach (var h in _closeHandlers.ToArray())
                 {
@@ -286,7 +296,7 @@ public sealed class SpeechEngineSession
                 EmitError(new InvalidOperationException(GetString(msg, "message") ?? string.Empty));
                 break;
 
-            // Unknown types are ignored for forward compatibility.
+                // Unknown types are ignored for forward compatibility.
         }
     }
 
@@ -322,20 +332,26 @@ public sealed class SpeechEngineSession
             }
         }
 
-        _inTranscriptHandler = true;
+        var scope = new TranscriptScope(eventId);
         var token = _currentCts.Token;
         foreach (var handler in _transcriptHandlers.ToArray())
         {
-            RunTranscriptHandler(handler, transcript, token);
+            RunTranscriptHandler(handler, transcript, scope, token);
         }
+        // Clear the scope on the read-loop flow so a stray SendResponse here (outside any handler)
+        // is suppressed; each dispatched handler keeps its own scope in its own async flow.
+        _activeScope.Value = null;
     }
 
     private void RunTranscriptHandler(
         Func<IReadOnlyList<ConversationMessage>, CancellationToken, SpeechEngineSession, Task> handler,
         IReadOnlyList<ConversationMessage> transcript,
+        TranscriptScope scope,
         CancellationToken token
     )
     {
+        // Set before invoking the handler so the value flows into the handler's async continuations.
+        _activeScope.Value = scope;
         Task task;
         try
         {

@@ -138,6 +138,66 @@ public class SpeechEngineSessionTest
     }
 
     [Test]
+    public void SendResponseAfterHandlerCompletesIsSuppressed()
+    {
+        var session = Session();
+        session.OnTranscript((t, token, s) => Task.CompletedTask); // completes without sending
+
+        session.HandleRawMessage(
+            "{\"type\":\"user_transcript\",\"event_id\":1,\"user_transcript\":[]}"
+        );
+        _sent.Clear();
+
+        // The send permission must end with the handler, not linger as a field.
+        session.SendResponse("late");
+        Assert.That(_sent, Is.Empty);
+    }
+
+    [Test]
+    public async Task ResponseKeepsItsOwnTurnsEventIdAfterANewerTranscript()
+    {
+        var session = Session();
+        var firstStarted = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously
+        );
+        var release = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously
+        );
+        var firstDone = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously
+        );
+
+        session.OnTranscript(
+            async (t, token, s) =>
+            {
+                if (t.Count > 0 && t[0].Content == "first")
+                {
+                    firstStarted.SetResult(true);
+                    await release.Task;
+                    s.SendResponse("reply"); // must carry turn 1's event_id
+                    firstDone.SetResult(true);
+                }
+            }
+        );
+
+        session.HandleRawMessage(
+            "{\"type\":\"user_transcript\",\"event_id\":1,\"user_transcript\":[{\"role\":\"user\",\"content\":\"first\"}]}"
+        );
+        await firstStarted.Task;
+
+        // A newer transcript (event_id 2) arrives while turn 1 is still awaiting.
+        session.HandleRawMessage(
+            "{\"type\":\"user_transcript\",\"event_id\":2,\"user_transcript\":[{\"role\":\"user\",\"content\":\"second\"}]}"
+        );
+
+        release.SetResult(true);
+        await firstDone.Task;
+
+        var reply = DecodedSent().First(m => m["content"]!.GetValue<string>() == "reply");
+        Assert.That(reply["event_id"]!.GetValue<long>(), Is.EqualTo(1L));
+    }
+
+    [Test]
     public void CloseMessageEmitsCloseAndClosesSession()
     {
         var session = Session();
