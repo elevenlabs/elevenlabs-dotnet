@@ -1,2 +1,24 @@
 # Specify files that shouldn't be modified by Fern
 README.md
+
+# Hand-written Speech Engine server model (the developer hosts a WebSocket server that the
+# ElevenLabs API dials into). The generator produces only the client-dials-out upstream socket;
+# these add the inbound-connection JWT verifier, the per-connection session/protocol, the
+# standalone HttpListener server, the ASP.NET Core attach helper, and the engine resource.
+src/ElevenLabs/SpeechEngine/ConversationMessage.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineJwtVerifier.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineCallbacks.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineCallbacksWiring.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineSession.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineWebSocketRunner.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineServer.cs
+src/ElevenLabs/SpeechEngine/SpeechEngineResource.cs
+src/ElevenLabs.Test/Unit/SpeechEngineJwtVerifierTest.cs
+src/ElevenLabs.Test/Unit/SpeechEngineSessionTest.cs
+src/ElevenLabs.Test/Unit/SpeechEngineResourceTest.cs
+src/ElevenLabs.Test/Unit/SpeechEngineWebSocketRunnerTest.cs
+
+# Hand-written ASP.NET Core companion package: the attach helper lives here (not in the core
+# package) so ordinary consumers do not inherit the Microsoft.AspNetCore.App FrameworkReference.
+src/ElevenLabs.AspNetCore/
+src/ElevenLabs.AspNetCore.Test/

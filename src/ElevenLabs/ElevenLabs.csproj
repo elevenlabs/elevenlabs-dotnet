@@ -57,6 +57,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />
     <PackageReference Include="System.Threading.Channels" Version="9.0.13" />
   </ItemGroup>
+
+  <!-- The ASP.NET Core attach helper lives in the companion package elevenlabs-dotnet-aspnetcore,
+       which carries the Microsoft.AspNetCore.App FrameworkReference, so this core package does not
+       force ordinary (console/worker/desktop) consumers onto the ASP.NET Core shared framework. The
+       standalone HttpListener server and the transport-agnostic session/verifier stay here and need
+       only the base runtime. -->
   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="System.Text.Json" Version="9.0.9" />
     <!-- System.Net.Http.Json ships in-framework on net5+; on net462/netstandard2.0 the
@@ -67,6 +73,10 @@
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>ElevenLabs.Test</_Parameter1>
+    </AssemblyAttribute>
+    <!-- The companion ASP.NET Core package reuses the internal SpeechEngineWebSocketRunner. -->
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>ElevenLabs.AspNetCore</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
