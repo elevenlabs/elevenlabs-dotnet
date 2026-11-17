@@ -42,6 +42,12 @@ public sealed class SpeechEngineSession
     private CancellationTokenSource? _currentCts;
     private bool _closed;
 
+    // Guards the closed-state transition together with creating/detaching _currentCts, so a close
+    // cannot dispose a turn's source before its token is captured, start a turn after close, or race
+    // another AbortCurrent into disposing the same source twice. Cancellation/disposal runs outside
+    // the lock.
+    private readonly object _gate = new();
+
     // Carries the running transcript turn's state (its event ID, and the permission to send) down
     // each handler's own asynchronous execution flow. Using AsyncLocal rather than a shared field
     // means an older handler awaiting an LLM result still tags its responses with its own turn's
@@ -220,12 +226,17 @@ public sealed class SpeechEngineSession
     /// </summary>
     public void HandleDisconnect()
     {
-        if (_closed)
+        CancellationTokenSource? previous;
+        lock (_gate)
         {
-            return;
+            if (_closed)
+            {
+                return;
+            }
+            _closed = true;
+            previous = Interlocked.Exchange(ref _currentCts, null);
         }
-        _closed = true;
-        AbortCurrent();
+        CancelAndDispose(previous);
         foreach (var h in _disconnectedHandlers.ToArray())
         {
             Guarded("disconnected", () => h(this));
@@ -235,12 +246,17 @@ public sealed class SpeechEngineSession
     /// <summary>Close the session and its underlying connection.</summary>
     public void Close()
     {
-        if (_closed)
+        CancellationTokenSource? previous;
+        lock (_gate)
         {
-            return;
+            if (_closed)
+            {
+                return;
+            }
+            _closed = true;
+            previous = Interlocked.Exchange(ref _currentCts, null);
         }
-        _closed = true;
-        AbortCurrent();
+        CancelAndDispose(previous);
         _closeConnection();
     }
 
@@ -284,8 +300,13 @@ public sealed class SpeechEngineSession
                 break;
 
             case "close":
-                _closed = true;
-                AbortCurrent();
+                CancellationTokenSource? previousOnClose;
+                lock (_gate)
+                {
+                    _closed = true;
+                    previousOnClose = Interlocked.Exchange(ref _currentCts, null);
+                }
+                CancelAndDispose(previousOnClose);
                 foreach (var h in _closeHandlers.ToArray())
                 {
                     Guarded("close", () => h(this));
@@ -311,9 +332,23 @@ public sealed class SpeechEngineSession
             return;
         }
 
-        AbortCurrent();
-        _currentCts = new CancellationTokenSource();
-        _currentEventId = eventId;
+        CancellationTokenSource? previous;
+        CancellationTokenSource cts;
+        lock (_gate)
+        {
+            // Do not start a turn after the session has closed.
+            if (_closed)
+            {
+                return;
+            }
+            previous = Interlocked.Exchange(ref _currentCts, null);
+            cts = new CancellationTokenSource();
+            _currentCts = cts;
+            _currentEventId = eventId;
+        }
+        CancelAndDispose(previous);
+        // Capture the token from the local source, which a concurrent close cannot null out.
+        var token = cts.Token;
 
         var transcript = new List<ConversationMessage>();
         if (msg.TryGetPropertyValue("user_transcript", out var raw) && raw is JsonArray arr)
@@ -333,7 +368,6 @@ public sealed class SpeechEngineSession
         }
 
         var scope = new TranscriptScope(eventId);
-        var token = _currentCts.Token;
         foreach (var handler in _transcriptHandlers.ToArray())
         {
             RunTranscriptHandler(handler, transcript, scope, token);
@@ -410,18 +444,21 @@ public sealed class SpeechEngineSession
         }
     }
 
-    private void AbortCurrent()
+    // Cancel and dispose a detached source. The field is nulled atomically by the caller (under
+    // _gate) before this runs, so a reentrant or concurrent caller never disposes it twice, and
+    // cancellation callbacks run outside the lock.
+    private static void CancelAndDispose(CancellationTokenSource? cts)
     {
-        if (_currentCts != null)
+        if (cts == null)
         {
-            try
-            {
-                _currentCts.Cancel();
-            }
-            catch (ObjectDisposedException) { }
-            _currentCts.Dispose();
-            _currentCts = null;
+            return;
         }
+        try
+        {
+            cts.Cancel();
+        }
+        catch (ObjectDisposedException) { }
+        cts.Dispose();
     }
 
     private void EmitError(Exception error)

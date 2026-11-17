@@ -198,6 +198,27 @@ public class SpeechEngineSessionTest
     }
 
     [Test]
+    public void TranscriptAfterCloseStartsNoHandler()
+    {
+        var session = Session();
+        var invoked = false;
+        session.OnTranscript(
+            (t, token, s) =>
+            {
+                invoked = true;
+                return Task.CompletedTask;
+            }
+        );
+
+        session.Close();
+        session.HandleRawMessage(
+            "{\"type\":\"user_transcript\",\"event_id\":1,\"user_transcript\":[]}"
+        );
+
+        Assert.That(invoked, Is.False, "a transcript must not start a handler on a closed session");
+    }
+
+    [Test]
     public void CloseMessageEmitsCloseAndClosesSession()
     {
         var session = Session();

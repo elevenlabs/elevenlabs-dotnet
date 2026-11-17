@@ -76,7 +76,11 @@ internal static class SpeechEngineWebSocketRunner
         using var messageBytes = new MemoryStream();
         try
         {
-            while (socket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+            while (
+                socket.State == WebSocketState.Open
+                && !cancellationToken.IsCancellationRequested
+                && session.IsOpen
+            )
             {
                 WebSocketReceiveResult result;
                 try
@@ -127,28 +131,33 @@ internal static class SpeechEngineWebSocketRunner
         {
             return;
         }
+        // Bound the whole handshake, including acquiring the gate: an outbound send blocked by
+        // backpressure to a dead peer holds the gate, so without a deadline on the WaitAsync the
+        // cleanup would never reach CloseOutputAsync or the caller's socket.Dispose().
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         try
         {
-            await sendGate.WaitAsync().ConfigureAwait(false);
-            try
-            {
-                using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                await socket
-                    .CloseOutputAsync(
-                        WebSocketCloseStatus.NormalClosure,
-                        string.Empty,
-                        timeout.Token
-                    )
-                    .ConfigureAwait(false);
-            }
-            finally
-            {
-                sendGate.Release();
-            }
+            await sendGate.WaitAsync(timeout.Token).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            // Timed out waiting for the gate (or it was disposed): let the caller dispose the socket,
+            // which aborts the blocked send.
+            return;
+        }
+        try
+        {
+            await socket
+                .CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, timeout.Token)
+                .ConfigureAwait(false);
         }
         catch (Exception)
         {
             // Peer already gone — nothing to hand-shake.
+        }
+        finally
+        {
+            sendGate.Release();
         }
     }
 }

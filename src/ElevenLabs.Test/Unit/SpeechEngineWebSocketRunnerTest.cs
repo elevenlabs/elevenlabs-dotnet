@@ -55,6 +55,44 @@ public class SpeechEngineWebSocketRunnerTest
     }
 
     [Test]
+    public async Task ProtocolCloseMessageStopsProcessingFurtherFrames()
+    {
+        // A JSON {"type":"close"} closes the session; a frame queued behind it must not be processed
+        // because the loop condition now includes session.IsOpen.
+        var closeFrame = (
+            Encoding.UTF8.GetBytes("{\"type\":\"close\"}"),
+            true,
+            WebSocketMessageType.Text
+        );
+        var transcriptFrame = (
+            Encoding.UTF8.GetBytes(
+                "{\"type\":\"user_transcript\",\"event_id\":1,\"user_transcript\":[]}"
+            ),
+            true,
+            WebSocketMessageType.Text
+        );
+        var socket = new FakeWebSocket(new[] { closeFrame, transcriptFrame });
+
+        var handled = false;
+        await SpeechEngineWebSocketRunner.RunAsync(
+            socket,
+            session =>
+                session.OnTranscript(
+                    (transcript, token, s) =>
+                    {
+                        handled = true;
+                        return Task.CompletedTask;
+                    }
+                ),
+            debug: false,
+            CancellationToken.None
+        );
+
+        Assert.That(handled, Is.False, "frames after a protocol close must not be processed");
+        Assert.That(socket.Disposed, Is.True);
+    }
+
+    [Test]
     public async Task CompletesCloseHandshakeAndDisposesOnExit()
     {
         // No frames: the fake reports a peer-initiated close, which should end the run.
