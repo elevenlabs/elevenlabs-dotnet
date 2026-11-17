@@ -63,3 +63,9 @@ jobs:
             exit 1
           fi
           echo "dotnet test ran $ran of $expected expected test(s)."
+
+          # Hand-written companion package (elevenlabs-dotnet-aspnetcore) has its own test project,
+          # which the count gate above does not cover.
+          if [ -f "src/ElevenLabs.AspNetCore.Test/ElevenLabs.AspNetCore.Test.csproj" ]; then
+            dotnet test "src/ElevenLabs.AspNetCore.Test/ElevenLabs.AspNetCore.Test.csproj"
+          fi

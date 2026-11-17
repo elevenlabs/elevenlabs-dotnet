@@ -1,12 +1,12 @@
-#if NET8_0_OR_GREATER
 using System;
 using System.Threading;
 
 namespace ElevenLabs.SpeechEngine;
 
 /// <summary>
-/// Returned by <see cref="SpeechEngineResource.Attach"/>. Call <see cref="Close"/> to stop accepting
-/// new connections and cancel in-flight sessions without affecting the host ASP.NET Core application.
+/// Returned by <c>SpeechEngineResource.Attach</c> (an extension method in the
+/// <c>elevenlabs-dotnet-aspnetcore</c> package). Call <see cref="Close"/> to stop accepting new
+/// connections and cancel in-flight sessions without affecting the host ASP.NET Core application.
 /// </summary>
 public sealed class SpeechEngineAttachment : IDisposable
 {
@@ -37,4 +37,3 @@ public sealed class SpeechEngineAttachment : IDisposable
     /// <inheritdoc />
     public void Dispose() => Close();
 }
-#endif

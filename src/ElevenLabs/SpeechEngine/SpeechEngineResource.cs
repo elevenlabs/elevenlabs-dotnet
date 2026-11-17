@@ -3,8 +3,6 @@ using System.Collections.Generic;
 #if NET8_0_OR_GREATER
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 #endif
 
 namespace ElevenLabs.SpeechEngine;
@@ -15,8 +13,9 @@ namespace ElevenLabs.SpeechEngine;
 /// </summary>
 /// <remarks>
 /// <para>
-/// Use <see cref="ServeAsync"/> to run a standalone WebSocket server for this engine,
-/// <see cref="Attach"/> to add it to an existing ASP.NET Core application, or
+/// Use <see cref="ServeAsync"/> to run a standalone WebSocket server for this engine, the
+/// <c>Attach</c> extension in the <c>elevenlabs-dotnet-aspnetcore</c> package to add it to an
+/// existing ASP.NET Core application, or
 /// <see cref="VerifyRequest(System.Collections.Generic.IReadOnlyDictionary{string,string})"/> plus
 /// <see cref="CreateSession"/> to drive a connection you manage yourself.
 /// </para>
@@ -104,13 +103,6 @@ public sealed class SpeechEngineResource
 
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Verify an incoming ASP.NET Core request. Returns <c>false</c> (never throws) when the API key
-    /// is missing, the header is absent, or the token is invalid.
-    /// </summary>
-    public bool VerifyRequest(HttpRequest request) =>
-        VerifyRequestHeader(request?.Headers[AuthHeader].ToString());
-
-    /// <summary>
     /// Start a standalone WebSocket server for this engine. Completes when
     /// <paramref name="cancellationToken"/> fires. Verification uses the engine's API key unless
     /// <see cref="SpeechEngineCallbacks.DisableAuth"/> is set.
@@ -122,72 +114,8 @@ public sealed class SpeechEngineResource
         CancellationToken cancellationToken = default
     ) => new SpeechEngineServer(port, path, _apiKey, callbacks).StartAsync(cancellationToken);
 
-    /// <summary>
-    /// Attach to an existing ASP.NET Core application and begin accepting Speech Engine connections at
-    /// <paramref name="path"/>. Enables WebSockets, routes the path, and verifies each request's JWT.
-    /// Returns a <see cref="SpeechEngineAttachment"/> whose <see cref="SpeechEngineAttachment.Close"/>
-    /// stops accepting connections without affecting the host application.
-    /// </summary>
-    public SpeechEngineAttachment Attach(
-        IApplicationBuilder app,
-        string path,
-        SpeechEngineCallbacks callbacks
-    )
-    {
-        if (app == null)
-        {
-            throw new ArgumentNullException(nameof(app));
-        }
-        callbacks ??= new SpeechEngineCallbacks();
-        var cts = new CancellationTokenSource();
-        var attachment = new SpeechEngineAttachment(cts);
-        Action<string> log = callbacks.Debug
-            ? m => Console.Error.WriteLine("[SpeechEngine] " + m)
-            : _ => { };
-
-        if (callbacks.DisableAuth)
-        {
-            Console.Error.WriteLine(
-                "[SpeechEngine] authentication is disabled on Attach() — incoming connections will NOT "
-                    + "be verified. Protect the server with an IP allowlist restricting traffic to ElevenLabs."
-            );
-        }
-
-        app.UseWebSockets();
-        app.Use(
-            async (context, next) =>
-            {
-                if (cts.IsCancellationRequested || context.Request.Path != path)
-                {
-                    await next(context).ConfigureAwait(false);
-                    return;
-                }
-                if (!context.WebSockets.IsWebSocketRequest)
-                {
-                    await next(context).ConfigureAwait(false);
-                    return;
-                }
-                if (!callbacks.DisableAuth && !VerifyRequest(context.Request))
-                {
-                    log("rejected connection — failed verification");
-                    context.Response.StatusCode = 401;
-                    return;
-                }
-
-                var socket = await context.WebSockets.AcceptWebSocketAsync().ConfigureAwait(false);
-                using var linked = CancellationTokenSource.CreateLinkedTokenSource(
-                    cts.Token,
-                    context.RequestAborted
-                );
-                log("creating new session");
-                await SpeechEngineWebSocketRunner
-                    .RunAsync(socket, callbacks.WireTo, callbacks.Debug, linked.Token)
-                    .ConfigureAwait(false);
-            }
-        );
-
-        log($"listening for WebSocket upgrades on {path}");
-        return attachment;
-    }
+    // The ASP.NET Core attach helper (Attach / VerifyRequest(HttpRequest)) lives in the companion
+    // package elevenlabs-dotnet-aspnetcore as extension methods, so this core package carries no
+    // dependency on the ASP.NET Core shared framework.
 #endif
 }

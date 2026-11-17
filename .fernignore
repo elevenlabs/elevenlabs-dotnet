@@ -12,8 +12,13 @@ src/ElevenLabs/SpeechEngine/SpeechEngineCallbacksWiring.cs
 src/ElevenLabs/SpeechEngine/SpeechEngineSession.cs
 src/ElevenLabs/SpeechEngine/SpeechEngineWebSocketRunner.cs
 src/ElevenLabs/SpeechEngine/SpeechEngineServer.cs
-src/ElevenLabs/SpeechEngine/SpeechEngineAttachment.cs
 src/ElevenLabs/SpeechEngine/SpeechEngineResource.cs
 src/ElevenLabs.Test/Unit/SpeechEngineJwtVerifierTest.cs
 src/ElevenLabs.Test/Unit/SpeechEngineSessionTest.cs
 src/ElevenLabs.Test/Unit/SpeechEngineResourceTest.cs
+src/ElevenLabs.Test/Unit/SpeechEngineWebSocketRunnerTest.cs
+
+# Hand-written ASP.NET Core companion package: the attach helper lives here (not in the core
+# package) so ordinary consumers do not inherit the Microsoft.AspNetCore.App FrameworkReference.
+src/ElevenLabs.AspNetCore/
+src/ElevenLabs.AspNetCore.Test/
