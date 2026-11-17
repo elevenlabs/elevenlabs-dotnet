@@ -106,6 +106,52 @@ internal static class Validate
                     edge.Source
                 );
             }
+
+            // A backward condition is a second transition the other way, target → source, that the API
+            // stores on this same edge. It must obey the same routing rules as any edge leaving the target.
+            if (edge.BackwardCondition != null)
+            {
+                var backName = $"\"{edge.Target}\" → \"{edge.Source}\"";
+                var backSourceType = graph.ContainsNode(edge.Target)
+                    ? (graph.GetNode(edge.Target)["type"] as System.Text.Json.Nodes.JsonValue)?.GetValue<string>()
+                    : null;
+                var backConditionType = (
+                    edge.BackwardCondition?["type"] as System.Text.Json.Nodes.JsonValue
+                )?.GetValue<string>();
+                if (edge.Source == graph.StartId)
+                {
+                    Error(
+                        "edge_into_start",
+                        $"Edge {backName} points into the start node; go to the first node after it instead",
+                        edge.Target
+                    );
+                }
+                if (backSourceType == "end" && !endsWithEdges.Contains(edge.Target))
+                {
+                    endsWithEdges.Add(edge.Target);
+                    Error(
+                        "end_has_outgoing_edges",
+                        $"End node \"{edge.Target}\" can't have outgoing edges",
+                        edge.Target
+                    );
+                }
+                if (backSourceType == "tool" && backConditionType != "result")
+                {
+                    Error(
+                        "tool_edge_needs_result",
+                        $"Edge {backName} leaves a tool node, so it must use OnSuccess() or OnFailure()",
+                        edge.Target
+                    );
+                }
+                if (backSourceType != null && backSourceType != "tool" && backConditionType == "result")
+                {
+                    Error(
+                        "result_edge_needs_tool",
+                        $"Edge {backName} uses OnSuccess()/OnFailure(), which only applies to tool nodes",
+                        edge.Target
+                    );
+                }
+            }
         }
 
         foreach (var id in graph.NodeOrder)
