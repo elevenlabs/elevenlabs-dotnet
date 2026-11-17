@@ -77,6 +77,27 @@ internal static class Wire
             {
                 return i;
             }
+            if (value.TryGetValue<decimal>(out var m))
+            {
+                return (double)m;
+            }
+            if (value.TryGetValue<float>(out var f))
+            {
+                return f;
+            }
+            // Any other numeric backing (e.g. a JsonObject-built `1.5f`/`0m`, or uint/short): parse the
+            // raw JSON number text, so layout never throws on a valid position.
+            if (
+                double.TryParse(
+                    value.ToJsonString(),
+                    System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var parsed
+                )
+            )
+            {
+                return parsed;
+            }
         }
         return node.GetValue<double>();
     }

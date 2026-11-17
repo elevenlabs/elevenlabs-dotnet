@@ -66,4 +66,14 @@ public class WorkflowBackwardTest
         Assert.That(NodeTypes.ModelKnows("not_a_real_node_type"), Is.False);
         Assert.That(NodeTypes.ModelKnows(null), Is.False);
     }
+
+    [Test]
+    public void AsDoubleHandlesEveryNumericBacking()
+    {
+        // Layout reads position coords through AsDouble; a float- or decimal-backed JsonValue must not throw.
+        Assert.That(Wire.AsDouble(System.Text.Json.Nodes.JsonValue.Create(1.5f)), Is.EqualTo(1.5).Within(1e-6));
+        Assert.That(Wire.AsDouble(System.Text.Json.Nodes.JsonValue.Create(0m)), Is.EqualTo(0.0));
+        Assert.That(Wire.AsDouble(System.Text.Json.Nodes.JsonValue.Create(42)), Is.EqualTo(42.0));
+        Assert.That(Wire.AsDouble(System.Text.Json.Nodes.JsonValue.Create(3.14)), Is.EqualTo(3.14).Within(1e-9));
+    }
 }
