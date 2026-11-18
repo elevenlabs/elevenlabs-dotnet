@@ -105,8 +105,9 @@ internal static class MultipartParser
             }
             pos = found + 1;
         }
-        // The body uses one line ending throughout; read it from the first delimiter line.
-        var lineBreak = StartsWithAt(body, pos + delimiter.Length, CrLf) ? CrLf : Lf;
+        // The body uses one line ending throughout; read it from the end of the first delimiter line,
+        // past any transport padding (spaces or tabs, which MIME allows after a delimiter).
+        var lineBreak = StartsWithAt(body, SkipPadding(body, pos + delimiter.Length), CrLf) ? CrLf : Lf;
         var breakThenDelimiter = Concat(lineBreak, delimiter);
 
         var parts = new List<Part>();
@@ -117,6 +118,7 @@ internal static class MultipartParser
             {
                 break; // Closing delimiter.
             }
+            after = SkipPadding(body, after);
             var start = StartsWithAt(body, after, lineBreak) ? after + lineBreak.Length : after;
             var next = IndexOf(body, breakThenDelimiter, start);
             // Every part ends at a delimiter, and the body at `--boundary--`; the API always sends it. A
@@ -127,7 +129,7 @@ internal static class MultipartParser
                     "The music response ended before its closing multipart boundary; it is incomplete"
                 );
             }
-            parts.Add(SplitPart(Slice(body, start, next - start), lineBreak));
+            parts.Add(SplitPart(body, start, next, lineBreak));
             pos = next + lineBreak.Length;
         }
 
@@ -196,21 +198,46 @@ internal static class MultipartParser
         return Encoding.ASCII.GetBytes(delimiterText);
     }
 
-    private static Part SplitPart(byte[] part, byte[] lineBreak)
+    /// <summary>Spaces and tabs after a delimiter are MIME transport padding; returns the offset past them.</summary>
+    private static int SkipPadding(byte[] body, int offset)
     {
-        // Prepend a line break so a part with no headers (the blank line straight after the
-        // delimiter) is found at offset 0 too.
-        var withBreak = Concat(lineBreak, part);
-        var separator = IndexOf(withBreak, Concat(lineBreak, lineBreak), 0);
-        if (separator < 0)
+        while (offset < body.Length && (body[offset] == (byte)' ' || body[offset] == (byte)'\t'))
         {
-            return new Part(Headers(part, lineBreak), Array.Empty<byte>(), separated: false);
+            offset++;
         }
-        var headerLength = Math.Max(0, separator - lineBreak.Length);
-        var headerBlock = Slice(withBreak, lineBreak.Length, headerLength);
-        var bodyStart = separator + (2 * lineBreak.Length);
-        var partBody = Slice(withBreak, bodyStart, withBreak.Length - bodyStart);
-        return new Part(Headers(headerBlock, lineBreak), partBody, separated: true);
+        return offset;
+    }
+
+    /// <summary>Splits <c>body[start..end)</c> into headers and body, copying only the part's body.</summary>
+    private static Part SplitPart(byte[] body, int start, int end, byte[] lineBreak)
+    {
+        // A part with no headers starts with the blank line that ends them.
+        if (StartsWithAt(body, start, lineBreak) && start + lineBreak.Length <= end)
+        {
+            var bodyStart = start + lineBreak.Length;
+            return new Part(
+                new Dictionary<string, string>(StringComparer.Ordinal),
+                Slice(body, bodyStart, end - bodyStart),
+                separated: true
+            );
+        }
+        var found = ((ReadOnlySpan<byte>)body.AsSpan(start, end - start)).IndexOf(
+            Concat(lineBreak, lineBreak)
+        );
+        if (found < 0)
+        {
+            return new Part(
+                Headers(Slice(body, start, end - start), lineBreak),
+                Array.Empty<byte>(),
+                separated: false
+            );
+        }
+        var partBodyStart = start + found + (2 * lineBreak.Length);
+        return new Part(
+            Headers(Slice(body, start, found), lineBreak),
+            Slice(body, partBodyStart, end - partBodyStart),
+            separated: true
+        );
     }
 
     private static Dictionary<string, string> Headers(byte[] block, byte[] lineBreak)
