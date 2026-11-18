@@ -219,6 +219,38 @@ The SDK has one channel per factory:
 - `client.CreateSpeechEngineApi(...)` returns an `ISpeechEngineApi`
 - `client.CreateTranslationApi(...)` returns an `ITranslationApi`
 
+## Webhooks
+
+ElevenLabs signs each webhook it sends with your webhook secret. `client.Webhooks.ConstructEvent`
+verifies the `ElevenLabs-Signature` header and returns the decoded event as a `JsonObject`. Pass the
+raw request body exactly as received: re-serializing a deserialized body changes the bytes and breaks
+verification.
+
+```csharp
+using ElevenLabs;
+
+// In an ASP.NET Core minimal API handler:
+using var reader = new StreamReader(request.Body);
+var rawBody = await reader.ReadToEndAsync();
+
+try
+{
+    var evt = client.Webhooks.ConstructEvent(
+        rawBody,
+        request.Headers["ElevenLabs-Signature"].ToString(),
+        Environment.GetEnvironmentVariable("ELEVENLABS_WEBHOOK_SECRET")!
+    );
+    Console.WriteLine(evt["type"]);
+}
+catch (ElevenLabsClientApiException)
+{
+    // Missing or invalid signature, or a timestamp older than 30 minutes.
+    return Results.BadRequest();
+}
+```
+
+`ElevenLabs.Webhooks.WebhookVerifier.ConstructEvent` does the same without a client.
+
 ## Advanced
 
 ### Retries

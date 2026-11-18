@@ -31,3 +31,9 @@ src/ElevenLabs.Test/Unit/SpeechEngineWebSocketRunnerTest.cs
 # package) so ordinary consumers do not inherit the Microsoft.AspNetCore.App FrameworkReference.
 src/ElevenLabs.AspNetCore/
 src/ElevenLabs.AspNetCore.Test/
+
+# Hand-written webhook signature verifier (Fern's generated verifier can't parse the compound
+# `t=...,v0=...` header). The partial adds ConstructEvent to the generated WebhooksClient.
+src/ElevenLabs/Webhooks/WebhookVerifier.cs
+src/ElevenLabs/Webhooks/WebhooksClient.ConstructEvent.cs
+src/ElevenLabs.Test/Unit/WebhookVerifierTest.cs
