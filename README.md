@@ -251,6 +251,68 @@ catch (ElevenLabsClientApiException)
 
 `ElevenLabs.Webhooks.WebhookVerifier.ConstructEvent` does the same without a client.
 
+## Flows: wait for a generation
+
+Flows generations and template runs finish asynchronously: `CreateAsync` returns straight away
+with a `pending` status. `CreateAndWaitAsync` creates the generation, then polls `GetAsync` until it
+is `completed` or `failed` and returns the final response. It is on `client.Flows.Image`,
+`client.Flows.Video`, `client.Flows.TextToSpeech` and `client.Flows.Templates.Runs`.
+
+```csharp
+using ElevenLabs;
+using ElevenLabs.Flows;
+
+var client = new ElevenLabsClient();
+
+var generation = await client.Flows.Image.CreateAndWaitAsync(
+    new CreateImageRequest
+    {
+        Body = new ImageGenerationRequest(
+            new ImageGenerationRequest.BytedanceSeedream5Lite(
+                new BytedanceSeedream5LiteRequest
+                {
+                    Prompt = "A corgi in a tiny lifeguard chair on a sunlit beach, photorealistic",
+                    ModelId = BytedanceSeedream5LiteRequestModelId.BytedanceSeedream5Lite,
+                }
+            )
+        ),
+    },
+    new FlowsWaitOptions { WaitTimeout = TimeSpan.FromMinutes(5) }
+);
+
+if (generation.IsCompleted)
+{
+    Console.WriteLine(generation.AsCompleted().ContentUrl);
+}
+else
+{
+    Console.WriteLine(generation.AsFailed().ErrorMessage);
+}
+```
+
+- A `failed` generation or run is returned, not thrown. Check the status on the result.
+- Between status checks it waits as long as the server's `Retry-After` header says, never less
+  than `MinPollInterval` (3 seconds by default, 0.5 seconds at the least), plus up to 20% jitter.
+- `WaitTimeout` bounds the whole wait. It defaults to `null`, which waits indefinitely. When it
+  runs out, `FlowsWaitTimeoutException` is thrown with the `Id` (and `TemplateId` for a run) so you
+  can resume with `GetAsync`. The work keeps running on the server.
+- `RequestOptions` apply to the create call and to every status check, except
+  `AdditionalBodyProperties`, which only the create call gets.
+
+For a template run, pass the template id:
+
+```csharp
+using ElevenLabs.Flows.Templates;
+
+var run = await client.Flows.Templates.Runs.CreateAndWaitAsync(
+    "tpl_123",
+    new CreateRunsRequest { Body = new TemplateRunCreateRequest() }
+);
+```
+
+Waiting holds a process open, so this suits scripts and quickstarts. In production, set `Webhook`
+on the request and handle the webhook event instead.
+
 ## Advanced
 
 ### Retries
