@@ -95,7 +95,10 @@ public sealed class MusicDetailed
             .ReadAsByteArrayAsync()
 #endif
             .ConfigureAwait(false);
-        var parsed = MultipartParser.Parse(body);
+        var parsed = MultipartParser.Parse(
+            body,
+            MultipartParser.BoundaryFrom(response.Content.Headers.ContentType?.ToString())
+        );
         var songId = response.Headers.TryGetValues("song-id", out var values)
             ? values.FirstOrDefault()
             : null;
@@ -105,8 +108,12 @@ public sealed class MusicDetailed
 
 /// <summary>
 /// Sends <c>POST /v1/music/detailed</c> exactly as the generated <c>MusicService.ComposeDetailedAsync</c>
-/// builds it, but through the binary download path, and returns the HTTP response unread.
+/// builds it, and returns the HTTP response with its body already buffered.
 /// </summary>
+/// <remarks>
+/// Uses the buffered path (not the download path) so the per-call Timeout covers the whole body: the
+/// parser needs all of it anyway, and a body that stalls surfaces as <c>ApiTimeoutException</c>.
+/// </remarks>
 internal sealed class MusicDetailedService : BaseService
 {
     internal MusicDetailedService(Client httpClient)
@@ -134,7 +141,7 @@ internal sealed class MusicDetailedService : BaseService
             .SetContentAsJson(input, _jsonSerializerOptions)
             .Build();
 
-        return await ExecuteDownloadAsync(request, resolvedConfig, cancellationToken)
+        return await ExecuteAsync(request, resolvedConfig, cancellationToken)
             .ConfigureAwait(false);
     }
 }

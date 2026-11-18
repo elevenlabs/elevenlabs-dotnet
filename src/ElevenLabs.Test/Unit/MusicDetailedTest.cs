@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json.Nodes;
 using ElevenLabs.Core;
+using ElevenLabs.Http.Exceptions;
 using ElevenLabs.Music;
 using NUnit.Framework;
 
@@ -247,6 +248,136 @@ public class MusicDetailedTest
         // The generated pipeline maps the status to its typed error (an ElevenLabsClientApiException).
         Assert.ThrowsAsync<UnprocessableEntityError>(async () =>
             await music.ComposeDetailedAsync(Request())
+        );
+    }
+
+    [Test]
+    public void ThrowsWhenTheBodyEndsMidAudio()
+    {
+        var full = Multipart("\r\n");
+        // Cut inside the audio, so the closing delimiter never arrives.
+        var cut = full.Take(full.Length - $"\r\n{Boundary}--\r\n".Length - 100).ToArray();
+        var (music, _) = Music(cut);
+
+        var error = Assert.ThrowsAsync<ElevenLabsClientException>(async () =>
+            await music.ComposeDetailedAsync(Request())
+        );
+        Assert.That(error!.Message, Does.Contain("incomplete"));
+    }
+
+    [Test]
+    public void ThrowsOnAPartialClosingBoundary()
+    {
+        var full = Multipart("\r\n");
+        var cut = full.Take(full.Length - "3--\r\n".Length).ToArray(); // ends in "...\r\n--boundary12"
+        var (music, _) = Music(cut);
+
+        var error = Assert.ThrowsAsync<ElevenLabsClientException>(async () =>
+            await music.ComposeDetailedAsync(Request())
+        );
+        Assert.That(error!.Message, Does.Contain("incomplete"));
+    }
+
+    [Test]
+    public async Task SkipsAPreambleUsingTheContentTypeBoundary()
+    {
+        var body = Encoding.UTF8.GetBytes("This is a multipart message.\r\n")
+            .Concat(Multipart("\r\n"))
+            .ToArray();
+        var (music, _) = Music(body);
+
+        var song = await music.ComposeDetailedAsync(Request());
+
+        Assert.That(JsonNode.DeepEquals(song.Json, JsonNode.Parse(Metadata)), Is.True);
+        Assert.That(song.Audio, Is.EqualTo(Audio));
+    }
+
+    [Test]
+    public void ReadsTheBoundaryParameter()
+    {
+        Assert.That(MultipartParser.BoundaryFrom("multipart/mixed; boundary=\"abc\""), Is.EqualTo("abc"));
+        Assert.That(
+            MultipartParser.BoundaryFrom("multipart/mixed; boundary=----boundaryf00"),
+            Is.EqualTo("----boundaryf00")
+        );
+        Assert.That(MultipartParser.BoundaryFrom("application/json"), Is.Null);
+        Assert.That(MultipartParser.BoundaryFrom(null), Is.Null);
+    }
+
+    /// <summary>Sends the headers, then a body that never finishes arriving.</summary>
+    private sealed class StallingTransport : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken
+        )
+        {
+            var content = new StreamContent(new StallingStream());
+            content.Headers.TryAddWithoutValidation("Content-Type", "multipart/mixed; boundary=boundary123");
+            return Task.FromResult(
+                new HttpResponseMessage(HttpStatusCode.OK) { Content = content, RequestMessage = request }
+            );
+        }
+    }
+
+    private sealed class StallingStream : Stream
+    {
+        public override bool CanRead => true;
+        public override bool CanSeek => false;
+        public override bool CanWrite => false;
+        public override long Length => throw new NotSupportedException();
+        public override long Position
+        {
+            get => throw new NotSupportedException();
+            set => throw new NotSupportedException();
+        }
+
+        public override async Task<int> ReadAsync(
+            byte[] buffer,
+            int offset,
+            int count,
+            CancellationToken cancellationToken
+        )
+        {
+            await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
+            return 0;
+        }
+
+        public override async ValueTask<int> ReadAsync(
+            Memory<byte> buffer,
+            CancellationToken cancellationToken = default
+        )
+        {
+            await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
+            return 0;
+        }
+
+        public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+        public override void Flush() { }
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+        public override void SetLength(long value) => throw new NotSupportedException();
+        public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+    }
+
+    [Test]
+    public void TheTimeoutCoversAStalledBody()
+    {
+        var client = new ElevenLabsClient(
+            "test-key",
+            new ClientOptions
+            {
+                BaseUrl = "http://localhost/",
+                HttpClient = new HttpClient(new StallingTransport()),
+                MaxRetries = 0,
+            }
+        );
+        var music = new MusicDetailed(client);
+
+        Assert.ThrowsAsync<ApiTimeoutException>(async () =>
+            await music.ComposeDetailedAsync(
+                Request(),
+                new RequestOptions { Timeout = TimeSpan.FromMilliseconds(200) }
+            )
         );
     }
 

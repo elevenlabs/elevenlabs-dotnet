@@ -28,6 +28,10 @@ internal static class MultipartParser
         "filename=\"([^\"]+)\"|filename=([^;\\s]+)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant
     );
+    private static readonly Regex BoundaryPattern = new(
+        "boundary=(?:\"([^\"]+)\"|([^;\\s]+))",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant
+    );
 
     internal readonly struct Parsed
     {
@@ -60,26 +64,53 @@ internal static class MultipartParser
             Headers.TryGetValue("content-type", out var type) ? type : string.Empty;
     }
 
-    /// <exception cref="ElevenLabsClientException">The body isn't a multipart body with a JSON part and an audio part.</exception>
-    internal static Parsed Parse(byte[] body)
+    /// <summary>The <c>boundary</c> parameter of a <c>Content-Type</c> header, unquoted, or null.</summary>
+    internal static string? BoundaryFrom(string? contentType)
     {
-        var firstBreak = Array.IndexOf(body, (byte)'\n');
-        var firstLineLength = firstBreak < 0 ? body.Length : firstBreak;
-        var delimiterText = Encoding.ASCII.GetString(body, 0, firstLineLength).Trim();
-        if (!delimiterText.StartsWith("--", StringComparison.Ordinal) || delimiterText.Length < 3)
+        if (contentType is null)
         {
-            throw new ElevenLabsClientException(
-                "Could not find the multipart boundary in the music response"
-            );
+            return null;
         }
-        var delimiter = Encoding.ASCII.GetBytes(delimiterText);
-        // The body uses one line ending throughout; read it from the delimiter line.
-        var lineBreak = firstBreak > 0 && body[firstBreak - 1] == (byte)'\r' ? CrLf : Lf;
+        var match = BoundaryPattern.Match(contentType);
+        if (!match.Success)
+        {
+            return null;
+        }
+        return match.Groups[1].Success ? match.Groups[1].Value : match.Groups[2].Value;
+    }
+
+    /// <param name="body">The response body.</param>
+    /// <param name="boundary">The <c>boundary</c> parameter of the response's <c>Content-Type</c>. Without
+    /// it the delimiter is read from the body's first line.</param>
+    /// <exception cref="ElevenLabsClientException">The body isn't a complete multipart body with a JSON part
+    /// and an audio part, including when it ends before the closing <c>--boundary--</c> (truncated).</exception>
+    internal static Parsed Parse(byte[] body, string? boundary = null)
+    {
+        var delimiter = DelimiterFor(body, boundary);
+
+        // The first delimiter starts the body or a line: anything before it is a preamble, which is ignored.
+        int pos;
+        if (StartsWithAt(body, 0, delimiter))
+        {
+            pos = 0;
+        }
+        else
+        {
+            var found = IndexOf(body, Concat(Lf, delimiter), 0);
+            if (found < 0)
+            {
+                throw new ElevenLabsClientException(
+                    "Could not find the multipart boundary in the music response"
+                );
+            }
+            pos = found + 1;
+        }
+        // The body uses one line ending throughout; read it from the first delimiter line.
+        var lineBreak = StartsWithAt(body, pos + delimiter.Length, CrLf) ? CrLf : Lf;
         var breakThenDelimiter = Concat(lineBreak, delimiter);
 
         var parts = new List<Part>();
-        var pos = IndexOf(body, delimiter, 0);
-        while (pos >= 0)
+        while (true)
         {
             var after = pos + delimiter.Length;
             if (StartsWithAt(body, after, DashDash))
@@ -88,9 +119,16 @@ internal static class MultipartParser
             }
             var start = StartsWithAt(body, after, lineBreak) ? after + lineBreak.Length : after;
             var next = IndexOf(body, breakThenDelimiter, start);
-            var end = next < 0 ? body.Length : next;
-            parts.Add(SplitPart(Slice(body, start, end - start), lineBreak));
-            pos = next < 0 ? -1 : next + lineBreak.Length;
+            // Every part ends at a delimiter, and the body at `--boundary--`; the API always sends it. A
+            // body that stops first was cut off, so its last part (the audio, usually) is incomplete.
+            if (next < 0)
+            {
+                throw new ElevenLabsClientException(
+                    "The music response ended before its closing multipart boundary; it is incomplete"
+                );
+            }
+            parts.Add(SplitPart(Slice(body, start, next - start), lineBreak));
+            pos = next + lineBreak.Length;
         }
 
         Part? jsonPart = null;
@@ -138,6 +176,24 @@ internal static class MultipartParser
 
         audioPart.Headers.TryGetValue("content-disposition", out var disposition);
         return new Parsed(json, audioPart.Body, Filename(disposition));
+    }
+
+    private static byte[] DelimiterFor(byte[] body, string? boundary)
+    {
+        if (!string.IsNullOrEmpty(boundary))
+        {
+            return Encoding.ASCII.GetBytes("--" + boundary);
+        }
+        var firstBreak = Array.IndexOf(body, (byte)'\n');
+        var firstLineLength = firstBreak < 0 ? body.Length : firstBreak;
+        var delimiterText = Encoding.ASCII.GetString(body, 0, firstLineLength).Trim();
+        if (!delimiterText.StartsWith("--", StringComparison.Ordinal) || delimiterText.Length < 3)
+        {
+            throw new ElevenLabsClientException(
+                "Could not find the multipart boundary in the music response"
+            );
+        }
+        return Encoding.ASCII.GetBytes(delimiterText);
     }
 
     private static Part SplitPart(byte[] part, byte[] lineBreak)
