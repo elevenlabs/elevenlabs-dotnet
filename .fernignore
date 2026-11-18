@@ -1,6 +1,15 @@
 # Specify files that shouldn't be modified by Fern
 README.md
 
+# Hand-written agent workflows-as-code builder (see docs/agents-as-code/workflow-spec.md)
+src/ElevenLabs/AgentWorkflows/
+src/ElevenLabs.Test/Unit/WorkflowFixtures/
+src/ElevenLabs.Test/Unit/WorkflowFixtureRunner.cs
+src/ElevenLabs.Test/Unit/WorkflowFixtureTest.cs
+src/ElevenLabs.Test/Unit/WorkflowBuilderTest.cs
+src/ElevenLabs.Test/Unit/WorkflowBackwardTest.cs
+src/ElevenLabs.Test/ElevenLabs.Test.csproj
+
 # Hand-written Speech Engine server model (the developer hosts a WebSocket server that the
 # ElevenLabs API dials into). The generator produces only the client-dials-out upstream socket;
 # these add the inbound-connection JWT verifier, the per-connection session/protocol, the
