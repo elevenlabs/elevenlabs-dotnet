@@ -38,6 +38,12 @@ src/ElevenLabs/Webhooks/WebhookVerifier.cs
 src/ElevenLabs/Webhooks/WebhooksClient.ConstructEvent.cs
 src/ElevenLabs.Test/Unit/WebhookVerifierTest.cs
 
+# Hand-written Flows CreateAndWaitAsync helpers (create a generation or template run, then poll
+# GetAsync until it is completed or failed, honouring the server's Retry-After). The partials add
+# CreateAndWaitAsync to the generated Image/Video/TextToSpeech/Runs clients and their interfaces.
+src/ElevenLabs/Flows/
+src/ElevenLabs.Test/Unit/FlowsCreateAndWaitTest.cs
+
 # Hand-written parsed music ComposeDetailedAsync. `POST /v1/music/detailed` returns a
 # `multipart/mixed` body (JSON metadata + audio) that the generated method tries to decode as JSON.
 # MusicDetailed sends the same request through the root client's HTTP pipeline (exposed by the
