@@ -214,7 +214,11 @@ internal sealed class WorkflowGraph
             }
         }
 
-        var fields = Fields.TryGetValue(nodeType ?? "", out var f) ? f : new Dictionary<string, string>();
+        // Node kinds without a dedicated field map (e.g. generated say/update_state) still accept
+        // position, which is common to every node kind.
+        var fields = Fields.TryGetValue(nodeType ?? "", out var f)
+            ? f
+            : new Dictionary<string, string> { ["position"] = "position" };
         foreach (var kv in fieldsInput)
         {
             if (kv.Value == null)

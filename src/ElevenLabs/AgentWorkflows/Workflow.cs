@@ -110,6 +110,17 @@ public sealed class Workflow : WorkflowChain
             Graph.Issue("unknown_edge", $"There is no edge from \"{sourceId}\" to \"{targetId}\" to insert into", sourceId);
             return null;
         }
+        // Splitting a bidirectional edge can't preserve the original target's reverse route, so reject
+        // it rather than silently drop or misattach that route. Remove the backward condition first.
+        if (Graph.Edges[index].BackwardCondition != null)
+        {
+            Graph.Issue(
+                "cannot_insert_bidirectional",
+                $"Edge \"{sourceId}\" → \"{targetId}\" has a backward condition; inserting into a bidirectional edge would drop its reverse route. Remove the backward condition first",
+                sourceId
+            );
+            return null;
+        }
         var original = Graph.Edges[index];
         Graph.Edges.RemoveAt(index);
         var before = Graph.Edges.Count;
@@ -257,8 +268,13 @@ public sealed class Workflow : WorkflowChain
                 ((JsonObject)edgesOut[idOf[reverse]]!)["backward_condition"] = edge.ForwardCondition!.DeepClone();
                 continue;
             }
-            AddToOrder(edge.Source, edge);
-            // The API lists an edge with a backward condition among its target's outgoing edges as well.
+            // An edge belongs in a node's outgoing order only for a transition that leaves it: the
+            // source when it has a forward condition, the target when it has a backward condition. A
+            // loaded edge may carry only one.
+            if (edge.ForwardCondition != null)
+            {
+                AddToOrder(edge.Source, edge);
+            }
             if (edge.BackwardCondition != null)
             {
                 AddToOrder(edge.Target, edge);

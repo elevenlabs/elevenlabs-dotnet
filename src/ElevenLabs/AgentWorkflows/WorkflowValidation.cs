@@ -72,39 +72,46 @@ internal static class Validate
                     Error("unknown_node", $"Edge {name} refers to unknown node \"{id}\"", id);
                 }
             }
-            if (edge.Target == graph.StartId)
+            // Forward routing rules apply only when there is a forward transition (a forward
+            // condition). A loaded edge can be backward-only, and then source → target does not exist.
+            if (edge.ForwardCondition != null)
             {
-                Error(
-                    "edge_into_start",
-                    $"Edge {name} points into the start node; go to the first node after it instead",
-                    edge.Source
-                );
-            }
+                if (edge.Target == graph.StartId)
+                {
+                    Error(
+                        "edge_into_start",
+                        $"Edge {name} points into the start node; go to the first node after it instead",
+                        edge.Source
+                    );
+                }
 
-            var sourceType = graph.ContainsNode(edge.Source)
-                ? (graph.GetNode(edge.Source)["type"] as System.Text.Json.Nodes.JsonValue)?.GetValue<string>()
-                : null;
-            var conditionType = (edge.ForwardCondition?["type"] as System.Text.Json.Nodes.JsonValue)?.GetValue<string>();
-            if (sourceType == "end" && !endsWithEdges.Contains(edge.Source))
-            {
-                endsWithEdges.Add(edge.Source);
-                Error("end_has_outgoing_edges", $"End node \"{edge.Source}\" can't have outgoing edges", edge.Source);
-            }
-            if (sourceType == "tool" && conditionType != "result")
-            {
-                Error(
-                    "tool_edge_needs_result",
-                    $"Edge {name} leaves a tool node, so it must use OnSuccess() or OnFailure()",
-                    edge.Source
-                );
-            }
-            if (sourceType != null && sourceType != "tool" && conditionType == "result")
-            {
-                Error(
-                    "result_edge_needs_tool",
-                    $"Edge {name} uses OnSuccess()/OnFailure(), which only applies to tool nodes",
-                    edge.Source
-                );
+                var sourceType = graph.ContainsNode(edge.Source)
+                    ? (graph.GetNode(edge.Source)["type"] as System.Text.Json.Nodes.JsonValue)?.GetValue<string>()
+                    : null;
+                var conditionType = (
+                    edge.ForwardCondition?["type"] as System.Text.Json.Nodes.JsonValue
+                )?.GetValue<string>();
+                if (sourceType == "end" && !endsWithEdges.Contains(edge.Source))
+                {
+                    endsWithEdges.Add(edge.Source);
+                    Error("end_has_outgoing_edges", $"End node \"{edge.Source}\" can't have outgoing edges", edge.Source);
+                }
+                if (sourceType == "tool" && conditionType != "result")
+                {
+                    Error(
+                        "tool_edge_needs_result",
+                        $"Edge {name} leaves a tool node, so it must use OnSuccess() or OnFailure()",
+                        edge.Source
+                    );
+                }
+                if (sourceType != null && sourceType != "tool" && conditionType == "result")
+                {
+                    Error(
+                        "result_edge_needs_tool",
+                        $"Edge {name} uses OnSuccess()/OnFailure(), which only applies to tool nodes",
+                        edge.Source
+                    );
+                }
             }
 
             // A backward condition is a second transition the other way, target → source, that the API
@@ -250,7 +257,12 @@ internal static class Validate
                 var current = queue.Dequeue();
                 foreach (var edge in graph.Edges)
                 {
-                    if (edge.Source == current && !depths.Has(edge.Target) && graph.ContainsNode(edge.Target))
+                    if (
+                        edge.Source == current
+                        && edge.ForwardCondition != null
+                        && !depths.Has(edge.Target)
+                        && graph.ContainsNode(edge.Target)
+                    )
                     {
                         depths.Set(edge.Target, depths.Map[current] + 1);
                         queue.Enqueue(edge.Target);
