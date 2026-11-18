@@ -43,3 +43,11 @@ src/ElevenLabs.Test/Unit/WebhookVerifierTest.cs
 # CreateAndWaitAsync to the generated Image/Video/TextToSpeech/Runs clients and their interfaces.
 src/ElevenLabs/Flows/
 src/ElevenLabs.Test/Unit/FlowsCreateAndWaitTest.cs
+
+# Hand-written parsed music ComposeDetailedAsync. `POST /v1/music/detailed` returns a
+# `multipart/mixed` body (JSON metadata + audio) that the generated method tries to decode as JSON.
+# MusicDetailed sends the same request through the root client's HTTP pipeline (exposed by the
+# ElevenLabsClient partial) and splits the parts.
+src/ElevenLabs/MusicDetailed/
+src/ElevenLabs/ElevenLabsClient.MusicDetailed.cs
+src/ElevenLabs.Test/Unit/MusicDetailedTest.cs

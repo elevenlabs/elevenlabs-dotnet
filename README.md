@@ -251,6 +251,40 @@ catch (ElevenLabsClientApiException)
 
 `ElevenLabs.Webhooks.WebhookVerifier.ConstructEvent` does the same without a client.
 
+## Composing music with metadata
+
+`POST /v1/music/detailed` returns the song's metadata and its audio file in one `multipart/mixed`
+response. `MusicDetailed.ComposeDetailedAsync` sends that request and splits the response for you.
+
+```csharp
+using ElevenLabs;
+using ElevenLabs.Music;
+
+var client = new ElevenLabsClient();
+var music = new MusicDetailed(client);
+
+var song = await music.ComposeDetailedAsync(
+    new ComposeDetailedMusicRequest
+    {
+        Body = new BodyComposeMusicWithADetailedResponseV1MusicDetailedPost
+        {
+            Prompt = "Epic orchestral music with dramatic strings and powerful brass",
+            MusicLengthMs = 60000,
+        },
+    }
+);
+
+Console.WriteLine(song.Json["song_metadata"]?["title"]);
+File.WriteAllBytes(song.Filename, song.Audio);
+```
+
+- `Json` is the metadata part as the API sends it: `composition_plan`, `song_metadata` and
+  `words_timestamps`.
+- `Audio` is the audio file's bytes and `Filename` the name the API suggests for it.
+- `SongId` is set when the request has `StoreForInpainting` enabled.
+- Use this rather than `client.Music.ComposeDetailedAsync`, which can't decode the multipart
+  response.
+
 ## Flows: wait for a generation
 
 Flows generations and template runs finish asynchronously: `CreateAsync` returns straight away
