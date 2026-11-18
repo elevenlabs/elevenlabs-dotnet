@@ -382,6 +382,37 @@ public class MusicDetailedTest
     }
 
     [Test]
+    public async Task SkipsTransportPaddingAfterEachDelimiter()
+    {
+        var padded = Encoding.Latin1.GetBytes(
+            Encoding.Latin1.GetString(Multipart("\r\n")).Replace($"{Boundary}\r\n", $"{Boundary} \t\r\n")
+        );
+        var (music, _) = Music(padded);
+
+        var song = await music.ComposeDetailedAsync(Request());
+
+        Assert.That(JsonNode.DeepEquals(song.Json, JsonNode.Parse(Metadata)), Is.True);
+        Assert.That(song.Audio, Is.EqualTo(Audio));
+        Assert.That(song.Filename, Is.EqualTo("test_song.mp3"));
+    }
+
+    [Test]
+    public void ParserReadsAPartWithNoHeaders()
+    {
+        var body = Encoding.UTF8.GetBytes(
+                $"{Boundary}\r\nContent-Type: application/json\r\n\r\n{{\"a\":1}}\r\n{Boundary}\r\n\r\n"
+            )
+            .Concat(Audio)
+            .Concat(Encoding.UTF8.GetBytes($"\r\n{Boundary}--\r\n"))
+            .ToArray();
+
+        var parsed = MultipartParser.Parse(body);
+
+        Assert.That(parsed.Json["a"]!.GetValue<int>(), Is.EqualTo(1));
+        Assert.That(parsed.Audio, Is.EqualTo(Audio));
+    }
+
+    [Test]
     public void ParserFindsTheAudioPartBeforeTheJsonPart()
     {
         var body = Encoding.UTF8.GetBytes($"{Boundary}\r\nContent-Type: audio/mpeg\r\n\r\n")
