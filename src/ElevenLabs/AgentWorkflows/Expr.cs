@@ -101,6 +101,8 @@ public sealed class Expr
 
     public Expr Neq(long other) => Binary("neq_operator", Literal(other));
 
+    public Expr Neq(double other) => Binary("neq_operator", Literal(other));
+
     public Expr Neq(bool other) => Binary("neq_operator", Literal(other));
 
     public Expr Gt(Expr other) => Binary("gt_operator", other);

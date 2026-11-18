@@ -61,6 +61,17 @@ public class WorkflowBuilderTest
     }
 
     [Test]
+    public void NeqAcceptsFractionalLiteralLikeEq()
+    {
+        var wf = new Workflow();
+        wf.Converse("a", "A").When(Expr.Variable("amount").Neq(1.5)).End();
+
+        var json = wf.ToJsonString();
+        Assert.That(json, Does.Contain("neq_operator"));
+        Assert.That(json, Does.Contain("1.5"));
+    }
+
+    [Test]
     public void RoundTripsThroughFromJson()
     {
         var wf = new Workflow();
