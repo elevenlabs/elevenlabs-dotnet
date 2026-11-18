@@ -1,9 +1,11 @@
 using System;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace ElevenLabs;
+namespace ElevenLabs.Webhooks;
 
 /// <summary>
 /// Verifies ElevenLabs webhook signatures.
@@ -16,9 +18,10 @@ namespace ElevenLabs;
 /// the raw request body joined with a period (<c>&lt;timestamp&gt;.&lt;raw_body&gt;</c>).
 /// </para>
 /// <para>
-/// This is a hand-written helper rather than generated code: the Fern generator's built-in
-/// verifier cannot parse a compound header that carries both the timestamp and the signature.
-/// It is listed in <c>.fernignore</c> so regeneration leaves it in place.
+/// This is a hand-written helper rather than generated code (listed in <c>.fernignore</c>): the
+/// Fern generator's built-in verifier cannot parse a compound header that carries both the
+/// timestamp and the signature. It mirrors <c>construct_event</c> in the Python SDK so every SDK
+/// accepts the same signatures. It is also exposed as <c>client.Webhooks.ConstructEvent</c>.
 /// </para>
 /// </remarks>
 public static class WebhookVerifier
@@ -30,34 +33,43 @@ public static class WebhookVerifier
     private const long ToleranceSeconds = 30 * 60;
 
     /// <summary>
-    /// Verifies a webhook signature and returns the decoded event payload.
+    /// Verify a webhook signature and return the decoded event payload.
     /// </summary>
     /// <param name="rawBody">
-    /// The raw request body, exactly as received. Must be the unparsed string: re-encoding a
-    /// decoded body changes the bytes and breaks verification.
+    /// The raw request body, exactly as received. Must be the unparsed string: re-serializing a
+    /// deserialized body changes the bytes and breaks verification.
     /// </param>
     /// <param name="sigHeader">The value of the <c>ElevenLabs-Signature</c> header.</param>
     /// <param name="secret">Your webhook signing secret.</param>
     /// <returns>The decoded webhook event.</returns>
     /// <exception cref="ElevenLabsClientApiException">
-    /// Thrown if the header or secret is missing, the timestamp is outside the tolerance window,
-    /// or the signature does not match.
+    /// With status code 400 if the header or secret is missing, the timestamp is outside the
+    /// tolerance window, or the signature does not match.
     /// </exception>
-    public static JsonNode ConstructEvent(string rawBody, string sigHeader, string secret)
+    /// <exception cref="JsonException">
+    /// If the signature is valid but the body is not a JSON object.
+    /// </exception>
+    public static JsonObject ConstructEvent(string rawBody, string sigHeader, string secret) =>
+        ConstructEvent(rawBody, sigHeader, secret, DateTimeOffset.UtcNow);
+
+    internal static JsonObject ConstructEvent(
+        string rawBody,
+        string sigHeader,
+        string secret,
+        DateTimeOffset now
+    )
     {
         if (string.IsNullOrEmpty(sigHeader))
         {
-            throw new ElevenLabsClientApiException("Missing signature header", 400, string.Empty);
+            throw Fail("Missing signature header");
         }
 
         if (string.IsNullOrEmpty(secret))
         {
-            throw new ElevenLabsClientApiException(
-                "Webhook secret not configured",
-                400,
-                string.Empty
-            );
+            throw Fail("Webhook secret not configured");
         }
+
+        rawBody ??= string.Empty;
 
         string? timestamp = null;
         string? signature = null;
@@ -75,75 +87,62 @@ public static class WebhookVerifier
 
         if (string.IsNullOrEmpty(timestamp) || signature == null)
         {
-            throw new ElevenLabsClientApiException(
-                "No signature hash found with expected scheme v0",
-                400,
-                string.Empty
-            );
+            throw Fail("No signature hash found with expected scheme v0");
         }
 
-        // Parse failures collapse to 0, which falls outside the past-only tolerance window and is
-        // rejected below, matching the other SDKs' lenient integer coercion.
-        _ = long.TryParse(timestamp, out var timestampSeconds);
-        var requestTimestampMs = timestampSeconds * 1000L;
-        var toleranceMs = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() - ToleranceSeconds) * 1000L;
-        if (requestTimestampMs < toleranceMs)
+        // A non-numeric timestamp can never be inside the window, so it is rejected the same way
+        // as a stale one rather than surfacing a FormatException.
+        if (
+            !long.TryParse(timestamp, NumberStyles.None, CultureInfo.InvariantCulture, out var ts)
+            || ts < now.ToUnixTimeSeconds() - ToleranceSeconds
+        )
         {
-            throw new ElevenLabsClientApiException(
-                "Timestamp outside the tolerance zone",
-                400,
-                string.Empty
-            );
+            throw Fail("Timestamp outside the tolerance zone");
         }
 
-        var digest = "v0=" + ComputeHmacSha256Hex(secret, timestamp + "." + rawBody);
-        if (!FixedTimeEquals(digest, signature!))
+        byte[] mac;
+        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
         {
-            throw new ElevenLabsClientApiException(
-                "Signature hash does not match the expected signature hash for payload",
-                400,
-                string.Empty
-            );
+            mac = hmac.ComputeHash(Encoding.UTF8.GetBytes(timestamp + "." + rawBody));
+        }
+        var expected = Encoding.UTF8.GetBytes("v0=" + ToLowerHex(mac));
+        var actual = Encoding.UTF8.GetBytes(signature);
+
+        if (!FixedTimeEquals(expected, actual))
+        {
+            throw Fail("Signature hash does not match the expected signature hash for payload");
         }
 
-        return JsonNode.Parse(rawBody)
-            ?? throw new ElevenLabsClientApiException(
-                "Signature hash does not match the expected signature hash for payload",
-                400,
-                string.Empty
-            );
+        return JsonNode.Parse(rawBody) as JsonObject
+            ?? throw new JsonException("Webhook payload is not a JSON object");
     }
 
-    private static string ComputeHmacSha256Hex(string secret, string message)
+    private static ElevenLabsClientApiException Fail(string message) =>
+        new(message, 400, string.Empty);
+
+    private static string ToLowerHex(byte[] bytes)
     {
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
-        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
-        var builder = new StringBuilder(hash.Length * 2);
-        foreach (var b in hash)
+        var sb = new StringBuilder(bytes.Length * 2);
+        foreach (var b in bytes)
         {
-            builder.Append(b.ToString("x2"));
+            sb.Append(b.ToString("x2", CultureInfo.InvariantCulture));
         }
-        return builder.ToString();
+        return sb.ToString();
     }
 
-    private static bool FixedTimeEquals(string left, string right)
+    private static bool FixedTimeEquals(byte[] left, byte[] right)
     {
-        var leftBytes = Encoding.UTF8.GetBytes(left);
-        var rightBytes = Encoding.UTF8.GetBytes(right);
 #if NET5_0_OR_GREATER || NETSTANDARD2_1
-        return CryptographicOperations.FixedTimeEquals(leftBytes, rightBytes);
+        return CryptographicOperations.FixedTimeEquals(left, right);
 #else
-        // Manual constant-time comparison for targets without CryptographicOperations
-        // (net462, netstandard2.0). Compares every byte so timing does not leak where a
-        // mismatch occurred; a length difference still fails without short-circuiting.
-        if (leftBytes.Length != rightBytes.Length)
+        if (left.Length != right.Length)
         {
             return false;
         }
         var result = 0;
-        for (var i = 0; i < leftBytes.Length; i++)
+        for (var i = 0; i < left.Length; i++)
         {
-            result |= leftBytes[i] ^ rightBytes[i];
+            result |= left[i] ^ right[i];
         }
         return result == 0;
 #endif
