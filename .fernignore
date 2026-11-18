@@ -37,3 +37,9 @@ src/ElevenLabs.AspNetCore.Test/
 src/ElevenLabs/Webhooks/WebhookVerifier.cs
 src/ElevenLabs/Webhooks/WebhooksClient.ConstructEvent.cs
 src/ElevenLabs.Test/Unit/WebhookVerifierTest.cs
+
+# Hand-written Flows CreateAndWaitAsync helpers (create a generation or template run, then poll
+# GetAsync until it is completed or failed, honouring the server's Retry-After). The partials add
+# CreateAndWaitAsync to the generated Image/Video/TextToSpeech/Runs clients and their interfaces.
+src/ElevenLabs/Flows/
+src/ElevenLabs.Test/Unit/FlowsCreateAndWaitTest.cs
