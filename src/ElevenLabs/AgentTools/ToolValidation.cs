@@ -57,7 +57,7 @@ internal static class ToolValidation
                 )
             );
         }
-        if (s.HasConstant && !MatchesKind(s.Kind, s.ConstantValue, IsNullable(s.LiteralType)))
+        if (s.HasConstant && !MatchesKind(s.Kind, s.ConstantValue, Schema.IsNullableType(s.LiteralType)))
         {
             issues.Add(
                 Error(
@@ -92,9 +92,10 @@ internal static class ToolValidation
         if (s.Kind == SchemaKind.Object)
         {
             var names = s.Properties.Select(prop => prop.Key).ToList();
-            foreach (var group in s.AnyOf.Concat(s.AllOf))
+            var groups = (s.AnyOf ?? new List<JsonNode?>()).Concat(s.AllOf ?? new List<JsonNode?>());
+            foreach (var group in groups)
             {
-                foreach (var name in group.Where(n => !names.Contains(n)))
+                foreach (var name in Schema.GroupNames(group).Where(n => !names.Contains(n)))
                 {
                     issues.Add(
                         Error(
@@ -122,10 +123,6 @@ internal static class ToolValidation
             }
         }
     }
-
-    /// <summary>Whether a loaded literal's <c>type</c> is a list that includes <c>"null"</c>, e.g. <c>["integer", "null"]</c>.</summary>
-    private static bool IsNullable(JsonNode? type) =>
-        type is JsonArray list && list.Any(item => ToolWire.Str(item) == "null");
 
     private static bool MatchesKind(SchemaKind kind, JsonNode? value, bool nullable)
     {

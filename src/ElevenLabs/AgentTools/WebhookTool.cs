@@ -33,7 +33,12 @@ public sealed class WebhookTool : Tool
     /// <summary>The <c>api_schema</c> fields not kept below: url, method, auth, content type and so on.</summary>
     private readonly JsonObject _api;
     private readonly List<KeyValuePair<string, Schema>> _pathParams = new();
-    private ObjectSchema? _query;
+    private Schema? _query;
+
+    // Whether the loaded query schema declared its own `type` (otherwise the builder's `type` is synthetic and not
+    // written), and whether it is still exactly as loaded (so an empty one round-trips).
+    private bool _queryTypeLoaded;
+    private bool _queryUntouched;
     private Schema? _body;
     private Schema? _response;
     private readonly List<KeyValuePair<string, JsonNode>> _headers = new();
@@ -65,7 +70,9 @@ public sealed class WebhookTool : Tool
         }
         if (query != null)
         {
-            tool._query = (ObjectSchema)Schema.FromWire(query, false, SchemaKind.Object);
+            tool._query = Schema.FromWire(query, false, SchemaKind.Object);
+            tool._queryTypeLoaded = query.ContainsKey("type");
+            tool._queryUntouched = true;
         }
         if (body != null)
         {
@@ -107,10 +114,17 @@ public sealed class WebhookTool : Tool
         return this;
     }
 
-    /// <summary>Sets the query param <paramref name="name"/>. Required unless the schema is <c>Optional()</c>. Literal schemas only.</summary>
+    /// <summary>
+    /// Sets the query param <paramref name="name"/>. Required unless the schema is <c>Optional()</c>. Literal schemas
+    /// only. A loaded query schema that isn't an object is left as loaded, and <c>Build()</c> reports it.
+    /// </summary>
     public WebhookTool QueryParam(string name, Schema schema)
     {
-        _query = (_query ?? Schema.Object()).Property(name, schema);
+        if (_query == null || _query is ObjectSchema)
+        {
+            _query = ((ObjectSchema?)_query ?? Schema.Object()).Property(name, schema);
+            _queryUntouched = false;
+        }
         return this;
     }
 
@@ -178,7 +192,11 @@ public sealed class WebhookTool : Tool
     /// <summary>Removes the query param <paramref name="name"/>.</summary>
     public WebhookTool RemoveQueryParam(string name)
     {
-        _query = _query?.Without(name);
+        if (_query is ObjectSchema query && query.PropertySchema(name) != null)
+        {
+            _query = query.Without(name);
+            _queryUntouched = false;
+        }
         return this;
     }
 
@@ -202,7 +220,15 @@ public sealed class WebhookTool : Tool
                     kept.Add(assignment?.DeepClone());
                 }
             }
-            Config["assignments"] = kept;
+            // Removing a variable that isn't assigned changes nothing; removing the last assignment leaves the field out.
+            if (kept.Count == 0 && assignments.Count > 0)
+            {
+                Config.Remove("assignments");
+            }
+            else if (kept.Count != assignments.Count)
+            {
+                Config["assignments"] = kept;
+            }
         }
         return this;
     }
@@ -231,9 +257,11 @@ public sealed class WebhookTool : Tool
     private protected override List<ToolIssue> Validate()
     {
         var issues = new List<ToolIssue>();
+        // An empty URL is as good as none: the API rejects it.
         var url = ToolWire.Str(_api["url"]);
-        if (url == null)
+        if (string.IsNullOrEmpty(url))
         {
+            url = null;
             issues.Add(
                 ToolValidation.Error(
                     "missing_url",
@@ -292,11 +320,15 @@ public sealed class WebhookTool : Tool
             }
             ToolValidation.CheckSchema(param.Value, path, true, issues);
         }
-        if (_query != null)
+        if (_query != null && !(_query is ObjectSchema))
         {
-            foreach (var name in _query.PropertyNames)
+            issues.Add(ToolValidation.Error("body_not_object", "query", "The query params schema must be an object"));
+        }
+        if (_query is ObjectSchema querySchema)
+        {
+            foreach (var name in querySchema.PropertyNames)
             {
-                var schema = _query.PropertySchema(name)!;
+                var schema = querySchema.PropertySchema(name)!;
                 var path = $"query.{name}";
                 if (!Schema.IsLiteral(schema.Kind))
                 {
@@ -345,7 +377,7 @@ public sealed class WebhookTool : Tool
             }
         }
         CheckUnique("pathParams", pathNames);
-        CheckUnique("query", _query?.PropertyNames ?? new List<string>());
+        CheckUnique("query", (_query as ObjectSchema)?.PropertyNames ?? new List<string>());
         CheckUnique("body", (_body as ObjectSchema)?.PropertyNames ?? new List<string>());
 
         var seen = new Dictionary<string, string>();
@@ -410,16 +442,19 @@ public sealed class WebhookTool : Tool
             }
             api["path_params_schema"] = pathParams;
         }
-        // The API's query params schema has only properties and required.
+        // The query params schema keeps every loaded field. Its wire form has no `type`, so the one the builder adds
+        // is dropped unless the loaded schema declared it. Emptied by edits, it is left out.
         var query = _query?.ToWire();
-        if (query?["properties"] is JsonNode properties)
+        if (query != null)
         {
-            var queryOut = new JsonObject { ["properties"] = properties.DeepClone() };
-            if (query["required"] is JsonNode required)
+            if (!_queryTypeLoaded)
             {
-                queryOut["required"] = required.DeepClone();
+                query.Remove("type");
             }
-            api["query_params_schema"] = queryOut;
+            if (query.Count > 0 || _queryUntouched)
+            {
+                api["query_params_schema"] = query;
+            }
         }
         if (_body != null)
         {

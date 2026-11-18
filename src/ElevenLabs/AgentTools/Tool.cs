@@ -101,7 +101,7 @@ public abstract class Tool
             var parameters = Take(config, "parameters") as JsonObject;
             return new ClientTool(
                 config,
-                parameters == null ? null : (ObjectSchema)Schema.FromWire(parameters, false, SchemaKind.Object)
+                parameters == null ? null : Schema.FromWire(parameters, false, SchemaKind.Object)
             );
         }
         var systemParams = Take(config, "params") as JsonObject ?? new JsonObject();
@@ -210,9 +210,9 @@ public abstract class Tool
     /// <summary>The finished tool config in wire format, with its <c>type</c>.</summary>
     private protected abstract JsonObject ToModel();
 
-    /// <summary>The generated model for a finished wire-format config.</summary>
+    /// <summary>The generated model for a finished wire-format config, carrying every value exactly.</summary>
     private protected virtual ToolRequestModelToolConfig ToConfigModel(JsonObject wire) =>
-        JsonUtils.Deserialize<ToolRequestModelToolConfig>(wire.ToJsonString());
+        ToolModelConversion.Convert(wire, Name);
 
     /// <summary>Validates, reports warnings, and returns the wire-format tool config.</summary>
     private protected JsonObject ToWireObject(Action<ToolIssue>? onWarning)

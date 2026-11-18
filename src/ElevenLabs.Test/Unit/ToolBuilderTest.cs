@@ -673,4 +673,203 @@ public class ToolBuilderTest
         }
         Assert.That(built, Is.EqualTo(13));
     }
+
+    // Review fixes on #9. Each test is a regression test for one item.
+
+    private static void AssertRoundTrip(string raw)
+    {
+        var tool = Tool.FromJson(raw);
+        AssertJson(tool.ToJson(), raw);
+        AssertBuildMatchesJson(tool);
+    }
+
+    /// <summary>The request Build() returns serializes to exactly what ToJson() shows.</summary>
+    private static void AssertBuildMatchesJson(Tool tool) =>
+        AssertJson(Wire.Canonicalize(JsonUtils.SerializeToNode(tool.Build().ToolConfig)), tool.ToJson().ToJsonString());
+
+    private static string WebhookWith(string apiFields, string topFields = "") =>
+        "{\"name\":\"t\",\"description\":\"T\",\"type\":\"webhook\"" + topFields
+        + ",\"api_schema\":{\"method\":\"GET\",\"url\":\"https://api.example.com/t\"" + apiFields + "}}";
+
+    [Test]
+    public void RemovingTheLastAssignmentLeavesTheFieldOut()
+    {
+        var json = GetOrder().Assign("a", "a").RemoveAssignment("a").ToJson();
+        Assert.That(json.ContainsKey("assignments"), Is.False);
+    }
+
+    [Test]
+    public void LoadedEmptyAssignmentsRoundTripAndRemovingAMissingOneChangesNothing()
+    {
+        var empty = WebhookWith("", ",\"assignments\":[]");
+        AssertRoundTrip(empty);
+        AssertJson(Tool.FromJson(empty).AsWebhook()!.RemoveAssignment("missing").ToJson(), empty);
+
+        var one = WebhookWith("", ",\"assignments\":[{\"dynamic_variable\":\"a\",\"source\":\"response\",\"value_path\":\"a\"}]");
+        AssertJson(Tool.FromJson(one).AsWebhook()!.RemoveAssignment("missing").ToJson(), one);
+    }
+
+    [Test]
+    public void RemovingTheLastClientParamLeavesParametersOut()
+    {
+        var tool = Tool.Client("t", "T").Param("a", Schema.String().Describe("A")).RemoveParam("a");
+        Assert.That(tool.ToJson().ContainsKey("parameters"), Is.False);
+        Assert.That(tool.ParametersSchema, Is.Null);
+
+        var loaded = Tool.FromJson(
+                """{"name":"t","description":"T","type":"client","parameters":{"type":"object","description":"P","properties":{"a":{"type":"string","description":"A"}},"required":["a"]}}"""
+            )
+            .AsClient()!;
+        Assert.That(loaded.RemoveParam("a").ToJson().ContainsKey("parameters"), Is.False);
+    }
+
+    [Test]
+    public void LoadedEmptyParametersRoundTripAndRemovingAMissingParamChangesNothing()
+    {
+        const string raw = """{"name":"t","description":"T","type":"client","parameters":{"type":"object"}}""";
+        AssertRoundTrip(raw);
+        AssertJson(Tool.FromJson(raw).AsClient()!.RemoveParam("missing").ToJson(), raw);
+    }
+
+    [Test]
+    public void AnEmptyUrlCountsAsMissing()
+    {
+        Assert.That(CodesOf(() => Tool.Webhook("t", "T").Get("").Build()), Is.EqualTo(new[] { "missing_url" }));
+        Assert.That(
+            CodesOf(() => Tool.FromJson("""{"name":"t","description":"T","type":"webhook","api_schema":{"method":"GET","url":""}}""").Build()),
+            Is.EqualTo(new[] { "missing_url" })
+        );
+    }
+
+    [Test]
+    public void KeepsALoadedBodyOrResponseOfAnotherTypeAndReportsIt()
+    {
+        var body = Tool.FromJson(
+            """{"name":"t","description":"T","type":"webhook","api_schema":{"method":"POST","url":"https://api.example.com/t","request_body_schema":{"type":"string","description":"X"},"response_body_schema":{"type":"array","items":{"type":"string","description":"A tag"}}}}"""
+        );
+        var webhook = body.AsWebhook()!;
+        Assert.That(webhook.BodySchema!.Kind, Is.EqualTo(SchemaKind.String));
+        Assert.That(webhook.ResponseSchema!.Kind, Is.EqualTo(SchemaKind.Array));
+        Assert.That(
+            IssuesOf(() => body.Build()).Select(Pair),
+            Is.EqualTo(new[] { new[] { "body_not_object", "body" }, new[] { "body_not_object", "response" } })
+        );
+    }
+
+    [Test]
+    public void KeepsLoadedClientParametersOfAnotherTypeAndReportsThem()
+    {
+        var tool = Tool.FromJson(
+            """{"name":"t","description":"T","type":"client","parameters":{"type":"string","description":"X"}}"""
+        );
+        Assert.That(tool.AsClient()!.ParametersSchema, Is.Null);
+        tool.AsClient()!.Param("a", Schema.String().Describe("A"));
+        Assert.That(IssuesOf(() => tool.Build()).Select(Pair), Is.EqualTo(new[] { new[] { "body_not_object", "params" } }));
+    }
+
+    [Test]
+    public void KeepsALoadedQuerySchemaOfAnotherTypeAndReportsIt()
+    {
+        var tool = Tool.FromJson(WebhookWith(",\"query_params_schema\":{\"type\":\"string\",\"description\":\"X\"}"));
+        Assert.That(IssuesOf(() => tool.Build()).Select(Pair), Is.EqualTo(new[] { new[] { "body_not_object", "query" } }));
+    }
+
+    [Test]
+    public void InfersAndWritesObjectForUntypedBodyResponseAndParameters()
+    {
+        var webhook = Tool.FromJson(
+            """{"name":"t","description":"T","type":"webhook","api_schema":{"method":"POST","url":"https://api.example.com/t","request_body_schema":{},"response_body_schema":{"properties":{"a":{"type":"string","description":"A"}}}}}"""
+        );
+        AssertJson(Api(webhook, "request_body_schema"), """{"type":"object"}""");
+        AssertJson(Api(webhook, "response_body_schema"), """{"properties":{"a":{"description":"A","type":"string"}},"type":"object"}""");
+        var client = Tool.FromJson("""{"name":"t","description":"T","type":"client","parameters":{}}""");
+        AssertJson(client.ToJson()["parameters"], """{"type":"object"}""");
+        AssertBuildMatchesJson(webhook);
+    }
+
+    [Test]
+    public void KeepsANullConstantOfANullableLiteralThroughToJsonAndBuild()
+    {
+        const string raw =
+            """{"description":"T","name":"t","parameters":{"properties":{"x":{"constant_value":null,"type":["integer","null"]}},"required":["x"],"type":"object"},"type":"client"}""";
+        AssertRoundTrip(raw);
+        var sent = JsonNode.Parse(JsonUtils.Serialize(Tool.FromJson(raw).Build()))!.ToJsonString();
+        Assert.That(sent, Does.Contain("\"constant_value\":null"));
+    }
+
+    [Test]
+    public void ReadsANullConstantOfANonNullableLiteralAsAbsent()
+    {
+        var tool = Tool.FromJson(
+            """{"name":"t","description":"T","type":"client","parameters":{"type":"object","properties":{"x":{"type":"integer","constant_value":null}},"required":["x"]}}"""
+        );
+        Assert.That(CodesOf(() => tool.Build()), Is.EqualTo(new[] { "missing_value_source" }));
+    }
+
+    [Test]
+    public void KeepsEveryLoadedQueryFieldAndOnlyDropsTheSyntheticType()
+    {
+        AssertRoundTrip(
+            WebhookWith(
+                ",\"query_params_schema\":{\"description\":\"Q\",\"properties\":{\"a\":{\"description\":\"A\",\"type\":\"string\"}},\"required\":[\"a\"],\"x-extra\":1}"
+            )
+        );
+        // The generated QueryParamsJsonSchemaInput always has `properties`, so Build() sends `{}` for these two.
+        foreach (var query in new[] { "{\"description\":\"Only extras\",\"x-extra\":1}", "{}" })
+        {
+            var raw = WebhookWith(",\"query_params_schema\":" + query);
+            AssertJson(Tool.FromJson(raw).ToJson(), raw);
+        }
+        AssertRoundTrip(
+            WebhookWith(",\"query_params_schema\":{\"properties\":{\"a\":{\"description\":\"A\",\"type\":\"string\"}},\"type\":\"object\"}")
+        );
+        var edited = Tool.FromJson(WebhookWith(",\"query_params_schema\":{\"description\":\"Q\"}"))
+            .AsWebhook()!
+            .QueryParam("b", Schema.String().Describe("B"));
+        AssertJson(
+            Api(edited, "query_params_schema"),
+            """{"description":"Q","properties":{"b":{"description":"B","type":"string"}},"required":["b"]}"""
+        );
+    }
+
+    [Test]
+    public void KeepsAnIntegerConstantADoubleCantHoldExactlyInBuild()
+    {
+        var tool = Tool.Client("t", "T").Param("big", Schema.Integer().Constant(9007199254740993L));
+        Assert.That(tool.ToJsonString(), Does.Contain("\"constant_value\": 9007199254740993"));
+        var sent = JsonNode.Parse(JsonUtils.Serialize(tool.Build()))!.ToJsonString();
+        Assert.That(sent, Does.Contain("\"constant_value\":9007199254740993"));
+        AssertBuildMatchesJson(tool);
+
+        // A constant the model holds exactly stays in the typed property.
+        var small = Tool.Client("t", "T").Param("n", Schema.Integer().Constant(10)).Build().ToolConfig.AsClient();
+        Assert.That(small.Parameters!.Properties!["n"].AsLiteralJsonSchemaProperty().ConstantValue!.Value.AsT1, Is.EqualTo(10));
+    }
+
+    [Test]
+    public void KeepsLoadedRequiredConstraintsExtrasAndEmptyGroups()
+    {
+        const string raw =
+            """{"description":"T","name":"t","parameters":{"properties":{"a":{"description":"A","type":"string"},"b":{"description":"B","type":"string"}},"required_constraints":{"all_of":[],"any_of":[{"required":["a"],"x-group":2}],"x-wrapper":1},"type":"object"},"type":"client"}""";
+        AssertRoundTrip(raw);
+        AssertRoundTrip(raw.Replace("\"all_of\":[],\"any_of\":[{\"required\":[\"a\"],\"x-group\":2}],", "\"any_of\":[],"));
+
+        var tool = Tool.FromJson(raw).AsClient()!;
+        var parameters = tool.ParametersSchema!.RequireAnyOf("b").RequireAllOf("a", "b");
+        tool.RemoveParam("a").RemoveParam("b");
+        AssertJson(
+            parameters.ToJson()["required_constraints"],
+            """{"all_of":[{"required":["a","b"]}],"any_of":[{"required":["a"],"x-group":2},{"required":["b"]}],"x-wrapper":1}"""
+        );
+    }
+
+    [Test]
+    public void KeepsLoadedAllowedValuesFieldsAndOverlaysTheVariable()
+    {
+        const string raw =
+            """{"description":"T","name":"t","parameters":{"properties":{"x":{"allowed_values":{"dynamic_variable":"ids","x-version":1},"description":"X","type":"string"}},"required":["x"],"type":"object"},"type":"client"}""";
+        AssertRoundTrip(raw);
+        var schema = (LiteralSchema)Tool.FromJson(raw).AsClient()!.ParametersSchema!.PropertySchema("x")!;
+        AssertJson(schema.AllowedFrom("other").ToJson()["allowed_values"], """{"dynamic_variable":"other","x-version":1}""");
+    }
 }

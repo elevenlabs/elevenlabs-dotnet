@@ -17,8 +17,8 @@ internal static class ToolWire
 
     /// <summary>
     /// A detached deep copy with every <c>null</c>-valued property removed, since the API sends <c>null</c> for some
-    /// unset fields and the spec reads them as absent. Arrays keep their elements, and the contents of a constant or
-    /// a placeholder map are copied unchanged.
+    /// unset fields and the spec reads them as absent. <c>constant_value: null</c> is kept for the schema loader to
+    /// judge. Arrays keep their elements, and the contents of a constant or a placeholder map are copied unchanged.
     /// </summary>
     public static JsonObject WithoutNulls(JsonObject obj)
     {
@@ -27,6 +27,11 @@ internal static class ToolWire
         {
             if (field.Value == null)
             {
+                // A null constant is a value for a literal whose type list includes "null"; the schema decides.
+                if (field.Key == "constant_value")
+                {
+                    result[field.Key] = null;
+                }
                 continue;
             }
             result[field.Key] = OpaqueKeys.Contains(field.Key) ? field.Value.DeepClone() : StripNulls(field.Value);

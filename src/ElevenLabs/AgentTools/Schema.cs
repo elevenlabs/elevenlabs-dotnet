@@ -32,16 +32,27 @@ internal sealed record SchemaState
     public bool Optional { get; init; }
     public IReadOnlyList<string>? Choices { get; init; }
     public string? AllowedFrom { get; init; }
+
+    /// <summary>A loaded literal's <c>allowed_values</c> object, so fields other than the variable survive edits.</summary>
+    public JsonObject? AllowedValues { get; init; }
     public Schema? Items { get; init; }
     public IReadOnlyList<KeyValuePair<string, Schema>> Properties { get; init; } =
         global::System.Array.Empty<KeyValuePair<string, Schema>>();
 
     /// <summary>A loaded object's <c>required</c>, so its order survives edits.</summary>
     public IReadOnlyList<string>? LoadedRequired { get; init; }
-    public IReadOnlyList<IReadOnlyList<string>> AnyOf { get; init; } =
-        global::System.Array.Empty<IReadOnlyList<string>>();
-    public IReadOnlyList<IReadOnlyList<string>> AllOf { get; init; } =
-        global::System.Array.Empty<IReadOnlyList<string>>();
+
+    /// <summary>
+    /// A loaded object's <c>required_constraints</c> fields other than <c>any_of</c> / <c>all_of</c>, or <c>null</c>
+    /// if it had none.
+    /// </summary>
+    public JsonObject? ConstraintsExtra { get; init; }
+
+    /// <summary>The <c>any_of</c> groups, each a wire object with <c>required</c> (and any loaded extras). <c>null</c> when absent.</summary>
+    public IReadOnlyList<JsonNode?>? AnyOf { get; init; }
+
+    /// <summary>The <c>all_of</c> groups, as <see cref="AnyOf"/>.</summary>
+    public IReadOnlyList<JsonNode?>? AllOf { get; init; }
 
     /// <summary>Loaded fields the builder doesn't model, and loaded API defaults, written back unchanged. Never mutated.</summary>
     public JsonObject Extra { get; init; } = new();
@@ -146,13 +157,14 @@ public abstract class Schema
     private protected abstract Schema Create(SchemaState state);
 
     /// <summary>
-    /// Loads a wire-format schema (nulls already removed). <paramref name="optional"/> is whether its parent leaves it
-    /// out of <c>required</c>. <paramref name="kind"/> is given where the API allows one kind only (e.g. a tool's
-    /// params object), since an empty schema has no <c>type</c>.
+    /// Loads a wire-format schema (nulls already removed, except a constant's). <paramref name="optional"/> is whether
+    /// its parent leaves it out of <c>required</c>. <paramref name="untypedKind"/> is the kind to infer when the schema
+    /// has no <c>type</c>, where the API expects one kind (e.g. a tool's params object); a declared <c>type</c> always
+    /// wins, so validation can report a schema of the wrong kind instead of it being rewritten.
     /// </summary>
-    internal static Schema FromWire(JsonObject m, bool optional = false, SchemaKind? kind = null)
+    internal static Schema FromWire(JsonObject m, bool optional = false, SchemaKind? untypedKind = null)
     {
-        var k = kind ?? KindOf(m);
+        var k = untypedKind != null && !m.ContainsKey("type") ? untypedKind.Value : KindOf(m);
         // The API fills unset fields with defaults ("", false, [], {}). They aren't value sources, but are kept as
         // extra fields so a pulled config writes back unchanged.
         var extra = new JsonObject();
@@ -167,11 +179,18 @@ public abstract class Schema
             m.TryGetPropertyValue(key, out var value) && value != null && !IsUnsetValue(key, value, k) ? value : null;
 
         var constant = Set("constant_value");
+        // A null constant is only a value for a literal whose type list includes "null"; anywhere else it is absent.
+        var nullConstant =
+            constant == null
+            && m.TryGetPropertyValue("constant_value", out var loadedConstant)
+            && loadedConstant == null
+            && IsLiteral(k)
+            && IsNullableType(m["type"]);
         var state = Initial(k) with
         {
             Description = ToolWire.Str(Set("description")),
             DynamicVariable = ToolWire.Str(Set("dynamic_variable")),
-            HasConstant = constant != null,
+            HasConstant = constant != null || nullConstant,
             ConstantValue = constant?.DeepClone(),
             Omitted = ToolWire.IsTrue(m["is_omitted"]),
             Optional = optional,
@@ -192,11 +211,24 @@ public abstract class Schema
                 }
             }
             var constraints = m["required_constraints"] as JsonObject;
+            JsonObject? constraintsExtra = null;
+            if (constraints != null)
+            {
+                constraintsExtra = new JsonObject();
+                foreach (var field in constraints)
+                {
+                    if (field.Key != "any_of" && field.Key != "all_of")
+                    {
+                        constraintsExtra[field.Key] = field.Value?.DeepClone();
+                    }
+                }
+            }
             return new ObjectSchema(
                 state with
                 {
                     Properties = properties,
                     LoadedRequired = required,
+                    ConstraintsExtra = constraintsExtra,
                     AnyOf = ConstraintGroups(constraints?["any_of"]),
                     AllOf = ConstraintGroups(constraints?["all_of"]),
                 }
@@ -207,13 +239,15 @@ public abstract class Schema
             var items = Set("items") is JsonObject itemsModel ? FromWire(itemsModel, true) : null;
             return new ArraySchema(state with { Items = items });
         }
+        var allowedValues = Set("allowed_values") as JsonObject;
         return new LiteralSchema(
             state with
             {
                 LiteralType = m["type"]?.DeepClone(),
                 SystemProvided = ToolWire.IsTrue(m["is_system_provided"]),
                 Choices = ToolWire.StrList(Set("enum")),
-                AllowedFrom = ToolWire.Str((Set("allowed_values") as JsonObject)?["dynamic_variable"]),
+                AllowedFrom = ToolWire.Str(allowedValues?["dynamic_variable"]),
+                AllowedValues = (JsonObject?)allowedValues?.DeepClone(),
             }
         );
     }
@@ -262,17 +296,18 @@ public abstract class Schema
             {
                 o["required"] = ToolWire.ToArray(required);
             }
-            var constraints = new JsonObject();
-            if (s.AnyOf.Count > 0)
+            // A loaded wrapper is kept with its own fields, and a loaded (even empty) group list with it.
+            if (s.ConstraintsExtra != null || s.AnyOf != null || s.AllOf != null)
             {
-                constraints["any_of"] = ConstraintsToWire(s.AnyOf);
-            }
-            if (s.AllOf.Count > 0)
-            {
-                constraints["all_of"] = ConstraintsToWire(s.AllOf);
-            }
-            if (constraints.Count > 0)
-            {
+                var constraints = (JsonObject?)s.ConstraintsExtra?.DeepClone() ?? new JsonObject();
+                if (s.AnyOf != null)
+                {
+                    constraints["any_of"] = ConstraintsToWire(s.AnyOf);
+                }
+                if (s.AllOf != null)
+                {
+                    constraints["all_of"] = ConstraintsToWire(s.AllOf);
+                }
                 o["required_constraints"] = constraints;
             }
             return o;
@@ -295,9 +330,15 @@ public abstract class Schema
         {
             o["enum"] = ToolWire.ToArray(s.Choices);
         }
-        if (s.AllowedFrom != null)
+        if (s.AllowedValues != null || s.AllowedFrom != null)
         {
-            o["allowed_values"] = new JsonObject { ["dynamic_variable"] = s.AllowedFrom };
+            // The loaded object keeps its other fields; the variable name is overlaid.
+            var allowed = (JsonObject?)s.AllowedValues?.DeepClone() ?? new JsonObject();
+            if (s.AllowedFrom != null)
+            {
+                allowed["dynamic_variable"] = s.AllowedFrom;
+            }
+            o["allowed_values"] = allowed;
         }
         return o;
     }
@@ -369,17 +410,23 @@ public abstract class Schema
         };
     }
 
-    private static IReadOnlyList<IReadOnlyList<string>> ConstraintGroups(JsonNode? node) =>
-        node is JsonArray groups
-            ? groups.Select(group => (IReadOnlyList<string>)(ToolWire.StrList(group?["required"]) ?? new List<string>())).ToList()
-            : (IReadOnlyList<IReadOnlyList<string>>)global::System.Array.Empty<IReadOnlyList<string>>();
+    /// <summary>Whether a literal's <c>type</c> is a list that includes <c>"null"</c>, e.g. <c>["integer", "null"]</c>.</summary>
+    internal static bool IsNullableType(JsonNode? type) =>
+        type is JsonArray list && list.Any(item => ToolWire.Str(item) == "null");
 
-    private static JsonArray ConstraintsToWire(IReadOnlyList<IReadOnlyList<string>> groups)
+    /// <summary>The names a <c>required_constraints</c> group requires.</summary>
+    internal static List<string> GroupNames(JsonNode? group) =>
+        ToolWire.StrList((group as JsonObject)?["required"]) ?? new List<string>();
+
+    private static IReadOnlyList<JsonNode?>? ConstraintGroups(JsonNode? node) =>
+        node is JsonArray groups ? groups.Select(group => group?.DeepClone()).ToList() : null;
+
+    private static JsonArray ConstraintsToWire(IReadOnlyList<JsonNode?> groups)
     {
         var arr = new JsonArray();
         foreach (var group in groups)
         {
-            arr.Add(new JsonObject { ["required"] = ToolWire.ToArray(group) });
+            arr.Add(group?.DeepClone());
         }
         return arr;
     }
@@ -508,10 +555,10 @@ public sealed class ObjectSchema : Schema
 
     private protected override Schema Create(SchemaState state) => new ObjectSchema(state);
 
-    private static List<IReadOnlyList<string>> Appended(IReadOnlyList<IReadOnlyList<string>> groups, IEnumerable<string> names)
+    private static List<JsonNode?> Appended(IReadOnlyList<JsonNode?>? groups, IEnumerable<string> names)
     {
-        var result = new List<IReadOnlyList<string>>(groups);
-        result.Add(names.ToList());
+        var result = new List<JsonNode?>(groups ?? new List<JsonNode?>());
+        result.Add(new JsonObject { ["required"] = ToolWire.ToArray(names) });
         return result;
     }
 }
