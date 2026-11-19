@@ -26,5 +26,6 @@
   <ItemGroup>
     <!-- Shared cross-SDK golden fixtures, embedded so they can't drift from the test. -->
     <EmbeddedResource Include="Unit\WorkflowFixtures\*.json" />
+    <EmbeddedResource Include="Unit\ToolFixtures\*.json" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,14 @@ src/ElevenLabs.Test/Unit/WorkflowBuilderTest.cs
 src/ElevenLabs.Test/Unit/WorkflowBackwardTest.cs
 src/ElevenLabs.Test/ElevenLabs.Test.csproj
 
+# Hand-written agent tools-as-code builder (see docs/agents-as-code/tool-spec.md). Reuses the workflow
+# builder's Destination and canonical JSON writer.
+src/ElevenLabs/AgentTools/
+src/ElevenLabs.Test/Unit/ToolFixtures/
+src/ElevenLabs.Test/Unit/ToolFixtureRunner.cs
+src/ElevenLabs.Test/Unit/ToolFixtureTest.cs
+src/ElevenLabs.Test/Unit/ToolBuilderTest.cs
+
 # Hand-written Speech Engine server model (the developer hosts a WebSocket server that the
 # ElevenLabs API dials into). The generator produces only the client-dials-out upstream socket;
 # these add the inbound-connection JWT verifier, the per-connection session/protocol, the

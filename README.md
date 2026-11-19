@@ -347,6 +347,70 @@ var run = await client.Flows.Templates.Runs.CreateAndWaitAsync(
 Waiting holds a process open, so this suits scripts and quickstarts. In production, set `Webhook`
 on the request and handle the webhook event instead.
 
+## Agent tools as code
+
+`ElevenLabs.AgentTools` builds agent tools in code: webhook tools, client tools and system tools
+such as ending or transferring the call. `Build()` validates the tool and returns the
+`ToolRequestModel` that `client.Agents.Tools.CreateAsync` and `UpdateAsync` accept. `ToJsonString()`
+writes the same format the ElevenLabs CLI keeps in `tool_configs/*.json`, and `Tool.FromJson` loads it
+back for editing.
+
+```csharp
+using ElevenLabs;
+using ElevenLabs.Agents;
+using ElevenLabs.AgentTools;
+using ElevenLabs.AgentWorkflows;
+// ElevenLabs.Tool is a generated model, so name the builder explicitly.
+using Tool = ElevenLabs.AgentTools.Tool;
+
+var getOrder = Tool.Webhook("get_order", "Look up an order by the number the caller gives")
+    .Get("https://api.example.com/orders/{order_id}")
+    .PathParam("order_id", Schema.String().Describe("The order number, e.g. A-1042"))
+    .QueryParam("include", Schema.String().Constant("items"))
+    .Header("Authorization", Header.Secret("sec_orders_api"))
+    .Header("X-Caller", Header.Variable("system__caller_id"))
+    .Assign("order_status", "order.status")
+    .Options(new WebhookToolOptions { ResponseTimeoutSecs = 10, PreToolSpeech = "force" });
+
+var refund = Tool.Webhook("issue_refund", "Refund an order the caller asked to return")
+    .Post("https://api.example.com/refunds")
+    .Body(
+        Schema.Object()
+            .Property("order_id", Schema.String().FromVariable("order_id"))
+            .Property("reason", Schema.String().Describe("Why the caller wants a refund").Choices("damaged", "late", "other"))
+            .Property("note", Schema.String().Describe("Anything else the caller said").Optional())
+    );
+
+var transfer = SystemTool.TransferToNumber()
+    .Transfer("Caller asks for billing", Destination.Phone("+15551234567"))
+    .Transfer(
+        "Caller asks for a manager",
+        Destination.SipVariable("manager_sip"),
+        new SystemTransferOptions { TransferType = "sip_refer" }
+    );
+
+var client = new ElevenLabsClient();
+var created = await client.Agents.Tools.CreateAsync(new CreateToolsRequest { Body = getOrder.Build() });
+File.WriteAllText("tool_configs/issue_refund.json", refund.ToJsonString());
+var builtInTools = new BuiltInToolsInput { TransferToNumber = transfer.BuildConfig() };
+```
+
+- Every literal param needs exactly one value source: `Describe` (the LLM provides it),
+  `FromVariable`, `Constant`, `SystemProvided` or `Omit`. Properties are required unless marked
+  `Optional()`.
+- `Schema` values are immutable, so one schema can be shared by several tools. `Schema.String()`,
+  `Integer()`, `Number()` and `Bool()` return a `LiteralSchema`, `Object()` an `ObjectSchema` and
+  `Array(items)` an `ArraySchema`; methods that only apply to one kind live on that type.
+- `Build()`, `BuildConfig()` and `ToJson()` report every problem at once in a
+  `ToolValidationException`, whose `Issues` carry stable codes such as `missing_url` or
+  `missing_value_source`. Pass `onWarning` to `Build()` to see warnings.
+- Attach webhook and client tools to an agent by id in `prompt.tool_ids`. A system tool goes in
+  `prompt.built_in_tools`, from `BuildConfig()`.
+- `Destination` and the transfer option names are shared with the workflow builder in
+  `ElevenLabs.AgentWorkflows`.
+- A loaded tool of a type the builder can't edit, such as an MCP tool, has `Kind == ToolKind.Other`.
+  It round-trips unchanged, and `Build()` warns with `unknown_tool_type`.
+
 ## Advanced
 
 ### Retries

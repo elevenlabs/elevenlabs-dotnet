@@ -23,7 +23,8 @@ internal static class Wire
     public static JsonNode? Clone(JsonNode? node) => node?.DeepClone();
 
     /// <summary>
-    /// Sorts object keys at every level (ordinal), returning a fresh, detached tree. Arrays keep their order.
+    /// Sorts object keys at every level (ordinal), returning a fresh, detached tree. Arrays keep their order, and
+    /// numbers are written as JavaScript writes them (<c>1e-7</c>, not <c>1E-07</c>).
     /// This is what makes the JSON match every other SDK's byte for byte.
     /// </summary>
     public static JsonNode? Canonicalize(JsonNode? node)
@@ -48,6 +49,8 @@ internal static class Wire
                 }
                 return list;
             }
+            case JsonValue value when value.GetValueKind() == JsonValueKind.Number:
+                return JsonNode.Parse(JsonNumber.ToJavaScript(value.ToJsonString()));
             default:
                 return node?.DeepClone();
         }
