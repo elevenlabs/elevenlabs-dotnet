@@ -140,8 +140,8 @@ internal static class ToolValidation
                 {
                     return false;
                 }
-                var number = Wire.AsDouble(value);
-                return !double.IsInfinity(number) && Math.Floor(number) == number;
+                // Judged from the digits as written: 9007199254740992.5 rounds to a whole double.
+                return !double.IsInfinity(Wire.AsDouble(value)) && JsonNumber.IsIntegral(value.ToJsonString());
             case SchemaKind.Number:
                 return valueKind == JsonValueKind.Number;
             case SchemaKind.Boolean:

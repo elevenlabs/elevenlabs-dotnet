@@ -443,7 +443,8 @@ public sealed class WebhookTool : Tool
             api["path_params_schema"] = pathParams;
         }
         // The query params schema keeps every loaded field. Its wire form has no `type`, so the one the builder adds
-        // is dropped unless the loaded schema declared it. Emptied by edits, it is left out.
+        // is dropped unless the loaded schema declared it. Emptied by edits, it is left out: a `type` kept from the
+        // loaded schema isn't content.
         var query = _query?.ToWire();
         if (query != null)
         {
@@ -451,7 +452,7 @@ public sealed class WebhookTool : Tool
             {
                 query.Remove("type");
             }
-            if (query.Count > 0 || _queryUntouched)
+            if (query.Any(field => field.Key != "type") || _queryUntouched)
             {
                 api["query_params_schema"] = query;
             }

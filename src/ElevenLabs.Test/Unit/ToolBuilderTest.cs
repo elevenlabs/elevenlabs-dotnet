@@ -872,4 +872,112 @@ public class ToolBuilderTest
         var schema = (LiteralSchema)Tool.FromJson(raw).AsClient()!.ParametersSchema!.PropertySchema("x")!;
         AssertJson(schema.AllowedFrom("other").ToJson()["allowed_values"], """{"dynamic_variable":"other","x-version":1}""");
     }
+
+    // Second round of review fixes on #9.
+
+    private static LiteralJsonSchemaProperty BuiltParam(Tool tool, string name) =>
+        tool.Build().ToolConfig.AsClient().Parameters!.Properties![name].AsLiteralJsonSchemaProperty();
+
+    [Test]
+    public void AStringConstantLikeAnOldMarkerIsNotTakenForOne()
+    {
+        // The markers used to be a fixed prefix plus an index, so these strings were read back as markers.
+        const string prefix = "\u0001elevenlabs-agent-tools-constant-";
+        var tool = Tool.Client("t", "T")
+            .Param("big", Schema.Integer().Constant(9007199254740993L))
+            .Param("zero", Schema.String().Constant(prefix + "0"))
+            .Param("far", Schema.String().Constant(prefix + "7"));
+        AssertBuildMatchesJson(tool);
+        Assert.That(BuiltParam(tool, "zero").ConstantValue!.Value.AsT0, Is.EqualTo(prefix + "0"));
+        Assert.That(BuiltParam(tool, "far").ConstantValue!.Value.AsT0, Is.EqualTo(prefix + "7"));
+    }
+
+    [Test]
+    public void ARestoredConstantShowsInAdditionalPropertiesAndEquality()
+    {
+        var a = BuiltParam(Tool.Client("t", "T").Param("n", Schema.Integer().Constant(9007199254740993L)), "n");
+        var b = BuiltParam(Tool.Client("t", "T").Param("n", Schema.Integer().Constant(9007199254740995L)), "n");
+        Assert.That(a.ConstantValue, Is.Null);
+        Assert.That(a.AdditionalProperties["constant_value"].GetRawText(), Is.EqualTo("9007199254740993"));
+        Assert.That(b.AdditionalProperties["constant_value"].GetRawText(), Is.EqualTo("9007199254740995"));
+        Assert.That(a, Is.Not.EqualTo(b));
+
+        var nullable = BuiltParam(
+            Tool.FromJson(
+                """{"description":"T","name":"t","parameters":{"properties":{"x":{"constant_value":null,"type":["integer","null"]}},"required":["x"],"type":"object"},"type":"client"}"""
+            ),
+            "x"
+        );
+        Assert.That(nullable.AdditionalProperties["constant_value"].GetRawText(), Is.EqualTo("null"));
+    }
+
+    [Test]
+    public void RejectsAnIntegerConstantWithAFractionADoubleRoundsAway()
+    {
+        foreach (var text in new[] { "9007199254740992.5", "9.0071992547409925e15", "1.5" })
+        {
+            var tool = Tool.Client("t", "T").Param("n", Schema.Integer().Constant(JsonNode.Parse(text)));
+            Assert.That(CodesOf(() => tool.Build()), Is.EqualTo(new[] { "constant_type_mismatch" }), text);
+        }
+        var fromDecimal = Tool.Client("t", "T").Param("n", Schema.Integer().Constant(9007199254740992.5m));
+        Assert.That(CodesOf(() => fromDecimal.Build()), Is.EqualTo(new[] { "constant_type_mismatch" }));
+        // Whole numbers written with a fraction or an exponent are still integers.
+        foreach (var text in new[] { "42", "42.0", "4.2e1", "9007199254740993" })
+        {
+            var tool = Tool.Client("t", "T").Param("n", Schema.Integer().Constant(JsonNode.Parse(text)));
+            Assert.DoesNotThrow(() => tool.Build(), text);
+        }
+    }
+
+    [Test]
+    public void RemovingEveryQueryParamFromATypedLoadedSchemaLeavesTheFieldOut()
+    {
+        var raw = WebhookWith(
+            ",\"query_params_schema\":{\"properties\":{\"a\":{\"description\":\"A\",\"type\":\"string\"}},\"required\":[\"a\"],\"type\":\"object\"}"
+        );
+        var tool = Tool.FromJson(raw).AsWebhook()!.RemoveQueryParam("a");
+        Assert.That(((JsonObject)tool.ToJson()["api_schema"]!).ContainsKey("query_params_schema"), Is.False);
+        Assert.That(tool.Build().ToolConfig.AsWebhook().ApiSchema.QueryParamsSchema, Is.Null);
+    }
+
+    [Test]
+    public void WritesNumbersAsJavaScriptDoes()
+    {
+        foreach (
+            var (value, expected) in new[]
+            {
+                (1e-7, "1e-7"),
+                (1.5e-7, "1.5e-7"),
+                (1e21, "1e+21"),
+                (123456789012345680000d, "123456789012345680000"),
+                (0.000001, "0.000001"),
+                (1.5, "1.5"),
+                (-2.5e-10, "-2.5e-10"),
+                (100d, "100"),
+            }
+        )
+        {
+            var tool = Tool.Client("t", "T").Param("x", Schema.Number().Constant(value));
+            Assert.That(tool.ToJsonString(), Does.Contain($"\"constant_value\": {expected},\n"), expected);
+            AssertBuildMatchesJson(tool);
+        }
+        // Loaded text is rewritten the same way, unless a double can't hold it exactly.
+        foreach (
+            var (text, expected) in new[]
+            {
+                ("1E-07", "1e-7"),
+                ("1.50", "1.5"),
+                ("1e21", "1e+21"),
+                ("9007199254740993", "9007199254740993"),
+                ("9007199254740992.5", "9007199254740992.5"),
+            }
+        )
+        {
+            var raw =
+                "{\"description\":\"T\",\"name\":\"t\",\"parameters\":{\"properties\":{\"x\":{\"constant_value\":"
+                + text
+                + ",\"type\":\"number\"}},\"required\":[\"x\"],\"type\":\"object\"},\"type\":\"client\"}";
+            Assert.That(Tool.FromJson(raw).ToJsonString(), Does.Contain($"\"constant_value\": {expected},\n"), text);
+        }
+    }
 }

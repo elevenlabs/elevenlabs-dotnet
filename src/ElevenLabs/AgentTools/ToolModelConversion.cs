@@ -29,17 +29,18 @@ internal static class ToolModelConversion
     public static ToolRequestModelToolConfig Convert(JsonObject wire, string toolName)
     {
         var copy = (JsonObject)wire.DeepClone();
-        var raw = new List<JsonElement>();
+        var prefix = MarkerPrefix(copy);
+        var raw = new Dictionary<string, JsonElement>(StringComparer.Ordinal);
         foreach (var schema in SchemaRoots(copy))
         {
-            ReplaceInexactConstants(schema, raw);
+            ReplaceInexactConstants(schema, prefix, raw);
         }
         var model = JsonUtils.Deserialize<ToolRequestModelToolConfig>(copy.ToJsonString());
         if (raw.Count == 0)
         {
             return model;
         }
-        var restored = new HashSet<int>();
+        var restored = new HashSet<string>(StringComparer.Ordinal);
         Visit(model, raw, restored);
         if (restored.Count != raw.Count)
         {
@@ -56,6 +57,46 @@ internal static class ToolModelConversion
             );
         }
         return model;
+    }
+
+    /// <summary>
+    /// A marker prefix for this conversion that no string in <paramref name="config"/> starts with, so a user's
+    /// string constant can't be mistaken for a marker.
+    /// </summary>
+    private static string MarkerPrefix(JsonNode config)
+    {
+        var strings = new List<string>();
+        CollectStrings(config, strings);
+        while (true)
+        {
+            var prefix = SentinelPrefix + Guid.NewGuid().ToString("N") + "-";
+            if (!strings.Any(value => value.StartsWith(prefix, StringComparison.Ordinal)))
+            {
+                return prefix;
+            }
+        }
+    }
+
+    private static void CollectStrings(JsonNode? node, List<string> strings)
+    {
+        switch (node)
+        {
+            case JsonObject obj:
+                foreach (var field in obj)
+                {
+                    CollectStrings(field.Value, strings);
+                }
+                return;
+            case JsonArray array:
+                foreach (var item in array)
+                {
+                    CollectStrings(item, strings);
+                }
+                return;
+            case JsonValue value when value.GetValueKind() == JsonValueKind.String:
+                strings.Add(value.GetValue<string>());
+                return;
+        }
     }
 
     /// <summary>The top-level schemas of a webhook or client tool config.</summary>
@@ -87,8 +128,8 @@ internal static class ToolModelConversion
         }
     }
 
-    /// <summary>Swaps each literal constant the generated model can't hold exactly for a sentinel string, recording it.</summary>
-    private static void ReplaceInexactConstants(JsonObject schema, List<JsonElement> raw)
+    /// <summary>Swaps each literal constant the generated model can't hold exactly for a marker string, recording it.</summary>
+    private static void ReplaceInexactConstants(JsonObject schema, string prefix, Dictionary<string, JsonElement> raw)
     {
         var type = ToolWire.Str(schema["type"]);
         var isContainer =
@@ -97,8 +138,9 @@ internal static class ToolModelConversion
             || (schema["type"] == null && (schema.ContainsKey("properties") || schema.ContainsKey("items")));
         if (!isContainer && schema.TryGetPropertyValue("constant_value", out var constant) && !RoundTrips(constant))
         {
-            raw.Add(ToElement(constant));
-            schema["constant_value"] = SentinelPrefix + (raw.Count - 1);
+            var marker = prefix + raw.Count;
+            raw[marker] = ToElement(constant);
+            schema["constant_value"] = marker;
         }
         if (schema["properties"] is JsonObject properties)
         {
@@ -106,13 +148,13 @@ internal static class ToolModelConversion
             {
                 if (property.Value is JsonObject child)
                 {
-                    ReplaceInexactConstants(child, raw);
+                    ReplaceInexactConstants(child, prefix, raw);
                 }
             }
         }
         if (schema["items"] is JsonObject items)
         {
-            ReplaceInexactConstants(items, raw);
+            ReplaceInexactConstants(items, prefix, raw);
         }
     }
 
@@ -146,7 +188,7 @@ internal static class ToolModelConversion
     }
 
     /// <summary>Walks the generated model and puts each recorded constant back in its literal's extension data.</summary>
-    private static void Visit(object? node, List<JsonElement> raw, HashSet<int> restored)
+    private static void Visit(object? node, Dictionary<string, JsonElement> raw, HashSet<string> restored)
     {
         switch (node)
         {
@@ -189,20 +231,25 @@ internal static class ToolModelConversion
         }
     }
 
-    private static void Restore(LiteralJsonSchemaProperty literal, List<JsonElement> raw, HashSet<int> restored)
+    private static void Restore(
+        LiteralJsonSchemaProperty literal,
+        Dictionary<string, JsonElement> raw,
+        HashSet<string> restored
+    )
     {
         if (
-            literal.ConstantValue is not { } constant
-            || !constant.IsT0
-            || !constant.AsT0.StartsWith(SentinelPrefix, StringComparison.Ordinal)
-            || !int.TryParse(constant.AsT0.Substring(SentinelPrefix.Length), out var index)
+            literal.ConstantValue is not { IsT0: true } constant
+            || !raw.TryGetValue(constant.AsT0, out var value)
             || LiteralExtensionData?.GetValue(literal) is not IDictionary<string, JsonElement> extensionData
         )
         {
             return;
         }
+        restored.Add(constant.AsT0);
         literal.ConstantValue = null;
-        extensionData["constant_value"] = raw[index];
-        restored.Add(index);
+        extensionData["constant_value"] = value;
+        // Deserialization already copied the extension data into AdditionalProperties; copy it again so inspecting
+        // and comparing the model see the constant it sends.
+        ((IJsonOnDeserialized)literal).OnDeserialized();
     }
 }
