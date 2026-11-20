@@ -220,7 +220,9 @@ public sealed class SystemTool : Tool
         }
         // A loaded transfer_to_number tool may use transfer_rules instead of transfers; the API takes exactly one.
         var hasTransfers = _params["transfers"] is JsonArray { Count: > 0 };
-        var hasRules = _params["transfer_rules"] is JsonArray { Count: > 0 };
+        // Only transfer_to_number has transfer_rules; transfer_to_agent needs transfers.
+        var hasRules =
+            SystemToolType == "transfer_to_number" && _params["transfer_rules"] is JsonArray { Count: > 0 };
         if (!hasTransfers && !hasRules)
         {
             issues.Add(
