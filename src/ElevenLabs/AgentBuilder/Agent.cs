@@ -307,12 +307,25 @@ public sealed class Agent
     /// <summary>
     /// Every webhook and client tool the agent and its workflow use, each once, in first-use order: the tools
     /// <c>Agents.PushAsync()</c> creates or updates. System tools aren't included; they live inside the agent's config.
+    /// Nor are other kinds, such as MCP tools: they stay attached by the id the agent was loaded with.
     /// </summary>
     public IReadOnlyList<Tool> Tools()
     {
         var seen = new HashSet<Tool>(ReferenceComparer<Tool>.Instance);
-        return _tools.Concat(WorkflowTools()).Where(tool => tool.Kind != ToolKind.System && seen.Add(tool)).ToList();
+        return _tools.Concat(WorkflowTools()).Where(tool => IsManaged(tool) && seen.Add(tool)).ToList();
     }
+
+    /// <summary>Whether <c>Agents.PushAsync()</c> creates or updates the tool: webhook and client tools only.</summary>
+    private static bool IsManaged(Tool tool) => tool.Kind is ToolKind.Webhook or ToolKind.Client;
+
+    /// <summary>
+    /// The id a tool push doesn't manage stays attached by: the one the agent was loaded with. The loaded
+    /// <c>tool_ids</c> order decides between several, then the ids' order, so the choice never depends on map order.
+    /// </summary>
+    private string? LoadedIdOf(Tool tool) =>
+        _loadedToolIds
+            .Concat(_toolsById.Keys.OrderBy(id => id, StringComparer.Ordinal))
+            .FirstOrDefault(id => _toolsById.TryGetValue(id, out var loaded) && ReferenceEquals(loaded, tool));
 
     /// <summary>
     /// Checks everything that doesn't need tool ids: the tools, the workflow, the settings, and that no two tools
@@ -410,7 +423,9 @@ public sealed class Agent
         var issues = new List<AgentIssue>();
         var config = (JsonObject)_base.DeepClone();
         string IdOf(Tool tool) =>
-            toolIds != null && toolIds.TryGetValue(tool.Name, out var id) ? id : WorkflowGraph.ToolPlaceholder(tool.Name);
+            !IsManaged(tool) ? LoadedIdOf(tool) ?? WorkflowGraph.ToolPlaceholder(tool.Name)
+            : toolIds != null && toolIds.TryGetValue(tool.Name, out var id) ? id
+            : WorkflowGraph.ToolPlaceholder(tool.Name);
 
         if (_name.Trim().Length == 0)
         {
@@ -472,10 +487,24 @@ public sealed class Agent
                 {
                     issues.Add(new AgentIssue("invalid_tool", AgentSeverity.Error, ex.Message, $"tools.{tool.Name}"));
                 }
+                // Push doesn't create or update other kinds (MCP...), so they need an id to stay attached by.
+                if (tool.Kind == ToolKind.Other && LoadedIdOf(tool) == null)
+                {
+                    issues.Add(
+                        new AgentIssue(
+                            "invalid_tool",
+                            AgentSeverity.Error,
+                            $"Tool \"{tool.Name}\" has type \"{TypeOf(tool)}\", which push doesn't create or update: "
+                                + "load it with its id or attach it with ToolIds",
+                            $"tools.{tool.Name}"
+                        )
+                    );
+                }
             }
         }
 
-        var managed = _tools.Where(tool => tool.Kind != ToolKind.System).ToList();
+        // Webhook and client tools by their pushed ids; other kinds by the id they were loaded with.
+        var attached = _tools.Where(tool => tool.Kind != ToolKind.System).ToList();
         var system = _tools.OfType<SystemTool>().ToList();
         if (_toolListGiven)
         {
@@ -483,7 +512,7 @@ public sealed class Agent
             {
                 issues.Add(Conflict("Tools", AgentWire.ToolIdsPath));
             }
-            var ids = KeepOrder(_toolIds.Concat(managed.Select(IdOf)).ToList(), _loadedToolIds);
+            var ids = KeepOrder(_toolIds.Concat(attached.Select(IdOf)).ToList(), _loadedToolIds);
             AgentWire.SetPath(config, AgentWire.ToolIdsPath, ToArray(ids));
         }
         foreach (var tool in system)
@@ -562,6 +591,7 @@ public sealed class Agent
                 (JsonObject)_rawWorkflow.DeepClone(),
                 id =>
                     _toolsById.TryGetValue(id, out var tool)
+                    && IsManaged(tool)
                     && toolIds != null
                     && toolIds.TryGetValue(tool.Name, out var newId)
                         ? newId
@@ -645,6 +675,19 @@ public sealed class Agent
         catch (Exception)
         {
             return null;
+        }
+    }
+
+    /// <summary>The tool's wire <c>type</c>, such as <c>mcp</c>, or <c>other</c> if it has none.</summary>
+    private static string TypeOf(Tool tool)
+    {
+        try
+        {
+            return AgentWire.Str(tool.ToJson()["type"]) ?? "other";
+        }
+        catch (Exception)
+        {
+            return "other";
         }
     }
 

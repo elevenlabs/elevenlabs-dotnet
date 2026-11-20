@@ -276,8 +276,10 @@ public sealed class AgentProject
             slot = new AgentSlot(new AgentEntry { Config = path }, agent);
             _agents.Add(slot);
         }
-        slot.Entry.Id = id;
         var branch = FindBranch(slot.Entry, branchId);
+        // CheckBranch() already required a branch's own file; never fall back to the main branch's.
+        var file = branch == null ? slot.Entry.Config : BranchConfigOf(branch) ?? throw NoBranchFile(agent.Name, branchId!);
+        slot.Entry.Id = id;
         // A branch has its own file; the slot's agent is the main branch's, which a branch must not replace.
         if (branch == null)
         {
@@ -295,7 +297,7 @@ public sealed class AgentProject
                 slot.Entry.VersionId = versionId;
             }
         }
-        Write((branch == null ? null : AgentWire.Str(branch["config"])) ?? slot.Entry.Config, ProjectFormat.FormatConfig(config));
+        Write(file, ProjectFormat.FormatConfig(config));
         Write(AgentsFile, AgentsIndex());
     }
 
@@ -315,14 +317,22 @@ public sealed class AgentProject
         {
             return;
         }
-        if (slot == null || FindBranch(slot.Entry, branchId) == null)
+        var branch = slot == null ? null : FindBranch(slot.Entry, branchId);
+        if (branch == null || BranchConfigOf(branch) == null)
         {
-            throw new AgentProjectException(
-                $"Branch {branchId} of \"{label}\" has no config file in {AgentsFile}. Add it under \"branches\" "
-                    + "(the CLI's `agents pull --all-branches` does), or push the main branch"
-            );
+            throw NoBranchFile(label, branchId);
         }
     }
+
+    private static AgentProjectException NoBranchFile(string label, string branchId) =>
+        new(
+            $"Branch {branchId} of \"{label}\" has no config file in {AgentsFile}. Add it under \"branches\" "
+                + "(the CLI's `agents pull --all-branches` does), or push the main branch"
+        );
+
+    /// <summary>A branch entry's config path, if it has a usable one: a non-empty string.</summary>
+    private static string? BranchConfigOf(JsonObject branch) =>
+        AgentWire.Str(branch["config"]) is { Length: > 0 } path ? path : null;
 
     private static JsonObject? FindBranch(AgentEntry entry, string? branchId) =>
         branchId == null

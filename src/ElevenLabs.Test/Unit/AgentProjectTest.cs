@@ -208,6 +208,44 @@ public class AgentProjectTest
         await Task.CompletedTask;
     }
 
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase(1)]
+    public void RejectsABranchEntryWithoutAConfigFileBeforeAnyWrite(object? config)
+    {
+        // A branch entry with no usable config path would otherwise be written into the main branch's file.
+        var files = CliProjectFixture.Files();
+        var index = JsonNode.Parse(files["agents.json"])!.AsObject();
+        var beta = index["agents"]![0]!["branches"]!["beta"]!.AsObject();
+        beta.Remove("config");
+        if (config != null)
+        {
+            beta["config"] = JsonValue.Create(config);
+        }
+        files["agents.json"] = index.ToJsonString();
+        var mainBefore = files["agent_configs/support.json"];
+        var project = AgentProject.FromFiles(files);
+        var server = new FakeAgentServer();
+        server.AddAgent("agent_support", CliProjectFixture.Json("agent_configs/support.json"));
+        var client = server.Client();
+
+        var push = () =>
+            client.Agents.PushAsync(project.GetAgent("Support"), new AgentPushOptions { Project = project, BranchId = "agtbrch_beta" });
+        Assert.That(async () => await push(), Throws.TypeOf<AgentProjectException>().With.Message.Contains("has no config file"));
+        var pull = () => client.Agents.PullAsync("agent_support", new AgentPullOptions { Project = project, BranchId = "agtbrch_beta" });
+        Assert.That(async () => await pull(), Throws.TypeOf<AgentProjectException>().With.Message.Contains("has no config file"));
+        // Recording directly can't reach the main file either.
+        var agent = Agent.FromJson(CliProjectFixture.Json("agent_configs/support.json"));
+        Assert.That(
+            () => project.RecordAgent(agent, "agent_support", agent.ToJson(), branchId: "agtbrch_beta", matchById: true),
+            Throws.TypeOf<AgentProjectException>().With.Message.Contains("has no config file")
+        );
+
+        Assert.That(server.Calls, Is.Empty);
+        Assert.That(project.ChangedFiles, Is.Empty);
+        Assert.That(project.ToFiles()["agent_configs/support.json"], Is.EqualTo(mainBefore));
+    }
+
     [Test]
     public void KeepsTheMainAgentWhenABranchIsRecordedAndTheToolTypeInStepWithItsConfig()
     {

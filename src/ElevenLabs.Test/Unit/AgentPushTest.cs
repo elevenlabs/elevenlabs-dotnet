@@ -350,6 +350,70 @@ public class AgentPushTest
         Assert.That(server.Writes(), Is.Empty);
     }
 
+    private const string McpTool =
+        """{"type":"mcp","name":"docs_search","description":"d","integration_type":"mcp_server","mcp_tool_name":"search","mcp_tool_description":"d","mcp_server_id":"srv","mcp_server_name":"Search"}""";
+
+    [Test]
+    public async Task PushLeavesAnMcpToolObjectAttachedByTheIdItWasLoadedWith()
+    {
+        // Loaded as a Tool object (as a project's tools.json does), not into ToolIds.
+        var server = new FakeAgentServer();
+        server.AddTool("tool_mcp", Config(McpTool), "agent_1");
+        var config = Config(
+            """{"name":"A","conversation_config":{"agent":{"prompt":{"prompt":"p","tool_ids":["tool_mcp"]}}},"platform_settings":{},"tags":[]}"""
+        );
+        server.AddAgent("agent_1", (JsonObject)config.DeepClone());
+        var mcp = Tool.FromJson(Config(McpTool));
+        var agent = Agent.FromJson(config, new Dictionary<string, Tool> { ["tool_mcp"] = mcp });
+        Assert.That(agent.Tools(), Is.Empty);
+
+        var result = await server.Client().Agents.PushAsync(agent, new AgentPushOptions { AgentId = "agent_1" });
+        Assert.That(server.Writes(), Is.EqualTo(new[] { "PATCH /v1/convai/agents/agent_1" }));
+        Assert.That(result.Tools, Is.Empty, "neither created, updated nor detached");
+        var sent = server.Calls.Last().Body!["conversation_config"]!["agent"]!["prompt"]!["tool_ids"]!;
+        Assert.That(sent.AsArray().Select(id => id!.GetValue<string>()), Is.EqualTo(new[] { "tool_mcp" }));
+        Assert.That(server.Tools["tool_mcp"].Config.ToJsonString(), Is.EqualTo(Config(McpTool).ToJsonString()));
+    }
+
+    [Test]
+    public void AnMcpToolObjectInAWorkflowNodeKeepsItsLoadedId()
+    {
+        var mcp = Tool.FromJson(Config(McpTool));
+        var config = Config("""{"name":"A","conversation_config":{"agent":{"prompt":{"prompt":"p","tool_ids":["tool_mcp"]}}}}""");
+        var agent = Agent.FromJson(config, new Dictionary<string, Tool> { ["tool_mcp"] = mcp });
+        var wf = new Workflow();
+        wf.Tool("run", new[] { mcp });
+        agent.Update(new AgentOptions { Workflow = wf });
+        Assert.That(agent.Tools(), Is.Empty);
+        var wire = agent.ToJson(new Dictionary<string, string>());
+        Assert.That(wire["workflow"]!["nodes"]!["run"]!["tools"]![0]!["tool_id"]!.GetValue<string>(), Is.EqualTo("tool_mcp"));
+    }
+
+    [Test]
+    public void RejectsAnMcpToolObjectWithoutAnIdBeforeAnyRequest()
+    {
+        var server = new FakeAgentServer();
+        var viaTools = new Agent("A", new AgentOptions { Prompt = "p" }).AddTool(Tool.FromJson(Config(McpTool)));
+        var wf = new Workflow();
+        wf.Tool("run", new[] { Tool.FromJson(Config(McpTool)) });
+        var viaWorkflow = new Agent("A", new AgentOptions { Prompt = "p", Workflow = wf });
+        foreach (var agent in new[] { viaTools, viaWorkflow })
+        {
+            var ex = Assert.Throws<AgentValidationException>(() => agent.Validate())!;
+            var issue = ex.Issues.Single();
+            Assert.That(issue.Code, Is.EqualTo("invalid_tool"));
+            Assert.That(issue.Path, Is.EqualTo("tools.docs_search"));
+            Assert.That(
+                issue.Message,
+                Is.EqualTo(
+                    "Tool \"docs_search\" has type \"mcp\", which push doesn't create or update: load it with its id or attach it with ToolIds"
+                )
+            );
+            Assert.That(async () => await server.Client().Agents.PushAsync(agent), Throws.TypeOf<AgentValidationException>());
+        }
+        Assert.That(server.Calls, Is.Empty);
+    }
+
     [Test]
     public async Task UpdatesAProjectToolWhoseOnlyChangeIsAFieldTheSdkDoesNotModel()
     {
