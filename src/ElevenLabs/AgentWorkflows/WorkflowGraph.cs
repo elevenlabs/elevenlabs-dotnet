@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace ElevenLabs.AgentWorkflows;
+
+// Inside the namespace, so it wins over the generated ElevenLabs.Tool model.
+using Tool = ElevenLabs.AgentTools.Tool;
 
 /// <summary>
 /// Mutable state shared by a <see cref="Workflow"/> and every node handle created from it. Nodes are kept in wire
@@ -70,6 +75,160 @@ internal sealed class WorkflowGraph
     public bool? PreventSubagentLoops { get; set; }
 
     public IReadOnlyList<string> NodeOrder => _nodeOrder;
+
+    private readonly Dictionary<string, Tool> _toolRefs = new();
+    private readonly List<string> _toolRefOrder = new();
+
+    /// <summary><c>Tool</c> objects referenced by nodes, by placeholder, in the order they were first referenced.</summary>
+    public IEnumerable<KeyValuePair<string, Tool>> ToolRefs =>
+        _toolRefOrder.Select(key => new KeyValuePair<string, Tool>(key, _toolRefs[key]));
+
+    /// <summary>The <c>Tool</c> object a placeholder stands for, or <c>null</c> for a plain tool id.</summary>
+    public Tool? ToolRefFor(string id) => _toolRefs.TryGetValue(id, out var tool) ? tool : null;
+
+    public void SetToolRef(string key, Tool tool)
+    {
+        if (!_toolRefs.ContainsKey(key))
+        {
+            _toolRefOrder.Add(key);
+        }
+        _toolRefs[key] = tool;
+    }
+
+    /// <summary>The placeholder a <c>Tool</c> object stands under in the graph until <c>Build()</c> swaps in its id.</summary>
+    public static string ToolPlaceholder(string name) => $"<tool:{name}>";
+
+    /// <summary>A tool id as shown in messages: the name for a <c>Tool</c> object's placeholder.</summary>
+    public static string DisplayTool(string id)
+    {
+        var match = Regex.Match(id, "^<tool:(.*)>$", RegexOptions.Singleline);
+        return match.Success ? match.Groups[1].Value : id;
+    }
+
+    /// <summary>Swaps <c>Tool</c> objects for placeholders, remembering each one, and returns the node's tool ids.</summary>
+    public List<string> RefTools(string nodeId, IEnumerable<ToolRef> refs)
+    {
+        var inThisNode = new Dictionary<string, Tool>();
+        var ids = new List<string>();
+        foreach (var reference in refs)
+        {
+            if (reference.Tool == null)
+            {
+                ids.Add(reference.Id ?? throw new ArgumentException("A ToolRef needs an id or a Tool", nameof(refs)));
+                continue;
+            }
+            var tool = reference.Tool;
+            var key = ToolPlaceholder(tool.Name);
+            // A different tool of the same name conflicts if this node or another node still uses it; one left
+            // behind by a removed or edited node doesn't.
+            inThisNode.TryGetValue(key, out var clash);
+            if (clash == null && _toolRefs.TryGetValue(key, out var known) && UsesPlaceholder(key, nodeId))
+            {
+                clash = known;
+            }
+            inThisNode[key] = tool;
+            if (clash != null && !ReferenceEquals(clash, tool))
+            {
+                Issue("duplicate_tool_name", $"Node \"{nodeId}\" uses a different tool also named \"{tool.Name}\"", nodeId);
+            }
+            SetToolRef(key, tool);
+            ids.Add(key);
+        }
+        return ids;
+    }
+
+    private bool UsesPlaceholder(string key, string exceptNodeId)
+    {
+        foreach (var id in _nodeOrder)
+        {
+            if (id != exceptNodeId && NodeToolIds(_nodes[id]).Contains(key))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>The tool ids (or placeholders) a node uses: a tool node's tools, or a subagent's extra tools.</summary>
+    public static List<string> NodeToolIds(JsonObject model)
+    {
+        var ids = new List<string>();
+        if (model["tools"] is JsonArray tools)
+        {
+            foreach (var tool in tools)
+            {
+                if (tool is JsonObject locator && Str(locator["tool_id"]) is string toolId)
+                {
+                    ids.Add(toolId);
+                }
+            }
+        }
+        if (model["additional_tool_ids"] is JsonArray extra)
+        {
+            foreach (var item in extra)
+            {
+                if (Str(item) is string toolId)
+                {
+                    ids.Add(toolId);
+                }
+            }
+        }
+        return ids;
+    }
+
+    /// <summary>A copy of a node with its tool ids mapped: a tool node's tools, or a subagent's extra tools.</summary>
+    public static JsonObject MapNodeToolIds(JsonObject model, Func<string, string> map)
+    {
+        var type = TypeOf(model);
+        if (type == "tool" && model["tools"] is JsonArray tools)
+        {
+            var copy = (JsonObject)model.DeepClone();
+            foreach (var tool in (JsonArray)copy["tools"]!)
+            {
+                if (tool is JsonObject locator && Str(locator["tool_id"]) is string toolId)
+                {
+                    locator["tool_id"] = map(toolId);
+                }
+            }
+            return copy;
+        }
+        if (type == "override_agent" && model["additional_tool_ids"] is JsonArray)
+        {
+            var copy = (JsonObject)model.DeepClone();
+            var mapped = new JsonArray();
+            foreach (var item in (JsonArray)copy["additional_tool_ids"]!)
+            {
+                mapped.Add(Str(item) is string toolId ? JsonValue.Create(map(toolId)) : item?.DeepClone());
+            }
+            copy["additional_tool_ids"] = mapped;
+            return copy;
+        }
+        return model;
+    }
+
+    /// <summary>Swaps tool ids for the <c>Tool</c> objects they stand for. Ids missing from <paramref name="byId"/> stay as they are.</summary>
+    public void BindTools(IReadOnlyDictionary<string, Tool> byId)
+    {
+        string Swap(string id)
+        {
+            if (!byId.TryGetValue(id, out var tool))
+            {
+                return id;
+            }
+            var key = ToolPlaceholder(tool.Name);
+            SetToolRef(key, tool);
+            return key;
+        }
+        foreach (var id in _nodeOrder.ToList())
+        {
+            _nodes[id] = MapNodeToolIds(_nodes[id], Swap);
+        }
+    }
+
+    private static string? Str(JsonNode? node) =>
+        node is JsonValue value && value.GetValueKind() == System.Text.Json.JsonValueKind.String
+            ? value.GetValue<string>()
+            : null;
 
     public bool ContainsNode(string id) => _nodes.ContainsKey(id);
 
@@ -152,6 +311,17 @@ internal sealed class WorkflowGraph
 
         var fieldsInput = new Dictionary<string, JsonNode?>(rest);
         var nodeType = TypeOf(node);
+        if (schemaOverrides != null)
+        {
+            // A Tool object's overrides may be keyed by its name.
+            var byPlaceholder = new JsonObject();
+            foreach (var kv in schemaOverrides)
+            {
+                var placeholder = ToolPlaceholder(kv.Key);
+                byPlaceholder[_toolRefs.ContainsKey(placeholder) ? placeholder : kv.Key] = kv.Value?.DeepClone();
+            }
+            schemaOverrides = byPlaceholder;
+        }
         if (nodeType == "tool")
         {
             var existing = node["tools"] as JsonArray;
@@ -167,7 +337,7 @@ internal sealed class WorkflowGraph
                     {
                         Issue(
                             "invalid_option",
-                            $"Node \"{id}\" has schema overrides for tool \"{kv.Key}\", which it doesn't run",
+                            $"Node \"{id}\" has schema overrides for tool \"{DisplayTool(kv.Key)}\", which it doesn't run",
                             id
                         );
                     }
@@ -245,6 +415,8 @@ internal sealed class WorkflowGraph
         Edges = new List<GraphEdge>();
         Issues.Clear();
         LoadedOrder.Clear();
+        _toolRefs.Clear();
+        _toolRefOrder.Clear();
         PreventSubagentLoops = (workflow["prevent_subagent_loops"] as JsonValue)?.GetValue<bool>();
 
         var nodes = workflow["nodes"] as JsonObject ?? new JsonObject();

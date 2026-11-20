@@ -411,6 +411,83 @@ var builtInTools = new BuiltInToolsInput { TransferToNumber = transfer.BuildConf
 - A loaded tool of a type the builder can't edit, such as an MCP tool, has `Kind == ToolKind.Other`.
   It round-trips unchanged, and `Build()` warns with `unknown_tool_type`.
 
+## Agents as code
+
+`ElevenLabs.AgentBuilder.Agent` puts an agent's settings, tools and workflow in one definition.
+`client.Agents.PushAsync` creates or updates every webhook and client tool it uses, then the agent,
+with the tools' ids filled in:
+
+```csharp
+using ElevenLabs;
+using ElevenLabs.AgentBuilder;
+using ElevenLabs.AgentTools;
+using ElevenLabs.AgentWorkflows;
+using Tool = ElevenLabs.AgentTools.Tool;
+
+var getOrder = Tool.Webhook("get_order", "Look up an order by its number")
+    .Get("https://api.example.com/orders/{order_id}")
+    .PathParam("order_id", Schema.String().Describe("The order number, e.g. A-1042"));
+
+var wf = new Workflow();
+wf.Converse("triage", "Find out what the caller needs")
+    .When("Caller gave an order number")
+    .Tool("lookup", new[] { getOrder }) // a Tool object: push fills in its id
+    .OnSuccess()
+    .Converse("resolve", "Explain the order status");
+
+var agent = new Agent("Support line", new AgentOptions
+{
+    Prompt = "You are a support agent for Acme.",
+    FirstMessage = "Hi, how can I help?",
+    VoiceId = "21m00Tcm4TlvDq8ikWAM",
+    Tools = new Tool[] { SystemTool.EndCall() },
+    Workflow = wf,
+});
+
+var client = new ElevenLabsClient();
+var result = await client.Agents.PushAsync(agent); // creates the agent and get_order
+await client.Agents.PushAsync(agent, new AgentPushOptions { AgentId = result.AgentId }); // later: updates only what changed
+```
+
+- **Validation first:** `PushAsync` calls `agent.Validate()` before any request, so an invalid agent
+  writes nothing. CI can call `Validate()` without an API key; it throws an
+  `AgentValidationException` whose `Issues` carry stable codes such as `duplicate_tool_name`.
+- **Tools are matched safely:** with `AgentId`, existing tools are found among the tools that agent
+  already uses, by name (on `BranchId` when given). A tool with the same name that another agent uses
+  is never touched. Tools the agent stops using are reported as `ToolPushAction.Detached`, not deleted.
+- **Escape hatch:** `ConversationConfig` and `PlatformSettings` take any other setting, merged under
+  the typed options. `ToolIds` attaches existing tools that push leaves alone. Workflow nodes take
+  tool ids, `Tool` objects, or a mix (`new ToolRef[] { getOrder, "tool_123" }`).
+- **Partial failures:** if a request fails, `PushAsync` throws an `AgentPushException` whose `Result`
+  lists the tools it had already created; the API error is its `InnerException`.
+- `RequestOptions` and the `CancellationToken` apply to every request push and pull make.
+
+### Keeping agents in git
+
+`AgentProject` reads and writes the ElevenLabs CLI's project layout (`agents.json`, `tools.json`,
+`agent_configs/`, `tool_configs/`). The same repo works with the SDK and with
+`elevenlabs agents push`. The project records each agent's and tool's id, so running a program again
+updates them instead of making copies:
+
+```csharp
+var project = AgentProject.Open("."); // an empty directory works too
+await client.Agents.PushAsync(agent, new AgentPushOptions { Project = project }); // writes the configs and ids it pushed
+
+// Edit an agent stored in the project
+var support = project.GetAgent("Support line");
+support.Update(new AgentOptions { FirstMessage = "Hello!" });
+await client.Agents.PushAsync(support, new AgentPushOptions { Project = project });
+
+// Bring an agent made in the dashboard into the repo
+await client.Agents.PullAsync("agent_123", new AgentPullOptions { Project = project });
+```
+
+Configs are kept in API format and settings the SDK doesn't model survive a round trip. Files are
+written owner-only (`0600`), never through a symlink and never outside the project. Only JSON configs
+are supported for now; projects that use YAML or TOML configs raise an `AgentProjectException`.
+`AgentProject.FromFiles` builds a project from file contents with no I/O, and `ToFiles()` gives
+them back.
+
 ## Advanced
 
 ### Retries

@@ -27,5 +27,9 @@
     <!-- Shared cross-SDK golden fixtures, embedded so they can't drift from the test. -->
     <EmbeddedResource Include="Unit\WorkflowFixtures\*.json" />
     <EmbeddedResource Include="Unit\ToolFixtures\*.json" />
+    <!-- The shared CLI project fixture, keyed by its project-relative path. -->
+    <EmbeddedResource Include="Unit\AgentProjectFixtures\cli-graph\**\*.json">
+      <LogicalName>AgentProjectFixtures/cli-graph/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
