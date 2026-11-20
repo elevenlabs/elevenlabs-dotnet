@@ -52,7 +52,7 @@ public class ToolFixtureTest
     [Test]
     public void EmbedsEveryFixture()
     {
-        Assert.That(ResourceNames(), Has.Count.EqualTo(21));
+        Assert.That(ResourceNames(), Has.Count.EqualTo(23));
     }
 
     [TestCaseSource(nameof(Fixtures))]

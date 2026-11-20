@@ -671,7 +671,7 @@ public class ToolBuilderTest
             AssertJson(Wire.Canonicalize(JsonUtils.SerializeToNode(request.ToolConfig)), tool.ToJson().ToJsonString());
             built++;
         }
-        Assert.That(built, Is.EqualTo(13));
+        Assert.That(built, Is.EqualTo(14));
     }
 
     // Review fixes on #9. Each test is a regression test for one item.

@@ -214,10 +214,27 @@ public sealed class SystemTool : Tool
     {
         var issues = new List<ToolIssue>();
         var isTransfer = SystemToolType == "transfer_to_number" || SystemToolType == "transfer_to_agent";
-        if (isTransfer && !(_params["transfers"] is JsonArray { Count: > 0 }))
+        if (!isTransfer)
+        {
+            return issues;
+        }
+        // A loaded transfer_to_number tool may use transfer_rules instead of transfers; the API takes exactly one.
+        var hasTransfers = _params["transfers"] is JsonArray { Count: > 0 };
+        var hasRules = _params["transfer_rules"] is JsonArray { Count: > 0 };
+        if (!hasTransfers && !hasRules)
         {
             issues.Add(
                 ToolValidation.Error("no_transfers", "transfer", $"{SystemToolType} needs at least one Transfer()")
+            );
+        }
+        else if (hasTransfers && hasRules)
+        {
+            issues.Add(
+                ToolValidation.Error(
+                    "conflicting_transfers",
+                    "transfer",
+                    $"{SystemToolType} has both transfers and transfer_rules; the API takes only one"
+                )
             );
         }
         return issues;
