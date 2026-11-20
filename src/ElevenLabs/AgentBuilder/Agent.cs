@@ -513,7 +513,17 @@ public sealed class Agent
             {
                 issues.Add(Conflict("Tools", AgentWire.ToolIdsPath));
             }
-            var ids = KeepOrder(_toolIds.Concat(attached.Select(IdOf)).ToList(), _loadedToolIds);
+            var attachedIds = _toolIds.ToList();
+            foreach (var tool in attached)
+            {
+                var id = IdOf(tool);
+                // A loaded tool of another kind added back while its id is still attached is the same attachment.
+                if (IsManaged(tool) || !attachedIds.Contains(id))
+                {
+                    attachedIds.Add(id);
+                }
+            }
+            var ids = KeepOrder(attachedIds, _loadedToolIds);
             AgentWire.SetPath(config, AgentWire.ToolIdsPath, ToArray(ids));
         }
         foreach (var tool in system)

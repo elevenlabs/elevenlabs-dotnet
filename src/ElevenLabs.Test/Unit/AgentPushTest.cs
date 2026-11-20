@@ -381,11 +381,12 @@ public class AgentPushTest
         var config = Config(
             """{"name":"A","conversation_config":{"agent":{"prompt":{"prompt":"p","tool_ids":["tool_mcp","tool_ping"]}}}}"""
         );
+        var mcp = Tool.FromJson(Config(McpTool));
         var agent = Agent.FromJson(
             config,
             new Dictionary<string, Tool>
             {
-                ["tool_mcp"] = Tool.FromJson(Config(McpTool)),
+                ["tool_mcp"] = mcp,
                 ["tool_ping"] = Tool.FromJson(Config("""{"type":"client","name":"ping","description":"Ping"}""")),
             }
         );
@@ -396,6 +397,13 @@ public class AgentPushTest
         Assert.That(agent.ToolIds, Is.EqualTo(new[] { "tool_mcp" }));
         Assert.That(agent.Tools().Select(t => t.Name), Is.EqualTo(new[] { "get_order" }));
         var ids = agent.ToJson(new Dictionary<string, string> { ["get_order"] = "tool_order" })["conversation_config"]!["agent"]![
+            "prompt"
+        ]!["tool_ids"]!;
+        Assert.That(ids.AsArray().Select(id => id!.GetValue<string>()), Is.EqualTo(new[] { "tool_mcp", "tool_order" }));
+
+        // Adding the loaded MCP tool back while its id is still attached doesn't attach it twice.
+        agent.AddTool(mcp);
+        ids = agent.ToJson(new Dictionary<string, string> { ["get_order"] = "tool_order" })["conversation_config"]!["agent"]![
             "prompt"
         ]!["tool_ids"]!;
         Assert.That(ids.AsArray().Select(id => id!.GetValue<string>()), Is.EqualTo(new[] { "tool_mcp", "tool_order" }));
