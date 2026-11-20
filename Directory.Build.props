@@ -1,0 +1,14 @@
+<Project>
+  <!--
+    Hand-written (listed in .fernignore). NuGet package metadata shared by every packable project. It is
+    imported before each .csproj, so a project that sets one of these properties itself wins. Kept out of
+    the generated ElevenLabs.csproj so regeneration cannot drop it.
+  -->
+  <PropertyGroup>
+    <Authors>ElevenLabs</Authors>
+    <Company>ElevenLabs</Company>
+    <Description>The official C# SDK for ElevenLabs.</Description>
+    <PackageProjectUrl>https://elevenlabs.io/docs</PackageProjectUrl>
+    <PackageTags>elevenlabs;text-to-speech;speech-to-text;tts;stt;voice;audio;agents;ai</PackageTags>
+  </PropertyGroup>
+</Project>
