@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Nodes;
 
 namespace ElevenLabs.AgentWorkflows;
+
+// Inside the namespace, so it wins over the generated ElevenLabs.Tool model.
+using Tool = ElevenLabs.AgentTools.Tool;
 
 /// <summary>
 /// The verbs that add a node and connect it to the current point in the workflow. Each returns the new node, so
@@ -32,22 +36,39 @@ public abstract class WorkflowChain
         PutNode(rest, "knowledge_base", options.KnowledgeBase);
         PutNode(rest, "conversation_config", options.ConversationConfig);
         PutStr(rest, "entry_behavior", options.EntryBehavior);
-        var applied = Graph.ApplyOptions(id, model, null, options.ToolIds, null, rest);
+        var refs = CombineToolRefs(options.ToolIds, options.Tools);
+        var toolIds = refs == null ? null : Graph.RefTools(id, refs);
+        var applied = Graph.ApplyOptions(id, model, null, toolIds, null, rest);
         Graph.AddNode(id, applied);
         return Connect(id, null);
     }
 
     /// <summary>Runs the tools in parallel. Branch on the result with <c>OnResult()</c>, or <c>OnSuccess()</c> and <c>OnFailure()</c>.</summary>
-    public WorkflowNode Tool(string id, IEnumerable<string> toolIds, ToolOptions? options = null)
+    public WorkflowNode Tool(string id, IEnumerable<string> toolIds, ToolOptions? options = null) =>
+        ToolNode(id, toolIds.Select(toolId => (ToolRef)toolId), options);
+
+    /// <summary>
+    /// Runs the tools in parallel. Each <c>Tool</c> object's id is filled in when the workflow is built with
+    /// <c>toolIds</c>, as <c>Agents.PushAsync()</c> does.
+    /// </summary>
+    public WorkflowNode Tool(string id, IEnumerable<Tool> tools, ToolOptions? options = null) =>
+        ToolNode(id, tools.Select(tool => (ToolRef)tool), options);
+
+    /// <summary>Runs the tools in parallel: <c>Tool</c> objects and tool ids, in any mix.</summary>
+    public WorkflowNode Tool(string id, IEnumerable<ToolRef> tools, ToolOptions? options = null) =>
+        ToolNode(id, tools, options);
+
+    private WorkflowNode ToolNode(string id, IEnumerable<ToolRef> tools, ToolOptions? options)
     {
         options ??= new ToolOptions();
         var rest = new Dictionary<string, JsonNode?>();
         PutNode(rest, "position", options.Position);
+        var toolIds = Graph.RefTools(id, tools);
         var applied = Graph.ApplyOptions(
             id,
             new JsonObject { ["type"] = "tool" },
             null,
-            new List<string>(toolIds),
+            toolIds,
             SchemaOverridesToWire(options.SchemaOverrides),
             rest
         );
@@ -109,6 +130,19 @@ public abstract class WorkflowChain
 
     private protected static WorkflowBranch Branch(WorkflowGraph graph, string source, Condition condition, Condition? back) =>
         new(graph, new EdgeOrigin(source, condition.ToWire(), back?.ToWire()));
+
+    /// <summary><paramref name="ids"/> then <paramref name="tools"/>, or <c>null</c> if neither is set.</summary>
+    private protected static List<ToolRef>? CombineToolRefs(IEnumerable<string>? ids, IEnumerable<ToolRef>? tools)
+    {
+        if (ids == null && tools == null)
+        {
+            return null;
+        }
+        var refs = new List<ToolRef>();
+        refs.AddRange((ids ?? Enumerable.Empty<string>()).Select(toolId => (ToolRef)toolId));
+        refs.AddRange(tools ?? Enumerable.Empty<ToolRef>());
+        return refs;
+    }
 
     private protected static JsonObject? SchemaOverridesToWire(
         IReadOnlyDictionary<string, IReadOnlyDictionary<string, JsonNode>>? schemaOverrides
@@ -266,11 +300,13 @@ public sealed class WorkflowNode : WorkflowChain
         PutBool(rest, "enable_transferred_agent_first_message", update.EnableTransferredAgentFirstMessage);
         PutBool(rest, "preserve_client_tts_overrides", update.PreserveClientTtsOverrides);
         PutBool(rest, "preserve_voice_settings", update.PreserveVoiceSettings);
+        var refs = CombineToolRefs(update.ToolIds, update.Tools);
+        var toolIds = refs == null ? null : Graph.RefTools(Id, refs);
         var applied = Graph.ApplyOptions(
             Id,
             Graph.GetNode(Id),
             update.Destination,
-            update.ToolIds,
+            toolIds,
             SchemaOverridesToWire(update.SchemaOverrides),
             rest
         );

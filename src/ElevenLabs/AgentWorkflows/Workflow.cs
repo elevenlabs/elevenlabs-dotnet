@@ -6,6 +6,9 @@ using ElevenLabs.Core;
 
 namespace ElevenLabs.AgentWorkflows;
 
+// Inside the namespace, so it wins over the generated ElevenLabs.Tool model.
+using Tool = ElevenLabs.AgentTools.Tool;
+
 /// <summary>
 /// An agent workflow, written as code. The workflow itself is the start node: calling a verb on it branches from
 /// the start. Build it with the verbs and routing methods, then <see cref="Build"/> it into the request model that
@@ -43,11 +46,17 @@ public sealed class Workflow : WorkflowChain
     /// <summary>
     /// Loads a workflow stored as API-format JSON (snake_case), for example from <see cref="ToJsonString"/> or a CLI
     /// <c>agent_configs/*.json</c> file. The input is either a workflow or a whole agent config with a <c>workflow</c> key.
+    /// Tool ids found in <paramref name="toolsById"/> are swapped for those <c>Tool</c> objects, so the loaded workflow
+    /// refers to them as a built one would; other ids stay as they are.
     /// </summary>
-    public static Workflow FromJson(string json) => FromJson(JsonNode.Parse(json) ?? new JsonObject());
+    public static Workflow FromJson(string json, IReadOnlyDictionary<string, Tool>? toolsById = null) =>
+        FromJson(JsonNode.Parse(json) ?? new JsonObject(), toolsById);
 
-    /// <summary>Loads a workflow from a parsed JSON node (a workflow, or an agent config with a <c>workflow</c> key).</summary>
-    public static Workflow FromJson(JsonNode parsed)
+    /// <summary>
+    /// Loads a workflow from a parsed JSON node (a workflow, or an agent config with a <c>workflow</c> key). Tool ids
+    /// found in <paramref name="toolsById"/> are swapped for those <c>Tool</c> objects.
+    /// </summary>
+    public static Workflow FromJson(JsonNode parsed, IReadOnlyDictionary<string, Tool>? toolsById = null)
     {
         var raw =
             parsed is JsonObject obj && obj.ContainsKey("workflow") ? obj["workflow"] as JsonObject : parsed as JsonObject;
@@ -56,7 +65,22 @@ public sealed class Workflow : WorkflowChain
         {
             wf.Graph.Load(raw);
         }
+        if (toolsById != null)
+        {
+            wf.Graph.BindTools(toolsById);
+        }
         return wf;
+    }
+
+    /// <summary>The <c>Tool</c> objects the workflow's nodes reference, in the order they were first used.</summary>
+    public IReadOnlyList<Tool> Tools()
+    {
+        var used = new HashSet<string>();
+        foreach (var id in Graph.NodeOrder)
+        {
+            used.UnionWith(WorkflowGraph.NodeToolIds(Graph.GetNode(id)));
+        }
+        return Graph.ToolRefs.Where(kv => used.Contains(kv.Key)).Select(kv => kv.Value).ToList();
     }
 
     /// <summary>The id of the start node: <c>"start_node"</c>, the id the API requires, or whatever a loaded workflow uses.</summary>
@@ -183,17 +207,36 @@ public sealed class Workflow : WorkflowChain
     /// Validates the workflow and returns it in the shape <c>agents.Create()</c> and <c>agents.Update()</c> accept.
     /// </summary>
     /// <exception cref="WorkflowValidationException">Listing every problem, if the workflow is invalid.</exception>
-    public AgentWorkflowRequestModel Build(Action<WorkflowIssue>? onWarning = null)
+    public AgentWorkflowRequestModel Build(Action<WorkflowIssue>? onWarning = null) => Build(null, onWarning);
+
+    /// <summary>
+    /// Validates the workflow and returns it in the shape <c>agents.Create()</c> and <c>agents.Update()</c> accept.
+    /// <paramref name="toolIds"/> maps the name of each <c>Tool</c> object the workflow references to its id;
+    /// <c>Agents.PushAsync()</c> passes it after creating the tools. Every <c>Tool</c> object needs one.
+    /// </summary>
+    /// <exception cref="WorkflowValidationException">Listing every problem, if the workflow is invalid.</exception>
+    public AgentWorkflowRequestModel Build(
+        IReadOnlyDictionary<string, string>? toolIds,
+        Action<WorkflowIssue>? onWarning = null
+    )
     {
-        var wire = ToWireObject(onWarning);
+        var wire = ToWireObject(onWarning, toolIds);
         return JsonUtils.Deserialize<AgentWorkflowRequestModel>(wire.ToJsonString());
     }
 
-    /// <summary>The workflow in API format (snake_case keys, sorted at every level), for storing as config. Validates like <see cref="Build"/>.</summary>
-    public JsonObject ToJson() => (JsonObject)Wire.Canonicalize(ToWireObject(null))!;
+    /// <summary>
+    /// The workflow in API format (snake_case keys, sorted at every level), for storing as config. Validates like
+    /// <see cref="Build(IReadOnlyDictionary{string, string}?, Action{WorkflowIssue}?)"/>, and takes the same <paramref name="toolIds"/>.
+    /// </summary>
+    public JsonObject ToJson(IReadOnlyDictionary<string, string>? toolIds = null) =>
+        (JsonObject)Wire.Canonicalize(ToWireObject(null, toolIds))!;
 
-    /// <summary><see cref="ToJson"/> as a string with 2-space indentation and a trailing newline: the canonical file format.</summary>
-    public string ToJsonString() => Wire.ToCanonicalString(ToWireObject(null));
+    /// <summary>
+    /// <see cref="ToJson"/> as a string with 2-space indentation and a trailing newline: the canonical file format.
+    /// Takes the same <paramref name="toolIds"/>.
+    /// </summary>
+    public string ToJsonString(IReadOnlyDictionary<string, string>? toolIds = null) =>
+        Wire.ToCanonicalString(ToWireObject(null, toolIds));
 
     private protected override EdgeOrigin Origin() => new(Graph.StartId, Condition.Always().ToWire());
 
@@ -211,9 +254,11 @@ public sealed class Workflow : WorkflowChain
         workflow == null ? null : JsonUtils.SerializeToNode(workflow) as JsonObject;
 
     /// <summary>Validates, merges reverse edges, lays out positions and assembles the wire-format workflow object.</summary>
-    internal JsonObject ToWireObject(Action<WorkflowIssue>? onWarning)
+    internal JsonObject ToWireObject(Action<WorkflowIssue>? onWarning, IReadOnlyDictionary<string, string>? toolIds = null)
     {
+        var resolvedIds = toolIds ?? new Dictionary<string, string>();
         var issues = Validate.Run(Graph);
+        issues.AddRange(UnresolvedTools(resolvedIds));
         var errors = issues.Where(issue => issue.Severity == WorkflowSeverity.Error).ToList();
         if (errors.Count > 0)
         {
@@ -297,10 +342,16 @@ public sealed class Workflow : WorkflowChain
             edgesOut[idOf[edge]] = wire;
         }
 
+        string Resolve(string toolId)
+        {
+            var tool = Graph.ToolRefFor(toolId);
+            return tool == null ? toolId : resolvedIds[tool.Name];
+        }
+
         var nodesOut = new JsonObject();
         foreach (var id in Graph.NodeOrder)
         {
-            var model = Graph.GetNode(id);
+            var model = WorkflowGraph.MapNodeToolIds(Graph.GetNode(id), Resolve);
             var outNode = new JsonObject();
             foreach (var field in model)
             {
@@ -324,6 +375,32 @@ public sealed class Workflow : WorkflowChain
             workflow["prevent_subagent_loops"] = Graph.PreventSubagentLoops.Value;
         }
         return workflow;
+    }
+
+    /// <summary>A <c>Tool</c> object with no id in <paramref name="toolIds"/>, for each node that uses one.</summary>
+    private List<WorkflowIssue> UnresolvedTools(IReadOnlyDictionary<string, string> toolIds)
+    {
+        var issues = new List<WorkflowIssue>();
+        foreach (var nodeId in Graph.NodeOrder)
+        {
+            foreach (var id in WorkflowGraph.NodeToolIds(Graph.GetNode(nodeId)))
+            {
+                var tool = Graph.ToolRefFor(id);
+                if (tool != null && !toolIds.ContainsKey(tool.Name))
+                {
+                    issues.Add(
+                        new WorkflowIssue(
+                            "unresolved_tool",
+                            WorkflowSeverity.Error,
+                            $"Node \"{nodeId}\" uses tool \"{tool.Name}\", which has no id yet. Push the agent with "
+                                + "Agents.PushAsync(), or pass Build(toolIds)",
+                            nodeId
+                        )
+                    );
+                }
+            }
+        }
+        return issues;
     }
 
     /// <summary>A loaded node's order for the edges it still has, then any others in edge-list order.</summary>

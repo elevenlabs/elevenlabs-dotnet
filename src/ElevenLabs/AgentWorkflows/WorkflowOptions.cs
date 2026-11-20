@@ -20,8 +20,14 @@ public sealed class ConverseOptions : NodeOptions
     /// <summary>Name shown in the workflow editor. Defaults to the node id.</summary>
     public string? Label { get; set; }
 
-    /// <summary>Tools available to this subagent, on top of the agent's own.</summary>
+    /// <summary>Tools available to this subagent, on top of the agent's own, by id.</summary>
     public IReadOnlyList<string>? ToolIds { get; set; }
+
+    /// <summary>
+    /// More tools for this subagent, after <see cref="ToolIds"/>: <c>Tool</c> objects, whose ids are filled in when
+    /// the workflow is built with <c>toolIds</c> (as <c>Agents.PushAsync()</c> does), or ids.
+    /// </summary>
+    public IReadOnlyList<ToolRef>? Tools { get; set; }
 
     /// <summary>Knowledge base documents available to this subagent (wire format), on top of the agent's own.</summary>
     public JsonNode? KnowledgeBase { get; set; }
@@ -36,7 +42,10 @@ public sealed class ConverseOptions : NodeOptions
 /// <summary>Options for a <c>Tool()</c> node.</summary>
 public sealed class ToolOptions : NodeOptions
 {
-    /// <summary>Parameter overrides per tool id, keyed by dotted parameter path (wire-format values).</summary>
+    /// <summary>
+    /// Parameter overrides per tool id (or tool name, for a <c>Tool</c> object), keyed by dotted parameter path
+    /// (wire-format values).
+    /// </summary>
     public IReadOnlyDictionary<string, IReadOnlyDictionary<string, JsonNode>>? SchemaOverrides { get; set; }
 }
 
@@ -68,8 +77,14 @@ public sealed class NodeUpdate : NodeOptions
     /// <summary>Subagent nodes: the instructions added to the agent's prompt.</summary>
     public string? Prompt { get; set; }
 
-    /// <summary>Subagent nodes: extra tools. Tool nodes: the tools to run.</summary>
+    /// <summary>Subagent nodes: extra tools. Tool nodes: the tools to run. By id.</summary>
     public IReadOnlyList<string>? ToolIds { get; set; }
+
+    /// <summary>
+    /// Like <see cref="ToolIds"/>, as <c>Tool</c> objects or ids, after <see cref="ToolIds"/>. Setting either one
+    /// replaces the node's tools.
+    /// </summary>
+    public IReadOnlyList<ToolRef>? Tools { get; set; }
 
     /// <summary>Transfer nodes: where to transfer to.</summary>
     public Destination? Destination { get; set; }
