@@ -1,0 +1,27 @@
+name: ASP.NET Core package
+
+# Hand-written and listed in .fernignore. The generated test.yml builds only the core test project,
+# so a break in the companion package (elevenlabs-dotnet-aspnetcore) went unnoticed. This builds and
+# tests it on every pull request and push.
+on:
+  pull_request:
+  push:
+    branches: ['main']
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+      - name: Test
+        run: dotnet test src/ElevenLabs.AspNetCore.Test/ElevenLabs.AspNetCore.Test.csproj
+      - name: Pack
+        run: dotnet pack src/ElevenLabs.AspNetCore/ElevenLabs.AspNetCore.csproj -c Release -o ./artifacts

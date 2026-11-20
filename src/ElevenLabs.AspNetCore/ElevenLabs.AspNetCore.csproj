@@ -20,6 +20,7 @@
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageId>elevenlabs-dotnet-aspnetcore</PackageId>
+    <Description>ASP.NET Core integration for the ElevenLabs .NET SDK: attach a Speech Engine server to your app's request pipeline.</Description>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/elevenlabs/elevenlabs-dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
