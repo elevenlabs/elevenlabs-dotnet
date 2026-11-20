@@ -654,6 +654,35 @@ public class ToolBuilderTest
         AssertJson(tool.ToJson(), raw);
     }
 
+    private const string TransferRule =
+        "{\"condition\":\"Caller asks for the front desk\",\"provider_configs\":[{\"config\":{\"transfer_destination\":{\"destination\":\"+15551234567\",\"type\":\"phone\"},\"type\":\"twilio_cold_blind_transfer\"},\"type\":\"twilio\"}]}";
+
+    private static Tool LoadedTransfer(string systemToolType) =>
+        Tool.FromJson(
+            JsonNode.Parse(
+                $"{{\"type\":\"system\",\"name\":\"{systemToolType}\",\"params\":{{\"system_tool_type\":\"{systemToolType}\",\"transfers\":[],\"transfer_rules\":[{TransferRule}]}}}}"
+            )!
+        );
+
+    [Test]
+    public void TransferRulesDoNotSatisfyAnAgentTransfer()
+    {
+        Assert.That(
+            CodesOf(() => LoadedTransfer("transfer_to_agent").Build()),
+            Is.EqualTo(new[] { "no_transfers" })
+        );
+    }
+
+    [Test]
+    public void SendsLoadedTransferRulesInTheBuiltRequest()
+    {
+        var sent = JsonUtils.SerializeToNode(LoadedTransfer("transfer_to_number").Build())!;
+        AssertJson(
+            Wire.Canonicalize(sent["tool_config"]!["params"]!["transfer_rules"]!),
+            Wire.Canonicalize(JsonNode.Parse($"[{TransferRule}]"))!.ToJsonString()
+        );
+    }
+
     [Test]
     public void BuildDeserializesEveryFixtureIntoTheGeneratedModel()
     {
