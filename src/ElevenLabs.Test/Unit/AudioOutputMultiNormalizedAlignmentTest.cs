@@ -21,7 +21,7 @@ public class AudioOutputMultiNormalizedAlignmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"chars\":[\"chars\"],\"char_start_times_ms\":[1],\"char_durations_ms\":[2]}";
+            "{\"chars\":[\"chars\"],\"char_start_times_ms\":[5],\"char_durations_ms\":[4]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioOutputMultiNormalizedAlignment>(
             wire

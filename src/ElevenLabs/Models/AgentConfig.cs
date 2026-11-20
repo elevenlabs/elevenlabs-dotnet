@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -69,6 +73,9 @@ public record AgentConfig : IJsonOnDeserialized
     /// <value>Per-channel response behavior overrides for text conversations. Built-in channel defaults apply when unset.</value>
     [JsonPropertyName("text_behavior_overrides")]
     public Dictionary<string, BehaviorOverride>? TextBehaviorOverrides { get; set; }
+
+    [JsonPropertyName("subagent_config")]
+    public SubagentConfigInput? SubagentConfig { get; set; }
 
     [JsonPropertyName("prompt")]
     public PromptAgentApiModelInput? Prompt { get; set; }
@@ -123,6 +130,7 @@ public record AgentConfig : IJsonOnDeserialized
                 other.MaxConversationDurationMessage
             )
             && ValueEquality.AreEqual(TextBehaviorOverrides, other.TextBehaviorOverrides)
+            && ValueEquality.AreEqual(SubagentConfig, other.SubagentConfig)
             && ValueEquality.AreEqual(Prompt, other.Prompt)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -140,6 +148,7 @@ public record AgentConfig : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DisableFirstMessageInterruptions);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MaxConversationDurationMessage);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TextBehaviorOverrides);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SubagentConfig);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Prompt);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

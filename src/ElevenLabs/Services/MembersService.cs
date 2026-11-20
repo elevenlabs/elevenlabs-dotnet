@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -53,6 +57,9 @@ internal class MembersService : BaseService
     private RequestConfig? _listAsyncConfig;
     private RequestConfig? _updateAsyncConfig;
     private RequestConfig? _updateUsageLimitAsyncConfig;
+    private RequestConfig? _listAsync1Config;
+    private RequestConfig? _updateRoleAsyncConfig;
+    private RequestConfig? _removeAsync1Config;
 
     internal MembersService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -104,6 +111,36 @@ internal class MembersService : BaseService
     public MembersService SetUpdateUsageLimitAsyncConfig(RequestConfig config)
     {
         _updateUsageLimitAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>ListAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public MembersService SetListAsync1Config(RequestConfig config)
+    {
+        _listAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateRoleAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public MembersService SetUpdateRoleAsyncConfig(RequestConfig config)
+    {
+        _updateRoleAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>RemoveAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public MembersService SetRemoveAsync1Config(RequestConfig config)
+    {
+        _removeAsync1Config = config;
         return this;
     }
 
@@ -383,6 +420,187 @@ internal class MembersService : BaseService
                     responseBody,
                     _jsonSerializerOptions
                 )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>List the workspace's members, suspended members last.</summary>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<
+        List<global::ElevenLabs.ReceptionTeamMemberResponse>
+    > ListAsync1(
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_listAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Get, "v1/reception/team/members")
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        List<global::ElevenLabs.ReceptionTeamMemberResponse> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                List<global::ElevenLabs.ReceptionTeamMemberResponse>
+            >(responseBody, _jsonSerializerOptions)!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Promote a member to admin or demote an admin to member.</summary>
+    /// <param name="userId">User ID of the member to update</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<Dictionary<string, string>> UpdateRoleAsync(
+        global::ElevenLabs.Reception.Team.BodySmbUpdateTeamMemberRole input,
+        string userId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (userId is null)
+            throw new ArgumentNullException(nameof(userId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_updateRoleAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            new HttpMethod("PATCH"),
+            "v1/reception/team/members/{user_id}"
+        )
+            .SetPathParameter("user_id", userId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        Dictionary<string, string> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                Dictionary<string, string>
+            >(responseBody, _jsonSerializerOptions)!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Remove a member from the workspace. Their seat goes to a suspended member, if any.</summary>
+    /// <param name="userId">User ID of the member to remove</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<Dictionary<string, string>> RemoveAsync1(
+        string userId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (userId is null)
+            throw new ArgumentNullException(nameof(userId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_removeAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Delete, "v1/reception/team/members/{user_id}")
+            .SetPathParameter("user_id", userId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        Dictionary<string, string> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                Dictionary<string, string>
+            >(responseBody, _jsonSerializerOptions)!;
         }
         catch (global::System.Text.Json.JsonException exception)
         {

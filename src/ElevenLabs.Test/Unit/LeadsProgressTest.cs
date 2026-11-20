@@ -21,7 +21,7 @@ public class LeadsProgressTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"total\":9,\"uncalled\":8,\"leads_needing_attention\":1,\"active\":9,\"finished\":1,\"finished_by_disposition\":{\"key\":9}}";
+            "{\"total\":10,\"uncalled\":5,\"leads_needing_attention\":10,\"active\":0,\"finished\":10,\"finished_by_disposition\":{\"key\":1}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LeadsProgress>(wire);
         var serialized = TestJson.Serialize(instance);

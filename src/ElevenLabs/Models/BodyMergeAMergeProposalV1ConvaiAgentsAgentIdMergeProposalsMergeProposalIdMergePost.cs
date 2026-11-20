@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -48,7 +52,7 @@ public record BodyMergeAMergeProposalV1ConvaiAgentsAgentIdMergeProposalsMergePro
     [JsonPropertyName("archive_source_branch")]
     public bool? ArchiveSourceBranch { get; set; }
 
-    /// <value>Force source branch changes onto the target, overriding timestamp-based conflict resolution.</value>
+    /// <value>Keep the source branch's value for every conflict.</value>
     [JsonPropertyName("force")]
     public bool? Force { get; set; }
 

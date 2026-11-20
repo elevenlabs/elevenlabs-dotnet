@@ -21,7 +21,7 @@ public class DocxExportOptionsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"docx\",\"segment_on_silence_longer_than_s\":2.13,\"max_segment_duration_s\":4.62,\"max_segment_chars\":5}";
+            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"docx\",\"segment_on_silence_longer_than_s\":9.68,\"max_segment_duration_s\":7.11,\"max_segment_chars\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DocxExportOptions>(wire);
         var serialized = TestJson.Serialize(instance);

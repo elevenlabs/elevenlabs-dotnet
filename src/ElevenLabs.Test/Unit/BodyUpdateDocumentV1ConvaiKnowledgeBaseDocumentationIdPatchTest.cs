@@ -21,7 +21,7 @@ public class BodyUpdateDocumentV1ConvaiKnowledgeBaseDocumentationIdPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"content\":\"content\",\"enable_auto_sync\":true,\"auto_remove\":true,\"minimum_frequency_days\":172,\"tighten_only\":false}";
+            "{\"name\":\"name\",\"content\":\"content\",\"enable_auto_sync\":false,\"auto_remove\":false,\"minimum_frequency_days\":51,\"tighten_only\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.KnowledgeBase.BodyUpdateDocumentV1ConvaiKnowledgeBaseDocumentationIdPatch>(

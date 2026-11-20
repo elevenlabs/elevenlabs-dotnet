@@ -21,7 +21,7 @@ public class BodyUpdateAMergeProposalV1ConvaiAgentsAgentIdMergeProposalsMergePro
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"title\",\"description\":\"description\",\"requested_reviewer_user_ids\":[\"requested_reviewer_user_ids\"],\"close\":true}";
+            "{\"title\":\"title\",\"description\":\"description\",\"requested_reviewer_user_ids\":[\"requested_reviewer_user_ids\"],\"close\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.BodyUpdateAMergeProposalV1ConvaiAgentsAgentIdMergeProposalsMergeProposalIdPatch>(

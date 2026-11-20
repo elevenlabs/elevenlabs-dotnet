@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -62,6 +66,16 @@ public record FieldConflict : IJsonOnDeserialized
     [JsonPropertyName("target_value")]
     public object? TargetValue { get; set; }
 
+    /// <value>Stable identifier of this conflict within a merge.</value>
+    [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("id")]
+    public string? Id { get; set; }
+
+    /// <value>Whether a resolution of this conflict may use `custom` with a `custom_value` instead of keeping a side.</value>
+    [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("accepts_custom_value")]
+    public bool? AcceptsCustomValue { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -104,6 +118,8 @@ public record FieldConflict : IJsonOnDeserialized
             && ValueEquality.AreEqual(BaseValue, other.BaseValue)
             && ValueEquality.AreEqual(SourceValue, other.SourceValue)
             && ValueEquality.AreEqual(TargetValue, other.TargetValue)
+            && ValueEquality.AreEqual(Id, other.Id)
+            && ValueEquality.AreEqual(AcceptsCustomValue, other.AcceptsCustomValue)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -118,6 +134,8 @@ public record FieldConflict : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(BaseValue);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SourceValue);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TargetValue);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Id);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(AcceptsCustomValue);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

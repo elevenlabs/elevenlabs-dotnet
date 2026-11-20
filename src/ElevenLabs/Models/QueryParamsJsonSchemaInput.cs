@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -44,8 +48,8 @@ public record QueryParamsJsonSchemaInput : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("properties")]
-    public Dictionary<string, LiteralJsonSchemaProperty> Properties { get; set; } =
-        new Dictionary<string, LiteralJsonSchemaProperty>();
+    public Dictionary<string, QueryParamsJsonSchemaInputProperties> Properties { get; set; } =
+        new Dictionary<string, QueryParamsJsonSchemaInputProperties>();
 
     [JsonPropertyName("required")]
     public IEnumerable<string>? Required { get; set; }

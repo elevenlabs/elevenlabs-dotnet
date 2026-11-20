@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -55,7 +59,7 @@ public partial class WorkspaceClient
         AuthConnections = new AuthConnectionsClient(httpClient);
         Groups = new GroupsClient(httpClient);
         Members = new ElevenLabs.Workspace.MembersClient(httpClient);
-        Invites = new InvitesClient(httpClient);
+        Invites = new ElevenLabs.Workspace.InvitesClient(httpClient);
         Resources = new ResourcesClient(httpClient);
         Usage = new UsageClient(httpClient);
         Analytics = new ElevenLabs.Workspace.AnalyticsClient(httpClient);
@@ -65,7 +69,7 @@ public partial class WorkspaceClient
     public IAuthConnectionsClient AuthConnections { get; }
     public IGroupsClient Groups { get; }
     public ElevenLabs.Workspace.IMembersClient Members { get; }
-    public IInvitesClient Invites { get; }
+    public ElevenLabs.Workspace.IInvitesClient Invites { get; }
     public IResourcesClient Resources { get; }
     public IUsageClient Usage { get; }
     public ElevenLabs.Workspace.IAnalyticsClient Analytics { get; }

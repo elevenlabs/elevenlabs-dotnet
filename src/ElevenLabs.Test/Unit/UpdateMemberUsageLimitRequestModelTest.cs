@@ -20,7 +20,7 @@ public class UpdateMemberUsageLimitRequestModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"usage_limit\":1}";
+        const string wire = "{\"usage_limit\":7}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Workspace.UpdateMemberUsageLimitRequestModel>(

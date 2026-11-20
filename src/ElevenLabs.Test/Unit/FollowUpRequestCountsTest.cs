@@ -21,7 +21,7 @@ public class FollowUpRequestCountsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"requested\":2,\"requested_by_disposition\":{\"key\":1},\"distinct_leads\":10}";
+            "{\"requested\":7,\"requested_by_disposition\":{\"key\":4},\"distinct_leads\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FollowUpRequestCounts>(wire);
         var serialized = TestJson.Serialize(instance);

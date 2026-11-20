@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -39,6 +43,9 @@ namespace ElevenLabs.Tokens;
 [Serializable]
 public record CreateSingleUseRequest
 {
+    [JsonIgnore]
+    public int? MaxSessionDurationSeconds { get; set; }
+
     [JsonIgnore]
     public string? XiApiKey { get; set; }
 

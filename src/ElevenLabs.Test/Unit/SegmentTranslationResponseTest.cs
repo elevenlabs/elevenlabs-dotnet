@@ -20,7 +20,7 @@ public class SegmentTranslationResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"version\":3}";
+        const string wire = "{\"version\":9}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentTranslationResponse>(wire);
         var serialized = TestJson.Serialize(instance);

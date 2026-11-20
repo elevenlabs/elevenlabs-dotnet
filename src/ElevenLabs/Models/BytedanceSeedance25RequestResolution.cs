@@ -23,6 +23,8 @@ public readonly record struct BytedanceSeedance25RequestResolution : IStringEnum
         Values.OneThousandEightyP
     );
 
+    public static readonly BytedanceSeedance25RequestResolution FourK = new(Values.FourK);
+
     public BytedanceSeedance25RequestResolution(string value)
     {
         Value = value;
@@ -127,5 +129,7 @@ public readonly record struct BytedanceSeedance25RequestResolution : IStringEnum
         public const string SevenHundredTwentyP = "720p";
 
         public const string OneThousandEightyP = "1080p";
+
+        public const string FourK = "4k";
     }
 }

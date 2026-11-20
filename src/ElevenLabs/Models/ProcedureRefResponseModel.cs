@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -78,6 +82,10 @@ public record ProcedureRefResponseModel : IJsonOnDeserialized
     [JsonPropertyName("referenced_dynamic_variables")]
     public IEnumerable<string>? ReferencedDynamicVariables { get; set; }
 
+    /// <value>Dynamic variable names written by Update state steps</value>
+    [JsonPropertyName("written_dynamic_variables")]
+    public IEnumerable<string>? WrittenDynamicVariables { get; set; }
+
     /// <value>Procedure ID of the folder this procedure is placed in. None means root.</value>
     [JsonPropertyName("folder_parent_id")]
     public string? FolderParentId { get; set; }
@@ -128,6 +136,7 @@ public record ProcedureRefResponseModel : IJsonOnDeserialized
             && ValueEquality.AreEqual(ReferencedKbIds, other.ReferencedKbIds)
             && ValueEquality.AreEqual(ReferencedProcedureIds, other.ReferencedProcedureIds)
             && ValueEquality.AreEqual(ReferencedDynamicVariables, other.ReferencedDynamicVariables)
+            && ValueEquality.AreEqual(WrittenDynamicVariables, other.WrittenDynamicVariables)
             && ValueEquality.AreEqual(FolderParentId, other.FolderParentId)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -147,6 +156,7 @@ public record ProcedureRefResponseModel : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ReferencedKbIds);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ReferencedProcedureIds);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ReferencedDynamicVariables);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(WrittenDynamicVariables);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FolderParentId);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

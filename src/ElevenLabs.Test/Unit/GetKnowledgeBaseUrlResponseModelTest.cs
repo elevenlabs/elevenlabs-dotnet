@@ -21,7 +21,7 @@ public class GetKnowledgeBaseUrlResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"metadata\":{\"created_at_unix_secs\":3,\"last_updated_at_unix_secs\":4,\"size_bytes\":0},\"supported_usages\":[\"prompt\"],\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"folder_parent_id\":\"folder_parent_id\",\"folder_path\":[{\"id\":\"id\",\"name\":\"name\"}],\"type\":\"url\",\"url\":\"url\",\"extracted_inner_html\":\"extracted_inner_html\",\"content_format\":\"html\",\"auto_sync_info\":{\"minimum_frequency_days\":7,\"auto_remove\":true,\"consec_failures\":4,\"next_refresh_by\":4}}";
+            "{\"id\":\"id\",\"name\":\"name\",\"metadata\":{\"created_at_unix_secs\":4,\"last_updated_at_unix_secs\":1,\"size_bytes\":1},\"supported_usages\":[\"prompt\"],\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"folder_parent_id\":\"folder_parent_id\",\"chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]},\"folder_path\":[{\"id\":\"id\",\"name\":\"name\"}],\"type\":\"url\",\"url\":\"url\",\"extracted_inner_html\":\"extracted_inner_html\",\"content_format\":\"html\",\"auto_sync_info\":{\"minimum_frequency_days\":7,\"auto_remove\":true,\"consec_failures\":3,\"next_refresh_by\":0}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetKnowledgeBaseUrlResponseModel>(
             wire

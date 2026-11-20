@@ -21,7 +21,7 @@ public class TransferToAgentToolConfigOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"system_tool_type\":\"transfer_to_agent\",\"transfers\":[{\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"node_id\":\"node_id\",\"condition\":\"condition\",\"delay_ms\":2,\"transfer_message\":\"transfer_message\",\"enable_transferred_agent_first_message\":true,\"is_workflow_node_transfer\":true,\"preserve_client_tts_overrides\":true,\"preserve_voice_settings\":false}]}";
+            "{\"system_tool_type\":\"transfer_to_agent\",\"transfers\":[{\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"node_id\":\"node_id\",\"condition\":\"condition\",\"delay_ms\":2,\"transfer_message\":\"transfer_message\",\"enable_transferred_agent_first_message\":false,\"is_workflow_node_transfer\":true,\"preserve_client_tts_overrides\":false,\"preserve_voice_settings\":false}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TransferToAgentToolConfigOutput>(
             wire

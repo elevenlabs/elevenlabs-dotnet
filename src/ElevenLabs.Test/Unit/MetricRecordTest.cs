@@ -20,7 +20,7 @@ public class MetricRecordTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"elapsed_time\":9.4}";
+        const string wire = "{\"elapsed_time\":5.35}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MetricRecord>(wire);
         var serialized = TestJson.Serialize(instance);

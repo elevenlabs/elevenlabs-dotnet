@@ -21,7 +21,7 @@ public class MergedOutcomeTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"merged\",\"version_id\":\"version_id\",\"at\":8,\"by_user_id\":\"by_user_id\"}";
+            "{\"status\":\"merged\",\"version_id\":\"version_id\",\"at\":6,\"by_user_id\":\"by_user_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MergedOutcome>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -43,15 +47,15 @@ public record CreateAgentConversationTicketRequestModel : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    /// <value>Conversation this ticket is about.</value>
+    /// <value>Conversation this agent issue is about.</value>
     [JsonPropertyName("conversation_id")]
     public required string ConversationId { get; set; }
 
-    /// <value>One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.</value>
+    /// <value>One-line headline shown in the issues list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open issue.</value>
     [JsonPropertyName("title")]
     public string? Title { get; set; }
 
-    /// <value>The issue this ticket is about, covering the whole conversation rather than a single turn.</value>
+    /// <value>The problem this agent issue is about, covering the whole conversation rather than a single turn.</value>
     [JsonPropertyName("qa_comment")]
     public string? QaComment { get; set; }
 
@@ -59,7 +63,7 @@ public record CreateAgentConversationTicketRequestModel : IJsonOnDeserialized
     [JsonPropertyName("turn_comments")]
     public IEnumerable<TurnCommentRequestModel>? TurnComments { get; set; }
 
-    /// <value>How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.</value>
+    /// <value>How urgently the agent issue needs attention. If the conversation already has an open issue, it is raised to this priority when lower.</value>
     [JsonPropertyName("priority")]
     public AgentConversationTicketPriority? Priority { get; set; }
 

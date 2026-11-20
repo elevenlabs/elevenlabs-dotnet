@@ -21,7 +21,7 @@ public class BodyCreateANewSpeakerV1DubbingResourceDubbingIdSpeakerPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"speaker_name\":\"speaker_name\",\"voice_id\":\"voice_id\",\"voice_stability\":2.42,\"voice_similarity\":9.71,\"voice_style\":7.52}";
+            "{\"speaker_name\":\"speaker_name\",\"voice_id\":\"voice_id\",\"voice_stability\":2.91,\"voice_similarity\":8.8,\"voice_style\":4.43}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodyCreateANewSpeakerV1DubbingResourceDubbingIdSpeakerPost>(

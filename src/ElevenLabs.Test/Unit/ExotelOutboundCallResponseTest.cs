@@ -21,7 +21,7 @@ public class ExotelOutboundCallResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"success\":false,\"message\":\"message\",\"conversation_id\":\"conversation_id\",\"callSid\":\"callSid\"}";
+            "{\"success\":true,\"message\":\"message\",\"conversation_id\":\"conversation_id\",\"callSid\":\"callSid\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ExotelOutboundCallResponse>(wire);
         var serialized = TestJson.Serialize(instance);

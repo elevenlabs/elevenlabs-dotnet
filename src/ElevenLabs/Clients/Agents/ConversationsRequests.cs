@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -257,6 +261,22 @@ public record ListConversationsRequest
 }
 
 [Serializable]
+public record CreateConversationsRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.Agents.CreateAgentConversationRequest Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
 public record ResolveConversationsRequest
 {
     [JsonIgnore]
@@ -328,6 +348,67 @@ public record GetSipMessagesConversationsRequest
 
     [JsonIgnore]
     public string? Cursor { get; set; }
+
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record SendMessageConversationsRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.Agents.SendConversationMessageRequest Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record GetTurnConversationsRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record SendMessageStreamConversationsRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.Agents.SendConversationMessageStreamRequest Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record StreamTurnEventsConversationsRequest
+{
+    [JsonIgnore]
+    public string? LastEventId { get; set; }
 
     [JsonIgnore]
     public string? XiApiKey { get; set; }

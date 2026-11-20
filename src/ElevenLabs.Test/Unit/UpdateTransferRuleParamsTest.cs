@@ -21,7 +21,7 @@ public class UpdateTransferRuleParamsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"smb_tool_type\":\"update_transfer_rule\",\"post_dial_digits_enabled\":true}";
+            "{\"smb_tool_type\":\"update_transfer_rule\",\"post_dial_digits_enabled\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UpdateTransferRuleParams>(wire);
         var serialized = TestJson.Serialize(instance);

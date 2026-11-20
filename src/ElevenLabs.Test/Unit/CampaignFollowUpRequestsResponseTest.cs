@@ -21,7 +21,7 @@ public class CampaignFollowUpRequestsResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"callbacks\":{\"requested\":2,\"requested_by_disposition\":{\"key\":1},\"distinct_leads\":10},\"redirects\":{\"requested\":2,\"requested_by_disposition\":{\"key\":1},\"distinct_leads\":10}}";
+            "{\"callbacks\":{\"requested\":7,\"requested_by_disposition\":{\"key\":4},\"distinct_leads\":5},\"redirects\":{\"requested\":7,\"requested_by_disposition\":{\"key\":4},\"distinct_leads\":5}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CampaignFollowUpRequestsResponse>(
             wire

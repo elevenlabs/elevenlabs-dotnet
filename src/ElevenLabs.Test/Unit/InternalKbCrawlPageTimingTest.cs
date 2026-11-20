@@ -21,7 +21,7 @@ public class InternalKbCrawlPageTimingTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"url\":\"url\",\"doc_id\":\"doc_id\",\"read_ms\":5,\"index_ms\":6,\"html_len\":0,\"skipped\":true,\"error\":false}";
+            "{\"url\":\"url\",\"doc_id\":\"doc_id\",\"read_ms\":1,\"index_ms\":6,\"html_len\":8,\"skipped\":true,\"error\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InternalKbCrawlPageTiming>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ArchitectDispatchResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"architect_chat_id\":\"architect_chat_id\",\"user_id\":\"user_id\",\"dispatched_at_unix_secs\":10}";
+            "{\"architect_chat_id\":\"architect_chat_id\",\"user_id\":\"user_id\",\"dispatched_at_unix_secs\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ArchitectDispatchResponseModel>(
             wire

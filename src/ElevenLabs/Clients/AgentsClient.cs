@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -59,6 +63,7 @@ public partial class AgentsClient
         Whatsapp = new WhatsappClient(httpClient);
         Summaries = new ElevenLabs.Agents.SummariesClient(httpClient);
         KnowledgeBase = new KnowledgeBaseClient(httpClient);
+        Subagents = new SubagentsClient(httpClient);
         Widget = new WidgetClient(httpClient);
         Link = new LinkClient(httpClient);
         HoldAudio = new HoldAudioClient(httpClient);
@@ -66,7 +71,7 @@ public partial class AgentsClient
         Tests = new TestsClient(httpClient);
         Users = new UsersClient(httpClient);
         TriageTickets = new TriageTicketsClient(httpClient);
-        PhoneNumbers = new PhoneNumbersClient(httpClient);
+        PhoneNumbers = new ElevenLabs.Agents.PhoneNumbersClient(httpClient);
         Llm = new LlmClient(httpClient);
         Analytics = new ElevenLabs.Agents.AnalyticsClient(httpClient);
         Tools = new ElevenLabs.Agents.ToolsClient(httpClient);
@@ -80,7 +85,7 @@ public partial class AgentsClient
         Versions = new VersionsClient(httpClient);
         Deployments = new DeploymentsClient(httpClient);
         Drafts = new ElevenLabs.Agents.DraftsClient(httpClient);
-        Procedures = new ProceduresClient(httpClient);
+        Procedures = new ElevenLabs.Agents.ProceduresClient(httpClient);
         MergeProposals = new MergeProposalsClient(httpClient);
         OutboundCampaigns = new OutboundCampaignsClient(httpClient);
         Realtime = new RealtimeClient(httpClient);
@@ -94,6 +99,7 @@ public partial class AgentsClient
     public IWhatsappClient Whatsapp { get; }
     public ElevenLabs.Agents.ISummariesClient Summaries { get; }
     public IKnowledgeBaseClient KnowledgeBase { get; }
+    public ISubagentsClient Subagents { get; }
     public IWidgetClient Widget { get; }
     public ILinkClient Link { get; }
     public IHoldAudioClient HoldAudio { get; }
@@ -101,7 +107,7 @@ public partial class AgentsClient
     public ITestsClient Tests { get; }
     public IUsersClient Users { get; }
     public ITriageTicketsClient TriageTickets { get; }
-    public IPhoneNumbersClient PhoneNumbers { get; }
+    public ElevenLabs.Agents.IPhoneNumbersClient PhoneNumbers { get; }
     public ILlmClient Llm { get; }
     public ElevenLabs.Agents.IAnalyticsClient Analytics { get; }
     public ElevenLabs.Agents.IToolsClient Tools { get; }
@@ -115,7 +121,7 @@ public partial class AgentsClient
     public IVersionsClient Versions { get; }
     public IDeploymentsClient Deployments { get; }
     public ElevenLabs.Agents.IDraftsClient Drafts { get; }
-    public IProceduresClient Procedures { get; }
+    public ElevenLabs.Agents.IProceduresClient Procedures { get; }
     public IMergeProposalsClient MergeProposals { get; }
     public IOutboundCampaignsClient OutboundCampaigns { get; }
     public IRealtimeClient Realtime { get; }

@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -51,6 +55,9 @@ internal class RulesService : BaseService
     private RequestConfig? _setAsyncConfig;
     private RequestConfig? _addAsyncConfig;
     private RequestConfig? _removeAsyncConfig;
+    private RequestConfig? _createAsyncConfig;
+    private RequestConfig? _updateAsyncConfig;
+    private RequestConfig? _deleteAsyncConfig;
 
     internal RulesService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -82,6 +89,36 @@ internal class RulesService : BaseService
     public RulesService SetRemoveAsyncConfig(RequestConfig config)
     {
         _removeAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public RulesService SetCreateAsyncConfig(RequestConfig config)
+    {
+        _createAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public RulesService SetUpdateAsyncConfig(RequestConfig config)
+    {
+        _updateAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>DeleteAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public RulesService SetDeleteAsyncConfig(RequestConfig config)
+    {
+        _deleteAsyncConfig = config;
         return this;
     }
 
@@ -259,6 +296,214 @@ internal class RulesService : BaseService
                     responseBody,
                     _jsonSerializerOptions
                 )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Add a behavioral rule to the named receptionist.</summary>
+    /// <param name="agentId">ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentRule> CreateAsync(
+        global::ElevenLabs.Reception.Receptionists.ReceptionCreateAgentRuleRequest input,
+        string agentId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (agentId is null)
+            throw new ArgumentNullException(nameof(agentId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_createAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Post,
+            "v1/reception/customer-facing-agents/{agent_id}/rules"
+        )
+            .SetPathParameter("agent_id", agentId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.AgentRule result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.AgentRule>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Replace an existing rule on the named receptionist. Send every field: an omitted `priority` resets to `strict`.</summary>
+    /// <param name="agentId">ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.</param>
+    /// <param name="ruleId">ID of the rule. Returned when you add one, and listed in the receptionist's `config.agent_rules`.</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentRule> UpdateAsync(
+        global::ElevenLabs.Reception.Receptionists.ReceptionUpdateAgentRuleRequest input,
+        string agentId,
+        string ruleId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (agentId is null)
+            throw new ArgumentNullException(nameof(agentId));
+        if (ruleId is null)
+            throw new ArgumentNullException(nameof(ruleId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_updateAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Put,
+            "v1/reception/customer-facing-agents/{agent_id}/rules/{rule_id}"
+        )
+            .SetPathParameter("agent_id", agentId)
+            .SetPathParameter("rule_id", ruleId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.AgentRule result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.AgentRule>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Delete a rule from the named receptionist.</summary>
+    /// <param name="agentId">ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.</param>
+    /// <param name="ruleId">ID of the rule. Returned when you add one, and listed in the receptionist's `config.agent_rules`.</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<Dictionary<string, string>> DeleteAsync(
+        string agentId,
+        string ruleId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (agentId is null)
+            throw new ArgumentNullException(nameof(agentId));
+        if (ruleId is null)
+            throw new ArgumentNullException(nameof(ruleId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_deleteAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Delete,
+            "v1/reception/customer-facing-agents/{agent_id}/rules/{rule_id}"
+        )
+            .SetPathParameter("agent_id", agentId)
+            .SetPathParameter("rule_id", ruleId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        Dictionary<string, string> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                Dictionary<string, string>
+            >(responseBody, _jsonSerializerOptions)!;
         }
         catch (global::System.Text.Json.JsonException exception)
         {

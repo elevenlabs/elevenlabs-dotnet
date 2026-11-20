@@ -20,7 +20,7 @@ public class TextToDialogueClientMessageInputsItemTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"voice_id\":\"voice_id\",\"new_turn\":true}";
+        const string wire = "{\"text\":\"text\",\"voice_id\":\"voice_id\",\"new_turn\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.TextToDialogueClientMessageInputsItem>(wire);

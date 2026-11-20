@@ -21,7 +21,7 @@ public class WorkflowToolMaxIterationsExceededStepModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"step_latency_secs\":6.12,\"type\":\"max_iterations_exceeded\",\"max_iterations\":7}";
+            "{\"step_latency_secs\":3.59,\"type\":\"max_iterations_exceeded\",\"max_iterations\":5}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.WorkflowToolMaxIterationsExceededStepModel>(

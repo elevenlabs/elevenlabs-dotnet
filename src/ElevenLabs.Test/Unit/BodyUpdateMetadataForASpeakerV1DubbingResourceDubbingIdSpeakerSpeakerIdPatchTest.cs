@@ -21,7 +21,7 @@ public class BodyUpdateMetadataForASpeakerV1DubbingResourceDubbingIdSpeakerSpeak
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"speaker_name\":\"speaker_name\",\"voice_id\":\"voice_id\",\"voice_stability\":4.99,\"voice_similarity\":3.53,\"voice_style\":9.6,\"languages\":[\"languages\"]}";
+            "{\"speaker_name\":\"speaker_name\",\"voice_id\":\"voice_id\",\"voice_stability\":0.52,\"voice_similarity\":4.78,\"voice_style\":0.62,\"languages\":[\"languages\"]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodyUpdateMetadataForASpeakerV1DubbingResourceDubbingIdSpeakerSpeakerIdPatch>(

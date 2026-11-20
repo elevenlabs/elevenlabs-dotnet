@@ -21,7 +21,7 @@ public class ActorModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"user\":{\"name\":\"name\",\"uid\":\"uid\",\"type_id\":0,\"type\":\"type\",\"email_addr\":\"email_addr\",\"full_name\":\"full_name\",\"domain\":\"domain\"},\"app_name\":\"app_name\",\"app_uid\":\"app_uid\",\"session\":{\"key\":{}}}";
+            "{\"user\":{\"name\":\"name\",\"uid\":\"uid\",\"type_id\":1,\"type\":\"type\",\"email_addr\":\"email_addr\",\"full_name\":\"full_name\",\"domain\":\"domain\"},\"app_name\":\"app_name\",\"app_uid\":\"app_uid\",\"session\":{\"key\":{}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ActorModel>(wire);
         var serialized = TestJson.Serialize(instance);

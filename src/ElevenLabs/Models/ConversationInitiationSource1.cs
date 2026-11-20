@@ -67,6 +67,10 @@ public readonly record struct ConversationInitiationSource1 : IStringEnum
         Values.FreshdeskIntegration
     );
 
+    public static readonly ConversationInitiationSource1 PlainIntegration = new(
+        Values.PlainIntegration
+    );
+
     public static readonly ConversationInitiationSource1 SalesforceIntegration = new(
         Values.SalesforceIntegration
     );
@@ -80,6 +84,10 @@ public readonly record struct ConversationInitiationSource1 : IStringEnum
     );
 
     public static readonly ConversationInitiationSource1 SubagentTool = new(Values.SubagentTool);
+
+    public static readonly ConversationInitiationSource1 AgentMessagesApi = new(
+        Values.AgentMessagesApi
+    );
 
     public ConversationInitiationSource1(string value)
     {
@@ -224,6 +232,8 @@ public readonly record struct ConversationInitiationSource1 : IStringEnum
 
         public const string FreshdeskIntegration = "freshdesk_integration";
 
+        public const string PlainIntegration = "plain_integration";
+
         public const string SalesforceIntegration = "salesforce_integration";
 
         public const string TemplatePreview = "template_preview";
@@ -231,5 +241,7 @@ public readonly record struct ConversationInitiationSource1 : IStringEnum
         public const string GenesysBotConnector = "genesys_bot_connector";
 
         public const string SubagentTool = "subagent_tool";
+
+        public const string AgentMessagesApi = "agent_messages_api";
     }
 }

@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -51,6 +55,7 @@ public partial interface IAgentsClient
     public IWhatsappClient Whatsapp { get; }
     public ElevenLabs.Agents.ISummariesClient Summaries { get; }
     public IKnowledgeBaseClient KnowledgeBase { get; }
+    public ISubagentsClient Subagents { get; }
     public IWidgetClient Widget { get; }
     public ILinkClient Link { get; }
     public IHoldAudioClient HoldAudio { get; }
@@ -58,7 +63,7 @@ public partial interface IAgentsClient
     public ITestsClient Tests { get; }
     public IUsersClient Users { get; }
     public ITriageTicketsClient TriageTickets { get; }
-    public IPhoneNumbersClient PhoneNumbers { get; }
+    public ElevenLabs.Agents.IPhoneNumbersClient PhoneNumbers { get; }
     public ILlmClient Llm { get; }
     public ElevenLabs.Agents.IAnalyticsClient Analytics { get; }
     public ElevenLabs.Agents.IToolsClient Tools { get; }
@@ -72,7 +77,7 @@ public partial interface IAgentsClient
     public IVersionsClient Versions { get; }
     public IDeploymentsClient Deployments { get; }
     public ElevenLabs.Agents.IDraftsClient Drafts { get; }
-    public IProceduresClient Procedures { get; }
+    public ElevenLabs.Agents.IProceduresClient Procedures { get; }
     public IMergeProposalsClient MergeProposals { get; }
     public IOutboundCampaignsClient OutboundCampaigns { get; }
     public IRealtimeClient Realtime { get; }

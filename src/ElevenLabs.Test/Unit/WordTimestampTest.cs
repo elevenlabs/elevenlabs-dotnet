@@ -20,7 +20,7 @@ public class WordTimestampTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"word\":\"word\",\"start_ms\":7,\"end_ms\":9}";
+        const string wire = "{\"word\":\"word\",\"start_ms\":1,\"end_ms\":9}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WordTimestamp>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class GetToolExecutionsPageResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"executions\":[{\"tool_id\":\"tool_id\",\"tool_request_id\":\"tool_request_id\",\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"timestamp\":5.16,\"latency_secs\":7.93,\"is_error\":true,\"request_payload\":\"request_payload\",\"response_payload\":\"response_payload\",\"error_message\":\"error_message\",\"error_type\":\"error_type\",\"id\":\"id\",\"tool_call_details\":{\"type\":\"webhook\",\"method\":\"method\",\"url\":\"url\",\"headers\":{\"key\":\"headers\"},\"path_params\":{\"key\":\"path_params\"},\"query_params\":{\"key\":\"query_params\"},\"body\":\"body\"}}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"executions\":[{\"tool_id\":\"tool_id\",\"tool_request_id\":\"tool_request_id\",\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"timestamp\":6.75,\"latency_secs\":1.73,\"is_error\":false,\"request_payload\":\"request_payload\",\"response_payload\":\"response_payload\",\"error_message\":\"error_message\",\"error_type\":\"error_type\",\"id\":\"id\",\"tool_call_details\":{\"type\":\"webhook\",\"method\":\"method\",\"url\":\"url\",\"headers\":{\"key\":\"headers\"},\"path_params\":{\"key\":\"path_params\"},\"query_params\":{\"key\":\"query_params\"},\"body\":\"body\"}}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetToolExecutionsPageResponseModel>(
             wire

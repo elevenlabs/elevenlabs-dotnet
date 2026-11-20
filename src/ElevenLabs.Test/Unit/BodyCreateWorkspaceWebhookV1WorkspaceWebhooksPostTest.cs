@@ -21,7 +21,7 @@ public class BodyCreateWorkspaceWebhookV1WorkspaceWebhooksPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"settings\":{\"auth_type\":\"hmac\",\"name\":\"name\",\"webhook_url\":\"webhook_url\",\"request_headers\":{\"key\":\"request_headers\"}}}";
+            "{\"settings\":{\"auth_type\":\"hmac\",\"name\":\"name\",\"webhook_url\":\"webhook_url\",\"request_headers\":{\"key\":\"request_headers\"},\"log_redacted_fields\":[\"log_redacted_fields\"]}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodyCreateWorkspaceWebhookV1WorkspaceWebhooksPost>(

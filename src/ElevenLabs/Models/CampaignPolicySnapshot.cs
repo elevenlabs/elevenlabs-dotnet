@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -53,6 +57,9 @@ public record CampaignPolicySnapshot : IJsonOnDeserialized
     [JsonPropertyName("calling_periods")]
     public IEnumerable<CallingPeriodPolicy> CallingPeriods { get; set; } =
         new List<CallingPeriodPolicy>();
+
+    [JsonPropertyName("date_overrides")]
+    public IEnumerable<DateOverridePolicy>? DateOverrides { get; set; }
 
     [JsonPropertyName("data_collection")]
     public required DataCollectionPolicy DataCollection { get; set; }
@@ -101,6 +108,7 @@ public record CampaignPolicySnapshot : IJsonOnDeserialized
             && ValueEquality.AreEqual(Timezone, other.Timezone)
             && ValueEquality.AreEqual(Retry, other.Retry)
             && ValueEquality.AreEqual(CallingPeriods, other.CallingPeriods)
+            && ValueEquality.AreEqual(DateOverrides, other.DateOverrides)
             && ValueEquality.AreEqual(DataCollection, other.DataCollection)
             && ValueEquality.AreEqual(FollowupContext, other.FollowupContext)
             && AdditionalProperties.Equals(other.AdditionalProperties);
@@ -115,6 +123,7 @@ public record CampaignPolicySnapshot : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Timezone);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Retry);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(CallingPeriods);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(DateOverrides);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DataCollection);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FollowupContext);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();

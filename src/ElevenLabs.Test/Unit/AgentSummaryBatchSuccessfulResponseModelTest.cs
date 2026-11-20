@@ -21,7 +21,7 @@ public class AgentSummaryBatchSuccessfulResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"success\",\"data\":{\"agent_id\":\"agent_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"tags\":[\"tags\"],\"created_at_unix_secs\":9,\"updated_at_unix_secs\":0,\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"last_call_time_unix_secs\":6,\"archived\":false}}";
+            "{\"status\":\"success\",\"data\":{\"agent_id\":\"agent_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"tags\":[\"tags\"],\"created_at_unix_secs\":7,\"updated_at_unix_secs\":9,\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"last_call_time_unix_secs\":8,\"archived\":true}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentSummaryBatchSuccessfulResponseModel>(wire);

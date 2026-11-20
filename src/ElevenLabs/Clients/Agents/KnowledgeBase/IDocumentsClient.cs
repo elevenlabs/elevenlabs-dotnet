@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -94,6 +98,22 @@ public partial interface IDocumentsClient
     /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
     /// </summary>
     IDocumentsClient SetDeleteAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
+    /// <summary>
+    /// Sets method-level configuration for <c>GetChunkingOverrideAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IDocumentsClient SetGetChunkingOverrideAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    );
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateChunkingOverrideAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IDocumentsClient SetUpdateChunkingOverrideAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    );
 
     /// <summary>
     /// Sets method-level configuration for <c>GetAgentsAsync</c>.
@@ -185,6 +205,22 @@ public partial interface IDocumentsClient
     WithRawResponseTask<object> DeleteAsync(
         string documentationId,
         DeleteDocumentsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Get the stored and effective RAG chunking overrides for a document or folder.</summary>
+    WithRawResponseTask<GetDocumentChunkingOverrideResponseModel> GetChunkingOverrideAsync(
+        string documentationId,
+        GetChunkingOverrideDocumentsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Set or clear the RAG chunking override for a document or folder.</summary>
+    WithRawResponseTask<UpdateDocumentChunkingOverrideResponseModel> UpdateChunkingOverrideAsync(
+        string documentationId,
+        UpdateChunkingOverrideDocumentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

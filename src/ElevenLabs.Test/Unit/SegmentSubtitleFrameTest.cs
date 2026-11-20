@@ -20,7 +20,7 @@ public class SegmentSubtitleFrameTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"start_time\":6.62,\"end_time\":3.51,\"lines\":[\"lines\"]}";
+        const string wire = "{\"start_time\":8.76,\"end_time\":2.04,\"lines\":[\"lines\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentSubtitleFrame>(wire);
         var serialized = TestJson.Serialize(instance);

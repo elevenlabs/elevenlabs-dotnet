@@ -21,7 +21,7 @@ public class MessagesSearchResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"meta\":{\"total\":0,\"page\":4,\"page_size\":8},\"results\":[{\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"agent_name\":\"agent_name\",\"transcript_index\":2,\"chunk_text\":\"chunk_text\",\"chunk_highlights\":[{\"value\":\"value\",\"is_hit\":true}],\"score\":8.04,\"conversation_start_time_unix_secs\":7}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"meta\":{\"total\":8,\"page\":4,\"page_size\":10},\"results\":[{\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"agent_name\":\"agent_name\",\"transcript_index\":6,\"chunk_text\":\"chunk_text\",\"chunk_highlights\":[{\"value\":\"value\",\"is_hit\":true}],\"score\":6.7,\"conversation_start_time_unix_secs\":3}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MessagesSearchResponse>(wire);
         var serialized = TestJson.Serialize(instance);

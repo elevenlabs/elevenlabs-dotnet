@@ -21,7 +21,7 @@ public class SegmentCreatePayloadTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_time\":1.72,\"end_time\":5.33,\"text\":\"text\",\"translations\":{\"key\":\"translations\"}}";
+            "{\"start_time\":9.04,\"end_time\":6.68,\"text\":\"text\",\"translations\":{\"key\":\"translations\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentCreatePayload>(wire);
         var serialized = TestJson.Serialize(instance);

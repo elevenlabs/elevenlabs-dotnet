@@ -21,7 +21,7 @@ public class SafetyCommonModelOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"ivc\":{\"is_unsafe\":false,\"llm_reason\":\"llm_reason\",\"safety_prompt_version\":5,\"matched_rule_id\":[\"sexual_minors\"]},\"non_ivc\":{\"is_unsafe\":false,\"llm_reason\":\"llm_reason\",\"safety_prompt_version\":5,\"matched_rule_id\":[\"sexual_minors\"]}}";
+            "{\"ivc\":{\"is_unsafe\":true,\"llm_reason\":\"llm_reason\",\"safety_prompt_version\":4,\"matched_rule_id\":[\"sexual_minors\"]},\"non_ivc\":{\"is_unsafe\":true,\"llm_reason\":\"llm_reason\",\"safety_prompt_version\":4,\"matched_rule_id\":[\"sexual_minors\"]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SafetyCommonModelOutput>(wire);
         var serialized = TestJson.Serialize(instance);

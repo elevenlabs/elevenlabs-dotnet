@@ -21,7 +21,7 @@ public class AutoSyncInfoTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"minimum_frequency_days\":7,\"auto_remove\":true,\"consec_failures\":4,\"next_refresh_by\":4}";
+            "{\"minimum_frequency_days\":7,\"auto_remove\":true,\"consec_failures\":3,\"next_refresh_by\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AutoSyncInfo>(wire);
         var serialized = TestJson.Serialize(instance);

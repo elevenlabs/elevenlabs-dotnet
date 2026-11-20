@@ -21,7 +21,7 @@ public class AudioOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"audio\":\"audio\",\"is_final\":true,\"normalized_alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[5],\"char_durations_ms\":[2]},\"alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[3],\"char_durations_ms\":[4]}}";
+            "{\"audio\":\"audio\",\"is_final\":true,\"normalized_alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[8],\"char_durations_ms\":[3]},\"alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[2],\"char_durations_ms\":[10]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioOutput>(wire);
         var serialized = TestJson.Serialize(instance);

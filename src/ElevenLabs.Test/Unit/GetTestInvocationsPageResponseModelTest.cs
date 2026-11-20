@@ -21,7 +21,7 @@ public class GetTestInvocationsPageResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"meta\":{\"total\":0,\"page\":4,\"page_size\":8},\"results\":[{\"id\":\"id\",\"name\":\"name\",\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"version_id\":\"version_id\",\"ran_against_draft\":true,\"runs_diverged_from_version\":false,\"created_at_unix_secs\":2,\"test_run_count\":7,\"passed_count\":6,\"failed_count\":8,\"pending_count\":9,\"cancelled_count\":6,\"title\":\"title\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"repeat_count\":1,\"cancelled\":true,\"credits_used\":10,\"total_price\":7.58}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"meta\":{\"total\":8,\"page\":4,\"page_size\":10},\"results\":[{\"id\":\"id\",\"name\":\"name\",\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"version_id\":\"version_id\",\"ran_against_draft\":false,\"runs_diverged_from_version\":false,\"created_at_unix_secs\":8,\"test_run_count\":3,\"passed_count\":7,\"failed_count\":3,\"pending_count\":7,\"cancelled_count\":3,\"title\":\"title\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"repeat_count\":1,\"cancelled\":true,\"credits_used\":8,\"total_price\":5.82}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetTestInvocationsPageResponseModel>(
             wire

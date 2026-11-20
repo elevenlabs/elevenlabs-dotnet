@@ -20,7 +20,7 @@ public class CommittedTranscriptWithTimestampsWordsItemCharactersItemTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"start\":1.08,\"end\":7.56}";
+        const string wire = "{\"text\":\"text\",\"start\":4.36,\"end\":9.68}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.CommittedTranscriptWithTimestampsWordsItemCharactersItem>(

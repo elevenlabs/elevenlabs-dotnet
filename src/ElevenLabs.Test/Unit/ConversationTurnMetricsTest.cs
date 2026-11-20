@@ -21,7 +21,7 @@ public class ConversationTurnMetricsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"metrics\":{\"key\":{\"elapsed_time\":9.4}},\"convai_asr_provider\":\"convai_asr_provider\",\"convai_tts_model\":\"convai_tts_model\",\"convai_tts_cascade\":\"convai_tts_cascade\",\"voice_id\":\"voice_id\"}";
+            "{\"metrics\":{\"key\":{\"elapsed_time\":5.35}},\"convai_asr_provider\":\"convai_asr_provider\",\"convai_tts_model\":\"convai_tts_model\",\"convai_tts_cascade\":\"convai_tts_cascade\",\"voice_id\":\"voice_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationTurnMetrics>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -34,6 +34,10 @@ public readonly record struct WorkspaceGroupPermission : IStringEnum
 
     public static readonly WorkspaceGroupPermission Architect = new(Values.Architect);
 
+    public static readonly WorkspaceGroupPermission AgentsEnvironmentVariablesWrite = new(
+        Values.AgentsEnvironmentVariablesWrite
+    );
+
     public static readonly WorkspaceGroupPermission VoiceIsolator = new(Values.VoiceIsolator);
 
     public static readonly WorkspaceGroupPermission AiSpeechClassifier = new(
@@ -41,6 +45,8 @@ public readonly record struct WorkspaceGroupPermission : IStringEnum
     );
 
     public static readonly WorkspaceGroupPermission SynthidDetector = new(Values.SynthidDetector);
+
+    public static readonly WorkspaceGroupPermission Watermark = new(Values.Watermark);
 
     public static readonly WorkspaceGroupPermission AddVoiceFromVoiceLibrary = new(
         Values.AddVoiceFromVoiceLibrary
@@ -242,11 +248,15 @@ public readonly record struct WorkspaceGroupPermission : IStringEnum
 
         public const string Architect = "architect";
 
+        public const string AgentsEnvironmentVariablesWrite = "agents_environment_variables_write";
+
         public const string VoiceIsolator = "voice_isolator";
 
         public const string AiSpeechClassifier = "ai_speech_classifier";
 
         public const string SynthidDetector = "synthid_detector";
+
+        public const string Watermark = "watermark";
 
         public const string AddVoiceFromVoiceLibrary = "add_voice_from_voice_library";
 

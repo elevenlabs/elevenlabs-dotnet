@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -51,6 +55,9 @@ internal class InvitesService : BaseService
     private RequestConfig? _createAsyncConfig;
     private RequestConfig? _createBatchAsyncConfig;
     private RequestConfig? _deleteAsyncConfig;
+    private RequestConfig? _listAsyncConfig;
+    private RequestConfig? _createAsync1Config;
+    private RequestConfig? _cancelAsyncConfig;
 
     internal InvitesService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -82,6 +89,36 @@ internal class InvitesService : BaseService
     public InvitesService SetDeleteAsyncConfig(RequestConfig config)
     {
         _deleteAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>ListAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public InvitesService SetListAsyncConfig(RequestConfig config)
+    {
+        _listAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public InvitesService SetCreateAsync1Config(RequestConfig config)
+    {
+        _createAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>CancelAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public InvitesService SetCancelAsyncConfig(RequestConfig config)
+    {
+        _cancelAsyncConfig = config;
         return this;
     }
 
@@ -235,6 +272,178 @@ internal class InvitesService : BaseService
                     responseBody,
                     _jsonSerializerOptions
                 )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>List the workspace's pending invites.</summary>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<
+        List<global::ElevenLabs.ReceptionTeamInviteResponse>
+    > ListAsync(
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_listAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Get, "v1/reception/team/invites")
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        List<global::ElevenLabs.ReceptionTeamInviteResponse> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                List<global::ElevenLabs.ReceptionTeamInviteResponse>
+            >(responseBody, _jsonSerializerOptions)!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Email an invite to join the workspace. A pending invite takes a seat, so this is refused once members and invites reach the plan's team limit.</summary>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<Dictionary<string, string>> CreateAsync1(
+        global::ElevenLabs.Reception.Team.CreateTeamInviteRequest input,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_createAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Post, "v1/reception/team/invites")
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        Dictionary<string, string> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                Dictionary<string, string>
+            >(responseBody, _jsonSerializerOptions)!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Cancel a pending invite, freeing its seat.</summary>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<Dictionary<string, string>> CancelAsync(
+        global::ElevenLabs.Reception.Team.BodySmbCancelTeamInvite input,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_cancelAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Delete, "v1/reception/team/invites")
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        Dictionary<string, string> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                Dictionary<string, string>
+            >(responseBody, _jsonSerializerOptions)!;
         }
         catch (global::System.Text.Json.JsonException exception)
         {

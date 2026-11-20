@@ -20,7 +20,8 @@ public class MetronomeUsageColumnFilterTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"column\":\"model\",\"operation\":\"eq\",\"values\":[\"nostru\"]}";
+        const string wire =
+            "{\"column\":\"model\",\"operation\":\"eq\",\"values\":[\"velit in \"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MetronomeUsageColumnFilter>(wire);
         var serialized = TestJson.Serialize(instance);

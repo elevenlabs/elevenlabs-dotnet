@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -63,6 +67,10 @@ public record BodyUpdateWorkspaceWebhookV1WorkspaceWebhooksWebhookIdPatch : IJso
     [JsonPropertyName("events")]
     public IEnumerable<WorkspaceWebhookEventType>? Events { get; set; }
 
+    /// <value>Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.</value>
+    [JsonPropertyName("log_redacted_fields")]
+    public IEnumerable<string>? LogRedactedFields { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -105,6 +113,7 @@ public record BodyUpdateWorkspaceWebhookV1WorkspaceWebhooksWebhookIdPatch : IJso
             && ValueEquality.AreEqual(RetryEnabled, other.RetryEnabled)
             && ValueEquality.AreEqual(RequestHeaders, other.RequestHeaders)
             && ValueEquality.AreEqual(Events, other.Events)
+            && ValueEquality.AreEqual(LogRedactedFields, other.LogRedactedFields)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -119,6 +128,7 @@ public record BodyUpdateWorkspaceWebhookV1WorkspaceWebhooksWebhookIdPatch : IJso
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(RetryEnabled);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(RequestHeaders);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Events);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(LogRedactedFields);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

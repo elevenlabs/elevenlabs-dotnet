@@ -21,7 +21,7 @@ public class TopicSentimentAggregateTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"sentiment\":{\"count\":10,\"sum\":7.18,\"min\":0.12,\"max\":5.57},\"frustration\":{\"count\":10,\"sum\":7.18,\"min\":0.12,\"max\":5.57},\"positive_count\":4,\"neutral_count\":4,\"negative_count\":4}";
+            "{\"sentiment\":{\"count\":10,\"sum\":8.3,\"min\":5.76,\"max\":0.3},\"frustration\":{\"count\":10,\"sum\":8.3,\"min\":5.76,\"max\":0.3},\"positive_count\":8,\"neutral_count\":4,\"negative_count\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TopicSentimentAggregate>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -64,9 +68,6 @@ public record ListTriageTicketsRequest
 
     [JsonIgnore]
     public string? AssigneeUserId { get; set; }
-
-    [JsonIgnore]
-    public AgentConversationTicketIssueType? IssueType { get; set; }
 
     [JsonIgnore]
     public string? Label { get; set; }
@@ -134,9 +135,6 @@ public record ListForWorkspaceTriageTicketsRequest
 
     [JsonIgnore]
     public string? AssigneeUserId { get; set; }
-
-    [JsonIgnore]
-    public AgentConversationTicketIssueType? IssueType { get; set; }
 
     [JsonIgnore]
     public string? Label { get; set; }

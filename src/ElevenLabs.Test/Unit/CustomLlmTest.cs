@@ -21,7 +21,7 @@ public class CustomLlmTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"url\":\"url\",\"model_id\":\"model_id\",\"api_key\":{\"secret_id\":\"secret_id\"},\"auth_connection\":{\"auth_connection_id\":\"auth_connection_id\"},\"request_headers\":{\"key\":\"dolore veniam \"},\"api_version\":\"api_version\",\"api_type\":\"chat_completions\"}";
+            "{\"url\":\"url\",\"model_id\":\"model_id\",\"api_key\":{\"secret_id\":\"secret_id\"},\"auth_connection\":{\"auth_connection_id\":\"auth_connection_id\"},\"request_headers\":{\"key\":\"offici\"},\"api_version\":\"api_version\",\"api_type\":\"chat_completions\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CustomLlm>(wire);
         var serialized = TestJson.Serialize(instance);

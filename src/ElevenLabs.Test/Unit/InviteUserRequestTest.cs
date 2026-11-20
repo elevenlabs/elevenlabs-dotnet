@@ -21,7 +21,7 @@ public class InviteUserRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"email\":\"john.doe@testmail.com\",\"workspace_permission\":\"workspace_permission\",\"seat_type\":\"workspace_admin\",\"group_ids\":[\"group_ids\"],\"usage_limit\":7}";
+            "{\"email\":\"john.doe@testmail.com\",\"workspace_permission\":\"workspace_permission\",\"seat_type\":\"workspace_admin\",\"group_ids\":[\"group_ids\"],\"usage_limit\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Workspace.InviteUserRequest>(wire);
         var serialized = TestJson.Serialize(instance);

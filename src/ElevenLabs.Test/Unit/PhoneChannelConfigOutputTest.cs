@@ -21,7 +21,7 @@ public class PhoneChannelConfigOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"channel\":\"phone\",\"agent_phone_number_id\":\"agent_phone_number_id\",\"mode_config\":{\"ringing_timeout_secs\":60,\"twilio_call_recording_enabled\":true,\"twilio_machine_detection\":{\"mode\":\"enable\",\"actions\":[{\"action\":\"hang_up\",\"answered_by\":[\"human\"]}]},\"mode\":\"voice\"}}";
+            "{\"channel\":\"phone\",\"agent_phone_number_id\":\"agent_phone_number_id\",\"mode_config\":{\"ringing_timeout_secs\":60,\"twilio_call_recording_enabled\":false,\"twilio_machine_detection\":{\"mode\":\"enable\",\"actions\":[{\"action\":\"hang_up\",\"answered_by\":[\"human\"]}]},\"mode\":\"voice\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PhoneChannelConfigOutput>(wire);
         var serialized = TestJson.Serialize(instance);

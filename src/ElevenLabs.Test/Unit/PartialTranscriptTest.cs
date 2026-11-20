@@ -21,7 +21,7 @@ public class PartialTranscriptTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message_type\":\"partial_transcript\",\"text\":\"text\",\"turn_probability\":1.15,\"words\":[{\"text\":\"text\",\"start\":8.32,\"end\":1.07,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":4.52,\"characters\":[{\"text\":\"text\",\"start\":7.34,\"end\":0.75}],\"channel_index\":3}]}";
+            "{\"message_type\":\"partial_transcript\",\"text\":\"text\",\"turn_probability\":3.04,\"language_code\":\"language_code\",\"words\":[{\"text\":\"text\",\"start\":5.25,\"end\":6.01,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":7.5,\"characters\":[{\"text\":\"text\",\"start\":4.56,\"end\":5.7}],\"channel_index\":2}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PartialTranscript>(wire);
         var serialized = TestJson.Serialize(instance);

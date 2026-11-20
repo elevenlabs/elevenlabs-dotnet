@@ -21,7 +21,7 @@ public class ListCrawlJobsResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"crawl_jobs\":[{\"type\":\"discovery\",\"seed_url\":\"seed_url\",\"pattern\":\"pattern\",\"exclude_patterns\":[\"exclude_patterns\"],\"max_pages\":3,\"auto_discover\":true,\"status\":\"queued\",\"pages_identified\":3,\"pages_scraped\":2,\"pages_skipped\":8,\"pages_failed\":2,\"root_folder_id\":\"root_folder_id\",\"updated_at\":7,\"id\":\"id\",\"created_at\":0}],\"next_cursor\":\"next_cursor\"}";
+            "{\"crawl_jobs\":[{\"type\":\"discovery\",\"seed_url\":\"seed_url\",\"pattern\":\"pattern\",\"exclude_patterns\":[\"exclude_patterns\"],\"max_pages\":10,\"auto_discover\":false,\"status\":\"queued\",\"pages_identified\":1,\"pages_scraped\":9,\"pages_skipped\":0,\"pages_failed\":6,\"root_folder_id\":\"root_folder_id\",\"updated_at\":5,\"id\":\"id\",\"created_at\":3}],\"next_cursor\":\"next_cursor\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ListCrawlJobsResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

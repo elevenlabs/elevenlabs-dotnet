@@ -21,7 +21,7 @@ public class CompactionSettingsWorkflowOverrideTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":true,\"soft_trigger_fraction\":1.24,\"tail_size\":2,\"min_reclaimable_tokens\":8}";
+            "{\"enabled\":true,\"soft_trigger_fraction\":6.34,\"tail_size\":3,\"min_reclaimable_tokens\":2}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CompactionSettingsWorkflowOverride>(
             wire

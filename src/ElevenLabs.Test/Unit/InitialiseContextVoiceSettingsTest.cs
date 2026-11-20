@@ -21,7 +21,7 @@ public class InitialiseContextVoiceSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":4.02,\"use_speaker_boost\":true,\"speed\":1}";
+            "{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.78,\"use_speaker_boost\":true,\"speed\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InitialiseContextVoiceSettings>(
             wire

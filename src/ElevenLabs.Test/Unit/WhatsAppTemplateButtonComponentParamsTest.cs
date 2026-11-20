@@ -21,7 +21,7 @@ public class WhatsAppTemplateButtonComponentParamsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"button\",\"parameters\":[{\"parameter_name\":\"parameter_name\",\"type\":\"text\",\"text\":\"text\"}],\"index\":9,\"sub_type\":\"sub_type\"}";
+            "{\"type\":\"button\",\"parameters\":[{\"parameter_name\":\"parameter_name\",\"type\":\"text\",\"text\":\"text\"}],\"index\":10,\"sub_type\":\"sub_type\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.WhatsAppTemplateButtonComponentParams>(wire);

@@ -21,7 +21,7 @@ public class RealtimeConversationGroupsResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"conversation_groups\":[{\"id\":\"id\",\"title\":\"title\",\"description\":\"description\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"sharing\":{\"people_count\":2,\"shared_with_everyone\":true,\"everyone_role\":\"admin\"},\"created_at_unix_secs\":9}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
+            "{\"conversation_groups\":[{\"id\":\"id\",\"title\":\"title\",\"description\":\"description\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"sharing\":{\"people_count\":4,\"shared_with_everyone\":false,\"everyone_role\":\"admin\"},\"created_at_unix_secs\":4}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.RealtimeConversationGroupsResponseModel>(wire);

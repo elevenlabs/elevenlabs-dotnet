@@ -21,7 +21,7 @@ public class BodyStreamComposedMusicV1MusicStreamPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"prompt\":\"prompt\",\"composition_plan\":{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":104050,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":8,\"end_ms\":5},\"negative_ranges\":[{\"start_ms\":8,\"end_ms\":5}]}}]},\"music_length_ms\":576917,\"model_id\":\"music_v1\",\"seed\":394586101,\"force_instrumental\":true,\"finetune_id\":\"finetune_id\",\"store_for_inpainting\":false}";
+            "{\"prompt\":\"prompt\",\"composition_plan\":{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":104477,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":7,\"end_ms\":1},\"negative_ranges\":[{\"start_ms\":7,\"end_ms\":1}]}}]},\"music_length_ms\":452046,\"model_id\":\"music_v1\",\"seed\":1127373711,\"force_instrumental\":false,\"finetune_id\":\"finetune_id\",\"store_for_inpainting\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodyStreamComposedMusicV1MusicStreamPost>(wire);

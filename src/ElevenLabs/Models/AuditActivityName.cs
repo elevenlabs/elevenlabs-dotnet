@@ -205,6 +205,18 @@ public readonly record struct AuditActivityName : IStringEnum
         Values.NotificationPreferenceUpdate
     );
 
+    public static readonly AuditActivityName OAuthAppAuthorizationGrant = new(
+        Values.OAuthAppAuthorizationGrant
+    );
+
+    public static readonly AuditActivityName OAuthAppAuthorizationManagement = new(
+        Values.OAuthAppAuthorizationManagement
+    );
+
+    public static readonly AuditActivityName OAuthAppAuthorizationRevocation = new(
+        Values.OAuthAppAuthorizationRevocation
+    );
+
     public static readonly AuditActivityName PasswordResetEmailRequest = new(
         Values.PasswordResetEmailRequest
     );
@@ -380,6 +392,38 @@ public readonly record struct AuditActivityName : IStringEnum
     public static readonly AuditActivityName WebhookManagement = new(Values.WebhookManagement);
 
     public static readonly AuditActivityName WebhookUpdate = new(Values.WebhookUpdate);
+
+    public static readonly AuditActivityName WorkloadIdentityFederationAssignmentCreation = new(
+        Values.WorkloadIdentityFederationAssignmentCreation
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationAssignmentDeletion = new(
+        Values.WorkloadIdentityFederationAssignmentDeletion
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationAssignmentManagement = new(
+        Values.WorkloadIdentityFederationAssignmentManagement
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationPoolCreation = new(
+        Values.WorkloadIdentityFederationPoolCreation
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationPoolDeletion = new(
+        Values.WorkloadIdentityFederationPoolDeletion
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationPoolManagement = new(
+        Values.WorkloadIdentityFederationPoolManagement
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationPoolUpdate = new(
+        Values.WorkloadIdentityFederationPoolUpdate
+    );
+
+    public static readonly AuditActivityName WorkloadIdentityFederationTokenExchange = new(
+        Values.WorkloadIdentityFederationTokenExchange
+    );
 
     public static readonly AuditActivityName WorkspaceCreation = new(Values.WorkspaceCreation);
 
@@ -653,6 +697,12 @@ public readonly record struct AuditActivityName : IStringEnum
 
         public const string NotificationPreferenceUpdate = "Notification Preference Update";
 
+        public const string OAuthAppAuthorizationGrant = "OAuth App Authorization Grant";
+
+        public const string OAuthAppAuthorizationManagement = "OAuth App Authorization Management";
+
+        public const string OAuthAppAuthorizationRevocation = "OAuth App Authorization Revocation";
+
         public const string PasswordResetEmailRequest = "Password Reset Email Request";
 
         public const string PasswordResetLinkGeneration = "Password Reset Link Generation";
@@ -768,6 +818,30 @@ public readonly record struct AuditActivityName : IStringEnum
         public const string WebhookManagement = "Webhook Management";
 
         public const string WebhookUpdate = "Webhook Update";
+
+        public const string WorkloadIdentityFederationAssignmentCreation =
+            "Workload Identity Federation Assignment Creation";
+
+        public const string WorkloadIdentityFederationAssignmentDeletion =
+            "Workload Identity Federation Assignment Deletion";
+
+        public const string WorkloadIdentityFederationAssignmentManagement =
+            "Workload Identity Federation Assignment Management";
+
+        public const string WorkloadIdentityFederationPoolCreation =
+            "Workload Identity Federation Pool Creation";
+
+        public const string WorkloadIdentityFederationPoolDeletion =
+            "Workload Identity Federation Pool Deletion";
+
+        public const string WorkloadIdentityFederationPoolManagement =
+            "Workload Identity Federation Pool Management";
+
+        public const string WorkloadIdentityFederationPoolUpdate =
+            "Workload Identity Federation Pool Update";
+
+        public const string WorkloadIdentityFederationTokenExchange =
+            "Workload Identity Federation Token Exchange";
 
         public const string WorkspaceCreation = "Workspace Creation";
 

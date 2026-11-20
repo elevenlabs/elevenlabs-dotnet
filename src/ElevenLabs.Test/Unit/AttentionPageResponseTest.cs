@@ -21,7 +21,7 @@ public class AttentionPageResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"attention\":[{\"attention_id\":\"attention_id\",\"campaign_id\":\"campaign_id\",\"reason\":\"reason\",\"detail\":\"detail\",\"status\":\"open\",\"retryable\":true,\"resolution\":\"resolution\",\"created_at_unix\":8,\"updated_at_unix\":5}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"attention\":[{\"attention_id\":\"attention_id\",\"campaign_id\":\"campaign_id\",\"reason\":\"reason\",\"detail\":\"detail\",\"status\":\"open\",\"retryable\":true,\"resolution\":\"resolution\",\"created_at_unix\":1,\"updated_at_unix\":1}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AttentionPageResponse>(wire);
         var serialized = TestJson.Serialize(instance);

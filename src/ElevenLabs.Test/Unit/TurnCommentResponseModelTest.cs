@@ -21,7 +21,7 @@ public class TurnCommentResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"turn_index\":7,\"comment\":\"comment\",\"created_at_unix_secs\":4,\"owner_user_id\":\"owner_user_id\"}";
+            "{\"turn_index\":6,\"comment\":\"comment\",\"created_at_unix_secs\":8,\"owner_user_id\":\"owner_user_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TurnCommentResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

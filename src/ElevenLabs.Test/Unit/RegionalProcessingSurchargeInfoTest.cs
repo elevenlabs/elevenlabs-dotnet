@@ -20,7 +20,7 @@ public class RegionalProcessingSurchargeInfoTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"multiplier\":2.85}";
+        const string wire = "{\"multiplier\":9.64}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RegionalProcessingSurchargeInfo>(
             wire

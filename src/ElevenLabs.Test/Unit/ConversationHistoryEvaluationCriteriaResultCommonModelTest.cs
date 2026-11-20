@@ -21,7 +21,7 @@ public class ConversationHistoryEvaluationCriteriaResultCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"criteria_id\":\"criteria_id\",\"result\":\"success\",\"rationale\":\"rationale\",\"scoring_mode\":\"binary\",\"score\":2,\"max_score\":2}";
+            "{\"criteria_id\":\"criteria_id\",\"result\":\"success\",\"rationale\":\"rationale\",\"scoring_mode\":\"binary\",\"score\":8,\"max_score\":9}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryEvaluationCriteriaResultCommonModel>(

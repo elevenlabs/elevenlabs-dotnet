@@ -21,7 +21,7 @@ public class TestsFeatureUsageCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":true,\"tests_ran_after_last_modification\":false,\"tests_ran_in_last_7_days\":true}";
+            "{\"enabled\":true,\"tests_ran_after_last_modification\":true,\"tests_ran_in_last_7_days\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TestsFeatureUsageCommonModel>(wire);
         var serialized = TestJson.Serialize(instance);

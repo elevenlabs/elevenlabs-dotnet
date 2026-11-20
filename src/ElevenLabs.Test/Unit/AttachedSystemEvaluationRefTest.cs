@@ -21,7 +21,7 @@ public class AttachedSystemEvaluationRefTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"source\":\"system\",\"analysis_item_id\":\"__system_eval_criteria_sentiment\",\"scope\":\"conversation\",\"weight\":0.95}";
+            "{\"source\":\"system\",\"analysis_item_id\":\"__system_eval_criteria_sentiment\",\"scope\":\"conversation\",\"weight\":7.47}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AttachedSystemEvaluationRef>(wire);
         var serialized = TestJson.Serialize(instance);

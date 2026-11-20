@@ -21,7 +21,7 @@ public class SupportedVoiceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"label\":\"label\",\"voice_id\":\"voice_id\",\"description\":\"description\",\"language\":\"language\",\"model_family\":\"turbo\",\"optimize_streaming_latency\":3,\"stability\":0.58,\"speed\":1.04,\"similarity_boost\":0.07,\"clone_strength\":0.46}";
+            "{\"label\":\"label\",\"voice_id\":\"voice_id\",\"description\":\"description\",\"language\":\"language\",\"model_family\":\"turbo\",\"optimize_streaming_latency\":3,\"stability\":0.57,\"speed\":0.95,\"similarity_boost\":0.69,\"clone_strength\":0.88}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SupportedVoice>(wire);
         var serialized = TestJson.Serialize(instance);

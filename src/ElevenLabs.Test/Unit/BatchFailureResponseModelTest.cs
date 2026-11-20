@@ -21,7 +21,7 @@ public class BatchFailureResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"failure\",\"error_code\":5,\"error_status\":\"error_status\",\"error_message\":\"error_message\"}";
+            "{\"status\":\"failure\",\"error_code\":2,\"error_status\":\"error_status\",\"error_message\":\"error_message\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.BatchFailureResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

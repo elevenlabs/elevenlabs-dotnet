@@ -21,7 +21,7 @@ public class SpeakerAudioResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"audio_base_64\":\"audio_base_64\",\"media_type\":\"media_type\",\"duration_secs\":7.9}";
+            "{\"audio_base_64\":\"audio_base_64\",\"media_type\":\"media_type\",\"duration_secs\":7.01}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeakerAudioResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

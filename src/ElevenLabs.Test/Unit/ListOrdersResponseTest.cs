@@ -21,7 +21,7 @@ public class ListOrdersResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"orders\":[{\"order_id\":\"prodorder_zli4hfgspojdfno4fscx8zjb4w\",\"name\":\"name\",\"state\":\"open\",\"total_amount_usd\":6.65,\"sandbox\":false,\"submitted_at\":\"2023-07-20T21:03:51.582Z\",\"updated_at\":\"2023-07-20T21:03:51.582Z\",\"cancel_reason\":\"cancel_reason\"}]}";
+            "{\"orders\":[{\"order_id\":\"prodorder_8zzl5pg5hiy2kygkr6rykg1lup\",\"name\":\"name\",\"state\":\"open\",\"total_amount_usd\":7.14,\"sandbox\":false,\"submitted_at\":\"2023-07-20T21:03:51.582Z\",\"updated_at\":\"2023-07-20T21:03:51.582Z\",\"cancel_reason\":\"cancel_reason\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ListOrdersResponse>(wire);
         var serialized = TestJson.Serialize(instance);

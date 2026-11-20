@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -49,6 +53,10 @@ public record TransferToNumberToolConfigOutput : IJsonOnDeserialized
     [JsonPropertyName("transfers")]
     public IEnumerable<PhoneNumberTransfer> Transfers { get; set; } =
         new List<PhoneNumberTransfer>();
+
+    /// <value>Per-provider transfer configuration. Mutually exclusive with `transfers`: a tool sets exactly one of the two. When present, the configuration matching the call's telephony provider is offered to the agent and executed.</value>
+    [JsonPropertyName("transfer_rules")]
+    public IEnumerable<TransferRuleOutput>? TransferRules { get; set; }
 
     /// <value>Whether to play a message to the client while they wait for transfer. Defaults to true for backward compatibility.</value>
     [JsonPropertyName("enable_client_message")]
@@ -93,6 +101,7 @@ public record TransferToNumberToolConfigOutput : IJsonOnDeserialized
         return true
             && ValueEquality.AreEqual(SystemToolType, other.SystemToolType)
             && ValueEquality.AreEqual(Transfers, other.Transfers)
+            && ValueEquality.AreEqual(TransferRules, other.TransferRules)
             && ValueEquality.AreEqual(EnableClientMessage, other.EnableClientMessage)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -105,6 +114,7 @@ public record TransferToNumberToolConfigOutput : IJsonOnDeserialized
             var hash = 17;
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SystemToolType);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Transfers);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TransferRules);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(EnableClientMessage);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

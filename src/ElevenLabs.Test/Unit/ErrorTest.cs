@@ -21,7 +21,7 @@ public class ErrorTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message\":\"message\",\"error\":\"error\",\"code\":5,\"param\":\"param\"}";
+            "{\"message\":\"message\",\"error\":\"error\",\"code\":8,\"param\":\"param\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Error>(wire);
         var serialized = TestJson.Serialize(instance);

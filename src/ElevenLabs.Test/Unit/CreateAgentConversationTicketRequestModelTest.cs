@@ -21,7 +21,7 @@ public class CreateAgentConversationTicketRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"conversation_id\":\"conversation_id\",\"title\":\"title\",\"qa_comment\":\"qa_comment\",\"turn_comments\":[{\"turn_index\":1,\"comment\":\"comment\"}],\"priority\":\"low\"}";
+            "{\"conversation_id\":\"conversation_id\",\"title\":\"title\",\"qa_comment\":\"qa_comment\",\"turn_comments\":[{\"turn_index\":8,\"comment\":\"comment\"}],\"priority\":\"low\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.CreateAgentConversationTicketRequestModel>(

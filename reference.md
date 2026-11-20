@@ -1295,6 +1295,14 @@ Update audio native project
 
 Update Audio-Native Content From Url
 
+## ContentProvenanceService
+
+### `WatermarkAsync`
+
+`POST /v1/content-provenance/watermark`
+
+Check Watermark
+
 ## RulesService
 
 ### `SetAsync`
@@ -1326,6 +1334,38 @@ Remove pronunciation dictionary rules
 **Parameters:**
 
 - `pronunciationDictionaryId` (required)
+
+### `CreateAsync`
+
+`POST /v1/reception/customer-facing-agents/{agent_id}/rules`
+
+Add Rule
+
+**Parameters:**
+
+- `agentId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/customer-facing-agents/{agent_id}/rules/{rule_id}`
+
+Update Rule
+
+**Parameters:**
+
+- `agentId` (required)
+- `ruleId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/customer-facing-agents/{agent_id}/rules/{rule_id}`
+
+Delete Rule
+
+**Parameters:**
+
+- `agentId` (required)
+- `ruleId` (required)
 
 ## ApiKeysService
 
@@ -1528,6 +1568,32 @@ Update Member Usage Limit
 
 - `userId` (required)
 
+### `ListAsync1`
+
+`GET /v1/reception/team/members`
+
+Get Team Members
+
+### `UpdateRoleAsync`
+
+`PATCH /v1/reception/team/members/{user_id}`
+
+Update Team Member Role
+
+**Parameters:**
+
+- `userId` (required)
+
+### `RemoveAsync1`
+
+`DELETE /v1/reception/team/members/{user_id}`
+
+Remove Team Member
+
+**Parameters:**
+
+- `userId` (required)
+
 ## InvitesService
 
 ### `CreateAsync`
@@ -1547,6 +1613,24 @@ Invite Multiple Users
 `DELETE /v1/workspace/invites`
 
 Delete invite
+
+### `ListAsync`
+
+`GET /v1/reception/team/invites`
+
+Get Pending Team Invites
+
+### `CreateAsync1`
+
+`POST /v1/reception/team/invites`
+
+Invite Team Member
+
+### `CancelAsync`
+
+`DELETE /v1/reception/team/invites`
+
+Cancel Team Invite
 
 ## ResourcesService
 
@@ -1618,6 +1702,27 @@ Delete Workspace Webhook
 **Parameters:**
 
 - `webhookId` (required)
+
+### `TestAsync`
+
+`POST /v1/workspace/webhooks/{webhook_id}/test`
+
+Send Test Webhook Event
+
+**Parameters:**
+
+- `webhookId` (required)
+
+### `RedeliverAsync`
+
+`POST /v1/workspace/webhooks/{webhook_id}/deliveries/{delivery_id}/redeliver`
+
+Redeliver Webhook Delivery
+
+**Parameters:**
+
+- `webhookId` (required)
+- `deliveryId` (required)
 
 ## MusicService
 
@@ -1717,6 +1822,7 @@ Create Single Use Token
 **Parameters:**
 
 - `tokenType` (required)
+- `maxSessionDurationSeconds`
 
 ## ForcedAlignmentService
 
@@ -1815,6 +1921,12 @@ List conversations
 - `customGuardrailNames`
 - `sortDirection`
 
+### `CreateAsync`
+
+`POST /v1/convai/conversations`
+
+Create Conversation
+
 ### `ResolveAsync`
 
 `GET /v1/convai/conversations/resolve`
@@ -1869,6 +1981,48 @@ Get Sip Messages For A Conversation
 - `conversationId` (required)
 - `pageSize`
 - `cursor`
+
+### `SendMessageAsync`
+
+`POST /v1/convai/conversations/{conversation_id}/messages`
+
+Send Conversation Message
+
+**Parameters:**
+
+- `conversationId` (required)
+
+### `SendMessageStreamAsync`
+
+`POST /v1/convai/conversations/{conversation_id}/messages/stream`
+
+Send Conversation Message Stream
+
+**Parameters:**
+
+- `conversationId` (required)
+
+### `GetTurnAsync`
+
+`GET /v1/convai/conversations/{conversation_id}/turns/{turn_id}`
+
+Get Conversation Turn
+
+**Parameters:**
+
+- `conversationId` (required)
+- `turnId` (required)
+
+### `StreamTurnEventsAsync`
+
+`GET /v1/convai/conversations/{conversation_id}/turns/{turn_id}/events`
+
+Stream Conversation Turn Events
+
+**Parameters:**
+
+- `conversationId` (required)
+- `turnId` (required)
 
 ## TwilioService
 
@@ -2041,6 +2195,20 @@ Get Knowledge Base Summaries By Ids
 **Parameters:**
 
 - `documentIds` (required)
+
+## SubagentsService
+
+### `GetDependentsAsync`
+
+`GET /v1/convai/agents/{agent_id}/subagent-dependents`
+
+Get Agent Subagent Dependents
+
+**Parameters:**
+
+- `agentId` (required)
+- `pageSize`
+- `cursor`
 
 ## WidgetService
 
@@ -2557,7 +2725,6 @@ List Agent Conversation Tickets
 - `sortBy`
 - `ownerUserId`
 - `assigneeUserId`
-- `issueType`
 - `label`
 - `mergedIntoTicketId`
 - `search`
@@ -2589,7 +2756,6 @@ List Workspace Conversation Tickets
 - `sortBy`
 - `ownerUserId`
 - `assigneeUserId`
-- `issueType`
 - `label`
 - `mergedIntoTicketId`
 - `search`
@@ -2753,6 +2919,38 @@ Get Sip Messages For A Phone Number
 - `pageSize`
 - `cursor`
 
+### `ListAsync1`
+
+`GET /v1/reception/phone-numbers/assignments`
+
+List Phone Numbers
+
+### `CreateAsync1`
+
+`POST /v1/reception/phone-numbers/assignments`
+
+Assign Phone Number
+
+### `UpdateAsync1`
+
+`PATCH /v1/reception/phone-numbers/assignments/{phone_assignment_id}`
+
+Move Phone Number
+
+**Parameters:**
+
+- `phoneAssignmentId` (required)
+
+### `DeleteAsync1`
+
+`DELETE /v1/reception/phone-numbers/assignments/{phone_assignment_id}`
+
+Release Phone Number
+
+**Parameters:**
+
+- `phoneAssignmentId` (required)
+
 ## LlmService
 
 ### `ListAsync`
@@ -2831,6 +3029,26 @@ Delete Knowledge Base Document Or Folder
 
 - `documentationId` (required)
 - `force`
+
+### `GetChunkingOverrideAsync`
+
+`GET /v1/convai/knowledge-base/{documentation_id}/chunking-override`
+
+Get Chunking Override
+
+**Parameters:**
+
+- `documentationId` (required)
+
+### `UpdateChunkingOverrideAsync`
+
+`PATCH /v1/convai/knowledge-base/{documentation_id}/chunking-override`
+
+Update Chunking Override
+
+**Parameters:**
+
+- `documentationId` (required)
 
 ### `GetAgentsAsync`
 
@@ -4134,6 +4352,48 @@ Remove Procedure
 - `branchId` (required)
 - `procedureId` (required)
 
+### `ListAsync1`
+
+`GET /v1/reception/customer-facing-agents/{agent_id}/procedures`
+
+List Procedures
+
+**Parameters:**
+
+- `agentId` (required)
+
+### `CreateAsync1`
+
+`POST /v1/reception/customer-facing-agents/{agent_id}/procedures`
+
+Add Procedure
+
+**Parameters:**
+
+- `agentId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/customer-facing-agents/{agent_id}/procedures/{procedure_id}`
+
+Update Procedure
+
+**Parameters:**
+
+- `agentId` (required)
+- `procedureId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/customer-facing-agents/{agent_id}/procedures/{procedure_id}`
+
+Delete Procedure
+
+**Parameters:**
+
+- `agentId` (required)
+- `procedureId` (required)
+
 ## AnalysisService
 
 ### `RunAsync`
@@ -4758,6 +5018,48 @@ Delete Asset
 
 - `assetId` (required)
 
+### `ListAsync1`
+
+`GET /v1/reception/assets`
+
+Get All Assets
+
+### `CreateAsync1`
+
+`POST /v1/reception/assets`
+
+Create Asset
+
+### `GetAsync1`
+
+`GET /v1/reception/assets/{asset_id}`
+
+Get Asset
+
+**Parameters:**
+
+- `assetId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/assets/{asset_id}`
+
+Update Asset
+
+**Parameters:**
+
+- `assetId` (required)
+
+### `DeleteAsync1`
+
+`DELETE /v1/reception/assets/{asset_id}`
+
+Delete Asset
+
+**Parameters:**
+
+- `assetId` (required)
+
 ## UsageService
 
 ### `GetUsageByProductOverTimeAsync`
@@ -4779,3 +5081,510 @@ Get Workspace Cost Usage
 `POST /v1/workspace/analytics/requests`
 
 List Api Requests
+
+## ServicesService
+
+### `ListAsync`
+
+`GET /v1/reception/services`
+
+Get All Services
+
+**Parameters:**
+
+- `staffId`
+- `assetId`
+- `isActive`
+- `kind`
+
+### `CreateAsync`
+
+`POST /v1/reception/services`
+
+Create Service
+
+### `GetAsync`
+
+`GET /v1/reception/services/{service_id}`
+
+Get Service
+
+**Parameters:**
+
+- `serviceId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/services/{service_id}`
+
+Update Service
+
+**Parameters:**
+
+- `serviceId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/services/{service_id}`
+
+Delete Service
+
+**Parameters:**
+
+- `serviceId` (required)
+
+### `ConfirmUpdateAsync`
+
+`POST /v1/reception/services/{service_id}/confirm-update`
+
+Confirm Service Update
+
+**Parameters:**
+
+- `serviceId` (required)
+- `reprice`
+
+## ProductsService
+
+### `ListAsync`
+
+`GET /v1/reception/products`
+
+Get All Products
+
+**Parameters:**
+
+- `group`
+- `isActive`
+
+### `CreateAsync`
+
+`POST /v1/reception/products`
+
+Create Product
+
+### `GetAsync`
+
+`GET /v1/reception/products/{product_id}`
+
+Get Product
+
+**Parameters:**
+
+- `productId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/products/{product_id}`
+
+Update Product
+
+**Parameters:**
+
+- `productId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/products/{product_id}`
+
+Delete Product
+
+**Parameters:**
+
+- `productId` (required)
+
+## StockService
+
+### `SetAsync`
+
+`PATCH /v1/reception/products/{product_id}/stock`
+
+Update Product Stock
+
+**Parameters:**
+
+- `productId` (required)
+
+### `AdjustAsync`
+
+`POST /v1/reception/products/{product_id}/stock/adjust`
+
+Adjust Product Stock
+
+**Parameters:**
+
+- `productId` (required)
+
+## StaffService
+
+### `ListAsync`
+
+`GET /v1/reception/staff`
+
+Get All Staff
+
+### `CreateAsync`
+
+`POST /v1/reception/staff`
+
+Create Staff Member
+
+### `GetAsync`
+
+`GET /v1/reception/staff/{staff_id}`
+
+Get Staff Member
+
+**Parameters:**
+
+- `staffId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/staff/{staff_id}`
+
+Update Staff Member
+
+**Parameters:**
+
+- `staffId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/staff/{staff_id}`
+
+Delete Staff Member
+
+**Parameters:**
+
+- `staffId` (required)
+
+## ReceptionistsService
+
+### `ListAsync`
+
+`GET /v1/reception/customer-facing-agents`
+
+List Receptionists
+
+### `UpdateAsync`
+
+`PATCH /v1/reception/customer-facing-agents/{agent_id}`
+
+Update Receptionist
+
+**Parameters:**
+
+- `agentId` (required)
+
+### `ActivateAsync`
+
+`POST /v1/reception/customer-facing-agents/{agent_id}/activate`
+
+Activate Receptionist
+
+**Parameters:**
+
+- `agentId` (required)
+
+## TransferRulesService
+
+### `CreateAsync`
+
+`POST /v1/reception/customer-facing-agents/{agent_id}/transfer-rules`
+
+Add Transfer Rule
+
+**Parameters:**
+
+- `agentId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/customer-facing-agents/{agent_id}/transfer-rules/{rule_id}`
+
+Update Transfer Rule
+
+**Parameters:**
+
+- `agentId` (required)
+- `ruleId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/customer-facing-agents/{agent_id}/transfer-rules/{rule_id}`
+
+Delete Transfer Rule
+
+**Parameters:**
+
+- `agentId` (required)
+- `ruleId` (required)
+
+## HolidaysService
+
+### `ListAsync`
+
+`GET /v1/reception/holidays`
+
+Get All Holidays
+
+**Parameters:**
+
+- `startUnix`
+- `endUnix`
+- `timeOffType`
+- `resourceId`
+- `locationId`
+
+### `CreateAsync`
+
+`POST /v1/reception/holidays`
+
+Create Holiday
+
+### `GetAsync`
+
+`GET /v1/reception/holidays/{holiday_id}`
+
+Get Holiday
+
+**Parameters:**
+
+- `holidayId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/holidays/{holiday_id}`
+
+Update Holiday
+
+**Parameters:**
+
+- `holidayId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/holidays/{holiday_id}`
+
+Delete Holiday
+
+**Parameters:**
+
+- `holidayId` (required)
+
+## LocationsService
+
+### `ListAsync`
+
+`GET /v1/reception/locations`
+
+List Locations
+
+### `CreateAsync`
+
+`POST /v1/reception/locations`
+
+Create Location
+
+### `GetAsync`
+
+`GET /v1/reception/locations/{location_id}`
+
+Get Location
+
+**Parameters:**
+
+- `locationId` (required)
+
+### `UpdateAsync`
+
+`PUT /v1/reception/locations/{location_id}`
+
+Update Location
+
+**Parameters:**
+
+- `locationId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/locations/{location_id}`
+
+Delete Location
+
+**Parameters:**
+
+- `locationId` (required)
+
+## BusinessProfileService
+
+### `GetAsync`
+
+`GET /v1/reception/agent-info`
+
+Get Business Profile
+
+### `UpdateAsync`
+
+`PUT /v1/reception/agent-info`
+
+Update Business Profile
+
+## KnowledgeSourcesService
+
+### `ListAsync`
+
+`GET /v1/reception/knowledge-sources`
+
+List Knowledge Sources
+
+### `UploadAsync`
+
+`POST /v1/reception/knowledge-sources`
+
+Upload Knowledge Source
+
+### `GetAsync`
+
+`GET /v1/reception/knowledge-sources/{source_id}`
+
+Get Knowledge Source
+
+**Parameters:**
+
+- `sourceId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/reception/knowledge-sources/{source_id}`
+
+Delete Knowledge Source
+
+**Parameters:**
+
+- `sourceId` (required)
+
+### `AddUrlAsync`
+
+`POST /v1/reception/knowledge-sources/urls`
+
+Add Url Source
+
+## WorkspacesService
+
+### `ListAsync`
+
+`GET /v1/reception/reseller/workspaces`
+
+List Reseller Workspaces
+
+**Parameters:**
+
+- `cursor`
+- `pageSize`
+
+### `CreateAsync`
+
+`POST /v1/reception/reseller/workspaces`
+
+Create Reseller Workspace
+
+### `CompleteOnboardingAsync`
+
+`POST /v1/reception/reseller/workspaces/{workspace_id}/complete-onboarding`
+
+Complete Reseller Workspace Onboarding
+
+**Parameters:**
+
+- `workspaceId` (required)
+
+## SubscriptionsService
+
+### `AssignAsync`
+
+`POST /v1/reception/reseller/workspaces/{workspace_id}/subscription`
+
+Assign Reseller Tier
+
+**Parameters:**
+
+- `workspaceId` (required)
+
+### `ChangeAsync`
+
+`PATCH /v1/reception/reseller/workspaces/{workspace_id}/subscription`
+
+Change Reseller Tier
+
+**Parameters:**
+
+- `workspaceId` (required)
+
+### `UnassignAsync`
+
+`DELETE /v1/reception/reseller/workspaces/{workspace_id}/subscription`
+
+Unassign Reseller Tier
+
+**Parameters:**
+
+- `workspaceId` (required)
+
+### `RestoreAsync`
+
+`POST /v1/reception/reseller/workspaces/{workspace_id}/subscription/restore`
+
+Restore Reseller Subscription
+
+**Parameters:**
+
+- `workspaceId` (required)
+
+### `CancelPendingDowngradeAsync`
+
+`POST /v1/reception/reseller/workspaces/{workspace_id}/subscription/cancel-downgrade`
+
+Cancel Reseller Pending Downgrade
+
+**Parameters:**
+
+- `workspaceId` (required)
+
+## TiersService
+
+### `ListAsync`
+
+`GET /v1/reception/reseller/tier-ladder`
+
+List Reseller Tiers
+
+## BillingService
+
+### `ListInvoicesAsync`
+
+`GET /v1/reception/reseller/billing/invoices`
+
+List Reseller Invoices
+
+**Parameters:**
+
+- `cursor`
+- `pageSize`
+
+### `GetInvoiceAsync`
+
+`GET /v1/reception/reseller/billing/invoices/{invoice_id}`
+
+Get Reseller Invoice
+
+**Parameters:**
+
+- `invoiceId` (required)
+
+### `ListUpcomingPaymentsAsync`
+
+`GET /v1/reception/reseller/billing/upcoming`
+
+List Reseller Upcoming Payments

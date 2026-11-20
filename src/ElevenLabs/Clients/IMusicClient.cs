@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -111,7 +115,7 @@ public partial interface IMusicClient
     );
 
     /// <summary>Compose a song from a prompt or a composition plan.</summary>
-    WithRawResponseTask<ComposeDetailedMusicResponse> ComposeDetailedAsync(
+    WithRawResponseTask<global::System.IO.Stream> ComposeDetailedAsync(
         ComposeDetailedMusicRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

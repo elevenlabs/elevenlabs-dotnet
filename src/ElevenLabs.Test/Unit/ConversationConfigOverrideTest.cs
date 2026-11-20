@@ -20,7 +20,7 @@ public class ConversationConfigOverrideTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text_only\":true,\"max_duration_seconds\":7}";
+        const string wire = "{\"text_only\":true,\"max_duration_seconds\":8}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationConfigOverride>(wire);
         var serialized = TestJson.Serialize(instance);

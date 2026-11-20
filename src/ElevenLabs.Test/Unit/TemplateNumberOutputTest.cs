@@ -21,7 +21,7 @@ public class TemplateNumberOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"JWr5N6X9ZTqf8jD2LmQb\",\"status\":\"pending\",\"failure_reason\":\"timeout\",\"error_message\":\"error_message\",\"type\":\"number\",\"content\":1.49}";
+            "{\"id\":\"JWr5N6X9ZTqf8jD2LmQb\",\"status\":\"pending\",\"failure_reason\":\"timeout\",\"error_message\":\"error_message\",\"type\":\"number\",\"content\":5.97}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TemplateNumberOutput>(wire);
         var serialized = TestJson.Serialize(instance);

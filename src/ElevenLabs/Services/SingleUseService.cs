@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -64,9 +68,11 @@ internal class SingleUseService : BaseService
     }
 
     /// <summary>Generate a time limited single-use token with embedded authentication for frontend clients.</summary>
+    /// <param name="maxSessionDurationSeconds">Closes the realtime transcription session opened with this token after this many seconds. Only for realtime_scribe tokens.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.SingleUseTokenResponseModel> CreateAsync(
         global::ElevenLabs.Tokens.SingleUseTokenType tokenType,
+        long? maxSessionDurationSeconds = null,
         string? xiApiKey = null,
         RequestConfig? requestConfig = null,
         CancellationToken cancellationToken = default
@@ -76,6 +82,7 @@ internal class SingleUseService : BaseService
 
         var request = new RequestBuilder(HttpMethod.Post, "v1/single-use-token/{token_type}")
             .SetPathParameter("token_type", tokenType.Value)
+            .SetOptionalQueryParameter("max_session_duration_seconds", maxSessionDurationSeconds)
             .SetOptionalHeader("xi-api-key", xiApiKey)
             .Build();
 

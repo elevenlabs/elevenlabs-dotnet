@@ -21,7 +21,7 @@ public class TicketStatusChangeResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"open\",\"changed_by_user_id\":\"changed_by_user_id\",\"changed_at_unix_secs\":6}";
+            "{\"status\":\"open\",\"changed_by_user_id\":\"changed_by_user_id\",\"changed_at_unix_secs\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TicketStatusChangeResponseModel>(
             wire

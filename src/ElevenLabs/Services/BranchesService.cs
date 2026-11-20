@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -397,11 +401,11 @@ internal class BranchesService : BaseService
         return result;
     }
 
-    /// <summary>Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.</summary>
+    /// <summary>Returns the result of merging the source branch into the target branch without performing the merge. When `conflicts` is not empty, the merge itself is rejected unless `conflict_resolutions` settles every conflict or `force` is set; until then the returned configuration shows one side of each conflict only as a placeholder.</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="sourceBranchId">Unique identifier for the source branch to merge from.</param>
     /// <param name="targetBranchId">The ID of the target branch to merge into.</param>
-    /// <param name="force">When true, source branch changes always win conflicts regardless of timestamps</param>
+    /// <param name="force">When true, the preview keeps the source branch's value for every conflict, as a merge with `force` does. Without it, a merge with conflicts needs `conflict_resolutions`.</param>
     /// <param name="includeProcedureGeneratedWorkflowElements">Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.MergePreviewResponseModel> PreviewMergeAsync(
@@ -475,7 +479,7 @@ internal class BranchesService : BaseService
         return result;
     }
 
-    /// <summary>Merge a branch into a target branch</summary>
+    /// <summary>Merge a branch into a target branch. If both branches changed the same field, the merge returns 409 unless `conflict_resolutions` settles every conflict the merge preview reports, or `force` is set.</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="sourceBranchId">Unique identifier for the source branch to merge from.</param>
     /// <param name="targetBranchId">The ID of the target branch to merge into.</param>
@@ -547,7 +551,7 @@ internal class BranchesService : BaseService
         return result;
     }
 
-    /// <summary>Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.</summary>
+    /// <summary>Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it. When `conflicts` is not empty, the rebase itself is rejected unless `conflict_resolutions` settles every conflict; until then the returned configuration keeps the given branch's side of each conflict.</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="branchId">Unique identifier for the source branch to merge from.</param>
     /// <param name="sourceBranchId">The ID of the branch to pull changes from. Defaults to the agent's main branch.</param>
@@ -620,7 +624,7 @@ internal class BranchesService : BaseService
         return result;
     }
 
-    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.</summary>
+    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="branchId">Unique identifier for the source branch to merge from.</param>
     /// <param name="sourceBranchId">The ID of the branch to pull changes from. Defaults to the agent's main branch.</param>

@@ -72,6 +72,10 @@ public readonly record struct PermissionType : IStringEnum
 
     public static readonly PermissionType AgentsArchitect = new(Values.AgentsArchitect);
 
+    public static readonly PermissionType AgentsEnvironmentVariablesWrite = new(
+        Values.AgentsEnvironmentVariablesWrite
+    );
+
     public static readonly PermissionType MusicGeneration = new(Values.MusicGeneration);
 
     public static readonly PermissionType ImageVideoGeneration = new(Values.ImageVideoGeneration);
@@ -133,6 +137,8 @@ public readonly record struct PermissionType : IStringEnum
     );
 
     public static readonly PermissionType SynthidDetector = new(Values.SynthidDetector);
+
+    public static readonly PermissionType Watermark = new(Values.Watermark);
 
     public PermissionType(string value)
     {
@@ -290,6 +296,8 @@ public readonly record struct PermissionType : IStringEnum
 
         public const string AgentsArchitect = "agents_architect";
 
+        public const string AgentsEnvironmentVariablesWrite = "agents_environment_variables_write";
+
         public const string MusicGeneration = "music_generation";
 
         public const string ImageVideoGeneration = "image_video_generation";
@@ -333,5 +341,7 @@ public readonly record struct PermissionType : IStringEnum
         public const string CopyResourcesCrossWorkspace = "copy_resources_cross_workspace";
 
         public const string SynthidDetector = "synthid_detector";
+
+        public const string Watermark = "watermark";
     }
 }

@@ -21,7 +21,7 @@ public class TtsVoiceSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"stability\":0.54,\"similarity_boost\":0.9,\"style\":0.74,\"use_speaker_boost\":true,\"speed\":0.79}";
+            "{\"stability\":0.61,\"similarity_boost\":0.73,\"style\":0.72,\"use_speaker_boost\":false,\"speed\":0.91}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TtsVoiceSettings>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -51,11 +55,16 @@ internal class ConversationsService : BaseService
     private RequestConfig? _getSignedUrlAsyncConfig;
     private RequestConfig? _getWebrtcTokenAsyncConfig;
     private RequestConfig? _listAsyncConfig;
+    private RequestConfig? _createAsyncConfig;
     private RequestConfig? _resolveAsyncConfig;
     private RequestConfig? _getAsyncConfig;
     private RequestConfig? _deleteAsyncConfig;
     private RequestConfig? _getSummaryAsyncConfig;
     private RequestConfig? _getSipMessagesAsyncConfig;
+    private RequestConfig? _sendMessageAsyncConfig;
+    private RequestConfig? _sendMessageStreamAsyncConfig;
+    private RequestConfig? _getTurnAsyncConfig;
+    private RequestConfig? _streamTurnEventsAsyncConfig;
 
     internal ConversationsService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -87,6 +96,16 @@ internal class ConversationsService : BaseService
     public ConversationsService SetListAsyncConfig(RequestConfig config)
     {
         _listAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public ConversationsService SetCreateAsyncConfig(RequestConfig config)
+    {
+        _createAsyncConfig = config;
         return this;
     }
 
@@ -137,6 +156,46 @@ internal class ConversationsService : BaseService
     public ConversationsService SetGetSipMessagesAsyncConfig(RequestConfig config)
     {
         _getSipMessagesAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>SendMessageAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public ConversationsService SetSendMessageAsyncConfig(RequestConfig config)
+    {
+        _sendMessageAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>SendMessageStreamAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public ConversationsService SetSendMessageStreamAsyncConfig(RequestConfig config)
+    {
+        _sendMessageStreamAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>GetTurnAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public ConversationsService SetGetTurnAsyncConfig(RequestConfig config)
+    {
+        _getTurnAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>StreamTurnEventsAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public ConversationsService SetStreamTurnEventsAsyncConfig(RequestConfig config)
+    {
+        _streamTurnEventsAsyncConfig = config;
         return this;
     }
 
@@ -478,6 +537,61 @@ internal class ConversationsService : BaseService
         return result;
     }
 
+    /// <summary>Create a text conversation with an agent. This does not run the agent, and the agent sends no first message. This endpoint is in alpha and may change.</summary>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.CreateAgentConversationResponse> CreateAsync(
+        global::ElevenLabs.Agents.CreateAgentConversationRequest input,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+
+        var resolvedConfig = GetResolvedConfig(_createAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Post, "v1/convai/conversations")
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.CreateAgentConversationResponse result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.CreateAgentConversationResponse>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
     /// <summary>Resolve a conversation URL (a Slack message URL or a Zendesk ticket URL) to the deterministic conversation ID for the given agent, then confirm the conversation exists.</summary>
     /// <param name="agentId">Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.</param>
     /// <param name="reference">A Slack message URL or a Zendesk ticket URL.</param>
@@ -783,5 +897,219 @@ internal class ConversationsService : BaseService
         }
 
         return result;
+    }
+
+    /// <summary>Send input to a conversation, and wait until the agent finishes or waits on client tool results. With `background` set to true, the endpoint returns 202 when the server admits the turn. Then stream the turn's events with `Last-Event-ID` set to the `stream_cursor`. This endpoint is in alpha and may change.</summary>
+    /// <param name="conversationId">The Conversation ID</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.ConversationTurn> SendMessageAsync(
+        global::ElevenLabs.Agents.SendConversationMessageRequest input,
+        string conversationId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (conversationId is null)
+            throw new ArgumentNullException(nameof(conversationId));
+
+        var resolvedConfig = GetResolvedConfig(_sendMessageAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Post,
+            "v1/convai/conversations/{conversation_id}/messages"
+        )
+            .SetPathParameter("conversation_id", conversationId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.ConversationTurn result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ConversationTurn>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Send input to a conversation, and stream the events of the request as server-sent events. The last event is `stream_ended`, which has the outcome of the turn. This endpoint is in alpha and may change.</summary>
+    /// <param name="conversationId">The Conversation ID</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public global::ElevenLabs.WithRawResponseStream<global::ElevenLabs.StreamEnvelope> SendMessageStreamAsync(
+        global::ElevenLabs.Agents.SendConversationMessageStreamRequest input,
+        string conversationId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (conversationId is null)
+            throw new ArgumentNullException(nameof(conversationId));
+
+        var resolvedConfig = GetResolvedConfig(_sendMessageStreamAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Post,
+            "v1/convai/conversations/{conversation_id}/messages/stream"
+        )
+            .SetPathParameter("conversation_id", conversationId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        return new global::ElevenLabs.WithRawResponseStream<global::ElevenLabs.StreamEnvelope>(
+            ExecuteStreamWithRawResponseAsync<global::ElevenLabs.StreamEnvelope>(
+                request,
+                true,
+                false,
+                resolvedConfig,
+                null,
+                null,
+                false,
+                cancellationToken
+            ),
+            cancellationToken
+        );
+    }
+
+    /// <summary>Get the status and output of a turn. The status comes from the stored transcript, so a turn that failed after the agent started can show as completed. Only the `stream_ended` event has the real outcome. This endpoint is in alpha and may change.</summary>
+    /// <param name="conversationId">The Conversation ID</param>
+    /// <param name="turnId">The Turn ID</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.ConversationTurn> GetTurnAsync(
+        string conversationId,
+        string turnId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (conversationId is null)
+            throw new ArgumentNullException(nameof(conversationId));
+        if (turnId is null)
+            throw new ArgumentNullException(nameof(turnId));
+
+        var resolvedConfig = GetResolvedConfig(_getTurnAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Get,
+            "v1/convai/conversations/{conversation_id}/turns/{turn_id}"
+        )
+            .SetPathParameter("conversation_id", conversationId)
+            .SetPathParameter("turn_id", turnId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.ConversationTurn result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ConversationTurn>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Stream the events of a turn as server-sent events. Send `Last-Event-ID` to resume after an event. The server keeps events for about an hour. This endpoint is in alpha and may change.</summary>
+    /// <param name="conversationId">The Conversation ID</param>
+    /// <param name="turnId">The Turn ID</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public global::ElevenLabs.WithRawResponseStream<global::ElevenLabs.StreamEnvelope> StreamTurnEventsAsync(
+        string conversationId,
+        string turnId,
+        string? lastEventId = null,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (conversationId is null)
+            throw new ArgumentNullException(nameof(conversationId));
+        if (turnId is null)
+            throw new ArgumentNullException(nameof(turnId));
+
+        var resolvedConfig = GetResolvedConfig(_streamTurnEventsAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Get,
+            "v1/convai/conversations/{conversation_id}/turns/{turn_id}/events"
+        )
+            .SetPathParameter("conversation_id", conversationId)
+            .SetPathParameter("turn_id", turnId)
+            .SetHeader("Last-Event-ID", lastEventId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        return new global::ElevenLabs.WithRawResponseStream<global::ElevenLabs.StreamEnvelope>(
+            ExecuteStreamWithRawResponseAsync<global::ElevenLabs.StreamEnvelope>(
+                request,
+                true,
+                false,
+                resolvedConfig,
+                null,
+                null,
+                false,
+                cancellationToken
+            ),
+            cancellationToken
+        );
     }
 }

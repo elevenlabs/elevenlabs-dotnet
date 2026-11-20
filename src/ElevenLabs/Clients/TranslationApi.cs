@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -108,7 +112,7 @@ public partial class TranslationApi
             .AddDeepObject("apply_text_normalization", _options.ApplyTextNormalization)
             .AddDeepObject("eagerness", _options.Eagerness)
             .Add("client_session_id", _options.ClientSessionId)
-            .Add("enable_zrm", _options.EnableZrm)
+            .Add("enable_logging", _options.EnableLogging)
             .MergeAdditional(_options.AdditionalQueryParameters)
             .Build();
         if (query.Length > 0)
@@ -401,7 +405,7 @@ public partial class TranslationApi
 
         public string? ClientSessionId { get; set; }
 
-        public bool? EnableZrm { get; set; }
+        public bool? EnableLogging { get; set; }
 
         /// <summary>
         /// Enable or disable automatic reconnection. Default: false.

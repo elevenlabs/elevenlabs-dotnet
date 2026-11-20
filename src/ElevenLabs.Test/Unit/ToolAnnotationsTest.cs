@@ -21,7 +21,7 @@ public class ToolAnnotationsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"title\",\"readOnlyHint\":true,\"destructiveHint\":false,\"idempotentHint\":true,\"openWorldHint\":false}";
+            "{\"title\":\"title\",\"readOnlyHint\":false,\"destructiveHint\":false,\"idempotentHint\":false,\"openWorldHint\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ToolAnnotations>(wire);
         var serialized = TestJson.Serialize(instance);

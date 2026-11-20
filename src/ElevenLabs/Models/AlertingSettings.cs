@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -55,6 +59,10 @@ public record AlertingSettings : IJsonOnDeserialized
     /// <value>How many minutes an alert can stay inactive before it is auto-resolved. Unset values fall through to the next layer.</value>
     [JsonPropertyName("auto_resolve_after_inactive_minutes")]
     public int? AutoResolveAfterInactiveMinutes { get; set; }
+
+    /// <value>Environments whose conversations are monitored, e.g. ``['production']``. The list must include ``production``. Unset values fall through to the next layer; when no layer sets it, every environment is monitored.</value>
+    [JsonPropertyName("environments")]
+    public IEnumerable<string>? Environments { get; set; }
 
     /// <value>Delivery channels for alert lifecycle notifications. Stacked with other layers and deduped by ``webhook_id``, PagerDuty ``connection_id``, or Slack ``(connection_id, channel_id)``.</value>
     [JsonPropertyName("notifiers")]
@@ -102,6 +110,7 @@ public record AlertingSettings : IJsonOnDeserialized
                 AutoResolveAfterInactiveMinutes,
                 other.AutoResolveAfterInactiveMinutes
             )
+            && ValueEquality.AreEqual(Environments, other.Environments)
             && ValueEquality.AreEqual(Notifiers, other.Notifiers)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -114,6 +123,7 @@ public record AlertingSettings : IJsonOnDeserialized
             var hash = 17;
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MonitorConfigs);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AutoResolveAfterInactiveMinutes);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Environments);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Notifiers);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

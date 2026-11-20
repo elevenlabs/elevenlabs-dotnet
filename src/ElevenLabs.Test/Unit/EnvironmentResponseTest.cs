@@ -21,7 +21,7 @@ public class EnvironmentResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"updated_at_unix_secs\":6,\"created_by_user_id\":\"created_by_user_id\"}";
+            "{\"name\":\"name\",\"updated_at_unix_secs\":9,\"created_by_user_id\":\"created_by_user_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.EnvironmentResponse>(wire);
         var serialized = TestJson.Serialize(instance);

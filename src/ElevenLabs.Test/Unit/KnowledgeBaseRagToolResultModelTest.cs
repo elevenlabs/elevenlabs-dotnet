@@ -21,7 +21,7 @@ public class KnowledgeBaseRagToolResultModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"result_type\":\"knowledge_base_rag_success\",\"status\":\"success\",\"chunk_count\":5,\"message\":\"Referenced knowledge base.\",\"chunks\":[{\"chunk_id\":\"chunk_id\",\"document_id\":\"document_id\",\"content\":\"content\"}]}";
+            "{\"result_type\":\"knowledge_base_rag_success\",\"status\":\"success\",\"chunk_count\":10,\"message\":\"Referenced knowledge base.\",\"chunks\":[{\"chunk_id\":\"chunk_id\",\"document_id\":\"document_id\",\"content\":\"content\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.KnowledgeBaseRagToolResultModel>(
             wire

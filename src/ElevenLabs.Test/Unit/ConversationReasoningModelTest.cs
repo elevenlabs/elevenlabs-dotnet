@@ -20,7 +20,7 @@ public class ConversationReasoningModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"summary\":\"summary\",\"provider_redact\":true}";
+        const string wire = "{\"summary\":\"summary\",\"provider_redact\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationReasoningModel>(wire);
         var serialized = TestJson.Serialize(instance);

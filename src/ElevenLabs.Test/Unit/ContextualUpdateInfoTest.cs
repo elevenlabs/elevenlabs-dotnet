@@ -20,7 +20,7 @@ public class ContextualUpdateInfoTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"context_id\":\"context_id\",\"is_superseded\":false}";
+        const string wire = "{\"context_id\":\"context_id\",\"is_superseded\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ContextualUpdateInfo>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class InitialiseContextTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":4.02,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[2]},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\",\"context_id\":\"context_id\"}";
+            "{\"text\":\"text\",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.78,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[5]},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\",\"context_id\":\"context_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InitialiseContext>(wire);
         var serialized = TestJson.Serialize(instance);

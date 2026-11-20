@@ -21,7 +21,7 @@ public class TransferBranchInfoTrafficSplitTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"branch_reason\":\"traffic_split\",\"branch_id\":\"branch_id\",\"traffic_percentage\":3.58}";
+            "{\"branch_reason\":\"traffic_split\",\"branch_id\":\"branch_id\",\"traffic_percentage\":9.91}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TransferBranchInfoTrafficSplit>(
             wire

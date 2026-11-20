@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -58,6 +62,9 @@ public record ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsI
 
     [JsonPropertyName("webhook_details")]
     public required ConversationHistoryTranscriptToolCallWebhookDetails WebhookDetails { get; set; }
+
+    [JsonPropertyName("function_details")]
+    public ConversationHistoryTranscriptToolCallIntegrationFunctionDetails? FunctionDetails { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -103,6 +110,7 @@ public record ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsI
             && ValueEquality.AreEqual(CredentialId, other.CredentialId)
             && ValueEquality.AreEqual(IntegrationConnectionId, other.IntegrationConnectionId)
             && ValueEquality.AreEqual(WebhookDetails, other.WebhookDetails)
+            && ValueEquality.AreEqual(FunctionDetails, other.FunctionDetails)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -117,6 +125,7 @@ public record ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsI
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(CredentialId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(IntegrationConnectionId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(WebhookDetails);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(FunctionDetails);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

@@ -21,7 +21,7 @@ public class TicketMergeProposalLinkResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"merge_proposal_id\":\"merge_proposal_id\",\"linked_by_user_id\":\"linked_by_user_id\",\"linked_at_unix_secs\":7}";
+            "{\"merge_proposal_id\":\"merge_proposal_id\",\"linked_by_user_id\":\"linked_by_user_id\",\"linked_at_unix_secs\":1}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.TicketMergeProposalLinkResponseModel>(wire);

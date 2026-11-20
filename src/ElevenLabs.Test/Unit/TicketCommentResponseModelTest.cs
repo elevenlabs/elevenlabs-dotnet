@@ -21,7 +21,7 @@ public class TicketCommentResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"comment\":\"comment\",\"created_at_unix_secs\":8,\"owner_user_id\":\"owner_user_id\"}";
+            "{\"comment\":\"comment\",\"created_at_unix_secs\":10,\"owner_user_id\":\"owner_user_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TicketCommentResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

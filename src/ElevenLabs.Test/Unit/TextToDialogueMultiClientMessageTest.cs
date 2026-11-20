@@ -21,7 +21,7 @@ public class TextToDialogueMultiClientMessageTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"inputs\":[{\"text\":\"text\",\"voice_id\":\"voice_id\",\"new_turn\":false}],\"flush\":false,\"close_socket\":false,\"keep_alive\":false,\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\",\"single_use_token\":\"single_use_token\",\"voices\":[\"voices\"],\"voice_settings\":{\"stability\":0.5},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"context_id\":\"context_id\",\"close_context\":true}";
+            "{\"inputs\":[{\"text\":\"text\",\"voice_id\":\"voice_id\",\"new_turn\":true}],\"flush\":true,\"close_socket\":false,\"keep_alive\":true,\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\",\"single_use_token\":\"single_use_token\",\"voices\":[\"voices\"],\"voice_settings\":{\"stability\":0.5},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"context_id\":\"context_id\",\"close_context\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TextToDialogueMultiClientMessage>(
             wire

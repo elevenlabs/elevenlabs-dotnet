@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -85,6 +89,7 @@ public partial class SingleUseClient
                 () =>
                     _service.CreateAsync(
                         tokenType,
+                        request.MaxSessionDurationSeconds,
                         request.XiApiKey,
                         cancellationToken: cancellationToken
                     )

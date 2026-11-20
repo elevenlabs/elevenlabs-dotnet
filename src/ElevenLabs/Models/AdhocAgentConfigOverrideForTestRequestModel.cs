@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -44,11 +48,12 @@ public record AdhocAgentConfigOverrideForTestRequestModel : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("conversation_config")]
-    public required ConversationalConfig ConversationConfig { get; set; }
+    public ConversationalConfig? ConversationConfig { get; set; }
 
     [JsonPropertyName("platform_settings")]
-    public required AgentPlatformSettingsRequestModel PlatformSettings { get; set; }
+    public AgentPlatformSettingsRequestModel? PlatformSettings { get; set; }
 
+    /// <value>A workflow to run instead of the agent's. It replaces the agent's workflow whole.</value>
     [JsonPropertyName("workflow")]
     public AgentWorkflowRequestModel? Workflow { get; set; }
 

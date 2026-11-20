@@ -21,7 +21,7 @@ public class FileInputConfigWorkflowOverrideTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":false,\"max_files_in_memory\":6,\"max_files_per_conversation\":8}";
+            "{\"enabled\":true,\"max_files_in_memory\":8,\"max_files_per_conversation\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FileInputConfigWorkflowOverride>(
             wire

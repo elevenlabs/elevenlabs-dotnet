@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -43,23 +47,23 @@ public record PatchAgentConversationTicketRequestModel : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    /// <value>If provided, updates the ticket title. Omit to leave unchanged.</value>
+    /// <value>If provided, updates the agent issue's title. Omit to leave unchanged.</value>
     [JsonPropertyName("title")]
     public string? Title { get; set; }
 
-    /// <value>If provided, updates the ticket description. Omit to leave unchanged.</value>
+    /// <value>If provided, updates the agent issue's description. Omit to leave unchanged.</value>
     [JsonPropertyName("qa_comment")]
     public string? QaComment { get; set; }
 
-    /// <value>If provided, updates the ticket status. Omit to leave unchanged.</value>
+    /// <value>If provided, updates the agent issue's status. Omit to leave unchanged.</value>
     [JsonPropertyName("status")]
     public AgentConversationTicketStatus? Status { get; set; }
 
-    /// <value>If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.</value>
+    /// <value>If provided, updates who is responsible for resolving this agent issue. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.</value>
     [JsonPropertyName("assignee_user_id")]
     public string? AssigneeUserId { get; set; }
 
-    /// <value>If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.</value>
+    /// <value>If provided, updates how urgently the agent issue needs attention. Pass null to clear it. Omit to leave unchanged.</value>
     [JsonPropertyName("priority")]
     public AgentConversationTicketPriority? Priority { get; set; }
 

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -231,7 +235,7 @@ public partial class BranchesClient
             )
         );
 
-    /// <summary>Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.</summary>
+    /// <summary>Returns the result of merging the source branch into the target branch without performing the merge. When `conflicts` is not empty, the merge itself is rejected unless `conflict_resolutions` settles every conflict or `force` is set; until then the returned configuration shows one side of each conflict only as a placeholder.</summary>
     public WithRawResponseTask<MergePreviewResponseModel> PreviewMergeAsync(
         string agentId,
         string sourceBranchId,
@@ -255,7 +259,7 @@ public partial class BranchesClient
             )
         );
 
-    /// <summary>Merge a branch into a target branch</summary>
+    /// <summary>Merge a branch into a target branch. If both branches changed the same field, the merge returns 409 unless `conflict_resolutions` settles every conflict the merge preview reports, or `force` is set.</summary>
     public WithRawResponseTask<object> MergeAsync(
         string agentId,
         string sourceBranchId,
@@ -278,7 +282,7 @@ public partial class BranchesClient
             )
         );
 
-    /// <summary>Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.</summary>
+    /// <summary>Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it. When `conflicts` is not empty, the rebase itself is rejected unless `conflict_resolutions` settles every conflict; until then the returned configuration keeps the given branch's side of each conflict.</summary>
     public WithRawResponseTask<MergePreviewResponseModel> PreviewRebaseAsync(
         string agentId,
         string branchId,
@@ -301,7 +305,7 @@ public partial class BranchesClient
             )
         );
 
-    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.</summary>
+    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.</summary>
     public WithRawResponseTask<object> RebaseAsync(
         string agentId,
         string branchId,

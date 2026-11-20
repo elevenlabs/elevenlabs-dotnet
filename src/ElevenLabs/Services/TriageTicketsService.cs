@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -173,19 +177,18 @@ internal class TriageTicketsService : BaseService
         return this;
     }
 
-    /// <summary>List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.</summary>
-    /// <param name="pageSize">How many agent conversation tickets to return. Can not exceed 100.</param>
-    /// <param name="conversationId">Filter tickets by conversation id.</param>
-    /// <param name="status">Filter tickets by status.</param>
-    /// <param name="sources">Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.</param>
-    /// <param name="priorities">Filter tickets by priority. Repeat the parameter to filter by multiple priorities.</param>
-    /// <param name="sortBy">Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).</param>
-    /// <param name="ownerUserId">Filter tickets by creator. Use 'agent' for agent-raised tickets.</param>
-    /// <param name="assigneeUserId">Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.</param>
-    /// <param name="issueType">Filter clusters by issue type.</param>
-    /// <param name="label">Filter tickets by an exact label.</param>
-    /// <param name="mergedIntoTicketId">Filter tickets merged into this ticket.</param>
-    /// <param name="search">Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.</param>
+    /// <summary>List an agent's issues, ordered by most recently created first unless sorted by priority. These are issues about the agent's own performance on a conversation (to work on with Architect), not tickets an agent opens for end users.</summary>
+    /// <param name="pageSize">How many agent issues to return. Can not exceed 100.</param>
+    /// <param name="conversationId">Filter agent issues by conversation id.</param>
+    /// <param name="status">Filter agent issues by status.</param>
+    /// <param name="sources">Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.</param>
+    /// <param name="priorities">Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.</param>
+    /// <param name="sortBy">Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).</param>
+    /// <param name="ownerUserId">Filter agent issues by creator. Use 'agent' for agent-raised issues.</param>
+    /// <param name="assigneeUserId">Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.</param>
+    /// <param name="label">Filter agent issues by an exact label.</param>
+    /// <param name="mergedIntoTicketId">Filter agent issues merged into this issue.</param>
+    /// <param name="search">Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.</param>
     /// <param name="cursor">Used for fetching next page. Cursor is returned in the response.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.GetAgentConversationTicketsPageResponseModel> ListAsync(
@@ -198,7 +201,6 @@ internal class TriageTicketsService : BaseService
         global::ElevenLabs.AgentConversationTicketSortBy? sortBy = null,
         string? ownerUserId = null,
         string? assigneeUserId = null,
-        global::ElevenLabs.AgentConversationTicketIssueType? issueType = null,
         string? label = null,
         string? mergedIntoTicketId = null,
         string? search = null,
@@ -226,7 +228,6 @@ internal class TriageTicketsService : BaseService
             .SetOptionalQueryParameter("sort_by", sortBy?.Value)
             .SetOptionalQueryParameter("owner_user_id", ownerUserId)
             .SetOptionalQueryParameter("assignee_user_id", assigneeUserId)
-            .SetOptionalQueryParameter("issue_type", issueType?.Value)
             .SetOptionalQueryParameter("label", label)
             .SetOptionalQueryParameter("merged_into_ticket_id", mergedIntoTicketId)
             .SetOptionalQueryParameter("search", search)
@@ -270,7 +271,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.</summary>
+    /// <summary>Manually raise a follow-up issue against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> CreateManualAsync(
         global::ElevenLabs.Agents.CreateManualTicketRequestModel input,
@@ -332,19 +333,18 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.</summary>
-    /// <param name="pageSize">How many agent conversation tickets to return. Can not exceed 100.</param>
-    /// <param name="agentId">Only tickets for this agent.</param>
-    /// <param name="status">Filter tickets by status.</param>
-    /// <param name="sources">Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.</param>
-    /// <param name="priorities">Filter tickets by priority. Repeat the parameter to filter by multiple priorities.</param>
-    /// <param name="sortBy">Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).</param>
-    /// <param name="ownerUserId">Filter tickets by creator. Use 'agent' for agent-raised tickets.</param>
-    /// <param name="assigneeUserId">Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.</param>
-    /// <param name="issueType">Filter clusters by issue type.</param>
-    /// <param name="label">Filter tickets by an exact label.</param>
-    /// <param name="mergedIntoTicketId">Filter tickets merged into this ticket.</param>
-    /// <param name="search">Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.</param>
+    /// <summary>List agent issues across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, issues assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Issues for agents the caller cannot access are omitted.</summary>
+    /// <param name="pageSize">How many agent issues to return. Can not exceed 100.</param>
+    /// <param name="agentId">Only issues for this agent.</param>
+    /// <param name="status">Filter agent issues by status.</param>
+    /// <param name="sources">Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.</param>
+    /// <param name="priorities">Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.</param>
+    /// <param name="sortBy">Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).</param>
+    /// <param name="ownerUserId">Filter agent issues by creator. Use 'agent' for agent-raised issues.</param>
+    /// <param name="assigneeUserId">Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.</param>
+    /// <param name="label">Filter agent issues by an exact label.</param>
+    /// <param name="mergedIntoTicketId">Filter agent issues merged into this issue.</param>
+    /// <param name="search">Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.</param>
     /// <param name="cursor">Used for fetching next page. Cursor is returned in the response.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.GetAgentConversationTicketsPageResponseModel> ListForWorkspaceAsync(
@@ -356,7 +356,6 @@ internal class TriageTicketsService : BaseService
         global::ElevenLabs.AgentConversationTicketSortBy? sortBy = null,
         string? ownerUserId = null,
         string? assigneeUserId = null,
-        global::ElevenLabs.AgentConversationTicketIssueType? issueType = null,
         string? label = null,
         string? mergedIntoTicketId = null,
         string? search = null,
@@ -377,7 +376,6 @@ internal class TriageTicketsService : BaseService
             .SetOptionalQueryParameter("sort_by", sortBy?.Value)
             .SetOptionalQueryParameter("owner_user_id", ownerUserId)
             .SetOptionalQueryParameter("assignee_user_id", assigneeUserId)
-            .SetOptionalQueryParameter("issue_type", issueType?.Value)
             .SetOptionalQueryParameter("label", label)
             .SetOptionalQueryParameter("merged_into_ticket_id", mergedIntoTicketId)
             .SetOptionalQueryParameter("search", search)
@@ -421,7 +419,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.</summary>
+    /// <summary>Raise an issue about an agent's performance on a conversation, to work on with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> CreateAsync(
         global::ElevenLabs.Agents.CreateAgentConversationTicketRequestModel input,
@@ -534,7 +532,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Get an agent conversation ticket by ID.</summary>
+    /// <summary>Get an agent issue by ID.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> GetAsync(
         string agentqaTicketId,
@@ -592,7 +590,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.</summary>
+    /// <summary>Update an agent issue's title, comment, status, priority, and/or assignee. Requires viewer access to the issue's agent.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> UpdateAsync(
         global::ElevenLabs.Agents.PatchAgentConversationTicketRequestModel input,
@@ -654,7 +652,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.</summary>
+    /// <summary>Delete an agent issue. Restricted to the issue creator or a workspace admin.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task DeleteAsync(
         string agentqaTicketId,
@@ -680,7 +678,7 @@ internal class TriageTicketsService : BaseService
             .ConfigureAwait(false);
     }
 
-    /// <summary>Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.</summary>
+    /// <summary>Append a comment discussing how to resolve the agent issue. Requires viewer access to the issue's agent.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> AddCommentAsync(
         global::ElevenLabs.Agents.AddTicketCommentRequestModel input,
@@ -742,7 +740,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.</summary>
+    /// <summary>Merge other open issues of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this issue, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the issue's agent.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> MergeAsync(
         global::ElevenLabs.Agents.MergeAgentConversationTicketsRequestModel input,
@@ -804,7 +802,7 @@ internal class TriageTicketsService : BaseService
         return result;
     }
 
-    /// <summary>Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.</summary>
+    /// <summary>Append a turn-level comment to an agent issue. Requires viewer access to the issue's agent.</summary>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.AgentConversationTicketResponseModel> AddTurnCommentAsync(
         global::ElevenLabs.Agents.AddTurnCommentRequestModel input,

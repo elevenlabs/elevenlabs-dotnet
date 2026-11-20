@@ -21,7 +21,7 @@ public class PromptEvaluationCriteriaTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"type\":\"prompt\",\"conversation_goal_prompt\":\"conversation_goal_prompt\",\"use_knowledge_base\":true,\"scope\":\"conversation\",\"llm\":\"gpt-4o-mini\",\"scoring_mode\":\"binary\",\"max_score\":100,\"score_instructions\":\"score_instructions\"}";
+            "{\"id\":\"id\",\"name\":\"name\",\"type\":\"prompt\",\"conversation_goal_prompt\":\"conversation_goal_prompt\",\"use_knowledge_base\":false,\"scope\":\"conversation\",\"llm\":\"gpt-4o-mini\",\"scoring_mode\":\"binary\",\"max_score\":100,\"score_instructions\":\"score_instructions\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PromptEvaluationCriteria>(wire);
         var serialized = TestJson.Serialize(instance);

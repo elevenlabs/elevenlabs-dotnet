@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -76,6 +80,11 @@ public record WorkflowPhoneNumberNodeModelOutput : IJsonOnDeserialized
     [JsonPropertyName("edge_order")]
     public IEnumerable<string> EdgeOrder { get; set; } = new List<string>();
 
+    /// <value>Per-provider transfer configuration. Mutually exclusive with a non-empty `transfer_destination`: when present, the configuration matching the call's telephony provider is executed and the legacy transfer fields are ignored.</value>
+    [JsonPropertyName("provider_configs")]
+    public IEnumerable<WorkflowPhoneNumberNodeModelOutputProviderConfigsItem> ProviderConfigs { get; set; } =
+        new List<WorkflowPhoneNumberNodeModelOutputProviderConfigsItem>();
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -122,6 +131,7 @@ public record WorkflowPhoneNumberNodeModelOutput : IJsonOnDeserialized
             && ValueEquality.AreEqual(Type, other.Type)
             && ValueEquality.AreEqual(Position, other.Position)
             && ValueEquality.AreEqual(EdgeOrder, other.EdgeOrder)
+            && ValueEquality.AreEqual(ProviderConfigs, other.ProviderConfigs)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -140,6 +150,7 @@ public record WorkflowPhoneNumberNodeModelOutput : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Type);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Position);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(EdgeOrder);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ProviderConfigs);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

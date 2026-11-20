@@ -21,7 +21,7 @@ public class AsyncConversationMetadataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"delivery_status\":\"pending\",\"delivery_timestamp\":1,\"delivery_error\":\"delivery_error\",\"external_system\":\"external_system\",\"external_id\":\"external_id\",\"external_link\":\"external_link\",\"retry_count\":4,\"last_retry_timestamp\":6,\"last_processed_external_message_id\":\"last_processed_external_message_id\",\"integration_trigger_id\":\"integration_trigger_id\",\"platform_metadata\":{\"conversation_initiation_source\":\"plain_integration\",\"thread_id\":\"thread_id\",\"workspace_id\":\"workspace_id\"}}";
+            "{\"delivery_status\":\"pending\",\"delivery_timestamp\":5,\"delivery_error\":\"delivery_error\",\"external_system\":\"external_system\",\"external_id\":\"external_id\",\"external_link\":\"external_link\",\"retry_count\":7,\"last_retry_timestamp\":9,\"last_processed_external_message_id\":\"last_processed_external_message_id\",\"integration_trigger_id\":\"integration_trigger_id\",\"platform_metadata\":{\"conversation_initiation_source\":\"plain_integration\",\"thread_id\":\"thread_id\",\"workspace_id\":\"workspace_id\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AsyncConversationMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

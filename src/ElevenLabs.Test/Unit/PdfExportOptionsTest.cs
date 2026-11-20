@@ -21,7 +21,7 @@ public class PdfExportOptionsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"pdf\",\"segment_on_silence_longer_than_s\":1.02,\"max_segment_duration_s\":4.34,\"max_segment_chars\":7}";
+            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"pdf\",\"segment_on_silence_longer_than_s\":0.71,\"max_segment_duration_s\":4.34,\"max_segment_chars\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PdfExportOptions>(wire);
         var serialized = TestJson.Serialize(instance);

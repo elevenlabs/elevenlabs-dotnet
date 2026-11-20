@@ -20,7 +20,7 @@ public class FinalAudioForTurnTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"is_final_audio_for_turn\":true}";
+        const string wire = "{\"is_final_audio_for_turn\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FinalAudioForTurn>(wire);
         var serialized = TestJson.Serialize(instance);

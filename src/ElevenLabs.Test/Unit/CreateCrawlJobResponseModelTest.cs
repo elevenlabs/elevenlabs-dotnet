@@ -21,7 +21,7 @@ public class CreateCrawlJobResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"type\":\"discovery\",\"root_folder_id\":\"root_folder_id\",\"status\":\"status\",\"created_at\":7,\"folder_path\":[{\"id\":\"id\"}]}";
+            "{\"id\":\"id\",\"type\":\"discovery\",\"root_folder_id\":\"root_folder_id\",\"status\":\"status\",\"created_at\":3,\"folder_path\":[{\"id\":\"id\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CreateCrawlJobResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

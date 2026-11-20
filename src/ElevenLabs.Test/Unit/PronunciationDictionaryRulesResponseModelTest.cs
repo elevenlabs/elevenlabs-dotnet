@@ -20,7 +20,7 @@ public class PronunciationDictionaryRulesResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"id\":\"id\",\"version_id\":\"version_id\",\"version_rules_num\":2}";
+        const string wire = "{\"id\":\"id\",\"version_id\":\"version_id\",\"version_rules_num\":8}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.PronunciationDictionaryRulesResponseModel>(

@@ -21,7 +21,7 @@ public class ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsOu
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"api_integration_webhook\",\"integration_id\":\"integration_id\",\"credential_id\":\"credential_id\",\"integration_connection_id\":\"integration_connection_id\",\"webhook_details\":{\"type\":\"webhook\",\"method\":\"method\",\"url\":\"url\",\"headers\":{\"key\":\"headers\"},\"path_params\":{\"key\":\"path_params\"},\"query_params\":{\"key\":\"query_params\"},\"body\":\"body\"}}";
+            "{\"type\":\"api_integration_webhook\",\"integration_id\":\"integration_id\",\"credential_id\":\"credential_id\",\"integration_connection_id\":\"integration_connection_id\",\"webhook_details\":{\"type\":\"webhook\",\"method\":\"method\",\"url\":\"url\",\"headers\":{\"key\":\"headers\"},\"path_params\":{\"key\":\"path_params\"},\"query_params\":{\"key\":\"query_params\"},\"body\":\"body\"},\"function_details\":{\"resolved_parameters\":{\"key\":\"resolved_parameters\"}}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryTranscriptToolCallApiIntegrationWebhookDetailsOutput>(

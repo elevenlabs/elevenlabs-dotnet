@@ -20,7 +20,7 @@ public class SegmentUpdatePayloadTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"start_time\":4.6,\"end_time\":7.66,\"text\":\"text\"}";
+        const string wire = "{\"start_time\":4.23,\"end_time\":4.76,\"text\":\"text\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentUpdatePayload>(wire);
         var serialized = TestJson.Serialize(instance);

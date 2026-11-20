@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -81,7 +85,7 @@ public record Voice : IJsonOnDeserialized
 
     /// <value>The settings of the voice.</value>
     [JsonPropertyName("settings")]
-    public BodyTextToSpeechFullVoiceSettings? Settings { get; set; }
+    public VoiceSettings? Settings { get; set; }
 
     /// <value>The sharing information of the voice.</value>
     [JsonPropertyName("sharing")]

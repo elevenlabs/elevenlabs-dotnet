@@ -21,7 +21,7 @@ public class AutoGenerationMetadataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_id\":\"agent_id\",\"stable_topic_id\":\"stable_topic_id\",\"criteria_id\":\"criteria_id\",\"topic_label\":\"topic_label\",\"source_conversation_id\":\"source_conversation_id\",\"generated_at_unix\":1}";
+            "{\"agent_id\":\"agent_id\",\"stable_topic_id\":\"stable_topic_id\",\"criteria_id\":\"criteria_id\",\"topic_label\":\"topic_label\",\"source_conversation_id\":\"source_conversation_id\",\"generated_at_unix\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AutoGenerationMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

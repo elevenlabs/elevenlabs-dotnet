@@ -20,7 +20,7 @@ public class AgentQueueingConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"enabled\":true,\"wait_timeout_seconds\":180}";
+        const string wire = "{\"enabled\":false,\"wait_timeout_seconds\":180}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentQueueingConfig>(wire);
         var serialized = TestJson.Serialize(instance);

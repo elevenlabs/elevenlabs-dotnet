@@ -21,7 +21,7 @@ public class ListMcpToolsResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"success\":true,\"tools\":[{\"name\":\"name\",\"title\":\"title\",\"description\":\"description\",\"inputSchema\":{\"key\":{}},\"execution\":{\"taskSupport\":\"forbidden\"},\"outputSchema\":{\"key\":{}},\"icons\":[{\"src\":\"src\",\"mimeType\":\"mimeType\",\"sizes\":[\"sizes\"],\"theme\":\"light\"}],\"annotations\":{\"title\":\"title\",\"readOnlyHint\":true,\"destructiveHint\":false,\"idempotentHint\":true,\"openWorldHint\":false},\"_meta\":{\"key\":{}}}],\"tool_approval_statuses\":[{\"tool_id\":\"tool_id\",\"state\":\"up_to_date\",\"approval_policy\":\"auto_approved\",\"approved_definition\":{\"description\":\"description\",\"input_schema\":{\"key\":{}}}}],\"error_message\":\"error_message\"}";
+            "{\"success\":true,\"tools\":[{\"name\":\"name\",\"title\":\"title\",\"description\":\"description\",\"inputSchema\":{\"key\":{}},\"execution\":{\"taskSupport\":\"forbidden\"},\"outputSchema\":{\"key\":{}},\"icons\":[{\"src\":\"src\",\"mimeType\":\"mimeType\",\"sizes\":[\"sizes\"],\"theme\":\"light\"}],\"annotations\":{\"title\":\"title\",\"readOnlyHint\":false,\"destructiveHint\":false,\"idempotentHint\":false,\"openWorldHint\":true},\"_meta\":{\"key\":{}}}],\"tool_approval_statuses\":[{\"tool_id\":\"tool_id\",\"state\":\"up_to_date\",\"approval_policy\":\"auto_approved\",\"approved_definition\":{\"description\":\"description\",\"input_schema\":{\"key\":{}}}}],\"error_message\":\"error_message\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ListMcpToolsResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

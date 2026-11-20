@@ -21,7 +21,7 @@ public class RagConfigInputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":false,\"embedding_model\":\"e5_mistral_7b_instruct\",\"max_vector_distance\":0.5,\"max_documents_length\":50000,\"max_retrieved_rag_chunks_count\":5,\"num_candidates\":6414,\"query_rewrite_prompt_override\":\"query_rewrite_prompt_override\",\"knowledge_base_tool_info\":{\"enabled_strategies\":[\"cat\"]}}";
+            "{\"enabled\":true,\"embedding_model\":\"e5_mistral_7b_instruct\",\"max_vector_distance\":0.5,\"max_documents_length\":50000,\"max_retrieved_rag_chunks_count\":5,\"num_candidates\":5005,\"query_rewrite_prompt_override\":\"query_rewrite_prompt_override\",\"knowledge_base_tool_info\":{\"enabled_strategies\":[\"cat\"]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RagConfigInput>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -53,6 +57,9 @@ public record AlertingSettingsResponse : IJsonOnDeserialized
 
     [JsonPropertyName("auto_resolve_after_inactive_minutes")]
     public int? AutoResolveAfterInactiveMinutes { get; set; }
+
+    [JsonPropertyName("environments")]
+    public IEnumerable<string>? Environments { get; set; }
 
     [JsonPropertyName("notifiers")]
     public IEnumerable<AlertingSettingsResponseNotifiersItem>? Notifiers { get; set; }
@@ -99,6 +106,7 @@ public record AlertingSettingsResponse : IJsonOnDeserialized
                 AutoResolveAfterInactiveMinutes,
                 other.AutoResolveAfterInactiveMinutes
             )
+            && ValueEquality.AreEqual(Environments, other.Environments)
             && ValueEquality.AreEqual(Notifiers, other.Notifiers)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -111,6 +119,7 @@ public record AlertingSettingsResponse : IJsonOnDeserialized
             var hash = 17;
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MonitorConfigs);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AutoResolveAfterInactiveMinutes);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Environments);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Notifiers);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

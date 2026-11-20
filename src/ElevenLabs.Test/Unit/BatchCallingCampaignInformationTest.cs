@@ -21,7 +21,7 @@ public class BatchCallingCampaignInformationTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"campaign_id\":\"campaign_id\",\"campaign_lead_id\":\"campaign_lead_id\",\"cold_attempt\":5,\"conversation_type\":\"initial\"}";
+            "{\"campaign_id\":\"campaign_id\",\"campaign_lead_id\":\"campaign_lead_id\",\"cold_attempt\":0,\"conversation_type\":\"initial\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.BatchCallingCampaignInformation>(
             wire

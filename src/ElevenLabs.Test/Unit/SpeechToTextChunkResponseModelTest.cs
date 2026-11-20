@@ -21,7 +21,7 @@ public class SpeechToTextChunkResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"language_code\":\"language_code\",\"language_probability\":4.3,\"text\":\"text\",\"words\":[{\"text\":\"text\",\"start\":1.37,\"end\":5.8,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":6.86,\"characters\":[{\"text\":\"text\",\"start\":0.93,\"end\":8.63}],\"channel_index\":1}],\"channel_index\":9,\"additional_formats\":[{\"requested_format\":\"requested_format\",\"file_extension\":\"file_extension\",\"content_type\":\"content_type\",\"is_base64_encoded\":false,\"content\":\"content\"}],\"transcription_id\":\"transcription_id\",\"entities\":[{\"text\":\"text\",\"entity_type\":\"entity_type\",\"start_char\":7,\"end_char\":0}],\"audio_duration_secs\":4.07,\"edited_transcript\":{\"kind\":\"transcript\",\"text\":\"text\"}}";
+            "{\"language_code\":\"language_code\",\"language_probability\":0.88,\"text\":\"text\",\"words\":[{\"text\":\"text\",\"start\":1.74,\"end\":2.48,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":1.5,\"characters\":[{\"text\":\"text\",\"start\":8.63,\"end\":3.58}],\"channel_index\":10}],\"channel_index\":9,\"additional_formats\":[{\"requested_format\":\"requested_format\",\"file_extension\":\"file_extension\",\"content_type\":\"content_type\",\"is_base64_encoded\":true,\"content\":\"content\"}],\"transcription_id\":\"transcription_id\",\"entities\":[{\"text\":\"text\",\"entity_type\":\"entity_type\",\"start_char\":0,\"end_char\":10}],\"audio_duration_secs\":1.29,\"edited_transcript\":{\"kind\":\"transcript\",\"text\":\"text\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeechToTextChunkResponseModel>(
             wire

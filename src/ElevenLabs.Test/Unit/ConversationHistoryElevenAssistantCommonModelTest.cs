@@ -20,7 +20,7 @@ public class ConversationHistoryElevenAssistantCommonModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"is_eleven_assistant\":false}";
+        const string wire = "{\"is_eleven_assistant\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryElevenAssistantCommonModel>(

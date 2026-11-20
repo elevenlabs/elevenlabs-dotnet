@@ -21,7 +21,7 @@ public class ListSpeechEnginesResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"speech_engines\":[{\"speech_engine_id\":\"speech_engine_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"created_at_unix_secs\":9,\"updated_at_unix_secs\":5,\"tags\":[\"tags\"],\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"}}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"speech_engines\":[{\"speech_engine_id\":\"speech_engine_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"created_at_unix_secs\":3,\"updated_at_unix_secs\":1,\"tags\":[\"tags\"],\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"}}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ListSpeechEnginesResponse>(wire);
         var serialized = TestJson.Serialize(instance);

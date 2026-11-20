@@ -21,7 +21,7 @@ public class WebhookHmacSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"auth_type\":\"hmac\",\"name\":\"name\",\"webhook_url\":\"webhook_url\",\"request_headers\":{\"key\":\"request_headers\"}}";
+            "{\"auth_type\":\"hmac\",\"name\":\"name\",\"webhook_url\":\"webhook_url\",\"request_headers\":{\"key\":\"request_headers\"},\"log_redacted_fields\":[\"log_redacted_fields\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WebhookHmacSettings>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -75,6 +79,10 @@ public record WorkflowOverrideAgentNodeModelInput : IJsonOnDeserialized
     [JsonPropertyName("entry_behavior")]
     public EntryBehavior? EntryBehavior { get; set; }
 
+    /// <value>Lets the caller interrupt the response this node gives on entry. Ignored unless entry_behavior is "generate_immediately".</value>
+    [JsonPropertyName("allow_interruptions_on_entry")]
+    public bool? AllowInterruptionsOnEntry { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -121,6 +129,7 @@ public record WorkflowOverrideAgentNodeModelInput : IJsonOnDeserialized
             && ValueEquality.AreEqual(AdditionalToolIds, other.AdditionalToolIds)
             && ValueEquality.AreEqual(Label, other.Label)
             && ValueEquality.AreEqual(EntryBehavior, other.EntryBehavior)
+            && ValueEquality.AreEqual(AllowInterruptionsOnEntry, other.AllowInterruptionsOnEntry)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -139,6 +148,7 @@ public record WorkflowOverrideAgentNodeModelInput : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AdditionalToolIds);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Label);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(EntryBehavior);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(AllowInterruptionsOnEntry);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

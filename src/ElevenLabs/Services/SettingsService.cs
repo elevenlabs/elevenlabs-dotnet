@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -130,7 +134,7 @@ internal class SettingsService : BaseService
     }
 
     /// <summary>Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.</summary>
-    public async global::System.Threading.Tasks.Task<global::ElevenLabs.BodyTextToSpeechFullVoiceSettings> GetDefaultAsync(
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.VoiceSettings> GetDefaultAsync(
         RequestConfig? requestConfig = null,
         CancellationToken cancellationToken = default
     )
@@ -152,11 +156,11 @@ internal class SettingsService : BaseService
         .ReadAsStringAsync()
 #endif
             .ConfigureAwait(false);
-        global::ElevenLabs.BodyTextToSpeechFullVoiceSettings result;
+        global::ElevenLabs.VoiceSettings result;
         try
         {
             result =
-                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.BodyTextToSpeechFullVoiceSettings>(
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.VoiceSettings>(
                     responseBody,
                     _jsonSerializerOptions
                 )!;
@@ -178,7 +182,7 @@ internal class SettingsService : BaseService
     /// <summary>Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.</summary>
     /// <param name="voiceId">Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
-    public async global::System.Threading.Tasks.Task<global::ElevenLabs.BodyTextToSpeechFullVoiceSettings> GetAsync(
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.VoiceSettings> GetAsync(
         string voiceId,
         string? xiApiKey = null,
         RequestConfig? requestConfig = null,
@@ -208,11 +212,11 @@ internal class SettingsService : BaseService
         .ReadAsStringAsync()
 #endif
             .ConfigureAwait(false);
-        global::ElevenLabs.BodyTextToSpeechFullVoiceSettings result;
+        global::ElevenLabs.VoiceSettings result;
         try
         {
             result =
-                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.BodyTextToSpeechFullVoiceSettings>(
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.VoiceSettings>(
                     responseBody,
                     _jsonSerializerOptions
                 )!;
@@ -235,7 +239,7 @@ internal class SettingsService : BaseService
     /// <param name="voiceId">ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.EditVoiceSettingsResponseModel> UpdateAsync(
-        global::ElevenLabs.BodyTextToSpeechFullVoiceSettings input,
+        global::ElevenLabs.VoiceSettings input,
         string voiceId,
         string? xiApiKey = null,
         RequestConfig? requestConfig = null,

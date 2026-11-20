@@ -21,7 +21,7 @@ public class MemoryEntrySearchResultTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"entry_id\":\"entry_id\",\"version\":3,\"summary\":\"summary\",\"text\":\"text\",\"source\":{\"type\":\"conversation\",\"conversation_id\":\"conversation_id\"}}";
+            "{\"entry_id\":\"entry_id\",\"version\":2,\"summary\":\"summary\",\"text\":\"text\",\"source\":{\"type\":\"conversation\",\"conversation_id\":\"conversation_id\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MemoryEntrySearchResult>(wire);
         var serialized = TestJson.Serialize(instance);

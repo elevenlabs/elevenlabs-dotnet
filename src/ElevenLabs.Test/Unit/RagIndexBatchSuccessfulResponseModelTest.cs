@@ -21,7 +21,7 @@ public class RagIndexBatchSuccessfulResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"success\",\"data\":{\"id\":\"id\",\"model\":\"e5_mistral_7b_instruct\",\"status\":\"new\",\"progress_percentage\":3.26,\"document_model_index_usage\":{\"used_bytes\":6}}}";
+            "{\"status\":\"success\",\"data\":{\"id\":\"id\",\"model\":\"e5_mistral_7b_instruct\",\"status\":\"new\",\"progress_percentage\":6.97,\"document_model_index_usage\":{\"used_bytes\":9}}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.RagIndexBatchSuccessfulResponseModel>(wire);

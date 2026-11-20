@@ -29,7 +29,9 @@ public partial class ElevenLabsClient : IElevenLabsClient
     public ISpeechToTextClient SpeechToText { get; }
     public IModelsClient Models { get; }
     public IAudioNativeClient AudioNative { get; }
-    public IWorkspacesClient Workspaces { get; }
+    public IContentProvenanceClient ContentProvenance { get; }
+    public IReceptionClient Reception { get; }
+    public ElevenLabs.IWorkspacesClient Workspaces { get; }
     public IServiceAccountsClient ServiceAccounts { get; }
     public IWorkspaceClient Workspace { get; }
     public IWebhooksClient Webhooks { get; }
@@ -40,7 +42,7 @@ public partial class ElevenLabsClient : IElevenLabsClient
     public IEnvironmentVariablesClient EnvironmentVariables { get; }
     public IEnvironmentsClient Environments { get; }
     public IProductionsClient Productions { get; }
-    public IAssetsClient Assets { get; }
+    public ElevenLabs.IAssetsClient Assets { get; }
 
     public ElevenLabsClient(string? apiKey = null, ClientOptions? clientOptions = null)
     {
@@ -107,7 +109,9 @@ public partial class ElevenLabsClient : IElevenLabsClient
         SpeechToText = new SpeechToTextClient(_httpClient);
         Models = new ModelsClient(_httpClient);
         AudioNative = new AudioNativeClient(_httpClient);
-        Workspaces = new WorkspacesClient(_httpClient);
+        ContentProvenance = new ContentProvenanceClient(_httpClient);
+        Reception = new ReceptionClient(_httpClient);
+        Workspaces = new ElevenLabs.WorkspacesClient(_httpClient);
         ServiceAccounts = new ServiceAccountsClient(_httpClient);
         Workspace = new WorkspaceClient(_httpClient);
         Webhooks = new WebhooksClient(_httpClient);
@@ -118,7 +122,7 @@ public partial class ElevenLabsClient : IElevenLabsClient
         EnvironmentVariables = new EnvironmentVariablesClient(_httpClient);
         Environments = new EnvironmentsClient(_httpClient);
         Productions = new ProductionsClient(_httpClient);
-        Assets = new AssetsClient(_httpClient);
+        Assets = new ElevenLabs.AssetsClient(_httpClient);
     }
 
     public ITextToDialogueApi CreateTextToDialogueApi()

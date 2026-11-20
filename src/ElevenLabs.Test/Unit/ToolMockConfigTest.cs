@@ -20,7 +20,8 @@ public class ToolMockConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"default_return_value\":\"Tool Called.\",\"default_is_error\":true}";
+        const string wire =
+            "{\"default_return_value\":\"Tool Called.\",\"default_is_error\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ToolMockConfig>(wire);
         var serialized = TestJson.Serialize(instance);

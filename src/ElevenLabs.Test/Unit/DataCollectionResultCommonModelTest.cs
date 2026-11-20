@@ -21,7 +21,7 @@ public class DataCollectionResultCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"data_collection_id\":\"data_collection_id\",\"name\":\"name\",\"value\":{},\"json_schema\":{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":false,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"magna\",\"is_omitted\":true},\"rationale\":\"rationale\"}";
+            "{\"data_collection_id\":\"data_collection_id\",\"name\":\"name\",\"value\":{},\"json_schema\":{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":true,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"in aute\",\"is_omitted\":false},\"rationale\":\"rationale\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DataCollectionResultCommonModel>(
             wire

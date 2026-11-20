@@ -27,6 +27,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -57,6 +61,8 @@ internal class DocumentsService : BaseService
     private RequestConfig? _getAsyncConfig;
     private RequestConfig? _updateAsyncConfig;
     private RequestConfig? _deleteAsyncConfig;
+    private RequestConfig? _getChunkingOverrideAsyncConfig;
+    private RequestConfig? _updateChunkingOverrideAsyncConfig;
     private RequestConfig? _getAgentsAsyncConfig;
     private RequestConfig? _getBulkAgentsAsyncConfig;
     private RequestConfig? _getContentAsyncConfig;
@@ -135,6 +141,26 @@ internal class DocumentsService : BaseService
     public DocumentsService SetDeleteAsyncConfig(RequestConfig config)
     {
         _deleteAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>GetChunkingOverrideAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public DocumentsService SetGetChunkingOverrideAsyncConfig(RequestConfig config)
+    {
+        _getChunkingOverrideAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateChunkingOverrideAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public DocumentsService SetUpdateChunkingOverrideAsyncConfig(RequestConfig config)
+    {
+        _updateChunkingOverrideAsyncConfig = config;
         return this;
     }
 
@@ -598,6 +624,128 @@ internal class DocumentsService : BaseService
                 responseBody,
                 _jsonSerializerOptions
             )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Get the stored and effective RAG chunking overrides for a document or folder.</summary>
+    /// <param name="documentationId">The id of a document from the knowledge base. This is returned on document addition.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.GetDocumentChunkingOverrideResponseModel> GetChunkingOverrideAsync(
+        string documentationId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (documentationId is null)
+            throw new ArgumentNullException(nameof(documentationId));
+
+        var resolvedConfig = GetResolvedConfig(_getChunkingOverrideAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Get,
+            "v1/convai/knowledge-base/{documentation_id}/chunking-override"
+        )
+            .SetPathParameter("documentation_id", documentationId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.GetDocumentChunkingOverrideResponseModel result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.GetDocumentChunkingOverrideResponseModel>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Set or clear the RAG chunking override for a document or folder.</summary>
+    /// <param name="documentationId">The id of a document from the knowledge base. This is returned on document addition.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.UpdateDocumentChunkingOverrideResponseModel> UpdateChunkingOverrideAsync(
+        global::ElevenLabs.Agents.KnowledgeBase.UpdateDocumentChunkingOverrideRequestModel input,
+        string documentationId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (documentationId is null)
+            throw new ArgumentNullException(nameof(documentationId));
+
+        var resolvedConfig = GetResolvedConfig(_updateChunkingOverrideAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            new HttpMethod("PATCH"),
+            "v1/convai/knowledge-base/{documentation_id}/chunking-override"
+        )
+            .SetPathParameter("documentation_id", documentationId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.UpdateDocumentChunkingOverrideResponseModel result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.UpdateDocumentChunkingOverrideResponseModel>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
         }
         catch (global::System.Text.Json.JsonException exception)
         {

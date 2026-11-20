@@ -694,6 +694,15 @@ public record SmbToolConfigParams
     }
 
     /// <summary>
+    /// Create an instance of SmbToolConfigParams with <see cref="SmbToolConfigParams.SmbConfirmChange"/>.
+    /// </summary>
+    public SmbToolConfigParams(SmbToolConfigParams.SmbConfirmChange value)
+    {
+        SmbToolType = "smb_confirm_change";
+        Value = value.Value;
+    }
+
+    /// <summary>
     /// Create an instance of SmbToolConfigParams with <see cref="SmbToolConfigParams.SubmitBusinessInfo"/>.
     /// </summary>
     public SmbToolConfigParams(SmbToolConfigParams.SubmitBusinessInfo value)
@@ -1260,6 +1269,11 @@ public record SmbToolConfigParams
     /// Returns true if <see cref="SmbToolType"/> is "set_booking_slug"
     /// </summary>
     public bool IsSetBookingSlug => SmbToolType == "set_booking_slug";
+
+    /// <summary>
+    /// Returns true if <see cref="SmbToolType"/> is "smb_confirm_change"
+    /// </summary>
+    public bool IsSmbConfirmChange => SmbToolType == "smb_confirm_change";
 
     /// <summary>
     /// Returns true if <see cref="SmbToolType"/> is "submit_business_info"
@@ -2187,6 +2201,17 @@ public record SmbToolConfigParams
             );
 
     /// <summary>
+    /// Returns the value as a <see cref="global::ElevenLabs.ConfirmChangeParams"/> if <see cref="SmbToolType"/> is 'smb_confirm_change', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="SmbToolType"/> is not 'smb_confirm_change'.</exception>
+    public global::ElevenLabs.ConfirmChangeParams AsSmbConfirmChange() =>
+        IsSmbConfirmChange
+            ? (global::ElevenLabs.ConfirmChangeParams)Value!
+            : throw new global::System.Exception(
+                "SmbToolConfigParams.SmbToolType is not 'smb_confirm_change'"
+            );
+
+    /// <summary>
     /// Returns the value as a <see cref="global::ElevenLabs.SubmitBusinessInfoParams"/> if <see cref="SmbToolType"/> is 'submit_business_info', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="SmbToolType"/> is not 'submit_business_info'.</exception>
@@ -2491,6 +2516,7 @@ public record SmbToolConfigParams
         Func<global::ElevenLabs.SearchClientsParams, T> onSearchClients,
         Func<global::ElevenLabs.SendCustomEmailParams, T> onSendCustomEmail,
         Func<global::ElevenLabs.SetBookingSlugParams, T> onSetBookingSlug,
+        Func<global::ElevenLabs.ConfirmChangeParams, T> onSmbConfirmChange,
         Func<global::ElevenLabs.SubmitBusinessInfoParams, T> onSubmitBusinessInfo,
         Func<global::ElevenLabs.TriggerUserVerificationParams, T> onTriggerUserVerification,
         Func<global::ElevenLabs.UpdateAgentConfigParams, T> onUpdateAgentConfig,
@@ -2612,6 +2638,7 @@ public record SmbToolConfigParams
             "search_clients" => onSearchClients(AsSearchClients()),
             "send_custom_email" => onSendCustomEmail(AsSendCustomEmail()),
             "set_booking_slug" => onSetBookingSlug(AsSetBookingSlug()),
+            "smb_confirm_change" => onSmbConfirmChange(AsSmbConfirmChange()),
             "submit_business_info" => onSubmitBusinessInfo(AsSubmitBusinessInfo()),
             "trigger_user_verification" => onTriggerUserVerification(AsTriggerUserVerification()),
             "update_agent_config" => onUpdateAgentConfig(AsUpdateAgentConfig()),
@@ -2718,6 +2745,7 @@ public record SmbToolConfigParams
         Action<global::ElevenLabs.SearchClientsParams> onSearchClients,
         Action<global::ElevenLabs.SendCustomEmailParams> onSendCustomEmail,
         Action<global::ElevenLabs.SetBookingSlugParams> onSetBookingSlug,
+        Action<global::ElevenLabs.ConfirmChangeParams> onSmbConfirmChange,
         Action<global::ElevenLabs.SubmitBusinessInfoParams> onSubmitBusinessInfo,
         Action<global::ElevenLabs.TriggerUserVerificationParams> onTriggerUserVerification,
         Action<global::ElevenLabs.UpdateAgentConfigParams> onUpdateAgentConfig,
@@ -2967,6 +2995,9 @@ public record SmbToolConfigParams
                 break;
             case "set_booking_slug":
                 onSetBookingSlug(AsSetBookingSlug());
+                break;
+            case "smb_confirm_change":
+                onSmbConfirmChange(AsSmbConfirmChange());
                 break;
             case "submit_business_info":
                 onSubmitBusinessInfo(AsSubmitBusinessInfo());
@@ -4117,6 +4148,20 @@ public record SmbToolConfigParams
     }
 
     /// <summary>
+    /// Attempts to cast the value to a <see cref="global::ElevenLabs.ConfirmChangeParams"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsSmbConfirmChange(out global::ElevenLabs.ConfirmChangeParams? value)
+    {
+        if (SmbToolType == "smb_confirm_change")
+        {
+            value = (global::ElevenLabs.ConfirmChangeParams)Value!;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
+    /// <summary>
     /// Attempts to cast the value to a <see cref="global::ElevenLabs.SubmitBusinessInfoParams"/> and returns true if successful.
     /// </summary>
     public bool TryAsSubmitBusinessInfo(out global::ElevenLabs.SubmitBusinessInfoParams? value)
@@ -4679,6 +4724,10 @@ public record SmbToolConfigParams
         new(value);
 
     public static implicit operator SmbToolConfigParams(
+        SmbToolConfigParams.SmbConfirmChange value
+    ) => new(value);
+
+    public static implicit operator SmbToolConfigParams(
         SmbToolConfigParams.SubmitBusinessInfo value
     ) => new(value);
 
@@ -5169,6 +5218,12 @@ public record SmbToolConfigParams
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.SetBookingSlugParams"
                     ),
+                "smb_confirm_change" => json.Deserialize<global::ElevenLabs.ConfirmChangeParams?>(
+                    options
+                )
+                    ?? throw new JsonException(
+                        "Failed to deserialize global::ElevenLabs.ConfirmChangeParams"
+                    ),
                 "submit_business_info" =>
                     json.Deserialize<global::ElevenLabs.SubmitBusinessInfoParams?>(options)
                         ?? throw new JsonException(
@@ -5424,6 +5479,7 @@ public record SmbToolConfigParams
                     "search_clients" => JsonSerializer.SerializeToNode(value.Value, options),
                     "send_custom_email" => JsonSerializer.SerializeToNode(value.Value, options),
                     "set_booking_slug" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "smb_confirm_change" => JsonSerializer.SerializeToNode(value.Value, options),
                     "submit_business_info" => JsonSerializer.SerializeToNode(value.Value, options),
                     "trigger_user_verification" => JsonSerializer.SerializeToNode(
                         value.Value,
@@ -6993,6 +7049,26 @@ public record SmbToolConfigParams
 
         public static implicit operator SmbToolConfigParams.SetBookingSlug(
             global::ElevenLabs.SetBookingSlugParams value
+        ) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for smb_confirm_change
+    /// </summary>
+    [Serializable]
+    public struct SmbConfirmChange
+    {
+        public SmbConfirmChange(global::ElevenLabs.ConfirmChangeParams value)
+        {
+            Value = value;
+        }
+
+        internal global::ElevenLabs.ConfirmChangeParams Value { get; set; }
+
+        public override string ToString() => Value.ToString() ?? "null";
+
+        public static implicit operator SmbToolConfigParams.SmbConfirmChange(
+            global::ElevenLabs.ConfirmChangeParams value
         ) => new(value);
     }
 
