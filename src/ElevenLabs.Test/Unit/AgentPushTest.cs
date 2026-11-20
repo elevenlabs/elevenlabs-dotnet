@@ -376,6 +376,32 @@ public class AgentPushTest
     }
 
     [Test]
+    public void LoadsAnMcpToolInToolsByIdIntoToolIdsSoReplacingTheToolsKeepsIt()
+    {
+        var config = Config(
+            """{"name":"A","conversation_config":{"agent":{"prompt":{"prompt":"p","tool_ids":["tool_mcp","tool_ping"]}}}}"""
+        );
+        var agent = Agent.FromJson(
+            config,
+            new Dictionary<string, Tool>
+            {
+                ["tool_mcp"] = Tool.FromJson(Config(McpTool)),
+                ["tool_ping"] = Tool.FromJson(Config("""{"type":"client","name":"ping","description":"Ping"}""")),
+            }
+        );
+        Assert.That(agent.ToolIds, Is.EqualTo(new[] { "tool_mcp" }));
+        Assert.That(agent.Tools().Select(t => t.Name), Is.EqualTo(new[] { "ping" }));
+
+        agent.Update(new AgentOptions { Tools = new Tool[] { GetOrder() } });
+        Assert.That(agent.ToolIds, Is.EqualTo(new[] { "tool_mcp" }));
+        Assert.That(agent.Tools().Select(t => t.Name), Is.EqualTo(new[] { "get_order" }));
+        var ids = agent.ToJson(new Dictionary<string, string> { ["get_order"] = "tool_order" })["conversation_config"]!["agent"]![
+            "prompt"
+        ]!["tool_ids"]!;
+        Assert.That(ids.AsArray().Select(id => id!.GetValue<string>()), Is.EqualTo(new[] { "tool_mcp", "tool_order" }));
+    }
+
+    [Test]
     public void AnMcpToolObjectInAWorkflowNodeKeepsItsLoadedId()
     {
         var mcp = Tool.FromJson(Config(McpTool));

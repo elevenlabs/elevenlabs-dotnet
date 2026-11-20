@@ -168,7 +168,8 @@ public sealed class Agent
             agent._loadedToolIds = AgentWire.StrList(ids);
             foreach (var id in agent._loadedToolIds)
             {
-                if (agent._toolsById.TryGetValue(id, out var tool))
+                // Push manages webhook and client tools only; other kinds (MCP...) stay attached by id, as pull does.
+                if (agent._toolsById.TryGetValue(id, out var tool) && IsManaged(tool))
                 {
                     agent._tools.Add(tool);
                 }
@@ -307,7 +308,7 @@ public sealed class Agent
     /// <summary>
     /// Every webhook and client tool the agent and its workflow use, each once, in first-use order: the tools
     /// <c>Agents.PushAsync()</c> creates or updates. System tools aren't included; they live inside the agent's config.
-    /// Nor are other kinds, such as MCP tools: they stay attached by the id the agent was loaded with.
+    /// Nor are other kinds, such as MCP tools: a loaded agent keeps them in <see cref="ToolIds"/>, attached by id.
     /// </summary>
     public IReadOnlyList<Tool> Tools()
     {
