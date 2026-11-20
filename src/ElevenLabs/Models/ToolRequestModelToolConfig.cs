@@ -29,15 +29,6 @@ public record ToolRequestModelToolConfig
     }
 
     /// <summary>
-    /// Create an instance of ToolRequestModelToolConfig with <see cref="ToolRequestModelToolConfig.Mcp"/>.
-    /// </summary>
-    public ToolRequestModelToolConfig(ToolRequestModelToolConfig.Mcp value)
-    {
-        Type = "mcp";
-        Value = value.Value;
-    }
-
-    /// <summary>
     /// Create an instance of ToolRequestModelToolConfig with <see cref="ToolRequestModelToolConfig.System"/>.
     /// </summary>
     public ToolRequestModelToolConfig(ToolRequestModelToolConfig.System value)
@@ -72,11 +63,6 @@ public record ToolRequestModelToolConfig
     public bool IsClient => Type == "client";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "mcp"
-    /// </summary>
-    public bool IsMcp => Type == "mcp";
-
-    /// <summary>
     /// Returns true if <see cref="Type"/> is "system"
     /// </summary>
     public bool IsSystem => Type == "system";
@@ -94,15 +80,6 @@ public record ToolRequestModelToolConfig
         IsClient
             ? (global::ElevenLabs.ClientToolConfigInput)Value!
             : throw new global::System.Exception("ToolRequestModelToolConfig.Type is not 'client'");
-
-    /// <summary>
-    /// Returns the value as a <see cref="global::ElevenLabs.McpToolConfigInput"/> if <see cref="Type"/> is 'mcp', otherwise throws an exception.
-    /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'mcp'.</exception>
-    public global::ElevenLabs.McpToolConfigInput AsMcp() =>
-        IsMcp
-            ? (global::ElevenLabs.McpToolConfigInput)Value!
-            : throw new global::System.Exception("ToolRequestModelToolConfig.Type is not 'mcp'");
 
     /// <summary>
     /// Returns the value as a <see cref="global::ElevenLabs.SystemToolConfigInput"/> if <see cref="Type"/> is 'system', otherwise throws an exception.
@@ -126,7 +103,6 @@ public record ToolRequestModelToolConfig
 
     public T Match<T>(
         Func<global::ElevenLabs.ClientToolConfigInput, T> onClient,
-        Func<global::ElevenLabs.McpToolConfigInput, T> onMcp,
         Func<global::ElevenLabs.SystemToolConfigInput, T> onSystem,
         Func<global::ElevenLabs.WebhookToolConfigInput, T> onWebhook,
         Func<string, object?, T> onUnknown_
@@ -135,7 +111,6 @@ public record ToolRequestModelToolConfig
         return Type switch
         {
             "client" => onClient(AsClient()),
-            "mcp" => onMcp(AsMcp()),
             "system" => onSystem(AsSystem()),
             "webhook" => onWebhook(AsWebhook()),
             _ => onUnknown_(Type, Value),
@@ -144,7 +119,6 @@ public record ToolRequestModelToolConfig
 
     public void Visit(
         Action<global::ElevenLabs.ClientToolConfigInput> onClient,
-        Action<global::ElevenLabs.McpToolConfigInput> onMcp,
         Action<global::ElevenLabs.SystemToolConfigInput> onSystem,
         Action<global::ElevenLabs.WebhookToolConfigInput> onWebhook,
         Action<string, object?> onUnknown_
@@ -154,9 +128,6 @@ public record ToolRequestModelToolConfig
         {
             case "client":
                 onClient(AsClient());
-                break;
-            case "mcp":
-                onMcp(AsMcp());
                 break;
             case "system":
                 onSystem(AsSystem());
@@ -178,20 +149,6 @@ public record ToolRequestModelToolConfig
         if (Type == "client")
         {
             value = (global::ElevenLabs.ClientToolConfigInput)Value!;
-            return true;
-        }
-        value = null;
-        return false;
-    }
-
-    /// <summary>
-    /// Attempts to cast the value to a <see cref="global::ElevenLabs.McpToolConfigInput"/> and returns true if successful.
-    /// </summary>
-    public bool TryAsMcp(out global::ElevenLabs.McpToolConfigInput? value)
-    {
-        if (Type == "mcp")
-        {
-            value = (global::ElevenLabs.McpToolConfigInput)Value!;
             return true;
         }
         value = null;
@@ -230,10 +187,6 @@ public record ToolRequestModelToolConfig
 
     public static implicit operator ToolRequestModelToolConfig(
         ToolRequestModelToolConfig.Client value
-    ) => new(value);
-
-    public static implicit operator ToolRequestModelToolConfig(
-        ToolRequestModelToolConfig.Mcp value
     ) => new(value);
 
     public static implicit operator ToolRequestModelToolConfig(
@@ -283,10 +236,6 @@ public record ToolRequestModelToolConfig
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.ClientToolConfigInput"
                     ),
-                "mcp" => json.Deserialize<global::ElevenLabs.McpToolConfigInput?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize global::ElevenLabs.McpToolConfigInput"
-                    ),
                 "system" => json.Deserialize<global::ElevenLabs.SystemToolConfigInput?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.SystemToolConfigInput"
@@ -310,7 +259,6 @@ public record ToolRequestModelToolConfig
                 value.Type switch
                 {
                     "client" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "mcp" => JsonSerializer.SerializeToNode(value.Value, options),
                     "system" => JsonSerializer.SerializeToNode(value.Value, options),
                     "webhook" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
@@ -358,26 +306,6 @@ public record ToolRequestModelToolConfig
 
         public static implicit operator ToolRequestModelToolConfig.Client(
             global::ElevenLabs.ClientToolConfigInput value
-        ) => new(value);
-    }
-
-    /// <summary>
-    /// Discriminated union type for mcp
-    /// </summary>
-    [Serializable]
-    public struct Mcp
-    {
-        public Mcp(global::ElevenLabs.McpToolConfigInput value)
-        {
-            Value = value;
-        }
-
-        internal global::ElevenLabs.McpToolConfigInput Value { get; set; }
-
-        public override string ToString() => Value.ToString() ?? "null";
-
-        public static implicit operator ToolRequestModelToolConfig.Mcp(
-            global::ElevenLabs.McpToolConfigInput value
         ) => new(value);
     }
 

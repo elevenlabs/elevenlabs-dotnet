@@ -20,7 +20,7 @@ public class UpdateAssetParamsTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"smb_tool_type\":\"update_asset\",\"per_resource_timezones\":false}";
+        const string wire = "{\"smb_tool_type\":\"update_asset\",\"per_resource_timezones\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UpdateAssetParams>(wire);
         var serialized = TestJson.Serialize(instance);

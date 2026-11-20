@@ -21,7 +21,7 @@ public class WorkflowEndNodeModelInputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"end\",\"position\":{\"x\":8.43,\"y\":1.14},\"edge_order\":[\"edge_order\"],\"outcome\":\"success\"}";
+            "{\"type\":\"end\",\"position\":{\"x\":0.28,\"y\":3.65},\"edge_order\":[\"edge_order\"],\"outcome\":\"success\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkflowEndNodeModelInput>(wire);
         var serialized = TestJson.Serialize(instance);

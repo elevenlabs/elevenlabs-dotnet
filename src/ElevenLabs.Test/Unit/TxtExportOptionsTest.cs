@@ -21,7 +21,7 @@ public class TxtExportOptionsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"max_characters_per_line\":10,\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"txt\",\"segment_on_silence_longer_than_s\":7.57,\"max_segment_duration_s\":4.64,\"max_segment_chars\":1}";
+            "{\"max_characters_per_line\":6,\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"txt\",\"segment_on_silence_longer_than_s\":4.09,\"max_segment_duration_s\":8.96,\"max_segment_chars\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TxtExportOptions>(wire);
         var serialized = TestJson.Serialize(instance);

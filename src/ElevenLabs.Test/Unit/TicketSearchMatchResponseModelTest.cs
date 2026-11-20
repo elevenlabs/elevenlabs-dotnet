@@ -21,7 +21,7 @@ public class TicketSearchMatchResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"field\":\"title\",\"snippet\":\"snippet\",\"highlight_start\":10,\"highlight_end\":2,\"turn_index\":3}";
+            "{\"field\":\"title\",\"snippet\":\"snippet\",\"highlight_start\":10,\"highlight_end\":9,\"turn_index\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TicketSearchMatchResponseModel>(
             wire

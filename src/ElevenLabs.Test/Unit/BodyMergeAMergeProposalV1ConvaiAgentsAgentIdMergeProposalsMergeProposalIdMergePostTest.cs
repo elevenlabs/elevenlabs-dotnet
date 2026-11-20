@@ -20,7 +20,7 @@ public class BodyMergeAMergeProposalV1ConvaiAgentsAgentIdMergeProposalsMergeProp
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"archive_source_branch\":true,\"force\":false}";
+        const string wire = "{\"archive_source_branch\":true,\"force\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.BodyMergeAMergeProposalV1ConvaiAgentsAgentIdMergeProposalsMergeProposalIdMergePost>(

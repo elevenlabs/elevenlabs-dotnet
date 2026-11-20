@@ -21,7 +21,7 @@ public class ConversationHistoryTranscriptToolCallCommonModelOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"system\",\"request_id\":\"request_id\",\"tool_name\":\"tool_name\",\"tool_id\":\"tool_id\",\"params_as_json\":\"params_as_json\",\"tool_has_been_called\":false,\"tool_details\":{\"type\":\"webhook\",\"method\":\"method\",\"url\":\"url\",\"headers\":{\"key\":\"headers\"},\"path_params\":{\"key\":\"path_params\"},\"query_params\":{\"key\":\"query_params\"},\"body\":\"body\"}}";
+            "{\"type\":\"system\",\"request_id\":\"request_id\",\"tool_name\":\"tool_name\",\"tool_id\":\"tool_id\",\"params_as_json\":\"params_as_json\",\"tool_has_been_called\":true,\"tool_details\":{\"type\":\"webhook\",\"method\":\"method\",\"url\":\"url\",\"headers\":{\"key\":\"headers\"},\"path_params\":{\"key\":\"path_params\"},\"query_params\":{\"key\":\"query_params\"},\"body\":\"body\"}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryTranscriptToolCallCommonModelOutput>(

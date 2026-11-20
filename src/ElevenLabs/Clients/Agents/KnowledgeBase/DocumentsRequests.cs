@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -140,6 +144,35 @@ public record DeleteDocumentsRequest
 
     [JsonIgnore]
     public string? XiApiKey { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record GetChunkingOverrideDocumentsRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record UpdateChunkingOverrideDocumentsRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.Agents.KnowledgeBase.UpdateDocumentChunkingOverrideRequestModel Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

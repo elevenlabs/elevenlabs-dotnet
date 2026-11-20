@@ -21,7 +21,7 @@ public class WorkflowToolEdgeStepModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"step_latency_secs\":5.69,\"type\":\"edge\",\"edge_id\":\"edge_id\",\"target_node_id\":\"target_node_id\"}";
+            "{\"step_latency_secs\":5.17,\"type\":\"edge\",\"edge_id\":\"edge_id\",\"target_node_id\":\"target_node_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkflowToolEdgeStepModel>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class BackgroundSoundConfigWorkflowOverrideTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"source_type\":\"preset\",\"source_id\":\"office2\",\"volume\":1.13,\"crossfade_loop\":false}";
+            "{\"source_type\":\"preset\",\"source_id\":\"office2\",\"volume\":0.6,\"crossfade_loop\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BackgroundSoundConfigWorkflowOverride>(wire);

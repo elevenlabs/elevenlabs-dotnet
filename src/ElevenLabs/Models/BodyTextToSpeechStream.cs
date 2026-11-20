@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -57,7 +61,7 @@ public record BodyTextToSpeechStream : IJsonOnDeserialized
 
     /// <value>Voice settings overriding stored settings for the given voice. They are applied only on the given request.</value>
     [JsonPropertyName("voice_settings")]
-    public BodyTextToSpeechFullVoiceSettings? VoiceSettings { get; set; }
+    public VoiceSettings? VoiceSettings { get; set; }
 
     /// <value>A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request</value>
     [JsonPropertyName("pronunciation_dictionary_locators")]

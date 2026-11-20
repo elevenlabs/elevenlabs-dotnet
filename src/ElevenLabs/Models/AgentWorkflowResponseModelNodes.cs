@@ -64,6 +64,15 @@ public record AgentWorkflowResponseModelNodes
     }
 
     /// <summary>
+    /// Create an instance of AgentWorkflowResponseModelNodes with <see cref="AgentWorkflowResponseModelNodes.StartProcedure"/>.
+    /// </summary>
+    public AgentWorkflowResponseModelNodes(AgentWorkflowResponseModelNodes.StartProcedure value)
+    {
+        Type = "start_procedure";
+        Value = value.Value;
+    }
+
+    /// <summary>
     /// Create an instance of AgentWorkflowResponseModelNodes with <see cref="AgentWorkflowResponseModelNodes.Tool"/>.
     /// </summary>
     public AgentWorkflowResponseModelNodes(AgentWorkflowResponseModelNodes.Tool value)
@@ -125,6 +134,11 @@ public record AgentWorkflowResponseModelNodes
     /// Returns true if <see cref="Type"/> is "start"
     /// </summary>
     public bool IsStart => Type == "start";
+
+    /// <summary>
+    /// Returns true if <see cref="Type"/> is "start_procedure"
+    /// </summary>
+    public bool IsStartProcedure => Type == "start_procedure";
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "tool"
@@ -197,6 +211,17 @@ public record AgentWorkflowResponseModelNodes
             );
 
     /// <summary>
+    /// Returns the value as a <see cref="global::ElevenLabs.WorkflowStartProcedureNodeModelOutput"/> if <see cref="Type"/> is 'start_procedure', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'start_procedure'.</exception>
+    public global::ElevenLabs.WorkflowStartProcedureNodeModelOutput AsStartProcedure() =>
+        IsStartProcedure
+            ? (global::ElevenLabs.WorkflowStartProcedureNodeModelOutput)Value!
+            : throw new global::System.Exception(
+                "AgentWorkflowResponseModelNodes.Type is not 'start_procedure'"
+            );
+
+    /// <summary>
     /// Returns the value as a <see cref="global::ElevenLabs.WorkflowToolNodeModelOutput"/> if <see cref="Type"/> is 'tool', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'tool'.</exception>
@@ -235,6 +260,7 @@ public record AgentWorkflowResponseModelNodes
         Func<global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput, T> onPhoneNumber,
         Func<global::ElevenLabs.WorkflowStandaloneAgentNodeModelOutput, T> onStandaloneAgent,
         Func<global::ElevenLabs.WorkflowStartNodeModelOutput, T> onStart,
+        Func<global::ElevenLabs.WorkflowStartProcedureNodeModelOutput, T> onStartProcedure,
         Func<global::ElevenLabs.WorkflowToolNodeModelOutput, T> onTool,
         Func<global::ElevenLabs.WorkflowSayNodeModelOutput, T> onSay,
         Func<global::ElevenLabs.WorkflowUpdateStateNodeModelOutput, T> onUpdateState,
@@ -248,6 +274,7 @@ public record AgentWorkflowResponseModelNodes
             "phone_number" => onPhoneNumber(AsPhoneNumber()),
             "standalone_agent" => onStandaloneAgent(AsStandaloneAgent()),
             "start" => onStart(AsStart()),
+            "start_procedure" => onStartProcedure(AsStartProcedure()),
             "tool" => onTool(AsTool()),
             "say" => onSay(AsSay()),
             "update_state" => onUpdateState(AsUpdateState()),
@@ -261,6 +288,7 @@ public record AgentWorkflowResponseModelNodes
         Action<global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput> onPhoneNumber,
         Action<global::ElevenLabs.WorkflowStandaloneAgentNodeModelOutput> onStandaloneAgent,
         Action<global::ElevenLabs.WorkflowStartNodeModelOutput> onStart,
+        Action<global::ElevenLabs.WorkflowStartProcedureNodeModelOutput> onStartProcedure,
         Action<global::ElevenLabs.WorkflowToolNodeModelOutput> onTool,
         Action<global::ElevenLabs.WorkflowSayNodeModelOutput> onSay,
         Action<global::ElevenLabs.WorkflowUpdateStateNodeModelOutput> onUpdateState,
@@ -283,6 +311,9 @@ public record AgentWorkflowResponseModelNodes
                 break;
             case "start":
                 onStart(AsStart());
+                break;
+            case "start_procedure":
+                onStartProcedure(AsStartProcedure());
                 break;
             case "tool":
                 onTool(AsTool());
@@ -374,6 +405,22 @@ public record AgentWorkflowResponseModelNodes
     }
 
     /// <summary>
+    /// Attempts to cast the value to a <see cref="global::ElevenLabs.WorkflowStartProcedureNodeModelOutput"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsStartProcedure(
+        out global::ElevenLabs.WorkflowStartProcedureNodeModelOutput? value
+    )
+    {
+        if (Type == "start_procedure")
+        {
+            value = (global::ElevenLabs.WorkflowStartProcedureNodeModelOutput)Value!;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
+    /// <summary>
     /// Attempts to cast the value to a <see cref="global::ElevenLabs.WorkflowToolNodeModelOutput"/> and returns true if successful.
     /// </summary>
     public bool TryAsTool(out global::ElevenLabs.WorkflowToolNodeModelOutput? value)
@@ -435,6 +482,10 @@ public record AgentWorkflowResponseModelNodes
 
     public static implicit operator AgentWorkflowResponseModelNodes(
         AgentWorkflowResponseModelNodes.Start value
+    ) => new(value);
+
+    public static implicit operator AgentWorkflowResponseModelNodes(
+        AgentWorkflowResponseModelNodes.StartProcedure value
     ) => new(value);
 
     public static implicit operator AgentWorkflowResponseModelNodes(
@@ -515,6 +566,13 @@ public record AgentWorkflowResponseModelNodes
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.WorkflowStartNodeModelOutput"
                     ),
+                "start_procedure" =>
+                    json.Deserialize<global::ElevenLabs.WorkflowStartProcedureNodeModelOutput?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize global::ElevenLabs.WorkflowStartProcedureNodeModelOutput"
+                        ),
                 "tool" => json.Deserialize<global::ElevenLabs.WorkflowToolNodeModelOutput?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.WorkflowToolNodeModelOutput"
@@ -549,6 +607,7 @@ public record AgentWorkflowResponseModelNodes
                     "phone_number" => JsonSerializer.SerializeToNode(value.Value, options),
                     "standalone_agent" => JsonSerializer.SerializeToNode(value.Value, options),
                     "start" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "start_procedure" => JsonSerializer.SerializeToNode(value.Value, options),
                     "tool" => JsonSerializer.SerializeToNode(value.Value, options),
                     "say" => JsonSerializer.SerializeToNode(value.Value, options),
                     "update_state" => JsonSerializer.SerializeToNode(value.Value, options),
@@ -677,6 +736,26 @@ public record AgentWorkflowResponseModelNodes
 
         public static implicit operator AgentWorkflowResponseModelNodes.Start(
             global::ElevenLabs.WorkflowStartNodeModelOutput value
+        ) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for start_procedure
+    /// </summary>
+    [Serializable]
+    public struct StartProcedure
+    {
+        public StartProcedure(global::ElevenLabs.WorkflowStartProcedureNodeModelOutput value)
+        {
+            Value = value;
+        }
+
+        internal global::ElevenLabs.WorkflowStartProcedureNodeModelOutput Value { get; set; }
+
+        public override string ToString() => Value.ToString() ?? "null";
+
+        public static implicit operator AgentWorkflowResponseModelNodes.StartProcedure(
+            global::ElevenLabs.WorkflowStartProcedureNodeModelOutput value
         ) => new(value);
     }
 

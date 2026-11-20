@@ -21,7 +21,7 @@ public class OpenAiTurnDetectionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"semantic_vad\",\"eagerness\":\"low\",\"create_response\":true,\"interrupt_response\":true,\"threshold\":8.76,\"prefix_padding_ms\":1,\"silence_duration_ms\":4,\"turn_timeout\":-1}";
+            "{\"type\":\"semantic_vad\",\"eagerness\":\"low\",\"create_response\":true,\"interrupt_response\":true,\"threshold\":9.7,\"prefix_padding_ms\":8,\"silence_duration_ms\":9,\"turn_timeout\":-1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OpenAiTurnDetection>(wire);
         var serialized = TestJson.Serialize(instance);

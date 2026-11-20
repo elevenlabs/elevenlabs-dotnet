@@ -50,6 +50,8 @@ public readonly record struct ConfigEntityType : IStringEnum
 
     public static readonly ConfigEntityType Language = new(Values.Language);
 
+    public static readonly ConfigEntityType CriminalRecord = new(Values.CriminalRecord);
+
     public static readonly ConfigEntityType Username = new(Values.Username);
 
     public static readonly ConfigEntityType Password = new(Values.Password);
@@ -302,6 +304,8 @@ public readonly record struct ConfigEntityType : IStringEnum
         public const string PhysicalAttribute = "physical_attribute";
 
         public const string Language = "language";
+
+        public const string CriminalRecord = "criminal_record";
 
         public const string Username = "username";
 

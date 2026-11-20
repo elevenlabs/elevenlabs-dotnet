@@ -20,7 +20,7 @@ public class SendTextMultiTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"context_id\":\"context_id\",\"flush\":true}";
+        const string wire = "{\"text\":\"text\",\"context_id\":\"context_id\",\"flush\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SendTextMulti>(wire);
         var serialized = TestJson.Serialize(instance);

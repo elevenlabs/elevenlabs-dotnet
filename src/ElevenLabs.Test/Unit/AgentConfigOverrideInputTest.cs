@@ -21,7 +21,7 @@ public class AgentConfigOverrideInputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"first_message\":\"first_message\",\"language\":\"language\",\"max_conversation_duration_message\":\"max_conversation_duration_message\",\"prompt\":{\"prompt\":\"prompt\",\"llm\":\"gpt-4o-mini\",\"reasoning_effort\":\"none\",\"tool_ids\":[\"tool_ids\"],\"tool_ids_strict\":false,\"native_mcp_server_ids\":[\"native_mcp_server_ids\"],\"knowledge_base\":[{\"type\":\"file\",\"name\":\"name\",\"id\":\"id\",\"usage_mode\":\"prompt\"}]}}";
+            "{\"first_message\":\"first_message\",\"language\":\"language\",\"max_conversation_duration_message\":\"max_conversation_duration_message\",\"prompt\":{\"prompt\":\"prompt\",\"llm\":\"gpt-4o-mini\",\"reasoning_effort\":\"none\",\"tool_ids\":[\"tool_ids\"],\"tool_ids_strict\":true,\"native_mcp_server_ids\":[\"native_mcp_server_ids\"],\"knowledge_base\":[{\"type\":\"file\",\"name\":\"name\",\"id\":\"id\",\"usage_mode\":\"prompt\"}]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentConfigOverrideInput>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -72,6 +76,18 @@ public partial interface IWebhooksClient
     /// </summary>
     IWebhooksClient SetDeleteAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
 
+    /// <summary>
+    /// Sets method-level configuration for <c>TestAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IWebhooksClient SetTestAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
+    /// <summary>
+    /// Sets method-level configuration for <c>RedeliverAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IWebhooksClient SetRedeliverAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
     /// <summary>List all webhooks for a workspace</summary>
     WithRawResponseTask<WorkspaceWebhookListResponseModel> ListAsync(
         ListWebhooksRequest request,
@@ -98,6 +114,23 @@ public partial interface IWebhooksClient
     WithRawResponseTask<DeleteWorkspaceWebhookResponseModel> DeleteAsync(
         string webhookId,
         DeleteWebhooksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.</summary>
+    WithRawResponseTask<WebhookSendResultResponseModel> TestAsync(
+        string webhookId,
+        TestWebhooksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Redelivering needs permission to manage webhooks and a web session, and the delivery's payload must be stored. Redeliveries and test events share a limit of 10 per webhook per minute.</summary>
+    WithRawResponseTask<WebhookSendResultResponseModel> RedeliverAsync(
+        string webhookId,
+        string deliveryId,
+        RedeliverWebhooksRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

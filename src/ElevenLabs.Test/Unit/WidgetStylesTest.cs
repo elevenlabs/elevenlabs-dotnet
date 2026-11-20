@@ -21,7 +21,7 @@ public class WidgetStylesTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"base\":\"base\",\"base_hover\":\"base_hover\",\"base_active\":\"base_active\",\"base_border\":\"base_border\",\"base_subtle\":\"base_subtle\",\"base_primary\":\"base_primary\",\"base_error\":\"base_error\",\"accent\":\"accent\",\"accent_hover\":\"accent_hover\",\"accent_active\":\"accent_active\",\"accent_border\":\"accent_border\",\"accent_subtle\":\"accent_subtle\",\"accent_primary\":\"accent_primary\",\"overlay_padding\":9.69,\"button_radius\":0.88,\"input_radius\":9.98,\"bubble_radius\":1.86,\"sheet_radius\":0.53,\"compact_sheet_radius\":5.76,\"dropdown_sheet_radius\":5.88}";
+            "{\"base\":\"base\",\"base_hover\":\"base_hover\",\"base_active\":\"base_active\",\"base_border\":\"base_border\",\"base_subtle\":\"base_subtle\",\"base_primary\":\"base_primary\",\"base_error\":\"base_error\",\"accent\":\"accent\",\"accent_hover\":\"accent_hover\",\"accent_active\":\"accent_active\",\"accent_border\":\"accent_border\",\"accent_subtle\":\"accent_subtle\",\"accent_primary\":\"accent_primary\",\"overlay_padding\":7.96,\"button_radius\":3.89,\"input_radius\":2.86,\"bubble_radius\":8.46,\"sheet_radius\":6.37,\"compact_sheet_radius\":4.94,\"dropdown_sheet_radius\":1.85}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WidgetStyles>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ConversationSentimentAnalysisTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"overall_label\":\"positive\",\"overall_sentiment_score\":-0.65,\"overall_frustration_score\":0.73,\"min_user_sentiment_score\":-0.78,\"max_user_frustration_score\":0.34,\"num_scored_user_turns\":3}";
+            "{\"overall_label\":\"positive\",\"overall_sentiment_score\":-0.52,\"overall_frustration_score\":0.88,\"min_user_sentiment_score\":0.63,\"max_user_frustration_score\":0.69,\"num_scored_user_turns\":2}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationSentimentAnalysis>(wire);
         var serialized = TestJson.Serialize(instance);

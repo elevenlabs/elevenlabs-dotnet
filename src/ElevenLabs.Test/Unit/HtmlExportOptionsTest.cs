@@ -21,7 +21,7 @@ public class HtmlExportOptionsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"html\",\"segment_on_silence_longer_than_s\":0.88,\"max_segment_duration_s\":5.42,\"max_segment_chars\":9}";
+            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"html\",\"segment_on_silence_longer_than_s\":6.58,\"max_segment_duration_s\":4.63,\"max_segment_chars\":9}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.HtmlExportOptions>(wire);
         var serialized = TestJson.Serialize(instance);

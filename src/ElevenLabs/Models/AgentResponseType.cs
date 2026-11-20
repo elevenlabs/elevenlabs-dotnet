@@ -8,7 +8,9 @@ namespace ElevenLabs;
 [Serializable]
 public readonly record struct AgentResponseType : IStringEnum
 {
-    public static readonly AgentResponseType AgentResponse = new(Values.AgentResponse);
+    public static readonly AgentResponseType Text = new(Values.Text);
+
+    public static readonly AgentResponseType Voice = new(Values.Voice);
 
     public AgentResponseType(string value)
     {
@@ -106,6 +108,8 @@ public readonly record struct AgentResponseType : IStringEnum
     [Serializable]
     public static class Values
     {
-        public const string AgentResponse = "agent_response";
+        public const string Text = "text";
+
+        public const string Voice = "voice";
     }
 }

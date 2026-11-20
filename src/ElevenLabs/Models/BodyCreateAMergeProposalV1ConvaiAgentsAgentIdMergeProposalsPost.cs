@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -63,7 +67,7 @@ public record BodyCreateAMergeProposalV1ConvaiAgentsAgentIdMergeProposalsPost : 
     [JsonPropertyName("requested_reviewer_user_ids")]
     public IEnumerable<string>? RequestedReviewerUserIds { get; set; }
 
-    /// <value>Triage ticket of this agent that the merge_proposal resolves. Merging it resolves the ticket if still open.</value>
+    /// <value>Issue of this agent that the merge_proposal resolves. Merging it resolves the issue if still open.</value>
     [JsonPropertyName("triage_ticket_id")]
     public string? TriageTicketId { get; set; }
 

@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -145,6 +149,30 @@ public partial class DocumentsClient
     public IDocumentsClient SetDeleteAsyncConfig(global::ElevenLabs.Config.RequestConfig config)
     {
         _service.SetDeleteAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>GetChunkingOverrideAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IDocumentsClient SetGetChunkingOverrideAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    )
+    {
+        _service.SetGetChunkingOverrideAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateChunkingOverrideAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IDocumentsClient SetUpdateChunkingOverrideAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    )
+    {
+        _service.SetUpdateChunkingOverrideAsyncConfig(config);
         return this;
     }
 
@@ -348,6 +376,45 @@ public partial class DocumentsClient
                     _service.DeleteAsync(
                         documentationId,
                         request.Force,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Get the stored and effective RAG chunking overrides for a document or folder.</summary>
+    public WithRawResponseTask<GetDocumentChunkingOverrideResponseModel> GetChunkingOverrideAsync(
+        string documentationId,
+        GetChunkingOverrideDocumentsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<GetDocumentChunkingOverrideResponseModel>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.GetChunkingOverrideAsync(
+                        documentationId,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Set or clear the RAG chunking override for a document or folder.</summary>
+    public WithRawResponseTask<UpdateDocumentChunkingOverrideResponseModel> UpdateChunkingOverrideAsync(
+        string documentationId,
+        UpdateChunkingOverrideDocumentsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<UpdateDocumentChunkingOverrideResponseModel>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.UpdateChunkingOverrideAsync(
+                        request.Body,
+                        documentationId,
                         request.XiApiKey,
                         cancellationToken: cancellationToken
                     )

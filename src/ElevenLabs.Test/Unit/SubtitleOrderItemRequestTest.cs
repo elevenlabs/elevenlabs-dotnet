@@ -21,7 +21,7 @@ public class SubtitleOrderItemRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"kind\":\"subtitles\",\"media_ids\":[\"prodmedia_7wassdw4j9zzcgpl3ovy2piv18\"],\"source_language\":\"source_language\",\"destination_languages\":[\"destination_languages\"],\"cue_options\":{\"min_duration_ms\":1000,\"max_duration_ms\":7000,\"max_lines_per_cue\":2,\"max_chars_per_line\":42,\"max_chars_per_s\":16,\"min_gap_between_cues_frames\":3},\"sdh\":false,\"instructions\":\"instructions\"}";
+            "{\"kind\":\"subtitles\",\"media_ids\":[\"prodmedia_rqpc7tg1ee3227nsadhy4rizmu\"],\"source_language\":\"source_language\",\"destination_languages\":[\"destination_languages\"],\"cue_options\":{\"min_duration_ms\":1000,\"max_duration_ms\":7000,\"max_lines_per_cue\":2,\"max_chars_per_line\":42,\"max_chars_per_s\":29,\"min_gap_between_cues_frames\":4},\"sdh\":false,\"instructions\":\"instructions\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SubtitleOrderItemRequest>(wire);
         var serialized = TestJson.Serialize(instance);

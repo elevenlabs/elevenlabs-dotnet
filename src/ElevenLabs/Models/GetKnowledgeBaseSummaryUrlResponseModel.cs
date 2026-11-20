@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -63,11 +67,15 @@ public record GetKnowledgeBaseSummaryUrlResponseModel : IJsonOnDeserialized
     [JsonPropertyName("folder_parent_id")]
     public string? FolderParentId { get; set; }
 
+    /// <value>Per-entity RAG chunking override. Null means inherit from ancestors or the embedding model default.</value>
+    [JsonPropertyName("chunking_override")]
+    public ChunkingOverride? ChunkingOverride { get; set; }
+
     /// <value>The folder path segments leading to this entity, from root to parent folder.</value>
     [JsonPropertyName("folder_path")]
     public IEnumerable<KnowledgeBaseFolderPathSegmentSummaryResponseModel>? FolderPath { get; set; }
 
-    /// <value>This field is deprecated and will be removed in the future, use the separate endpoint to get dependent agents instead.</value>
+    /// <value>This field is deprecated, always empty, and will be removed in the future. Use the separate endpoint to get dependent agents instead.</value>
     [JsonPropertyName("dependent_agents")]
     public IEnumerable<GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem> DependentAgents { get; set; } =
         new List<GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem>();
@@ -124,6 +132,7 @@ public record GetKnowledgeBaseSummaryUrlResponseModel : IJsonOnDeserialized
             && ValueEquality.AreEqual(SupportedUsages, other.SupportedUsages)
             && ValueEquality.AreEqual(AccessInfo, other.AccessInfo)
             && ValueEquality.AreEqual(FolderParentId, other.FolderParentId)
+            && ValueEquality.AreEqual(ChunkingOverride, other.ChunkingOverride)
             && ValueEquality.AreEqual(FolderPath, other.FolderPath)
             && ValueEquality.AreEqual(DependentAgents, other.DependentAgents)
             && ValueEquality.AreEqual(Type, other.Type)
@@ -144,6 +153,7 @@ public record GetKnowledgeBaseSummaryUrlResponseModel : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SupportedUsages);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AccessInfo);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FolderParentId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ChunkingOverride);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FolderPath);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DependentAgents);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Type);

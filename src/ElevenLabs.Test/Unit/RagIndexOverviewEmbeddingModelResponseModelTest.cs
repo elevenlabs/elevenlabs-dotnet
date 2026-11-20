@@ -20,7 +20,7 @@ public class RagIndexOverviewEmbeddingModelResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"model\":\"e5_mistral_7b_instruct\",\"used_bytes\":7}";
+        const string wire = "{\"model\":\"e5_mistral_7b_instruct\",\"used_bytes\":2}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.RagIndexOverviewEmbeddingModelResponseModel>(

@@ -21,7 +21,7 @@ public class DubbingMediaReferenceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":8.26,\"is_audio\":true,\"url\":\"url\"}";
+            "{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":8.28,\"is_audio\":false,\"url\":\"url\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingMediaReference>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ProcedureRefResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"procedure_id\":\"procedure_id\",\"version_id\":\"version_id\",\"name\":\"name\",\"type\":\"free_form\",\"trigger\":\"trigger\",\"referenced_tool_ids\":[\"referenced_tool_ids\"],\"referenced_kb_ids\":[\"referenced_kb_ids\"],\"referenced_procedure_ids\":[\"referenced_procedure_ids\"],\"referenced_dynamic_variables\":[\"referenced_dynamic_variables\"],\"folder_parent_id\":\"folder_parent_id\"}";
+            "{\"procedure_id\":\"procedure_id\",\"version_id\":\"version_id\",\"name\":\"name\",\"type\":\"free_form\",\"trigger\":\"trigger\",\"referenced_tool_ids\":[\"referenced_tool_ids\"],\"referenced_kb_ids\":[\"referenced_kb_ids\"],\"referenced_procedure_ids\":[\"referenced_procedure_ids\"],\"referenced_dynamic_variables\":[\"referenced_dynamic_variables\"],\"written_dynamic_variables\":[\"written_dynamic_variables\"],\"folder_parent_id\":\"folder_parent_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ProcedureRefResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

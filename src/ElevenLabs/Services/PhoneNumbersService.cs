@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -56,6 +60,10 @@ internal class PhoneNumbersService : BaseService
     private RequestConfig? _deleteAsyncConfig;
     private RequestConfig? _listV2AsyncConfig;
     private RequestConfig? _getSipMessagesAsyncConfig;
+    private RequestConfig? _listAsync1Config;
+    private RequestConfig? _createAsync1Config;
+    private RequestConfig? _updateAsync1Config;
+    private RequestConfig? _deleteAsync1Config;
 
     internal PhoneNumbersService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -127,6 +135,46 @@ internal class PhoneNumbersService : BaseService
     public PhoneNumbersService SetGetSipMessagesAsyncConfig(RequestConfig config)
     {
         _getSipMessagesAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>ListAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public PhoneNumbersService SetListAsync1Config(RequestConfig config)
+    {
+        _listAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public PhoneNumbersService SetCreateAsync1Config(RequestConfig config)
+    {
+        _createAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public PhoneNumbersService SetUpdateAsync1Config(RequestConfig config)
+    {
+        _updateAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>DeleteAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public PhoneNumbersService SetDeleteAsync1Config(RequestConfig config)
+    {
+        _deleteAsync1Config = config;
         return this;
     }
 
@@ -679,5 +727,221 @@ internal class PhoneNumbersService : BaseService
         }
 
         return result;
+    }
+
+    /// <summary>List the workspace's phone numbers and the receptionist each one rings. A number with no `customer_facing_agent_id` is held by the workspace but not attached to a receptionist yet.</summary>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<
+        List<global::ElevenLabs.ReceptionPhoneAssignment>
+    > ListAsync1(
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_listAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Get, "v1/reception/phone-numbers/assignments")
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        List<global::ElevenLabs.ReceptionPhoneAssignment> result;
+        try
+        {
+            result = global::System.Text.Json.JsonSerializer.Deserialize<
+                List<global::ElevenLabs.ReceptionPhoneAssignment>
+            >(responseBody, _jsonSerializerOptions)!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Give a receptionist a phone number. A number the workspace already holds but has not attached is used first. Otherwise, in the US and Canada, a number with one of the requested `area_codes` is taken from the pool or bought, falling back to any number in the business's country. In countries that require paperwork, the number is issued right away but takes public calls only once the workspace's own registration is approved (see `accepts_public_calls`). Counts toward the plan's phone number limit, and free plans can take only a few new numbers a day. Returns 404 when no number is available and 403 `telephony_managed_by_reseller` when the reseller supplies the workspace's numbers from its own Twilio account or SIP trunk and none is free.</summary>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.ReceptionPhoneAssignment> CreateAsync1(
+        global::ElevenLabs.Reception.CreatePhoneAssignmentRequest input,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_createAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Post, "v1/reception/phone-numbers/assignments")
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.ReceptionPhoneAssignment result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ReceptionPhoneAssignment>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Move a phone number to a different receptionist in the same workspace, which answers its calls from then on. Returns 409 `phone_number_not_attached` for a number no receptionist answers yet (attach it with `POST /v1/reception/phone-numbers/assignments`).</summary>
+    /// <param name="phoneAssignmentId">ID of the phone number assignment. Returned when you assign a number; list them with `GET /v1/reception/phone-numbers/assignments`.</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.ReceptionPhoneAssignment> UpdateAsync1(
+        global::ElevenLabs.Reception.ReassignPhoneRequest input,
+        string phoneAssignmentId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (phoneAssignmentId is null)
+            throw new ArgumentNullException(nameof(phoneAssignmentId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_updateAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(
+            new HttpMethod("PATCH"),
+            "v1/reception/phone-numbers/assignments/{phone_assignment_id}"
+        )
+            .SetPathParameter("phone_assignment_id", phoneAssignmentId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.ReceptionPhoneAssignment result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ReceptionPhoneAssignment>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Remove a phone number from the workspace. A pool number goes back to the pool it came from. A number the business brought from its own Twilio account, or one issued in a country that requires paperwork, is released at Twilio and cannot be recovered. Returns 403 `telephony_managed_by_reseller` when the reseller supplies the workspace's numbers from its own Twilio account or SIP trunk.</summary>
+    /// <param name="phoneAssignmentId">ID of the phone number assignment. Returned when you assign a number; list them with `GET /v1/reception/phone-numbers/assignments`.</param>
+    /// <param name="xiWorkspaceId">The customer workspace a reseller's API key acts on.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task DeleteAsync1(
+        string phoneAssignmentId,
+        string xiWorkspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (phoneAssignmentId is null)
+            throw new ArgumentNullException(nameof(phoneAssignmentId));
+        if (xiWorkspaceId is null)
+            throw new ArgumentNullException(nameof(xiWorkspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_deleteAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Delete,
+            "v1/reception/phone-numbers/assignments/{phone_assignment_id}"
+        )
+            .SetPathParameter("phone_assignment_id", phoneAssignmentId)
+            .SetHeader("xi-workspace-id", xiWorkspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

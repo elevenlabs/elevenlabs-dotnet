@@ -21,7 +21,7 @@ public class SendTextTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"try_trigger_generation\":false,\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.16,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[0]},\"flush\":true}";
+            "{\"text\":\"text\",\"try_trigger_generation\":false,\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.41,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[6]},\"flush\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SendText>(wire);
         var serialized = TestJson.Serialize(instance);

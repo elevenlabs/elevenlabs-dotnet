@@ -21,7 +21,7 @@ public class SongSectionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":104050,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":8,\"end_ms\":5},\"negative_ranges\":[{\"start_ms\":8,\"end_ms\":5}]}}";
+            "{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":104477,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":7,\"end_ms\":1},\"negative_ranges\":[{\"start_ms\":7,\"end_ms\":1}]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SongSection>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class WhatsAppOutboundCallResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"success\":true,\"message\":\"message\",\"conversation_id\":\"conversation_id\"}";
+            "{\"success\":false,\"message\":\"message\",\"conversation_id\":\"conversation_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WhatsAppOutboundCallResponse>(wire);
         var serialized = TestJson.Serialize(instance);

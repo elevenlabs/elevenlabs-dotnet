@@ -19,7 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
-using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -43,7 +46,7 @@ namespace ElevenLabs;
 /// </summary>
 public partial interface IPronunciationDictionariesClient
 {
-    public IRulesClient Rules { get; }
+    public ElevenLabs.PronunciationDictionaries.IRulesClient Rules { get; }
 
     /// <summary>
     /// Sets service-level configuration for every method on this client.

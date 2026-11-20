@@ -20,7 +20,7 @@ public class AgentMetadataResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"created_at_unix_secs\":1,\"updated_at_unix_secs\":8}";
+        const string wire = "{\"created_at_unix_secs\":2,\"updated_at_unix_secs\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentMetadataResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

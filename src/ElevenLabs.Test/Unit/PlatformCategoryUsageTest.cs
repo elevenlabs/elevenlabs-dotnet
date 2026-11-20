@@ -20,7 +20,7 @@ public class PlatformCategoryUsageTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"credits\":8,\"price\":9.28,\"quantity\":9.85}";
+        const string wire = "{\"credits\":4,\"price\":4.4,\"quantity\":7.51}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PlatformCategoryUsage>(wire);
         var serialized = TestJson.Serialize(instance);

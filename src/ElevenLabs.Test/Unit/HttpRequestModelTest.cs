@@ -21,7 +21,7 @@ public class HttpRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"http_method\":\"http_method\",\"url\":{\"url_string\":\"url_string\",\"scheme\":\"scheme\",\"hostname\":\"hostname\",\"port\":2,\"path\":\"path\",\"query_string\":\"query_string\"},\"user_agent\":\"user_agent\",\"x_forwarded_for\":[\"x_forwarded_for\"]}";
+            "{\"http_method\":\"http_method\",\"url\":{\"url_string\":\"url_string\",\"scheme\":\"scheme\",\"hostname\":\"hostname\",\"port\":10,\"path\":\"path\",\"query_string\":\"query_string\"},\"user_agent\":\"user_agent\",\"x_forwarded_for\":[\"x_forwarded_for\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.HttpRequestModel>(wire);
         var serialized = TestJson.Serialize(instance);

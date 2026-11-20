@@ -21,7 +21,7 @@ public class SipLogMessageTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"call_id\":\"call_id\",\"phone_numbers\":[\"phone_numbers\"],\"local_address\":\"local_address\",\"remote_address\":\"remote_address\",\"transport\":\"transport\",\"raw_message\":\"raw_message\",\"error_message\":\"error_message\",\"direction\":\"in\",\"created_at_unix_micro\":1}";
+            "{\"call_id\":\"call_id\",\"phone_numbers\":[\"phone_numbers\"],\"local_address\":\"local_address\",\"remote_address\":\"remote_address\",\"transport\":\"transport\",\"raw_message\":\"raw_message\",\"error_message\":\"error_message\",\"direction\":\"in\",\"created_at_unix_micro\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SipLogMessage>(wire);
         var serialized = TestJson.Serialize(instance);

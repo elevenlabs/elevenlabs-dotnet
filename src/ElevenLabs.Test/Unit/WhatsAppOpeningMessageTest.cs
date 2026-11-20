@@ -21,7 +21,7 @@ public class WhatsAppOpeningMessageTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"template_name\":\"template_name\",\"wamid\":\"wamid\",\"sent_at_unix\":3,\"delivered_at_unix\":0,\"read_at_unix\":8,\"replied_at_unix\":1,\"failed_at_unix\":1,\"error_code\":\"error_code\",\"pricing_category\":\"pricing_category\",\"billable\":false}";
+            "{\"template_name\":\"template_name\",\"wamid\":\"wamid\",\"sent_at_unix\":0,\"delivered_at_unix\":4,\"read_at_unix\":8,\"replied_at_unix\":5,\"failed_at_unix\":2,\"error_code\":\"error_code\",\"pricing_category\":\"pricing_category\",\"billable\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WhatsAppOpeningMessage>(wire);
         var serialized = TestJson.Serialize(instance);

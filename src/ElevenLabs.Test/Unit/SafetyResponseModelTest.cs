@@ -21,7 +21,7 @@ public class SafetyResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"is_blocked_ivc\":true,\"is_blocked_non_ivc\":true,\"ignore_safety_evaluation\":true}";
+            "{\"is_blocked_ivc\":false,\"is_blocked_non_ivc\":false,\"ignore_safety_evaluation\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SafetyResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

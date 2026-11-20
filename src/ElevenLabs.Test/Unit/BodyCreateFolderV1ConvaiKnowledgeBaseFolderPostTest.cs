@@ -21,7 +21,7 @@ public class BodyCreateFolderV1ConvaiKnowledgeBaseFolderPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"parent_folder_id\":\"parent_folder_id\",\"enable_auto_sync\":true,\"auto_remove\":false,\"minimum_frequency_days\":122}";
+            "{\"name\":\"name\",\"parent_folder_id\":\"parent_folder_id\",\"enable_auto_sync\":true,\"auto_remove\":false,\"minimum_frequency_days\":28}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.KnowledgeBase.BodyCreateFolderV1ConvaiKnowledgeBaseFolderPost>(

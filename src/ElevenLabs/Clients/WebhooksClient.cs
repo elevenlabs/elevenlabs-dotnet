@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -102,6 +106,26 @@ public partial class WebhooksClient
         return this;
     }
 
+    /// <summary>
+    /// Sets method-level configuration for <c>TestAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IWebhooksClient SetTestAsyncConfig(global::ElevenLabs.Config.RequestConfig config)
+    {
+        _service.SetTestAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>RedeliverAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IWebhooksClient SetRedeliverAsyncConfig(global::ElevenLabs.Config.RequestConfig config)
+    {
+        _service.SetRedeliverAsyncConfig(config);
+        return this;
+    }
+
     /// <summary>List all webhooks for a workspace</summary>
     public WithRawResponseTask<WorkspaceWebhookListResponseModel> ListAsync(
         ListWebhooksRequest request,
@@ -171,6 +195,47 @@ public partial class WebhooksClient
                 () =>
                     _service.DeleteAsync(
                         webhookId,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.</summary>
+    public WithRawResponseTask<WebhookSendResultResponseModel> TestAsync(
+        string webhookId,
+        TestWebhooksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<WebhookSendResultResponseModel>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.TestAsync(
+                        request.Body,
+                        webhookId,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Redelivering needs permission to manage webhooks and a web session, and the delivery's payload must be stored. Redeliveries and test events share a limit of 10 per webhook per minute.</summary>
+    public WithRawResponseTask<WebhookSendResultResponseModel> RedeliverAsync(
+        string webhookId,
+        string deliveryId,
+        RedeliverWebhooksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<WebhookSendResultResponseModel>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.RedeliverAsync(
+                        webhookId,
+                        deliveryId,
                         request.XiApiKey,
                         cancellationToken: cancellationToken
                     )

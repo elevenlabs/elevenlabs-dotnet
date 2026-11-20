@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -43,7 +47,7 @@ public record MergeAgentConversationTicketsRequestModel : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    /// <value>Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.</value>
+    /// <value>Open issues of the same agent to fold into this one. They are kept with status 'merged', pointing at this issue.</value>
     [JsonPropertyName("source_ticket_ids")]
     public IEnumerable<string> SourceTicketIds { get; set; } = new List<string>();
 

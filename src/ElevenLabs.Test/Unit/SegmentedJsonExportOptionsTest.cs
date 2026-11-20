@@ -21,7 +21,7 @@ public class SegmentedJsonExportOptionsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"segmented_json\",\"segment_on_silence_longer_than_s\":3.57,\"max_segment_duration_s\":0.27,\"max_segment_chars\":0}";
+            "{\"include_speakers\":true,\"include_timestamps\":true,\"format\":\"segmented_json\",\"segment_on_silence_longer_than_s\":9.98,\"max_segment_duration_s\":0.25,\"max_segment_chars\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentedJsonExportOptions>(wire);
         var serialized = TestJson.Serialize(instance);

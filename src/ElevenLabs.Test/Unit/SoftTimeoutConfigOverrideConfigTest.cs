@@ -20,7 +20,7 @@ public class SoftTimeoutConfigOverrideConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"message\":false,\"additional_soft_timeout_messages\":false}";
+        const string wire = "{\"message\":true,\"additional_soft_timeout_messages\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SoftTimeoutConfigOverrideConfig>(
             wire

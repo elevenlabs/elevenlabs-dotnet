@@ -21,7 +21,7 @@ public class DependentAvailableAgentIdentifierTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"referenced_resource_ids\":[\"referenced_resource_ids\"],\"id\":\"id\",\"name\":\"name\",\"type\":\"available\",\"created_at_unix_secs\":4,\"access_level\":\"admin\"}";
+            "{\"referenced_resource_ids\":[\"referenced_resource_ids\"],\"id\":\"id\",\"name\":\"name\",\"type\":\"available\",\"created_at_unix_secs\":7,\"access_level\":\"admin\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DependentAvailableAgentIdentifier>(
             wire

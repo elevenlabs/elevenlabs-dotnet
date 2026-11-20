@@ -21,7 +21,7 @@ public class BodyInviteMultipleUsersV1WorkspaceInvitesAddBulkPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"emails\":[\"emails\"],\"seat_type\":\"workspace_admin\",\"group_ids\":[\"group_ids\"],\"usage_limit\":0}";
+            "{\"emails\":[\"emails\"],\"seat_type\":\"workspace_admin\",\"group_ids\":[\"group_ids\"],\"usage_limit\":9}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Workspace.BodyInviteMultipleUsersV1WorkspaceInvitesAddBulkPost>(

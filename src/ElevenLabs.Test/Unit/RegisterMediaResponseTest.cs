@@ -20,7 +20,7 @@ public class RegisterMediaResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"media_id\":\"prodmedia_h7agqqmq0pyq2m4juxh2101ek0\"}";
+        const string wire = "{\"media_id\":\"prodmedia_fetxnfh6c7w0takk14ey46ea22\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RegisterMediaResponse>(wire);
         var serialized = TestJson.Serialize(instance);

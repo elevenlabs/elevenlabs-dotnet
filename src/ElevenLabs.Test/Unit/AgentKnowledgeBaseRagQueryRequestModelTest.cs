@@ -21,7 +21,7 @@ public class AgentKnowledgeBaseRagQueryRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"strategy\":\"cat\",\"query\":\"query\",\"documents\":[\"documents\"],\"use_agent_defaults\":true,\"max_documents_length\":6291,\"max_retrieved_rag_chunks_count\":4}";
+            "{\"strategy\":\"cat\",\"query\":\"query\",\"documents\":[\"documents\"],\"use_agent_defaults\":true,\"max_documents_length\":29196,\"max_retrieved_rag_chunks_count\":14}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentKnowledgeBaseRagQueryRequestModel>(wire);

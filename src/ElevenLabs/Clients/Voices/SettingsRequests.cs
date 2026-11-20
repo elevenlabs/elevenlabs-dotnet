@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -56,7 +60,7 @@ public record UpdateSettingsRequest
     public string? XiApiKey { get; set; }
 
     [JsonIgnore]
-    public required global::ElevenLabs.BodyTextToSpeechFullVoiceSettings Body { get; set; }
+    public required global::ElevenLabs.VoiceSettings Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

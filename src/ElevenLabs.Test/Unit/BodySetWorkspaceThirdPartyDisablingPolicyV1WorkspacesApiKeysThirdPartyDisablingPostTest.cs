@@ -20,7 +20,7 @@ public class BodySetWorkspaceThirdPartyDisablingPolicyV1WorkspacesApiKeysThirdPa
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"third_party_disable_allowed\":false}";
+        const string wire = "{\"third_party_disable_allowed\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodySetWorkspaceThirdPartyDisablingPolicyV1WorkspacesApiKeysThirdPartyDisablingPost>(

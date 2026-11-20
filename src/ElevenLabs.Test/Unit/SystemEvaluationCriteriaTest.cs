@@ -20,7 +20,7 @@ public class SystemEvaluationCriteriaTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"user_sentiment_score\":-0.85,\"user_frustration_score\":0.03}";
+        const string wire = "{\"user_sentiment_score\":-0.81,\"user_frustration_score\":0.37}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SystemEvaluationCriteria>(wire);
         var serialized = TestJson.Serialize(instance);

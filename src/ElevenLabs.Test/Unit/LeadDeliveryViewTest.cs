@@ -21,7 +21,7 @@ public class LeadDeliveryViewTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"pending\",\"stage\":\"queued\",\"sent_at_unix\":3,\"delivered_at_unix\":4,\"read_at_unix\":8,\"replied_at_unix\":6,\"failed_at_unix\":4,\"error_message\":\"error_message\"}";
+            "{\"status\":\"pending\",\"stage\":\"queued\",\"sent_at_unix\":10,\"delivered_at_unix\":4,\"read_at_unix\":0,\"replied_at_unix\":7,\"failed_at_unix\":7,\"error_message\":\"error_message\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LeadDeliveryView>(wire);
         var serialized = TestJson.Serialize(instance);

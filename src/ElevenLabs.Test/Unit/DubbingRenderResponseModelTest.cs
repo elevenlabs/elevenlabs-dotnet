@@ -20,7 +20,7 @@ public class DubbingRenderResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"version\":4,\"render_id\":\"render_id\"}";
+        const string wire = "{\"version\":9,\"render_id\":\"render_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingRenderResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

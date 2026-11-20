@@ -21,7 +21,7 @@ public class DetectedEntityTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"entity_type\":\"entity_type\",\"start_char\":7,\"end_char\":0}";
+            "{\"text\":\"text\",\"entity_type\":\"entity_type\",\"start_char\":0,\"end_char\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DetectedEntity>(wire);
         var serialized = TestJson.Serialize(instance);

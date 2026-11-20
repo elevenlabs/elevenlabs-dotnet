@@ -20,7 +20,7 @@ public class BodyRenderAudioOrVideoForTheGivenLanguageV1DubbingResourceDubbingId
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"render_type\":\"mp4\",\"normalize_volume\":true}";
+        const string wire = "{\"render_type\":\"mp4\",\"normalize_volume\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodyRenderAudioOrVideoForTheGivenLanguageV1DubbingResourceDubbingIdRenderLanguagePost>(

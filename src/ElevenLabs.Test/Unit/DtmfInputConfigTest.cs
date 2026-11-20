@@ -21,7 +21,7 @@ public class DtmfInputConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"dtmf_input_timeout\":2,\"hash_terminator\":true,\"redact_input\":true}";
+            "{\"dtmf_input_timeout\":2,\"hash_terminator\":true,\"redact_input\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DtmfInputConfig>(wire);
         var serialized = TestJson.Serialize(instance);

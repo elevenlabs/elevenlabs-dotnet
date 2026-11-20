@@ -20,7 +20,7 @@ public class OTelAttributeTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"key\":\"key\",\"value\":{\"key\":\"officia\"}}";
+        const string wire = "{\"key\":\"key\",\"value\":{\"key\":\"commodo \"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OTelAttribute>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -27,6 +27,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -206,7 +210,7 @@ internal class MusicService : BaseService
     /// <param name="outputFormat">Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.</param>
     /// <param name="enableLogging">When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
-    public async global::System.Threading.Tasks.Task<global::ElevenLabs.ComposeDetailedMusicResponse> ComposeDetailedAsync(
+    public async global::System.Threading.Tasks.Task<global::System.IO.Stream> ComposeDetailedAsync(
         global::ElevenLabs.BodyComposeMusicWithADetailedResponseV1MusicDetailedPost input,
         global::ElevenLabs.ComposeDetailedMusicRequestOutputFormat? outputFormat = null,
         bool? enableLogging = true,
@@ -227,38 +231,13 @@ internal class MusicService : BaseService
             .SetContentAsJson(input, _jsonSerializerOptions)
             .Build();
 
-        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+        var response = await ExecuteDownloadAsync(request, resolvedConfig, cancellationToken)
             .ConfigureAwait(false);
 
-        // Standard deserialization
-        // Read the body first so a decode failure can report the bytes that caused it.
-        var responseBody = await response
-            .Content
-#if NET5_0_OR_GREATER
-            .ReadAsStringAsync(cancellationToken)
-#else
-        .ReadAsStringAsync()
-#endif
+        // Open the response body as a live stream
+        global::System.IO.Stream result = await global::ElevenLabs
+            .Core.ResponseBodyStream.OpenAsync(response, cancellationToken)
             .ConfigureAwait(false);
-        global::ElevenLabs.ComposeDetailedMusicResponse result;
-        try
-        {
-            result =
-                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ComposeDetailedMusicResponse>(
-                    responseBody,
-                    _jsonSerializerOptions
-                )!;
-        }
-        catch (global::System.Text.Json.JsonException exception)
-        {
-            throw new ElevenLabs.ElevenLabsClientApiException(
-                "Failed to deserialize response",
-                (int)response.StatusCode,
-                responseBody,
-                exception,
-                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
-            );
-        }
 
         return result;
     }

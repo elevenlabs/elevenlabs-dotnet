@@ -20,7 +20,7 @@ public class FocusGuardrailTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"is_enabled\":false}";
+        const string wire = "{\"is_enabled\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FocusGuardrail>(wire);
         var serialized = TestJson.Serialize(instance);

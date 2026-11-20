@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -65,7 +69,7 @@ public record DubbingLanguageResponse : IJsonOnDeserialized
 
     /// <value>Voice settings applied to every speaker in this language, or null if the defaults apply.</value>
     [JsonPropertyName("voice_settings")]
-    public DubbingLanguageResponseVoiceSettings? VoiceSettings { get; set; }
+    public DubbingVoiceSettings? VoiceSettings { get; set; }
 
     /// <value>Signed output URLs; null until the target has produced an output (present once `completed`, and kept while `stale` — compare `output_revision` against `revision` to tell whether the output is up to date).</value>
     [JsonPropertyName("outputs")]

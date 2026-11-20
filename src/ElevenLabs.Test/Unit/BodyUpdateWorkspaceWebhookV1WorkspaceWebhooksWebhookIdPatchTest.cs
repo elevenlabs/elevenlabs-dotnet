@@ -21,7 +21,7 @@ public class BodyUpdateWorkspaceWebhookV1WorkspaceWebhooksWebhookIdPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"is_disabled\":true,\"name\":\"My Callback Webhook\",\"retry_enabled\":true,\"request_headers\":{\"key\":\"request_headers\"},\"events\":[\"voice_library_removal_notice\"]}";
+            "{\"is_disabled\":true,\"name\":\"My Callback Webhook\",\"retry_enabled\":false,\"request_headers\":{\"key\":\"request_headers\"},\"events\":[\"voice_library_removal_notice\"],\"log_redacted_fields\":[\"log_redacted_fields\"]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.BodyUpdateWorkspaceWebhookV1WorkspaceWebhooksWebhookIdPatch>(

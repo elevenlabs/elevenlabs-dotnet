@@ -20,7 +20,7 @@ public class SegmentDubResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"version\":9}";
+        const string wire = "{\"version\":4}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentDubResponse>(wire);
         var serialized = TestJson.Serialize(instance);

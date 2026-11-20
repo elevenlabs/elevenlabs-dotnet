@@ -21,7 +21,7 @@ public class OwnerGetClientAppointmentsParamsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"include_cancelled\":true,\"smb_tool_type\":\"owner_get_client_appointments\"}";
+            "{\"include_cancelled\":false,\"smb_tool_type\":\"owner_get_client_appointments\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OwnerGetClientAppointmentsParams>(
             wire

@@ -54,6 +54,10 @@ public readonly record struct Llm : IStringEnum
 
     public static readonly Llm Gpt61Terra = new(Values.Gpt61Terra);
 
+    public static readonly Llm Gpt62Astra = new(Values.Gpt62Astra);
+
+    public static readonly Llm Gpt62Sol = new(Values.Gpt62Sol);
+
     public static readonly Llm Gpt5Mini = new(Values.Gpt5Mini);
 
     public static readonly Llm Gpt5Nano = new(Values.Gpt5Nano);
@@ -94,6 +98,10 @@ public readonly record struct Llm : IStringEnum
 
     public static readonly Llm Gemini4Argon = new(Values.Gemini4Argon);
 
+    public static readonly Llm Gemini4Hydrogen = new(Values.Gemini4Hydrogen);
+
+    public static readonly Llm Gemini4Neon = new(Values.Gemini4Neon);
+
     public static readonly Llm ClaudeSonnet45 = new(Values.ClaudeSonnet45);
 
     public static readonly Llm ClaudeOpus46 = new(Values.ClaudeOpus46);
@@ -125,8 +133,6 @@ public readonly record struct Llm : IStringEnum
     public static readonly Llm Claude35SonnetV1 = new(Values.Claude35SonnetV1);
 
     public static readonly Llm Claude3Haiku = new(Values.Claude3Haiku);
-
-    public static readonly Llm GrokBeta = new(Values.GrokBeta);
 
     public static readonly Llm CustomLlm = new(Values.CustomLlm);
 
@@ -372,6 +378,10 @@ public readonly record struct Llm : IStringEnum
 
         public const string Gpt61Terra = "gpt-6.1-terra";
 
+        public const string Gpt62Astra = "gpt-6.2-astra";
+
+        public const string Gpt62Sol = "gpt-6.2-sol";
+
         public const string Gpt5Mini = "gpt-5-mini";
 
         public const string Gpt5Nano = "gpt-5-nano";
@@ -412,6 +422,10 @@ public readonly record struct Llm : IStringEnum
 
         public const string Gemini4Argon = "gemini-4-argon";
 
+        public const string Gemini4Hydrogen = "gemini-4-hydrogen";
+
+        public const string Gemini4Neon = "gemini-4-neon";
+
         public const string ClaudeSonnet45 = "claude-sonnet-4-5";
 
         public const string ClaudeOpus46 = "claude-opus-4-6";
@@ -443,8 +457,6 @@ public readonly record struct Llm : IStringEnum
         public const string Claude35SonnetV1 = "claude-3-5-sonnet-v1";
 
         public const string Claude3Haiku = "claude-3-haiku";
-
-        public const string GrokBeta = "grok-beta";
 
         public const string CustomLlm = "custom-llm";
 

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -52,6 +56,10 @@ public record PartialTranscript : IJsonOnDeserialized
     /// <value>Probability that the speaker has finished their turn. Only sent for models that predict turns.</value>
     [JsonPropertyName("turn_probability")]
     public double? TurnProbability { get; set; }
+
+    /// <value>The language of the speech so far in the current turn. Only present when include_language_detection is true, and then always present: null until the text is long enough to tell and the same language has been seen on consecutive partials. The committed transcript's language_code is authoritative.</value>
+    [JsonPropertyName("language_code")]
+    public string? LanguageCode { get; set; }
 
     /// <value>Draft words with speaker IDs when diarize is enabled. Speaker IDs and timestamps may change as more audio is received.</value>
     [JsonPropertyName("words")]
@@ -97,6 +105,7 @@ public record PartialTranscript : IJsonOnDeserialized
             && ValueEquality.AreEqual(MessageType, other.MessageType)
             && ValueEquality.AreEqual(Text, other.Text)
             && ValueEquality.AreEqual(TurnProbability, other.TurnProbability)
+            && ValueEquality.AreEqual(LanguageCode, other.LanguageCode)
             && ValueEquality.AreEqual(Words, other.Words)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -110,6 +119,7 @@ public record PartialTranscript : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MessageType);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Text);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TurnProbability);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(LanguageCode);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Words);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

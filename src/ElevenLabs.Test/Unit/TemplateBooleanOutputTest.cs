@@ -21,7 +21,7 @@ public class TemplateBooleanOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"JWr5N6X9ZTqf8jD2LmQb\",\"status\":\"pending\",\"failure_reason\":\"timeout\",\"error_message\":\"error_message\",\"type\":\"boolean\",\"content\":true}";
+            "{\"id\":\"JWr5N6X9ZTqf8jD2LmQb\",\"status\":\"pending\",\"failure_reason\":\"timeout\",\"error_message\":\"error_message\",\"type\":\"boolean\",\"content\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TemplateBooleanOutput>(wire);
         var serialized = TestJson.Serialize(instance);

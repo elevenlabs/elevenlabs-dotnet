@@ -20,7 +20,7 @@ public class BodyBulkDeleteKnowledgeBaseDocumentsV1ConvaiKnowledgeBaseBulkDelete
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"document_ids\":[\"document_ids\"],\"force\":false}";
+        const string wire = "{\"document_ids\":[\"document_ids\"],\"force\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.KnowledgeBase.BodyBulkDeleteKnowledgeBaseDocumentsV1ConvaiKnowledgeBaseBulkDeletePost>(

@@ -21,7 +21,7 @@ public class LlmUsageCalculatorResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"llm_prices\":[{\"llm\":\"gpt-4o-mini\",\"price_per_minute\":9.44,\"price_per_message\":4.79}]}";
+            "{\"llm_prices\":[{\"llm\":\"gpt-4o-mini\",\"price_per_minute\":5.21,\"price_per_message\":5.69}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LlmUsageCalculatorResponseModel>(
             wire

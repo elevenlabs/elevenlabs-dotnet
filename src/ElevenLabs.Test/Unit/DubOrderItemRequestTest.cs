@@ -21,7 +21,7 @@ public class DubOrderItemRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"kind\":\"dub\",\"media_id\":\"prodmedia_mr0urqpc7tg1ee3227nsadhy4r\",\"source_language\":\"source_language\",\"destination_languages\":[\"destination_languages\"],\"include_captions\":false,\"include_source_captions\":true,\"instructions\":\"instructions\",\"captions_sdh\":false}";
+            "{\"kind\":\"dub\",\"media_id\":\"prodmedia_5fhzo2dkuu90h3lfjti8jyo53b\",\"source_language\":\"source_language\",\"destination_languages\":[\"destination_languages\"],\"include_captions\":false,\"include_source_captions\":false,\"instructions\":\"instructions\",\"captions_sdh\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubOrderItemRequest>(wire);
         var serialized = TestJson.Serialize(instance);

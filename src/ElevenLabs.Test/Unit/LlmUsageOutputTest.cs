@@ -21,7 +21,7 @@ public class LlmUsageOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"model_usage\":{\"key\":{\"input\":{\"tokens\":10,\"price\":7.64},\"input_cache_read\":{\"tokens\":10,\"price\":7.64},\"input_cache_write\":{\"tokens\":10,\"price\":7.64},\"output_total\":{\"tokens\":10,\"price\":7.64}}}}";
+            "{\"model_usage\":{\"key\":{\"input\":{\"tokens\":0,\"price\":9.52},\"input_cache_read\":{\"tokens\":0,\"price\":9.52},\"input_cache_write\":{\"tokens\":0,\"price\":9.52},\"output_total\":{\"tokens\":0,\"price\":9.52}}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LlmUsageOutput>(wire);
         var serialized = TestJson.Serialize(instance);

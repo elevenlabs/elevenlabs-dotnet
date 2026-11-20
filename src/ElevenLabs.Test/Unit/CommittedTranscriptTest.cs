@@ -21,7 +21,7 @@ public class CommittedTranscriptTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message_type\":\"committed_transcript\",\"text\":\"text\",\"segment_index\":3}";
+            "{\"message_type\":\"committed_transcript\",\"text\":\"text\",\"segment_index\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CommittedTranscript>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -103,13 +107,25 @@ public record MergePreviewResponseModel : IJsonOnDeserialized
     [JsonPropertyName("overridden_fields")]
     public IEnumerable<string>? OverriddenFields { get; set; }
 
-    /// <value>Structured view of the same conflicts as overridden_fields, each carrying the value on the base (common ancestor), source branch, and target branch so the divergence can be presented and resolved field-by-field.</value>
+    /// <value>Structured view of the same conflicts as overridden_fields, each carrying the value on the base (common ancestor), source branch, and target branch so the divergence can be presented and resolved field-by-field. A merge or rebase is rejected while any of them has no resolution in `conflict_resolutions`, unless the merge is forced.</value>
     [JsonPropertyName("conflicts")]
     public IEnumerable<FieldConflict>? Conflicts { get; set; }
 
     /// <value>True when the merge/rebase would be a no-op, i.e. the merged result is identical to the source branch tip. The rebase endpoint rejects in this case.</value>
     [JsonPropertyName("source_identical_to_target")]
     public bool? SourceIdenticalToTarget { get; set; }
+
+    /// <value>Tip version of the source branch (the rebased branch for a rebase) the preview was computed from.</value>
+    [JsonPropertyName("source_tip_version_id")]
+    public string? SourceTipVersionId { get; set; }
+
+    /// <value>Tip version of the target branch (main for a rebase) the preview was computed from.</value>
+    [JsonPropertyName("target_tip_version_id")]
+    public string? TargetTipVersionId { get; set; }
+
+    /// <value>Why the merge doesn't combine into a valid configuration while conflicts are left to resolve. The preview then shows the branch the merge writes unchanged.</value>
+    [JsonPropertyName("merge_error")]
+    public string? MergeError { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -166,6 +182,9 @@ public record MergePreviewResponseModel : IJsonOnDeserialized
             && ValueEquality.AreEqual(OverriddenFields, other.OverriddenFields)
             && ValueEquality.AreEqual(Conflicts, other.Conflicts)
             && ValueEquality.AreEqual(SourceIdenticalToTarget, other.SourceIdenticalToTarget)
+            && ValueEquality.AreEqual(SourceTipVersionId, other.SourceTipVersionId)
+            && ValueEquality.AreEqual(TargetTipVersionId, other.TargetTipVersionId)
+            && ValueEquality.AreEqual(MergeError, other.MergeError)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -193,6 +212,9 @@ public record MergePreviewResponseModel : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(OverriddenFields);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Conflicts);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SourceIdenticalToTarget);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SourceTipVersionId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TargetTipVersionId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MergeError);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

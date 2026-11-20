@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -183,13 +187,13 @@ public partial class MusicClient
         );
 
     /// <summary>Compose a song from a prompt or a composition plan.</summary>
-    public WithRawResponseTask<ComposeDetailedMusicResponse> ComposeDetailedAsync(
+    public WithRawResponseTask<global::System.IO.Stream> ComposeDetailedAsync(
         ComposeDetailedMusicRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     ) =>
-        new WithRawResponseTask<ComposeDetailedMusicResponse>(
-            WithRawResponseAdapter.Wrap(
+        new WithRawResponseTask<global::System.IO.Stream>(
+            WithRawResponseAdapter.WrapStream(
                 options,
                 () =>
                     _service.ComposeDetailedAsync(

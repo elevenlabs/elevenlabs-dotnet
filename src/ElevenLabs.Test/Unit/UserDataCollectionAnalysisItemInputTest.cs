@@ -21,7 +21,7 @@ public class UserDataCollectionAnalysisItemInputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"source\":\"user\",\"llm\":\"gpt-4o-mini\",\"kind\":\"data_collection\",\"value_schema\":{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":true,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"Ut elit cupi\",\"is_omitted\":true}}";
+            "{\"name\":\"name\",\"source\":\"user\",\"llm\":\"gpt-4o-mini\",\"kind\":\"data_collection\",\"value_schema\":{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":false,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"in minim id u\",\"is_omitted\":true}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UserDataCollectionAnalysisItemInput>(
             wire

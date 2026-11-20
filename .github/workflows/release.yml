@@ -64,8 +64,6 @@ jobs:
         if: steps.secrets.outputs.ok == 'true'
         run: |
           dotnet pack "src/ElevenLabs/ElevenLabs.csproj" -c Release -o ./artifacts
-          # Companion ASP.NET Core package (elevenlabs-dotnet-aspnetcore); the push below globs both.
-          dotnet pack "src/ElevenLabs.AspNetCore/ElevenLabs.AspNetCore.csproj" -c Release -o ./artifacts
           dotnet nuget push "./artifacts/*.nupkg" \
             --api-key "$NUGET_API_KEY" \
             --source https://api.nuget.org/v3/index.json \

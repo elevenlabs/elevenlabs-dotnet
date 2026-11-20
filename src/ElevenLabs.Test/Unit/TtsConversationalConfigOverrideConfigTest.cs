@@ -21,7 +21,7 @@ public class TtsConversationalConfigOverrideConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"model_id\":true,\"voice_id\":false,\"supported_voices\":true,\"stability\":true,\"speed\":false,\"similarity_boost\":true,\"clone_strength\":false,\"pronunciation_dictionary_locators\":true}";
+            "{\"model_id\":true,\"voice_id\":true,\"supported_voices\":false,\"stability\":false,\"speed\":false,\"similarity_boost\":true,\"clone_strength\":true,\"pronunciation_dictionary_locators\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.TtsConversationalConfigOverrideConfig>(wire);

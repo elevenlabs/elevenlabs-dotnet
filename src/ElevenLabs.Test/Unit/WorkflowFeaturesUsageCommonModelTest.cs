@@ -21,7 +21,7 @@ public class WorkflowFeaturesUsageCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":false,\"tool_node\":{\"enabled\":true,\"used\":false},\"standalone_agent_node\":{\"enabled\":true,\"used\":false},\"phone_number_node\":{\"enabled\":true,\"used\":false},\"end_node\":{\"enabled\":true,\"used\":false},\"override_agent_node\":{\"enabled\":true,\"used\":false}}";
+            "{\"enabled\":true,\"tool_node\":{\"enabled\":false,\"used\":false},\"standalone_agent_node\":{\"enabled\":false,\"used\":false},\"phone_number_node\":{\"enabled\":false,\"used\":false},\"end_node\":{\"enabled\":false,\"used\":false},\"override_agent_node\":{\"enabled\":false,\"used\":false}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkflowFeaturesUsageCommonModel>(
             wire

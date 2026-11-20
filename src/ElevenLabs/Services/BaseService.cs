@@ -31,6 +31,7 @@ internal class BaseService
             {
                 new global::ElevenLabs.Core.OneOfSerializer(),
                 new DateTimeSerializer(),
+                new DateOnlyConverter(),
             },
         };
         _jsonSerializerOptions.PropertyNameCaseInsensitive = false;

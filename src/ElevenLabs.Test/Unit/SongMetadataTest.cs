@@ -21,7 +21,7 @@ public class SongMetadataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"title\",\"description\":\"description\",\"genres\":[\"genres\"],\"languages\":[\"languages\"],\"is_explicit\":false}";
+            "{\"title\":\"title\",\"description\":\"description\",\"genres\":[\"genres\"],\"languages\":[\"languages\"],\"is_explicit\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SongMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

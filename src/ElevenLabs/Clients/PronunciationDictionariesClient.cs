@@ -19,7 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
-using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -51,10 +54,10 @@ public partial class PronunciationDictionariesClient
     internal PronunciationDictionariesClient(global::ElevenLabs.Http.Client httpClient)
     {
         _service = new PronunciationDictionariesService(httpClient);
-        Rules = new RulesClient(httpClient);
+        Rules = new ElevenLabs.PronunciationDictionaries.RulesClient(httpClient);
     }
 
-    public IRulesClient Rules { get; }
+    public ElevenLabs.PronunciationDictionaries.IRulesClient Rules { get; }
 
     /// <summary>
     /// Sets service-level configuration for every method on this client.

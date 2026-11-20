@@ -21,7 +21,7 @@ public class SendTextVoiceSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.16,\"use_speaker_boost\":true,\"speed\":1}";
+            "{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.41,\"use_speaker_boost\":true,\"speed\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SendTextVoiceSettings>(wire);
         var serialized = TestJson.Serialize(instance);

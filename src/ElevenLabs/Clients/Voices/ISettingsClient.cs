@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -67,13 +71,13 @@ public partial interface ISettingsClient
     ISettingsClient SetUpdateAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
 
     /// <summary>Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.</summary>
-    WithRawResponseTask<BodyTextToSpeechFullVoiceSettings> GetDefaultAsync(
+    WithRawResponseTask<VoiceSettings> GetDefaultAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.</summary>
-    WithRawResponseTask<BodyTextToSpeechFullVoiceSettings> GetAsync(
+    WithRawResponseTask<VoiceSettings> GetAsync(
         string voiceId,
         GetSettingsRequest request,
         RequestOptions? options = null,

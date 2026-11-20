@@ -21,7 +21,7 @@ public class WorkspaceAnalyticsQueryResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"columns\":[\"columns\"],\"column_types\":[\"String\"],\"rows\":[[\"proide\"]],\"column_units\":[\"ms\"]}";
+            "{\"columns\":[\"columns\"],\"column_types\":[\"String\"],\"rows\":[[\"occae\"]],\"column_units\":[\"ms\"]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.WorkspaceAnalyticsQueryResponseModel>(wire);

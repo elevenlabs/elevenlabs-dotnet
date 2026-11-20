@@ -21,7 +21,7 @@ public class NumericUniformScoringTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"mode\":\"numeric_uniform\",\"max_score\":6,\"instructions\":\"instructions\"}";
+            "{\"mode\":\"numeric_uniform\",\"max_score\":7,\"instructions\":\"instructions\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.NumericUniformScoring>(wire);
         var serialized = TestJson.Serialize(instance);

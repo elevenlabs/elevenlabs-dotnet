@@ -21,7 +21,7 @@ public class ExternalFolderSyncInfoTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"google_drive\",\"source_entity_id\":\"source_entity_id\",\"integration_connection_id\":\"integration_connection_id\",\"root_folder_id\":\"root_folder_id\",\"sync_cursor\":\"sync_cursor\",\"last_sync_at\":6}";
+            "{\"type\":\"google_drive\",\"source_entity_id\":\"source_entity_id\",\"integration_connection_id\":\"integration_connection_id\",\"root_folder_id\":\"root_folder_id\",\"sync_cursor\":\"sync_cursor\",\"last_sync_at\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ExternalFolderSyncInfo>(wire);
         var serialized = TestJson.Serialize(instance);

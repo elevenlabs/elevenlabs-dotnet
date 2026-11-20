@@ -21,7 +21,7 @@ public class DiarizedTranscriptWordsItemTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"start\":5.6,\"end\":8.47,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":5.89,\"characters\":[{\"text\":\"text\",\"start\":7.59,\"end\":9.22}],\"channel_index\":10}";
+            "{\"text\":\"text\",\"start\":9.24,\"end\":3.94,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":5.39,\"characters\":[{\"text\":\"text\",\"start\":5.3,\"end\":3.46}],\"channel_index\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DiarizedTranscriptWordsItem>(wire);
         var serialized = TestJson.Serialize(instance);

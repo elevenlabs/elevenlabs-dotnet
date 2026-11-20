@@ -21,7 +21,7 @@ public class MusicFinetunePageResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"finetunes\":[{\"id\":\"id\",\"name\":\"name\",\"tags\":[\"tags\"],\"primary_genre\":\"primary_genre\",\"model_id\":\"music_v1\",\"created_at\":\"2023-05-26T02:07:38.965Z\",\"visibility\":\"private\",\"created_by\":\"self\",\"status\":\"pending\",\"training_progress\":5.02,\"failure_reason\":\"audio_processing_failed\"}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"finetunes\":[{\"id\":\"id\",\"name\":\"name\",\"tags\":[\"tags\"],\"primary_genre\":\"primary_genre\",\"model_id\":\"music_v1\",\"created_at\":\"2023-05-26T02:07:38.965Z\",\"visibility\":\"private\",\"created_by\":\"self\",\"status\":\"pending\",\"training_progress\":5.47,\"failure_reason\":\"audio_processing_failed\"}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MusicFinetunePageResponseModel>(
             wire

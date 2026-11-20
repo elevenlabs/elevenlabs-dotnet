@@ -21,7 +21,7 @@ public class KbExternalSyncJobTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"google_drive\",\"folder_id\":\"folder_id\",\"integration_connection_id\":\"integration_connection_id\",\"triggered_by\":\"on_demand\",\"status\":\"queued\",\"sync_type\":\"full\",\"items_identified\":7,\"items_processed\":7,\"error_message\":\"error_message\",\"started_at\":7,\"completed_at\":4,\"updated_at\":5,\"id\":\"id\",\"created_at\":10}";
+            "{\"type\":\"google_drive\",\"folder_id\":\"folder_id\",\"integration_connection_id\":\"integration_connection_id\",\"triggered_by\":\"on_demand\",\"status\":\"queued\",\"sync_type\":\"full\",\"items_identified\":6,\"items_processed\":8,\"error_message\":\"error_message\",\"started_at\":0,\"completed_at\":3,\"updated_at\":0,\"id\":\"id\",\"created_at\":8}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.KbExternalSyncJob>(wire);
         var serialized = TestJson.Serialize(instance);

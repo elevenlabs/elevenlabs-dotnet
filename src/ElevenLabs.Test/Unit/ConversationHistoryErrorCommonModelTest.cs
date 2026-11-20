@@ -20,7 +20,7 @@ public class ConversationHistoryErrorCommonModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"code\":1,\"reason\":\"reason\"}";
+        const string wire = "{\"code\":4,\"reason\":\"reason\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationHistoryErrorCommonModel>(
             wire

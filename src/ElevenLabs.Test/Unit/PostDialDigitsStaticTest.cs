@@ -20,7 +20,7 @@ public class PostDialDigitsStaticTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"type\":\"static\",\"value\":\"36429\"}";
+        const string wire = "{\"type\":\"static\",\"value\":\"214W21\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PostDialDigitsStatic>(wire);
         var serialized = TestJson.Serialize(instance);

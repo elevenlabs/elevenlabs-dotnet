@@ -20,7 +20,7 @@ public class ElevenFlashV25VoiceSettingsTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"stability\":0.64,\"similarity_boost\":0.92,\"speed\":1.16}";
+        const string wire = "{\"stability\":0.6,\"similarity_boost\":0.5,\"speed\":0.91}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ElevenFlashV25VoiceSettings>(wire);
         var serialized = TestJson.Serialize(instance);

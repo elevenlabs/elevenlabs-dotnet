@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -50,7 +54,7 @@ public record BodyCreateDubbingLanguageTargetV1DubbingProjectProjectIdLanguagePo
 
     /// <value>Voice settings applied to every speaker in this language. Omit to use the defaults.</value>
     [JsonPropertyName("voice_settings")]
-    public DubbingLanguageResponseVoiceSettings? VoiceSettings { get; set; }
+    public DubbingVoiceSettings? VoiceSettings { get; set; }
 
     /// <value>Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's `external_id` (or its `id`, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20,000 entries, totaling at most 4 MiB of text. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript).</value>
     [JsonPropertyName("translations")]

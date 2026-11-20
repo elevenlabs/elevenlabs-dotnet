@@ -21,7 +21,7 @@ public class InitializeConnectionMultiVoiceSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":6.76,\"use_speaker_boost\":true,\"speed\":1}";
+            "{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":8.93,\"use_speaker_boost\":true,\"speed\":1}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.InitializeConnectionMultiVoiceSettings>(wire);

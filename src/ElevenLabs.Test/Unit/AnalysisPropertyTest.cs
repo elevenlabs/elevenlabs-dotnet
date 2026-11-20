@@ -21,7 +21,7 @@ public class AnalysisPropertyTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":true,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"occaecat\",\"is_omitted\":false,\"name\":\"name\",\"llm\":\"gpt-4o-mini\"}";
+            "{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":false,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"consectetur\",\"is_omitted\":true,\"name\":\"name\",\"llm\":\"gpt-4o-mini\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AnalysisProperty>(wire);
         var serialized = TestJson.Serialize(instance);

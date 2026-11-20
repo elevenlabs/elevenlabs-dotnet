@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -43,15 +47,15 @@ public record CreateManualTicketRequestModel : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    /// <value>One-line headline shown in the triage list. Defaults to one derived from qa_comment.</value>
+    /// <value>One-line headline shown in the issues list. Defaults to one derived from qa_comment.</value>
     [JsonPropertyName("title")]
     public string? Title { get; set; }
 
-    /// <value>What the ticket is about, e.g. a follow-up task for the agent.</value>
+    /// <value>What the agent issue is about, e.g. a follow-up task for the agent.</value>
     [JsonPropertyName("qa_comment")]
     public required string QaComment { get; set; }
 
-    /// <value>How urgently the ticket needs attention.</value>
+    /// <value>How urgently the agent issue needs attention.</value>
     [JsonPropertyName("priority")]
     public AgentConversationTicketPriority? Priority { get; set; }
 

@@ -21,7 +21,7 @@ public class AgentDeploymentHistoryItemTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"traffic_percentage_branch_id_map\":{\"key\":6.7},\"deployed_at_unix_secs\":5,\"is_active\":true,\"source\":\"manual\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"}}";
+            "{\"id\":\"id\",\"traffic_percentage_branch_id_map\":{\"key\":6.54},\"deployed_at_unix_secs\":2,\"is_active\":false,\"source\":\"manual\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentDeploymentHistoryItem>(wire);
         var serialized = TestJson.Serialize(instance);

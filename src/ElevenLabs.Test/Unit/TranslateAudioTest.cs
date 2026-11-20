@@ -20,7 +20,7 @@ public class TranslateAudioTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"message_type\":\"audio\",\"data\":\"data\",\"sample_rate\":0}";
+        const string wire = "{\"message_type\":\"audio\",\"data\":\"data\",\"sample_rate\":8}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TranslateAudio>(wire);
         var serialized = TestJson.Serialize(instance);

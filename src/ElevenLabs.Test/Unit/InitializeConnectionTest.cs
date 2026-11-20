@@ -21,7 +21,7 @@ public class InitializeConnectionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\" \",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":4.41,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[2]},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\"}";
+            "{\"text\":\" \",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":3.96,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[9]},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InitializeConnection>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class TtsConversationalConfigOverrideTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"model_id\":\"eleven_turbo_v2\",\"voice_id\":\"voice_id\",\"supported_voices\":[{\"label\":\"label\",\"voice_id\":\"voice_id\",\"description\":\"description\",\"language\":\"language\",\"model_family\":\"turbo\",\"optimize_streaming_latency\":3,\"stability\":0.58,\"speed\":1.04,\"similarity_boost\":0.07,\"clone_strength\":0.46}],\"stability\":6.04,\"speed\":4.81,\"similarity_boost\":2.65,\"clone_strength\":2.71,\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}]}";
+            "{\"model_id\":\"eleven_turbo_v2\",\"voice_id\":\"voice_id\",\"supported_voices\":[{\"label\":\"label\",\"voice_id\":\"voice_id\",\"description\":\"description\",\"language\":\"language\",\"model_family\":\"turbo\",\"optimize_streaming_latency\":3,\"stability\":0.57,\"speed\":0.95,\"similarity_boost\":0.69,\"clone_strength\":0.88}],\"stability\":6.26,\"speed\":2.22,\"similarity_boost\":3.05,\"clone_strength\":3.87,\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TtsConversationalConfigOverride>(
             wire

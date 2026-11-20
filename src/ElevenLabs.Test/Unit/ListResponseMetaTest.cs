@@ -20,7 +20,7 @@ public class ListResponseMetaTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"total\":0,\"page\":4,\"page_size\":8}";
+        const string wire = "{\"total\":8,\"page\":4,\"page_size\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ListResponseMeta>(wire);
         var serialized = TestJson.Serialize(instance);

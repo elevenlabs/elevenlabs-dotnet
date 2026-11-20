@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -43,6 +47,18 @@ public record BodyRebaseABranchOntoMainV1ConvaiAgentsAgentIdBranchesBranchIdReba
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
+
+    /// <value>Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.</value>
+    [JsonPropertyName("conflict_resolutions")]
+    public IEnumerable<ConflictResolution>? ConflictResolutions { get; set; }
+
+    /// <value>Tip version of the branch being rebased (`source_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.</value>
+    [JsonPropertyName("branch_tip_id")]
+    public string? BranchTipId { get; set; }
+
+    /// <value>Tip version of the branch the changes are pulled from (`source_branch_id`, the main branch by default; `target_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.</value>
+    [JsonPropertyName("source_tip_id")]
+    public string? SourceTipId { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -82,7 +98,11 @@ public record BodyRebaseABranchOntoMainV1ConvaiAgentsAgentIdBranchesBranchIdReba
         // the cheap scalar comparisons short-circuit ahead of it matters for Distinct/HashSet over
         // large collections. Anchored on `true` so a model with no declared properties still emits
         // a valid expression.
-        return true && AdditionalProperties.Equals(other.AdditionalProperties);
+        return true
+            && ValueEquality.AreEqual(ConflictResolutions, other.ConflictResolutions)
+            && ValueEquality.AreEqual(BranchTipId, other.BranchTipId)
+            && ValueEquality.AreEqual(SourceTipId, other.SourceTipId)
+            && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
     /// <inheritdoc />
@@ -91,6 +111,9 @@ public record BodyRebaseABranchOntoMainV1ConvaiAgentsAgentIdBranchesBranchIdReba
         unchecked
         {
             var hash = 17;
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ConflictResolutions);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(BranchTipId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SourceTipId);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

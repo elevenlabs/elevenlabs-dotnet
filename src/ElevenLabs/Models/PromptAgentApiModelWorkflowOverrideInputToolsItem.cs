@@ -42,17 +42,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
     }
 
     /// <summary>
-    /// Create an instance of PromptAgentApiModelWorkflowOverrideInputToolsItem with <see cref="PromptAgentApiModelWorkflowOverrideInputToolsItem.Mcp"/>.
-    /// </summary>
-    public PromptAgentApiModelWorkflowOverrideInputToolsItem(
-        PromptAgentApiModelWorkflowOverrideInputToolsItem.Mcp value
-    )
-    {
-        Type = "mcp";
-        Value = value.Value;
-    }
-
-    /// <summary>
     /// Create an instance of PromptAgentApiModelWorkflowOverrideInputToolsItem with <see cref="PromptAgentApiModelWorkflowOverrideInputToolsItem.Smb"/>.
     /// </summary>
     public PromptAgentApiModelWorkflowOverrideInputToolsItem(
@@ -107,11 +96,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
     public bool IsClient => Type == "client";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "mcp"
-    /// </summary>
-    public bool IsMcp => Type == "mcp";
-
-    /// <summary>
     /// Returns true if <see cref="Type"/> is "smb"
     /// </summary>
     public bool IsSmb => Type == "smb";
@@ -146,17 +130,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
             ? (global::ElevenLabs.ClientToolConfigInput)Value!
             : throw new global::System.Exception(
                 "PromptAgentApiModelWorkflowOverrideInputToolsItem.Type is not 'client'"
-            );
-
-    /// <summary>
-    /// Returns the value as a <see cref="global::ElevenLabs.McpToolConfigInput"/> if <see cref="Type"/> is 'mcp', otherwise throws an exception.
-    /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'mcp'.</exception>
-    public global::ElevenLabs.McpToolConfigInput AsMcp() =>
-        IsMcp
-            ? (global::ElevenLabs.McpToolConfigInput)Value!
-            : throw new global::System.Exception(
-                "PromptAgentApiModelWorkflowOverrideInputToolsItem.Type is not 'mcp'"
             );
 
     /// <summary>
@@ -195,7 +168,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
     public T Match<T>(
         Func<global::ElevenLabs.ApiIntegrationWebhookToolConfigInput, T> onApiIntegrationWebhook,
         Func<global::ElevenLabs.ClientToolConfigInput, T> onClient,
-        Func<global::ElevenLabs.McpToolConfigInput, T> onMcp,
         Func<global::ElevenLabs.SmbToolConfig, T> onSmb,
         Func<global::ElevenLabs.SystemToolConfigInput, T> onSystem,
         Func<global::ElevenLabs.WebhookToolConfigInput, T> onWebhook,
@@ -206,7 +178,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
         {
             "api_integration_webhook" => onApiIntegrationWebhook(AsApiIntegrationWebhook()),
             "client" => onClient(AsClient()),
-            "mcp" => onMcp(AsMcp()),
             "smb" => onSmb(AsSmb()),
             "system" => onSystem(AsSystem()),
             "webhook" => onWebhook(AsWebhook()),
@@ -217,7 +188,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
     public void Visit(
         Action<global::ElevenLabs.ApiIntegrationWebhookToolConfigInput> onApiIntegrationWebhook,
         Action<global::ElevenLabs.ClientToolConfigInput> onClient,
-        Action<global::ElevenLabs.McpToolConfigInput> onMcp,
         Action<global::ElevenLabs.SmbToolConfig> onSmb,
         Action<global::ElevenLabs.SystemToolConfigInput> onSystem,
         Action<global::ElevenLabs.WebhookToolConfigInput> onWebhook,
@@ -231,9 +201,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
                 break;
             case "client":
                 onClient(AsClient());
-                break;
-            case "mcp":
-                onMcp(AsMcp());
                 break;
             case "smb":
                 onSmb(AsSmb());
@@ -274,20 +241,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
         if (Type == "client")
         {
             value = (global::ElevenLabs.ClientToolConfigInput)Value!;
-            return true;
-        }
-        value = null;
-        return false;
-    }
-
-    /// <summary>
-    /// Attempts to cast the value to a <see cref="global::ElevenLabs.McpToolConfigInput"/> and returns true if successful.
-    /// </summary>
-    public bool TryAsMcp(out global::ElevenLabs.McpToolConfigInput? value)
-    {
-        if (Type == "mcp")
-        {
-            value = (global::ElevenLabs.McpToolConfigInput)Value!;
             return true;
         }
         value = null;
@@ -344,10 +297,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
 
     public static implicit operator PromptAgentApiModelWorkflowOverrideInputToolsItem(
         PromptAgentApiModelWorkflowOverrideInputToolsItem.Client value
-    ) => new(value);
-
-    public static implicit operator PromptAgentApiModelWorkflowOverrideInputToolsItem(
-        PromptAgentApiModelWorkflowOverrideInputToolsItem.Mcp value
     ) => new(value);
 
     public static implicit operator PromptAgentApiModelWorkflowOverrideInputToolsItem(
@@ -411,10 +360,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.ClientToolConfigInput"
                     ),
-                "mcp" => json.Deserialize<global::ElevenLabs.McpToolConfigInput?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize global::ElevenLabs.McpToolConfigInput"
-                    ),
                 "smb" => json.Deserialize<global::ElevenLabs.SmbToolConfig?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.SmbToolConfig"
@@ -446,7 +391,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
                         options
                     ),
                     "client" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "mcp" => JsonSerializer.SerializeToNode(value.Value, options),
                     "smb" => JsonSerializer.SerializeToNode(value.Value, options),
                     "system" => JsonSerializer.SerializeToNode(value.Value, options),
                     "webhook" => JsonSerializer.SerializeToNode(value.Value, options),
@@ -515,26 +459,6 @@ public record PromptAgentApiModelWorkflowOverrideInputToolsItem
 
         public static implicit operator PromptAgentApiModelWorkflowOverrideInputToolsItem.Client(
             global::ElevenLabs.ClientToolConfigInput value
-        ) => new(value);
-    }
-
-    /// <summary>
-    /// Discriminated union type for mcp
-    /// </summary>
-    [Serializable]
-    public struct Mcp
-    {
-        public Mcp(global::ElevenLabs.McpToolConfigInput value)
-        {
-            Value = value;
-        }
-
-        internal global::ElevenLabs.McpToolConfigInput Value { get; set; }
-
-        public override string ToString() => Value.ToString() ?? "null";
-
-        public static implicit operator PromptAgentApiModelWorkflowOverrideInputToolsItem.Mcp(
-            global::ElevenLabs.McpToolConfigInput value
         ) => new(value);
     }
 

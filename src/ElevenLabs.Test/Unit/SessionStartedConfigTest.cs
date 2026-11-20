@@ -21,7 +21,7 @@ public class SessionStartedConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"sample_rate\":6,\"audio_format\":\"pcm_8000\",\"language_code\":\"language_code\",\"secondary_languages\":[\"secondary_languages\"],\"timestamps_granularity\":\"none\",\"vad_commit_strategy\":true,\"vad_silence_threshold_secs\":1.5,\"vad_threshold\":0.4,\"min_speech_duration_ms\":100,\"min_silence_duration_ms\":100,\"max_tokens_to_recompute\":5,\"model_id\":\"scribe_v2_realtime\",\"disable_logging\":true,\"include_timestamps\":true,\"include_language_detection\":true,\"filter_background_audio\":false,\"keyterms\":[\"keyterms\"],\"no_verbatim\":false,\"entity_detection\":[\"entity_detection\"],\"entity_redaction\":[\"entity_redaction\"],\"entity_redaction_mode\":\"enumerated_entity_type\",\"keepalive_interval_ms\":9}";
+            "{\"sample_rate\":9,\"audio_format\":\"pcm_8000\",\"language_code\":\"language_code\",\"secondary_languages\":[\"secondary_languages\"],\"timestamps_granularity\":\"none\",\"vad_commit_strategy\":true,\"vad_silence_threshold_secs\":1.5,\"vad_threshold\":0.4,\"min_speech_duration_ms\":100,\"min_silence_duration_ms\":100,\"max_tokens_to_recompute\":5,\"model_id\":\"scribe_v2_realtime\",\"disable_logging\":true,\"include_timestamps\":true,\"include_language_detection\":false,\"filter_background_audio\":true,\"keyterms\":[\"keyterms\"],\"no_verbatim\":true,\"entity_detection\":[\"entity_detection\"],\"entity_redaction\":[\"entity_redaction\"],\"entity_redaction_mode\":\"enumerated_entity_type\",\"keepalive_interval_ms\":8}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SessionStartedConfig>(wire);
         var serialized = TestJson.Serialize(instance);

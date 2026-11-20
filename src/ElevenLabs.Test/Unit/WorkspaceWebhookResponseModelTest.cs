@@ -21,7 +21,7 @@ public class WorkspaceWebhookResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"webhook_id\":\"webhook_id\",\"webhook_url\":\"webhook_url\",\"is_disabled\":true,\"is_auto_disabled\":false,\"created_at_unix\":7,\"auth_type\":\"hmac\",\"usage\":[{\"usage_type\":\"ConvAI Agent Settings\"}],\"events\":[\"voice_library_removal_notice\"],\"most_recent_failure_error_code\":7,\"most_recent_failure_timestamp\":8}";
+            "{\"name\":\"name\",\"webhook_id\":\"webhook_id\",\"webhook_url\":\"webhook_url\",\"is_disabled\":false,\"is_auto_disabled\":true,\"created_at_unix\":7,\"auth_type\":\"hmac\",\"usage\":[{\"usage_type\":\"ConvAI Agent Settings\"}],\"events\":[\"voice_library_removal_notice\"],\"most_recent_failure_error_code\":8,\"most_recent_failure_timestamp\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkspaceWebhookResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

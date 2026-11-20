@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -59,7 +63,8 @@ public record PromptAgentApiModelOutput : IJsonOnDeserialized
     ///
     /// STANDARD: default price and throughput.
     /// FAST: pays a per-token price premium for higher throughput / lower latency.
-    ///     See OpenAI's fast mode: https://openai.com/api-fast-mode/
+    ///     See OpenAI's fast mode: https://openai.com/api-fast-mode/ and, for Gemini, Vertex
+    ///     Priority PayGo: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/priority-paygo
     /// </value>
     [JsonPropertyName("service_tier")]
     public LlmServiceTier? ServiceTier { get; set; }

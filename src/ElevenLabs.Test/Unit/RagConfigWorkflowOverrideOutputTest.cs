@@ -21,7 +21,7 @@ public class RagConfigWorkflowOverrideOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":false,\"embedding_model\":\"e5_mistral_7b_instruct\",\"max_vector_distance\":9.52,\"max_documents_length\":10,\"max_retrieved_rag_chunks_count\":8,\"num_candidates\":1,\"query_rewrite_prompt_override\":\"query_rewrite_prompt_override\",\"knowledge_base_tool_info\":{\"enabled_strategies\":[\"cat\"]}}";
+            "{\"enabled\":true,\"embedding_model\":\"e5_mistral_7b_instruct\",\"max_vector_distance\":3.06,\"max_documents_length\":5,\"max_retrieved_rag_chunks_count\":7,\"num_candidates\":9,\"query_rewrite_prompt_override\":\"query_rewrite_prompt_override\",\"knowledge_base_tool_info\":{\"enabled_strategies\":[\"cat\"]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RagConfigWorkflowOverrideOutput>(
             wire

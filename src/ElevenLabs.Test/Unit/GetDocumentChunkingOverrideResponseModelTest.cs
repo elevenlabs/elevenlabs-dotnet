@@ -1,0 +1,36 @@
+using NUnit.Framework;
+
+namespace ElevenLabs.Tests;
+
+/// <summary>
+/// Round-trip coverage for <c>global::ElevenLabs.GetDocumentChunkingOverrideResponseModel</c>.
+/// </summary>
+/// <remarks>
+/// Asserts the wire document the model was built from comes back out of it unchanged — not merely
+/// that serialization runs. Starting from JSON rather than from a constructed instance is what
+/// makes one emitter cover both output modes: the legacy positional record and the fernMode
+/// `required`/`init` record are constructed differently but deserialize from the same document, so
+/// nothing here has to know which shape it is looking at. It is also the stronger assertion, since
+/// a property whose C# name diverges from its wire name fails this and would pass a test that only
+/// compared an instance to itself.
+/// </remarks>
+[TestFixture]
+public class GetDocumentChunkingOverrideResponseModelTest
+{
+    [Test]
+    public void RoundTripsThroughTheWireDocument()
+    {
+        const string wire =
+            "{\"id\":\"id\",\"chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]},\"effective_chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]},\"inherited_chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]}}";
+
+        var instance =
+            TestJson.Deserialize<global::ElevenLabs.GetDocumentChunkingOverrideResponseModel>(wire);
+        var serialized = TestJson.Serialize(instance);
+
+        JsonAssert.AreEquivalent(
+            wire,
+            serialized,
+            "global::ElevenLabs.GetDocumentChunkingOverrideResponseModel did not round-trip."
+        );
+    }
+}

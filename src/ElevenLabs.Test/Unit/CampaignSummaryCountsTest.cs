@@ -21,7 +21,7 @@ public class CampaignSummaryCountsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"leads\":9,\"terminal_leads\":6,\"open_attention\":6,\"delivery\":{\"sent\":1,\"delivered\":1,\"read\":3,\"replied\":3,\"failed\":1}}";
+            "{\"leads\":3,\"terminal_leads\":2,\"open_attention\":9,\"delivery\":{\"sent\":6,\"delivered\":9,\"read\":2,\"replied\":0,\"failed\":5}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CampaignSummaryCounts>(wire);
         var serialized = TestJson.Serialize(instance);

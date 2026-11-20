@@ -14,6 +14,10 @@ public readonly record struct AsrProvider : IStringEnum
 
     public static readonly AsrProvider ScribeV2Turbo = new(Values.ScribeV2Turbo);
 
+    public static readonly AsrProvider ScribeV3Live = new(Values.ScribeV3Live);
+
+    public static readonly AsrProvider ScribeV3LiveMedical = new(Values.ScribeV3LiveMedical);
+
     public AsrProvider(string value)
     {
         Value = value;
@@ -115,5 +119,9 @@ public readonly record struct AsrProvider : IStringEnum
         public const string ScribeRealtime = "scribe_realtime";
 
         public const string ScribeV2Turbo = "scribe_v2_turbo";
+
+        public const string ScribeV3Live = "scribe_v3_live";
+
+        public const string ScribeV3LiveMedical = "scribe_v3_live_medical";
     }
 }

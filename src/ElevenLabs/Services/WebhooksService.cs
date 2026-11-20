@@ -26,6 +26,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -52,6 +56,8 @@ internal class WebhooksService : BaseService
     private RequestConfig? _createAsyncConfig;
     private RequestConfig? _updateAsyncConfig;
     private RequestConfig? _deleteAsyncConfig;
+    private RequestConfig? _testAsyncConfig;
+    private RequestConfig? _redeliverAsyncConfig;
 
     internal WebhooksService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -93,6 +99,26 @@ internal class WebhooksService : BaseService
     public WebhooksService SetDeleteAsyncConfig(RequestConfig config)
     {
         _deleteAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>TestAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public WebhooksService SetTestAsyncConfig(RequestConfig config)
+    {
+        _testAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>RedeliverAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public WebhooksService SetRedeliverAsyncConfig(RequestConfig config)
+    {
+        _redeliverAsyncConfig = config;
         return this;
     }
 
@@ -305,6 +331,130 @@ internal class WebhooksService : BaseService
         {
             result =
                 global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.DeleteWorkspaceWebhookResponseModel>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.</summary>
+    /// <param name="webhookId">The ID of the webhook.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.WebhookSendResultResponseModel> TestAsync(
+        global::ElevenLabs.BodySendTestWebhookEventV1WorkspaceWebhooksWebhookIdTestPost input,
+        string webhookId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (webhookId is null)
+            throw new ArgumentNullException(nameof(webhookId));
+
+        var resolvedConfig = GetResolvedConfig(_testAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Post, "v1/workspace/webhooks/{webhook_id}/test")
+            .SetPathParameter("webhook_id", webhookId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.WebhookSendResultResponseModel result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.WebhookSendResultResponseModel>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Redelivering needs permission to manage webhooks and a web session, and the delivery's payload must be stored. Redeliveries and test events share a limit of 10 per webhook per minute.</summary>
+    /// <param name="webhookId">The ID of the webhook.</param>
+    /// <param name="deliveryId">The ID of the delivery to send again.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.WebhookSendResultResponseModel> RedeliverAsync(
+        string webhookId,
+        string deliveryId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (webhookId is null)
+            throw new ArgumentNullException(nameof(webhookId));
+        if (deliveryId is null)
+            throw new ArgumentNullException(nameof(deliveryId));
+
+        var resolvedConfig = GetResolvedConfig(_redeliverAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            HttpMethod.Post,
+            "v1/workspace/webhooks/{webhook_id}/deliveries/{delivery_id}/redeliver"
+        )
+            .SetPathParameter("webhook_id", webhookId)
+            .SetPathParameter("delivery_id", deliveryId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.WebhookSendResultResponseModel result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.WebhookSendResultResponseModel>(
                     responseBody,
                     _jsonSerializerOptions
                 )!;

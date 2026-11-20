@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -53,6 +57,10 @@ public record PolicyConfigOutput : IJsonOnDeserialized
     /// <value>The weekly windows calls may be placed in.</value>
     [JsonPropertyName("calling_periods")]
     public IEnumerable<CallingPeriod>? CallingPeriods { get; set; }
+
+    /// <value>Local dates in `timezone` whose calling windows replace `calling_periods`. Date ranges may not overlap.</value>
+    [JsonPropertyName("date_overrides")]
+    public IEnumerable<DateOverride>? DateOverrides { get; set; }
 
     /// <value>
     /// The agent's data collection items that steer follow-up calls. Each defaults
@@ -105,6 +113,7 @@ public record PolicyConfigOutput : IJsonOnDeserialized
             && ValueEquality.AreEqual(Timezone, other.Timezone)
             && ValueEquality.AreEqual(Retry, other.Retry)
             && ValueEquality.AreEqual(CallingPeriods, other.CallingPeriods)
+            && ValueEquality.AreEqual(DateOverrides, other.DateOverrides)
             && ValueEquality.AreEqual(DataCollection, other.DataCollection)
             && ValueEquality.AreEqual(FollowupContext, other.FollowupContext)
             && AdditionalProperties.Equals(other.AdditionalProperties);
@@ -119,6 +128,7 @@ public record PolicyConfigOutput : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Timezone);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Retry);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(CallingPeriods);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(DateOverrides);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DataCollection);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FollowupContext);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();

@@ -21,7 +21,7 @@ public class ForcedAlignmentResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"characters\":[{\"text\":\"text\",\"start\":5.01,\"end\":0.97}],\"words\":[{\"text\":\"text\",\"start\":2.93,\"end\":4.19,\"loss\":2.53}],\"loss\":7.21}";
+            "{\"characters\":[{\"text\":\"text\",\"start\":6.39,\"end\":6.58}],\"words\":[{\"text\":\"text\",\"start\":5.65,\"end\":9.63,\"loss\":5.6}],\"loss\":2.55}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ForcedAlignmentResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -78,6 +82,12 @@ public partial interface IConversationsClient
     IConversationsClient SetListAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
 
     /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IConversationsClient SetCreateAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
+    /// <summary>
     /// Sets method-level configuration for <c>ResolveAsync</c>.
     /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
     /// </summary>
@@ -109,6 +119,34 @@ public partial interface IConversationsClient
         global::ElevenLabs.Config.RequestConfig config
     );
 
+    /// <summary>
+    /// Sets method-level configuration for <c>SendMessageAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IConversationsClient SetSendMessageAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
+    /// <summary>
+    /// Sets method-level configuration for <c>GetTurnAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IConversationsClient SetGetTurnAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
+    /// <summary>
+    /// Sets method-level configuration for <c>SendMessageStreamAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IConversationsClient SetSendMessageStreamAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    );
+
+    /// <summary>
+    /// Sets method-level configuration for <c>StreamTurnEventsAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IConversationsClient SetStreamTurnEventsAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    );
+
     /// <summary>Get a signed url to start a conversation with an agent with an agent that requires authorization</summary>
     WithRawResponseTask<ConversationSignedUrlResponseModel> GetSignedUrlAsync(
         GetSignedUrlConversationsRequest request,
@@ -126,6 +164,13 @@ public partial interface IConversationsClient
     /// <summary>Get all conversations of agents that user owns. With option to restrict to a specific agent.</summary>
     WithRawResponseTask<GetConversationsPageResponseModel> ListAsync(
         ListConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Create a text conversation with an agent. This does not run the agent, and the agent sends no first message. This endpoint is in alpha and may change.</summary>
+    WithRawResponseTask<CreateAgentConversationResponse> CreateAsync(
+        CreateConversationsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -165,6 +210,40 @@ public partial interface IConversationsClient
     WithRawResponseTask<GetSipLogMessagesResponse> GetSipMessagesAsync(
         string conversationId,
         GetSipMessagesConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Send input to a conversation, and wait until the agent finishes or waits on client tool results. With `background` set to true, the endpoint returns 202 when the server admits the turn. Then stream the turn's events with `Last-Event-ID` set to the `stream_cursor`. This endpoint is in alpha and may change.</summary>
+    WithRawResponseTask<ConversationTurn> SendMessageAsync(
+        string conversationId,
+        SendMessageConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Get the status and output of a turn. The status comes from the stored transcript, so a turn that failed after the agent started can show as completed. Only the `stream_ended` event has the real outcome. This endpoint is in alpha and may change.</summary>
+    WithRawResponseTask<ConversationTurn> GetTurnAsync(
+        string conversationId,
+        string turnId,
+        GetTurnConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Send input to a conversation, and stream the events of the request as server-sent events. The last event is `stream_ended`, which has the outcome of the turn. This endpoint is in alpha and may change.</summary>
+    global::ElevenLabs.WithRawResponseStream<StreamEnvelope> SendMessageStreamAsync(
+        string conversationId,
+        SendMessageStreamConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Stream the events of a turn as server-sent events. Send `Last-Event-ID` to resume after an event. The server keeps events for about an hour. This endpoint is in alpha and may change.</summary>
+    global::ElevenLabs.WithRawResponseStream<StreamEnvelope> StreamTurnEventsAsync(
+        string conversationId,
+        string turnId,
+        StreamTurnEventsConversationsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

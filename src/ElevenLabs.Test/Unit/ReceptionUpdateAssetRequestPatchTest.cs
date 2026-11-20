@@ -1,0 +1,38 @@
+using NUnit.Framework;
+
+namespace ElevenLabs.Tests;
+
+/// <summary>
+/// Round-trip coverage for <c>global::ElevenLabs.Reception.ReceptionUpdateAssetRequestPatch</c>.
+/// </summary>
+/// <remarks>
+/// Asserts the wire document the model was built from comes back out of it unchanged — not merely
+/// that serialization runs. Starting from JSON rather than from a constructed instance is what
+/// makes one emitter cover both output modes: the legacy positional record and the fernMode
+/// `required`/`init` record are constructed differently but deserialize from the same document, so
+/// nothing here has to know which shape it is looking at. It is also the stronger assertion, since
+/// a property whose C# name diverges from its wire name fails this and would pass a test that only
+/// compared an instance to itself.
+/// </remarks>
+[TestFixture]
+public class ReceptionUpdateAssetRequestPatchTest
+{
+    [Test]
+    public void RoundTripsThroughTheWireDocument()
+    {
+        const string wire =
+            "{\"groups\":[{\"label\":\"Ut minim c\",\"rank\":5}],\"ungrouped_rank\":5,\"name\":\"Excepteur sunt\",\"description\":\"ullamco dolore\",\"is_active\":false,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":9,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"et qui \"}";
+
+        var instance =
+            TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionUpdateAssetRequestPatch>(
+                wire
+            );
+        var serialized = TestJson.Serialize(instance);
+
+        JsonAssert.AreEquivalent(
+            wire,
+            serialized,
+            "global::ElevenLabs.Reception.ReceptionUpdateAssetRequestPatch did not round-trip."
+        );
+    }
+}

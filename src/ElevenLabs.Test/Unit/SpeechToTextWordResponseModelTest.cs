@@ -21,7 +21,7 @@ public class SpeechToTextWordResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"start\":1.37,\"end\":5.8,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":6.86,\"characters\":[{\"text\":\"text\",\"start\":0.93,\"end\":8.63}],\"channel_index\":1}";
+            "{\"text\":\"text\",\"start\":1.74,\"end\":2.48,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":1.5,\"characters\":[{\"text\":\"text\",\"start\":8.63,\"end\":3.58}],\"channel_index\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeechToTextWordResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

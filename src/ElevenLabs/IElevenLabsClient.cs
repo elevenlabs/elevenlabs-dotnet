@@ -26,7 +26,9 @@ public partial interface IElevenLabsClient
     public ISpeechToTextClient SpeechToText { get; }
     public IModelsClient Models { get; }
     public IAudioNativeClient AudioNative { get; }
-    public IWorkspacesClient Workspaces { get; }
+    public IContentProvenanceClient ContentProvenance { get; }
+    public IReceptionClient Reception { get; }
+    public ElevenLabs.IWorkspacesClient Workspaces { get; }
     public IServiceAccountsClient ServiceAccounts { get; }
     public IWorkspaceClient Workspace { get; }
     public IWebhooksClient Webhooks { get; }
@@ -37,7 +39,7 @@ public partial interface IElevenLabsClient
     public IEnvironmentVariablesClient EnvironmentVariables { get; }
     public IEnvironmentsClient Environments { get; }
     public IProductionsClient Productions { get; }
-    public IAssetsClient Assets { get; }
+    public ElevenLabs.IAssetsClient Assets { get; }
     ITextToDialogueApi CreateTextToDialogueApi();
     ITextToDialogueApi CreateTextToDialogueApi(TextToDialogueApi.Options options);
     ITextToDialogueMultiContextApi CreateTextToDialogueMultiContextApi();

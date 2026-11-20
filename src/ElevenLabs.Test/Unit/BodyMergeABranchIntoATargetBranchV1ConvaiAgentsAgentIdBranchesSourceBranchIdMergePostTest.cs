@@ -20,7 +20,8 @@ public class BodyMergeABranchIntoATargetBranchV1ConvaiAgentsAgentIdBranchesSourc
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"archive_source_branch\":true,\"force\":true}";
+        const string wire =
+            "{\"archive_source_branch\":true,\"force\":false,\"conflict_resolutions\":[{\"conflict_id\":\"conversation_config:agent.first_message\",\"choice\":\"source\",\"custom_value\":\"custom_value\"}],\"source_tip_id\":\"source_tip_id\",\"target_tip_id\":\"target_tip_id\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.BodyMergeABranchIntoATargetBranchV1ConvaiAgentsAgentIdBranchesSourceBranchIdMergePost>(

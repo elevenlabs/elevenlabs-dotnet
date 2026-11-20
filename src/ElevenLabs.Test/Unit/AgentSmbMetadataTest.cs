@@ -21,7 +21,7 @@ public class AgentSmbMetadataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_type\":\"customer_facing\",\"is_ephemeral\":false,\"source_fingerprint\":\"source_fingerprint\"}";
+            "{\"agent_type\":\"customer_facing\",\"is_ephemeral\":true,\"source_fingerprint\":\"source_fingerprint\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentSmbMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

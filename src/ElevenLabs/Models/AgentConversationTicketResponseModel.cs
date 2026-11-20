@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -58,12 +62,13 @@ public record AgentConversationTicketResponseModel : IJsonOnDeserialized
     [JsonPropertyName("needs_clustering")]
     public required bool NeedsClustering { get; set; }
 
-    /// <value>One-line headline for the ticket. None only on tickets created before titles existed.</value>
+    /// <value>One-line headline for the agent issue. None only on issues created before titles existed.</value>
     [JsonPropertyName("title")]
     public string? Title { get; set; }
 
+    /// <value>Always null. Issue types are labels, written as `issue_type:&lt;value&gt;`.</value>
     [JsonPropertyName("issue_type")]
-    public AgentConversationTicketIssueType? IssueType { get; set; }
+    public object? IssueType { get; set; }
 
     [JsonPropertyName("labels")]
     public IEnumerable<string> Labels { get; set; } = new List<string>();
@@ -102,7 +107,7 @@ public record AgentConversationTicketResponseModel : IJsonOnDeserialized
     public IEnumerable<TicketStatusChangeResponseModel> StatusChanges { get; set; } =
         new List<TicketStatusChangeResponseModel>();
 
-    /// <value>The ticket this one was merged into, set while its status is 'merged'.</value>
+    /// <value>The agent issue this one was merged into, set while its status is 'merged'.</value>
     [JsonPropertyName("merged_into_ticket_id")]
     public string? MergedIntoTicketId { get; set; }
 

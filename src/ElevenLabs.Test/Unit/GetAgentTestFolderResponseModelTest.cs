@@ -21,7 +21,7 @@ public class GetAgentTestFolderResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"folder_path\":[{\"id\":\"id\",\"name\":\"name\"}],\"children_count\":7}";
+            "{\"id\":\"id\",\"name\":\"name\",\"folder_path\":[{\"id\":\"id\",\"name\":\"name\"}],\"children_count\":4}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetAgentTestFolderResponseModel>(
             wire

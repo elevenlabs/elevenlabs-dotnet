@@ -21,7 +21,7 @@ public class GetAgentLinkResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_id\":\"agent_id\",\"token\":{\"agent_id\":\"agent_id\",\"conversation_token\":\"conversation_token\",\"expiration_time_unix_secs\":4,\"conversation_id\":\"conversation_id\",\"purpose\":\"signed_url\",\"token_requester_user_id\":\"token_requester_user_id\"}}";
+            "{\"agent_id\":\"agent_id\",\"token\":{\"agent_id\":\"agent_id\",\"conversation_token\":\"conversation_token\",\"expiration_time_unix_secs\":6,\"conversation_id\":\"conversation_id\",\"purpose\":\"signed_url\",\"token_requester_user_id\":\"token_requester_user_id\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetAgentLinkResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

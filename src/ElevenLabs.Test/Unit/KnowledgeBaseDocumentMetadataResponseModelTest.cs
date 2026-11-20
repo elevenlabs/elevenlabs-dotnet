@@ -21,7 +21,7 @@ public class KnowledgeBaseDocumentMetadataResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"created_at_unix_secs\":3,\"last_updated_at_unix_secs\":4,\"size_bytes\":0}";
+            "{\"created_at_unix_secs\":4,\"last_updated_at_unix_secs\":1,\"size_bytes\":1}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.KnowledgeBaseDocumentMetadataResponseModel>(

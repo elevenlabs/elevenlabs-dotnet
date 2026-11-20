@@ -21,7 +21,7 @@ public class ConversationHistoryBatchCallModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"batch_call_id\":\"batch_call_id\",\"batch_call_recipient_id\":\"batch_call_recipient_id\",\"campaign\":{\"campaign_id\":\"campaign_id\",\"campaign_lead_id\":\"campaign_lead_id\",\"cold_attempt\":5,\"conversation_type\":\"initial\"}}";
+            "{\"batch_call_id\":\"batch_call_id\",\"batch_call_recipient_id\":\"batch_call_recipient_id\",\"campaign\":{\"campaign_id\":\"campaign_id\",\"campaign_lead_id\":\"campaign_lead_id\",\"cold_attempt\":0,\"conversation_type\":\"initial\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationHistoryBatchCallModel>(
             wire

@@ -20,7 +20,7 @@ public class InitializeConnectionMultiGenerationConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"chunk_length_schedule\":[2]}";
+        const string wire = "{\"chunk_length_schedule\":[10]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.InitializeConnectionMultiGenerationConfig>(

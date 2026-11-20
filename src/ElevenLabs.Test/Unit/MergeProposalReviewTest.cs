@@ -21,7 +21,7 @@ public class MergeProposalReviewTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"user_id\":\"user_id\",\"state\":\"approved\",\"submitted_at\":5,\"comment\":\"comment\",\"reviewer_role\":\"admin\"}";
+            "{\"user_id\":\"user_id\",\"state\":\"approved\",\"submitted_at\":0,\"comment\":\"comment\",\"reviewer_role\":\"admin\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MergeProposalReview>(wire);
         var serialized = TestJson.Serialize(instance);

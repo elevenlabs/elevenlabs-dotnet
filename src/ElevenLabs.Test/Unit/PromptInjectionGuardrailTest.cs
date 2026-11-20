@@ -20,7 +20,7 @@ public class PromptInjectionGuardrailTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"is_enabled\":true}";
+        const string wire = "{\"is_enabled\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PromptInjectionGuardrail>(wire);
         var serialized = TestJson.Serialize(instance);

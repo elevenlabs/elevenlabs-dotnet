@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -113,6 +117,16 @@ public partial class ConversationsClient
     }
 
     /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IConversationsClient SetCreateAsyncConfig(global::ElevenLabs.Config.RequestConfig config)
+    {
+        _service.SetCreateAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
     /// Sets method-level configuration for <c>ResolveAsync</c>.
     /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
     /// </summary>
@@ -165,6 +179,54 @@ public partial class ConversationsClient
     )
     {
         _service.SetGetSipMessagesAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>SendMessageAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IConversationsClient SetSendMessageAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    )
+    {
+        _service.SetSendMessageAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>GetTurnAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IConversationsClient SetGetTurnAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    )
+    {
+        _service.SetGetTurnAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>SendMessageStreamAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IConversationsClient SetSendMessageStreamAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    )
+    {
+        _service.SetSendMessageStreamAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>StreamTurnEventsAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IConversationsClient SetStreamTurnEventsAsyncConfig(
+        global::ElevenLabs.Config.RequestConfig config
+    )
+    {
+        _service.SetStreamTurnEventsAsyncConfig(config);
         return this;
     }
 
@@ -279,6 +341,24 @@ public partial class ConversationsClient
             )
         );
 
+    /// <summary>Create a text conversation with an agent. This does not run the agent, and the agent sends no first message. This endpoint is in alpha and may change.</summary>
+    public WithRawResponseTask<CreateAgentConversationResponse> CreateAsync(
+        CreateConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<CreateAgentConversationResponse>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.CreateAsync(
+                        request.Body,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
     /// <summary>Resolve a conversation URL (a Slack message URL or a Zendesk ticket URL) to the deterministic conversation ID for the given agent, then confirm the conversation exists.</summary>
     public WithRawResponseTask<GetConversationResponseModel> ResolveAsync(
         ResolveConversationsRequest request,
@@ -376,5 +456,84 @@ public partial class ConversationsClient
                         cancellationToken: cancellationToken
                     )
             )
+        );
+
+    /// <summary>Send input to a conversation, and wait until the agent finishes or waits on client tool results. With `background` set to true, the endpoint returns 202 when the server admits the turn. Then stream the turn's events with `Last-Event-ID` set to the `stream_cursor`. This endpoint is in alpha and may change.</summary>
+    public WithRawResponseTask<ConversationTurn> SendMessageAsync(
+        string conversationId,
+        SendMessageConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<ConversationTurn>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.SendMessageAsync(
+                        request.Body,
+                        conversationId,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Get the status and output of a turn. The status comes from the stored transcript, so a turn that failed after the agent started can show as completed. Only the `stream_ended` event has the real outcome. This endpoint is in alpha and may change.</summary>
+    public WithRawResponseTask<ConversationTurn> GetTurnAsync(
+        string conversationId,
+        string turnId,
+        GetTurnConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<ConversationTurn>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.GetTurnAsync(
+                        conversationId,
+                        turnId,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Send input to a conversation, and stream the events of the request as server-sent events. The last event is `stream_ended`, which has the outcome of the turn. This endpoint is in alpha and may change.</summary>
+    public global::ElevenLabs.WithRawResponseStream<StreamEnvelope> SendMessageStreamAsync(
+        string conversationId,
+        SendMessageStreamConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        WithRawResponseAdapter.WithOptions(
+            options,
+            () =>
+                _service.SendMessageStreamAsync(
+                    request.Body,
+                    conversationId,
+                    request.XiApiKey,
+                    cancellationToken: cancellationToken
+                )
+        );
+
+    /// <summary>Stream the events of a turn as server-sent events. Send `Last-Event-ID` to resume after an event. The server keeps events for about an hour. This endpoint is in alpha and may change.</summary>
+    public global::ElevenLabs.WithRawResponseStream<StreamEnvelope> StreamTurnEventsAsync(
+        string conversationId,
+        string turnId,
+        StreamTurnEventsConversationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        WithRawResponseAdapter.WithOptions(
+            options,
+            () =>
+                _service.StreamTurnEventsAsync(
+                    conversationId,
+                    turnId,
+                    request.LastEventId,
+                    request.XiApiKey,
+                    cancellationToken: cancellationToken
+                )
         );
 }

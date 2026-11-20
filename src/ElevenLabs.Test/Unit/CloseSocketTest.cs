@@ -20,7 +20,7 @@ public class CloseSocketTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"close_socket\":true}";
+        const string wire = "{\"close_socket\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CloseSocket>(wire);
         var serialized = TestJson.Serialize(instance);

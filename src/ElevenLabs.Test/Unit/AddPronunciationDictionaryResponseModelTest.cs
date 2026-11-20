@@ -21,7 +21,7 @@ public class AddPronunciationDictionaryResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"created_by\":\"created_by\",\"creation_time_unix\":10,\"version_id\":\"version_id\",\"version_rules_num\":8,\"description\":\"description\",\"permission_on_resource\":\"admin\"}";
+            "{\"id\":\"id\",\"name\":\"name\",\"created_by\":\"created_by\",\"creation_time_unix\":8,\"version_id\":\"version_id\",\"version_rules_num\":6,\"description\":\"description\",\"permission_on_resource\":\"admin\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AddPronunciationDictionaryResponseModel>(wire);

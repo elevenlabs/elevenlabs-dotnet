@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -48,9 +52,21 @@ public record BodyMergeABranchIntoATargetBranchV1ConvaiAgentsAgentIdBranchesSour
     [JsonPropertyName("archive_source_branch")]
     public bool? ArchiveSourceBranch { get; set; }
 
-    /// <value>Force source branch changes onto the target, overriding timestamp-based conflict resolution</value>
+    /// <value>Keep the source branch's value for every conflict instead of sending `conflict_resolutions`</value>
     [JsonPropertyName("force")]
     public bool? Force { get; set; }
+
+    /// <value>Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.</value>
+    [JsonPropertyName("conflict_resolutions")]
+    public IEnumerable<ConflictResolution>? ConflictResolutions { get; set; }
+
+    /// <value>Source branch tip version the conflicts were resolved against (`source_tip_version_id` of the preview). The request fails with 409 if the branch moved since.</value>
+    [JsonPropertyName("source_tip_id")]
+    public string? SourceTipId { get; set; }
+
+    /// <value>Target branch tip version the conflicts were resolved against (`target_tip_version_id` of the preview). The request fails with 409 if the branch moved since.</value>
+    [JsonPropertyName("target_tip_id")]
+    public string? TargetTipId { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -93,6 +109,9 @@ public record BodyMergeABranchIntoATargetBranchV1ConvaiAgentsAgentIdBranchesSour
         return true
             && ValueEquality.AreEqual(ArchiveSourceBranch, other.ArchiveSourceBranch)
             && ValueEquality.AreEqual(Force, other.Force)
+            && ValueEquality.AreEqual(ConflictResolutions, other.ConflictResolutions)
+            && ValueEquality.AreEqual(SourceTipId, other.SourceTipId)
+            && ValueEquality.AreEqual(TargetTipId, other.TargetTipId)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -104,6 +123,9 @@ public record BodyMergeABranchIntoATargetBranchV1ConvaiAgentsAgentIdBranchesSour
             var hash = 17;
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ArchiveSourceBranch);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Force);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ConflictResolutions);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SourceTipId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TargetTipId);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

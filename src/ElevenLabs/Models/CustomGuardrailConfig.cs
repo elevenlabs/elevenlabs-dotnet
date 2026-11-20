@@ -19,6 +19,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.SpeechEngine;
 using ElevenLabs.Studio;
@@ -61,6 +65,17 @@ public record CustomGuardrailConfig : IJsonOnDeserialized
     /// <value>LLM model to use for custom guardrail evaluation</value>
     [JsonPropertyName("model")]
     public CustomGuardrailConfigModel? Model { get; set; }
+
+    /// <value>
+    /// Request-time processing tier for a model.
+    ///
+    /// STANDARD: default price and throughput.
+    /// FAST: pays a per-token price premium for higher throughput / lower latency.
+    ///     See OpenAI's fast mode: https://openai.com/api-fast-mode/ and, for Gemini, Vertex
+    ///     Priority PayGo: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/priority-paygo
+    /// </value>
+    [JsonPropertyName("service_tier")]
+    public LlmServiceTier? ServiceTier { get; set; }
 
     /// <value>How much recent history the guardrail sees before the reply it evaluates, counted in user messages (the agent replies between them are included too). The guardrail always gets a single &lt;conversation_history&gt; transcript ending in the evaluated reply, marked 'AGENT [current reply]:'. 0 (default) adds no prior history (just that line); 1 adds the latest user message onward.</value>
     [JsonPropertyName("history_message_count")]
@@ -115,6 +130,7 @@ public record CustomGuardrailConfig : IJsonOnDeserialized
             && ValueEquality.AreEqual(Prompt, other.Prompt)
             && ValueEquality.AreEqual(ExecutionMode, other.ExecutionMode)
             && ValueEquality.AreEqual(Model, other.Model)
+            && ValueEquality.AreEqual(ServiceTier, other.ServiceTier)
             && ValueEquality.AreEqual(HistoryMessageCount, other.HistoryMessageCount)
             && ValueEquality.AreEqual(TriggerAction, other.TriggerAction)
             && ValueEquality.AreEqual(EvaluateFullResponseOnly, other.EvaluateFullResponseOnly)
@@ -132,6 +148,7 @@ public record CustomGuardrailConfig : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Prompt);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ExecutionMode);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Model);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ServiceTier);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(HistoryMessageCount);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TriggerAction);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(EvaluateFullResponseOnly);

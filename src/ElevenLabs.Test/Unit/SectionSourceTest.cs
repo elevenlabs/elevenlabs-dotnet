@@ -21,7 +21,7 @@ public class SectionSourceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"song_id\":\"song_id\",\"range\":{\"start_ms\":8,\"end_ms\":5},\"negative_ranges\":[{\"start_ms\":8,\"end_ms\":5}]}";
+            "{\"song_id\":\"song_id\",\"range\":{\"start_ms\":7,\"end_ms\":1},\"negative_ranges\":[{\"start_ms\":7,\"end_ms\":1}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SectionSource>(wire);
         var serialized = TestJson.Serialize(instance);

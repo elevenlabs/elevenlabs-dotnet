@@ -21,7 +21,7 @@ public class KnowledgeBaseToolResultModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"result_type\":\"knowledge_base_success\",\"status\":\"success\",\"chunk_count\":4,\"message\":\"Referenced knowledge base.\"}";
+            "{\"result_type\":\"knowledge_base_success\",\"status\":\"success\",\"chunk_count\":1,\"message\":\"Referenced knowledge base.\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.KnowledgeBaseToolResultModel>(wire);
         var serialized = TestJson.Serialize(instance);

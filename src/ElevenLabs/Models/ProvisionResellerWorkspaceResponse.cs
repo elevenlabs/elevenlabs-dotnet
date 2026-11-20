@@ -1,0 +1,159 @@
+using ElevenLabs.Agents;
+using ElevenLabs.Agents.Conversations;
+using ElevenLabs.Agents.Dashboard;
+using ElevenLabs.Agents.KnowledgeBase;
+using ElevenLabs.Agents.McpServers;
+using ElevenLabs.Agents.OutboundCampaigns;
+using ElevenLabs.Agents.Procedures;
+using ElevenLabs.Agents.Tests;
+using ElevenLabs.Agents.Widget;
+using ElevenLabs.Core;
+using ElevenLabs.Dubbing;
+using ElevenLabs.Dubbing.Project;
+using ElevenLabs.Dubbing.Project.Language;
+using ElevenLabs.EnvironmentVariables;
+using ElevenLabs.Flows;
+using ElevenLabs.Flows.Templates;
+using ElevenLabs.History;
+using ElevenLabs.Music;
+using ElevenLabs.Productions;
+using ElevenLabs.Productions.Orders;
+using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
+using ElevenLabs.ServiceAccounts;
+using ElevenLabs.SpeechEngine;
+using ElevenLabs.Studio;
+using ElevenLabs.Studio.Projects;
+using ElevenLabs.Studio.Projects.Chapters;
+using ElevenLabs.Tokens;
+using ElevenLabs.Voices;
+using ElevenLabs.Voices.Pvc;
+using ElevenLabs.Voices.Pvc.Verification;
+using ElevenLabs.Workspace;
+using ElevenLabs.Workspace.Analytics;
+using ElevenLabs.Workspace.Groups;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+
+namespace ElevenLabs;
+
+[Serializable]
+public record ProvisionResellerWorkspaceResponse : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    [JsonPropertyName("workspace_id")]
+    public required string WorkspaceId { get; set; }
+
+    [JsonPropertyName("business_name")]
+    public required string BusinessName { get; set; }
+
+    [JsonPropertyName("billing_tier")]
+    public string? BillingTier { get; set; }
+
+    [JsonPropertyName("receptionist_count")]
+    public required int ReceptionistCount { get; set; }
+
+    [JsonPropertyName("calls_last_30_days")]
+    public required int CallsLast30Days { get; set; }
+
+    [JsonPropertyName("created_at_unix")]
+    public required int CreatedAtUnix { get; set; }
+
+    /// <value>The reseller-managed subscription, when this workspace has one. None means nothing is sold here yet and a tier can be assigned.</value>
+    [JsonPropertyName("subscription")]
+    public ResellerWorkspaceSubscription? Subscription { get; set; }
+
+    /// <value>A charge for this workspace is unpaid. Assigning or changing a tier is refused until it clears, so surface it rather than letting it fail.</value>
+    [JsonPropertyName("has_payment_issue")]
+    public bool? HasPaymentIssue { get; set; }
+
+    /// <value>When onboarding finished. Until then the onboarding wizard may replace or remove the workspace's business data.</value>
+    [JsonPropertyName("onboarding_completed_at_unix")]
+    public int? OnboardingCompletedAtUnix { get; set; }
+
+    [JsonPropertyName("member_results")]
+    public IEnumerable<TeamInviteResult>? MemberResults { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// Written out rather than synthesized. A record's generated Equals compares every instance
+    /// field, and `_extensionData` is a fresh Dictionary per instance compared by REFERENCE, so two
+    /// identical models were never equal — silently defeating ==, Distinct(), HashSet membership,
+    /// dictionary keys and test assertions for every model in the SDK. Excluding it loses nothing:
+    /// it is a transient deserialization sink whose contents are copied into
+    /// AdditionalProperties, which IS compared here.
+    /// </remarks>
+    public virtual bool Equals(ProvisionResellerWorkspaceResponse? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+        // The synthesized record Equals compares EqualityContract, so a base instance never equals a
+        // derived one. Hand-writing Equals drops that unless it is restated.
+        if (EqualityContract != other.EqualityContract)
+        {
+            return false;
+        }
+        // Declared properties first: the additional-properties comparison walks a dictionary and
+        // allocates a string per entry, and is the least likely of the three to differ, so letting
+        // the cheap scalar comparisons short-circuit ahead of it matters for Distinct/HashSet over
+        // large collections. Anchored on `true` so a model with no declared properties still emits
+        // a valid expression.
+        return true
+            && ValueEquality.AreEqual(WorkspaceId, other.WorkspaceId)
+            && ValueEquality.AreEqual(BusinessName, other.BusinessName)
+            && ValueEquality.AreEqual(BillingTier, other.BillingTier)
+            && ValueEquality.AreEqual(ReceptionistCount, other.ReceptionistCount)
+            && ValueEquality.AreEqual(CallsLast30Days, other.CallsLast30Days)
+            && ValueEquality.AreEqual(CreatedAtUnix, other.CreatedAtUnix)
+            && ValueEquality.AreEqual(Subscription, other.Subscription)
+            && ValueEquality.AreEqual(HasPaymentIssue, other.HasPaymentIssue)
+            && ValueEquality.AreEqual(OnboardingCompletedAtUnix, other.OnboardingCompletedAtUnix)
+            && ValueEquality.AreEqual(MemberResults, other.MemberResults)
+            && AdditionalProperties.Equals(other.AdditionalProperties);
+    }
+
+    /// <inheritdoc />
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            var hash = 17;
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(WorkspaceId);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(BusinessName);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(BillingTier);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ReceptionistCount);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(CallsLast30Days);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(CreatedAtUnix);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Subscription);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(HasPaymentIssue);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(OnboardingCompletedAtUnix);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MemberResults);
+            hash = (hash * 31) + AdditionalProperties.GetHashCode();
+            return hash;
+        }
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

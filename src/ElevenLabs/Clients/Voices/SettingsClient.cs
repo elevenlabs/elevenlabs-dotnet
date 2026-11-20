@@ -20,6 +20,10 @@ using ElevenLabs.Music;
 using ElevenLabs.Productions;
 using ElevenLabs.Productions.Orders;
 using ElevenLabs.PronunciationDictionaries;
+using ElevenLabs.Reception;
+using ElevenLabs.Reception.Products;
+using ElevenLabs.Reception.Receptionists;
+using ElevenLabs.Reception.Team;
 using ElevenLabs.ServiceAccounts;
 using ElevenLabs.Services;
 using ElevenLabs.SpeechEngine;
@@ -93,11 +97,11 @@ public partial class SettingsClient
     }
 
     /// <summary>Gets the default settings for voices. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.</summary>
-    public WithRawResponseTask<BodyTextToSpeechFullVoiceSettings> GetDefaultAsync(
+    public WithRawResponseTask<VoiceSettings> GetDefaultAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     ) =>
-        new WithRawResponseTask<BodyTextToSpeechFullVoiceSettings>(
+        new WithRawResponseTask<VoiceSettings>(
             WithRawResponseAdapter.Wrap(
                 options,
                 () => _service.GetDefaultAsync(cancellationToken: cancellationToken)
@@ -105,13 +109,13 @@ public partial class SettingsClient
         );
 
     /// <summary>Returns the settings for a specific voice. "similarity_boost" corresponds to"Clarity + Similarity Enhancement" in the web app and "stability" corresponds to "Stability" slider in the web app.</summary>
-    public WithRawResponseTask<BodyTextToSpeechFullVoiceSettings> GetAsync(
+    public WithRawResponseTask<VoiceSettings> GetAsync(
         string voiceId,
         GetSettingsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     ) =>
-        new WithRawResponseTask<BodyTextToSpeechFullVoiceSettings>(
+        new WithRawResponseTask<VoiceSettings>(
             WithRawResponseAdapter.Wrap(
                 options,
                 () =>

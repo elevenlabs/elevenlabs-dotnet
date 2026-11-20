@@ -20,7 +20,7 @@ public class LlmTokensCategoryUsageTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"tokens\":10,\"price\":7.64}";
+        const string wire = "{\"tokens\":0,\"price\":9.52}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LlmTokensCategoryUsage>(wire);
         var serialized = TestJson.Serialize(instance);
