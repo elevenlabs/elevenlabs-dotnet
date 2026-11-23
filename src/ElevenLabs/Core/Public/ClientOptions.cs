@@ -11,9 +11,9 @@ public partial class ClientOptions
     internal Headers Headers { get; init; } = new();
 
     /// <summary>
-    /// The Base URL for the API.
+    /// The Environment for the API.
     /// </summary>
-    public string BaseUrl { get;
+    public ElevenLabsClientEnvironment Environment { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -84,7 +84,7 @@ public partial class ClientOptions
     {
         return new ClientOptions
         {
-            BaseUrl = BaseUrl,
+            Environment = Environment,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,

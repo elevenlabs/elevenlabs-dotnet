@@ -296,7 +296,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
     private string BuildUrl(global::ElevenLabs.Core.BaseRequest request)
     {
-        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.Environment.Base;
 
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');

@@ -38,4 +38,11 @@ public class Environment
         new("https://api.in.residency.elevenlabs.io/");
     public static Environment ProductionSingapore { get; } =
         new("https://api.sg.residency.elevenlabs.io/");
+    public static Environment Default { get; } = new("wss://api.elevenlabs.io/");
+    public static Environment Api { get; } = new("wss://api.elevenlabs.io/");
+    public static Environment ProductionRoutedOnlyToTheUsRegion { get; } =
+        new("wss://api.us.elevenlabs.io/");
+    public static Environment ApiEu { get; } = new("wss://api.eu.residency.elevenlabs.io/");
+    public static Environment ApiIn { get; } = new("wss://api.in.residency.elevenlabs.io/");
+    public static Environment ApiSg { get; } = new("wss://api.sg.residency.elevenlabs.io/");
 }

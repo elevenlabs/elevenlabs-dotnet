@@ -26,6 +26,8 @@ public class RequestBuilder
 
     private HttpContent? _content;
 
+    private string? _baseUrl;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestBuilder"/> class.
     /// </summary>
@@ -35,6 +37,16 @@ public class RequestBuilder
     {
         _httpMethod = httpMethod;
         _urlTemplate = urlTemplate;
+    }
+
+    /// <summary>
+    /// Sends the request to <paramref name="baseUrl"/> instead of the client's base address.
+    /// </summary>
+    /// <param name="baseUrl">The absolute base URL the request path is resolved against.</param>
+    public RequestBuilder SetBaseUrl(string baseUrl)
+    {
+        _baseUrl = baseUrl;
+        return this;
     }
 
     /// <summary>
@@ -393,7 +405,11 @@ public class RequestBuilder
     /// </summary>
     public HttpRequestMessage BuildHttpRequestMessage()
     {
-        var requestMessage = new HttpRequestMessage(_httpMethod, BuildUrl()) { Content = _content };
+        var requestUri =
+            _baseUrl == null
+                ? new Uri(BuildUrl(), UriKind.RelativeOrAbsolute)
+                : new Uri(new Uri(_baseUrl.TrimEnd('/') + "/"), BuildUrl());
+        var requestMessage = new HttpRequestMessage(_httpMethod, requestUri) { Content = _content };
 
         foreach (var kvp in _headers)
         {

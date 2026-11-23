@@ -49,7 +49,7 @@ jobs:
           # file rather than from the generated sources: a class whose methods lost their [Test]
           # attribute still compiles, still exists on disk, and contributes zero collected tests.
           ran=$(grep -o 'total="[0-9]*"' "$trx" | head -1 | grep -o '[0-9]*')
-          expected=1511
+          expected=1583
           if [ -z "$ran" ]; then
             echo "::error::Could not read the test count from $trx."
             exit 1

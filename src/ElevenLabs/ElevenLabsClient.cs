@@ -86,9 +86,10 @@ public partial class ElevenLabsClient : IElevenLabsClient
             defaultHeaders: defaultHeaders
         );
         _httpClient.SetBaseAddress(
-            new global::System.Uri(clientOptions.BaseUrl).EnsureTrailingSlash()
+            new global::System.Uri(clientOptions.Environment.Base).EnsureTrailingSlash()
         );
         _httpClient.SetTimeout(clientOptions.Timeout);
+        _httpClient.SelectedEnvironment = clientOptions.Environment;
 
         History = new HistoryClient(_httpClient);
         TextToSoundEffects = new TextToSoundEffectsClient(_httpClient);
@@ -258,6 +259,11 @@ public partial class ElevenLabsClient : IElevenLabsClient
             _httpClient.DefaultHeaders,
             _httpClient.HandshakeCredentials
         );
+    }
+
+    public IAgentsApi CreateAgentsApi(AgentsApi.Options options)
+    {
+        return new AgentsApi(options, _httpClient.DefaultHeaders, _httpClient.HandshakeCredentials);
     }
 }
 

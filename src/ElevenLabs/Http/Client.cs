@@ -48,6 +48,9 @@ public class Client
         }
     }
 
+    internal global::ElevenLabs.ElevenLabsClientEnvironment SelectedEnvironment { get; set; } =
+        global::ElevenLabs.ElevenLabsClientEnvironment.Production;
+
     /// <summary>
     /// Builds the default transport handler. A <see cref="SocketsHttpHandler"/> is used so pooled
     /// connections are recycled (picking up DNS changes on long-lived clients) and gzip/deflate/brotli
