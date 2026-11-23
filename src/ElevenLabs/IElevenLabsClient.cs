@@ -55,4 +55,5 @@ public partial interface IElevenLabsClient
     );
     ITranslationApi CreateTranslationApi(TranslationApi.Options options);
     IDubbingApi CreateDubbingApi(DubbingApi.Options options);
+    IAgentsApi CreateAgentsApi(AgentsApi.Options options);
 }

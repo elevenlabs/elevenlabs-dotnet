@@ -259,6 +259,15 @@ public partial class ElevenLabsClient : IElevenLabsClient
             _httpClient.HandshakeCredentials
         );
     }
+
+    public IAgentsApi CreateAgentsApi(AgentsApi.Options options)
+    {
+        if (string.IsNullOrWhiteSpace(options.BaseUrl))
+        {
+            options.BaseUrl = _httpClient.WebSocketBaseUrl;
+        }
+        return new AgentsApi(options, _httpClient.DefaultHeaders, _httpClient.HandshakeCredentials);
+    }
 }
 
 /// <summary>
