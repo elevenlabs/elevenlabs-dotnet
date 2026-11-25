@@ -20,7 +20,7 @@ public class UpdateEnvironmentVariableRequestTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"values\":{\"key\":\"qui dolo\"}}";
+        const string wire = "{\"values\":{\"key\":\"veniam ut cupi\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UpdateEnvironmentVariableRequest>(
             wire

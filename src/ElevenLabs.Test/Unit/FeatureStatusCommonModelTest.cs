@@ -20,7 +20,7 @@ public class FeatureStatusCommonModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"enabled\":false,\"used\":false}";
+        const string wire = "{\"enabled\":true,\"used\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FeatureStatusCommonModel>(wire);
         var serialized = TestJson.Serialize(instance);

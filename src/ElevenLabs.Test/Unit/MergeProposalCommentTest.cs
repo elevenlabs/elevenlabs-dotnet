@@ -21,7 +21,7 @@ public class MergeProposalCommentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"user_id\":\"user_id\",\"body\":\"body\",\"created_at\":5}";
+            "{\"id\":\"id\",\"user_id\":\"user_id\",\"body\":\"body\",\"created_at\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MergeProposalComment>(wire);
         var serialized = TestJson.Serialize(instance);

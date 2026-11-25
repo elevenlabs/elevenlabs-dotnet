@@ -20,7 +20,7 @@ public class StoredUsagePlatformLimitTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"limit\":2,\"usage\":2}";
+        const string wire = "{\"limit\":5,\"usage\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.StoredUsagePlatformLimit>(wire);
         var serialized = TestJson.Serialize(instance);

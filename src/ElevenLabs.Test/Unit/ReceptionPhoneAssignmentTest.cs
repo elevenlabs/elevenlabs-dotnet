@@ -21,7 +21,7 @@ public class ReceptionPhoneAssignmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"phone_number\":\"in cup\",\"is_byo\":true,\"provider\":\"twilio\",\"nanp_area_code\":415,\"customer_facing_agent_id\":\"customer_facing_agent_id\",\"deactivated_at_unix\":3,\"deactivation_reason\":\"tier_downgrade\",\"regulatory_status\":\"held\",\"regulatory_number_type\":\"local\",\"regulatory_country\":\"adipisi\",\"id\":\"phone_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":0,\"updated_at_unix\":6}";
+            "{\"phone_number\":\"pariatur\",\"is_byo\":false,\"provider\":\"twilio\",\"nanp_area_code\":415,\"customer_facing_agent_id\":\"customer_facing_agent_id\",\"deactivated_at_unix\":5,\"deactivation_reason\":\"tier_downgrade\",\"regulatory_status\":\"held\",\"regulatory_number_type\":\"local\",\"regulatory_country\":\"incididunt\",\"id\":\"phone_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":5,\"updated_at_unix\":4}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionPhoneAssignment>(wire);
         var serialized = TestJson.Serialize(instance);

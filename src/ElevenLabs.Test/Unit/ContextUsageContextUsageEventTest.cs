@@ -21,7 +21,7 @@ public class ContextUsageContextUsageEventTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"event_id\":1,\"model\":\"model\",\"context_tokens\":0,\"context_limit_tokens\":4}";
+            "{\"event_id\":1,\"model\":\"model\",\"context_tokens\":1,\"context_limit_tokens\":9}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ContextUsageContextUsageEvent>(wire);
         var serialized = TestJson.Serialize(instance);

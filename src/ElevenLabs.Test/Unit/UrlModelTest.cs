@@ -21,7 +21,7 @@ public class UrlModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"url_string\":\"url_string\",\"scheme\":\"scheme\",\"hostname\":\"hostname\",\"port\":10,\"path\":\"path\",\"query_string\":\"query_string\"}";
+            "{\"url_string\":\"url_string\",\"scheme\":\"scheme\",\"hostname\":\"hostname\",\"port\":6,\"path\":\"path\",\"query_string\":\"query_string\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UrlModel>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class SuppressLeadResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"campaign_id\":\"campaign_id\",\"lead_id\":\"lead_id\",\"has_calls_in_flight\":true}";
+            "{\"campaign_id\":\"campaign_id\",\"lead_id\":\"lead_id\",\"has_calls_in_flight\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SuppressLeadResponse>(wire);
         var serialized = TestJson.Serialize(instance);

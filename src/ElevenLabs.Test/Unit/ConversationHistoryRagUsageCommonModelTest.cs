@@ -20,7 +20,7 @@ public class ConversationHistoryRagUsageCommonModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"usage_count\":2,\"embedding_model\":\"embedding_model\"}";
+        const string wire = "{\"usage_count\":3,\"embedding_model\":\"embedding_model\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryRagUsageCommonModel>(wire);

@@ -21,7 +21,7 @@ public class DependentAvailableMcpServerIdentifierTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"type\":\"available\",\"created_at_unix_secs\":4,\"access_level\":\"admin\"}";
+            "{\"id\":\"id\",\"name\":\"name\",\"type\":\"available\",\"created_at_unix_secs\":5,\"access_level\":\"admin\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.DependentAvailableMcpServerIdentifier>(wire);

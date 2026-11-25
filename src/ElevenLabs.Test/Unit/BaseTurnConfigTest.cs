@@ -21,7 +21,7 @@ public class BaseTurnConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"turn_timeout\":7,\"initial_wait_time\":1,\"silence_end_call_timeout\":-1,\"turn_eagerness\":\"patient\",\"spelling_patience\":\"auto\",\"speculative_turn\":true,\"retranscribe_on_turn_timeout\":false,\"turn_model\":\"turn_v2\",\"interruption_ignore_terms\":[\"interruption_ignore_terms\"],\"interruption_ignore_term_languages\":[\"interruption_ignore_term_languages\"],\"merge_with_default_ignore_terms\":false,\"transcribe_on_disabled_interruptions\":false}";
+            "{\"turn_timeout\":7,\"initial_wait_time\":7.16,\"silence_end_call_timeout\":-1,\"turn_eagerness\":\"patient\",\"spelling_patience\":\"auto\",\"speculative_turn\":false,\"retranscribe_on_turn_timeout\":true,\"turn_model\":\"turn_v2\",\"interruption_ignore_terms\":[\"interruption_ignore_terms\"],\"interruption_ignore_term_languages\":[\"interruption_ignore_term_languages\"],\"merge_with_default_ignore_terms\":true,\"transcribe_on_disabled_interruptions\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.BaseTurnConfig>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class AgentHoldAudioConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"audio_path\":\"audio_path\",\"audio_url\":\"audio_url\",\"original_filename\":\"original_filename\",\"duration_secs\":8.35,\"size_bytes\":8}";
+            "{\"audio_path\":\"audio_path\",\"audio_url\":\"audio_url\",\"original_filename\":\"original_filename\",\"duration_secs\":9.17,\"size_bytes\":9}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentHoldAudioConfig>(wire);
         var serialized = TestJson.Serialize(instance);

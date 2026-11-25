@@ -21,7 +21,7 @@ public class UuiTransferConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"data\":\"data\",\"protocol_discriminator\":\"5E\",\"protocol_discriminator_mode\":\"prefix\"}";
+            "{\"data\":\"data\",\"protocol_discriminator\":\"b9\",\"protocol_discriminator_mode\":\"prefix\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UuiTransferConfig>(wire);
         var serialized = TestJson.Serialize(instance);

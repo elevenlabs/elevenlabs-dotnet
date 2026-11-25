@@ -21,7 +21,7 @@ public class BodyComposeMusicV1MusicPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"prompt\":\"prompt\",\"composition_plan\":{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":104477,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":7,\"end_ms\":1},\"negative_ranges\":[{\"start_ms\":7,\"end_ms\":1}]}}]},\"music_length_ms\":218434,\"model_id\":\"music_v1\",\"seed\":1277070542,\"force_instrumental\":false,\"finetune_id\":\"finetune_id\",\"respect_sections_durations\":true,\"store_for_inpainting\":true,\"sign_with_c2pa\":true}";
+            "{\"prompt\":\"prompt\",\"composition_plan\":{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":95666,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":10,\"end_ms\":0},\"negative_ranges\":[{\"start_ms\":10,\"end_ms\":0}]}}]},\"music_length_ms\":347900,\"model_id\":\"music_v1\",\"seed\":1224457259,\"force_instrumental\":true,\"finetune_id\":\"finetune_id\",\"respect_sections_durations\":true,\"store_for_inpainting\":false,\"sign_with_c2pa\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.BodyComposeMusicV1MusicPost>(wire);
         var serialized = TestJson.Serialize(instance);

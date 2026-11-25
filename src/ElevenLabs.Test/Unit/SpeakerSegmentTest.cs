@@ -21,7 +21,7 @@ public class SpeakerSegmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"start_time\":0.08,\"end_time\":3.58,\"text\":\"text\",\"subtitles\":[{\"start_time\":8.76,\"end_time\":2.04,\"lines\":[\"lines\"]}],\"dubs\":{\"key\":{\"start_time\":5.58,\"end_time\":6.13,\"text\":\"text\",\"subtitles\":[{\"start_time\":8.76,\"end_time\":2.04,\"lines\":[\"lines\"]}],\"audio_stale\":true,\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":8.28,\"is_audio\":false,\"url\":\"url\"}}}}";
+            "{\"id\":\"id\",\"start_time\":4.76,\"end_time\":3.15,\"text\":\"text\",\"subtitles\":[{\"start_time\":6.98,\"end_time\":0.15,\"lines\":[\"lines\"]}],\"dubs\":{\"key\":{\"start_time\":4.44,\"end_time\":4.23,\"text\":\"text\",\"subtitles\":[{\"start_time\":6.98,\"end_time\":0.15,\"lines\":[\"lines\"]}],\"audio_stale\":true,\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":9.21,\"is_audio\":true,\"url\":\"url\"}}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeakerSegment>(wire);
         var serialized = TestJson.Serialize(instance);

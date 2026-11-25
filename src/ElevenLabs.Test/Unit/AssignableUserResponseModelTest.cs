@@ -21,7 +21,7 @@ public class AssignableUserResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"user_id\":\"user_id\",\"email\":\"email\",\"first_name\":\"first_name\",\"is_service_account\":true,\"has_access\":true}";
+            "{\"user_id\":\"user_id\",\"email\":\"email\",\"first_name\":\"first_name\",\"is_service_account\":false,\"has_access\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AssignableUserResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

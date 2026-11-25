@@ -21,7 +21,7 @@ public class ClosedOutcomeTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"closed\",\"reason\":\"withdrawn\",\"at\":10,\"by_user_id\":\"by_user_id\"}";
+            "{\"status\":\"closed\",\"reason\":\"withdrawn\",\"at\":3,\"by_user_id\":\"by_user_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ClosedOutcome>(wire);
         var serialized = TestJson.Serialize(instance);

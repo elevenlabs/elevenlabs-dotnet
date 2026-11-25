@@ -21,7 +21,7 @@ public class BodyComputeRagIndexesInBatchV1ConvaiKnowledgeBaseRagIndexPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"items\":[{\"document_id\":\"document_id\",\"create_if_missing\":true,\"model\":\"e5_mistral_7b_instruct\"}]}";
+            "{\"items\":[{\"document_id\":\"document_id\",\"create_if_missing\":false,\"model\":\"e5_mistral_7b_instruct\"}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.BodyComputeRagIndexesInBatchV1ConvaiKnowledgeBaseRagIndexPost>(

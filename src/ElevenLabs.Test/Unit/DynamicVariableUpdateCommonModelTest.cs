@@ -21,7 +21,7 @@ public class DynamicVariableUpdateCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"variable_name\":\"variable_name\",\"old_value\":\"old_value\",\"new_value\":\"new_value\",\"updated_at\":7.21,\"tool_name\":\"tool_name\",\"tool_request_id\":\"tool_request_id\"}";
+            "{\"variable_name\":\"variable_name\",\"old_value\":\"old_value\",\"new_value\":\"new_value\",\"updated_at\":7.5,\"tool_name\":\"tool_name\",\"tool_request_id\":\"tool_request_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DynamicVariableUpdateCommonModel>(
             wire

@@ -21,7 +21,7 @@ public class ConversationAgentResponseAgentResponseEventTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_response\":\"agent_response\",\"event_id\":2,\"response_id\":\"response_id\",\"in_response_to_ids\":[\"in_response_to_ids\"],\"response_type\":\"text\",\"attachments\":[{\"url\":\"url\",\"name\":\"name\",\"mime_type\":\"mime_type\"}]}";
+            "{\"agent_response\":\"agent_response\",\"event_id\":4,\"response_id\":\"response_id\",\"in_response_to_ids\":[\"in_response_to_ids\"],\"response_type\":\"text\",\"attachments\":[{\"url\":\"url\",\"name\":\"name\",\"mime_type\":\"mime_type\"}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationAgentResponseAgentResponseEvent>(

@@ -20,7 +20,7 @@ public class SearchHighlightSegmentTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"value\":\"value\",\"is_hit\":true}";
+        const string wire = "{\"value\":\"value\",\"is_hit\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SearchHighlightSegment>(wire);
         var serialized = TestJson.Serialize(instance);

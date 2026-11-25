@@ -21,7 +21,7 @@ public class McpConnectionStatusMcpConnectionStatusTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"integrations\":[{\"integration_id\":\"integration_id\",\"integration_type\":\"mcp_server\",\"is_connected\":true,\"tool_count\":9}]}";
+            "{\"integrations\":[{\"integration_id\":\"integration_id\",\"integration_type\":\"mcp_server\",\"is_connected\":false,\"tool_count\":0}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.McpConnectionStatusMcpConnectionStatus>(wire);

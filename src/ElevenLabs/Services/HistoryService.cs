@@ -121,6 +121,7 @@ internal class HistoryService : BaseService
     /// <param name="sortDirection">Sort direction for the results.</param>
     /// <param name="search">search term used for filtering</param>
     /// <param name="source">Source of the generated history item</param>
+    /// <param name="sources">Sources of the generated history items, matching any of them. Cannot be combined with source.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.GetSpeechHistoryResponse> ListAsync(
         long? pageSize = 100,
@@ -132,6 +133,7 @@ internal class HistoryService : BaseService
         global::ElevenLabs.ListHistoryRequestSortDirection? sortDirection = null,
         string? search = null,
         global::ElevenLabs.ListHistoryRequestSource? source = null,
+        List<global::ElevenLabs.ListHistoryRequestSourcesItem>? sources = null,
         string? xiApiKey = null,
         RequestConfig? requestConfig = null,
         CancellationToken cancellationToken = default
@@ -149,6 +151,7 @@ internal class HistoryService : BaseService
             .SetOptionalQueryParameter("sort_direction", sortDirection?.Value)
             .SetOptionalQueryParameter("search", search)
             .SetOptionalQueryParameter("source", source?.Value)
+            .SetOptionalQueryParameter("sources", sources)
             .SetOptionalHeader("xi-api-key", xiApiKey)
             .Build();
 

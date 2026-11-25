@@ -21,7 +21,7 @@ public class SrtExportOptionsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"max_characters_per_line\":6,\"include_speakers\":false,\"include_timestamps\":true,\"format\":\"srt\",\"segment_on_silence_longer_than_s\":0.32,\"max_segment_duration_s\":1.32,\"max_segment_chars\":2}";
+            "{\"max_characters_per_line\":1,\"include_speakers\":false,\"include_timestamps\":true,\"format\":\"srt\",\"segment_on_silence_longer_than_s\":5.86,\"max_segment_duration_s\":0.38,\"max_segment_chars\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SrtExportOptions>(wire);
         var serialized = TestJson.Serialize(instance);

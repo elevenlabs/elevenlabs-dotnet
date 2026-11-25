@@ -21,7 +21,7 @@ public class ReceptionCustomerFacingConfigPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"additional_instructions\":\"aliqu\",\"tone_traits\":[\"Ut ve\"],\"details_to_collect\":[\"laborum aliquip\"],\"llm\":\"gpt-4o-mini\",\"reasoning_effort\":\"none\",\"disable_rag\":false,\"background_voice_detection\":true,\"turn_eagerness\":\"patient\",\"voice_id\":\"21m00Tcm4TlvDq8ikWAM\",\"language\":\"culpa enim rep\",\"additional_languages\":[\"minim\"],\"first_message\":\"Hi, thanks for calling Bloom Salon! How can I help you today?\",\"first_message_mode\":\"interruptible\",\"enable_end_call_tool\":false,\"enable_skip_turn_tool\":false,\"enable_play_keypad_touch_tone_tool\":false,\"hide_caller_number_on_transfers\":true,\"record_after_transfers\":false,\"enable_secure_mode\":true,\"enable_spam_protection\":false}";
+            "{\"additional_instructions\":\"amet minim\",\"tone_traits\":[\"qui sed in\"],\"details_to_collect\":[\"ipsum anim q\"],\"llm\":\"gpt-4o-mini\",\"reasoning_effort\":\"none\",\"disable_rag\":true,\"background_voice_detection\":true,\"turn_eagerness\":\"patient\",\"voice_id\":\"21m00Tcm4TlvDq8ikWAM\",\"language\":\"quis Ex\",\"additional_languages\":[\"exercitatio\"],\"first_message\":\"Hi, thanks for calling Bloom Salon! How can I help you today?\",\"first_message_mode\":\"interruptible\",\"enable_end_call_tool\":false,\"enable_skip_turn_tool\":true,\"enable_play_keypad_touch_tone_tool\":false,\"hide_caller_number_on_transfers\":true,\"record_after_transfers\":false,\"enable_secure_mode\":false,\"enable_spam_protection\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionCustomerFacingConfigPatch>(
             wire

@@ -21,7 +21,7 @@ public class TestInvocationSummaryResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"version_id\":\"version_id\",\"ran_against_draft\":false,\"runs_diverged_from_version\":false,\"created_at_unix_secs\":8,\"test_run_count\":3,\"passed_count\":7,\"failed_count\":3,\"pending_count\":7,\"cancelled_count\":3,\"title\":\"title\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"repeat_count\":1,\"cancelled\":true,\"credits_used\":8,\"total_price\":5.82}";
+            "{\"id\":\"id\",\"name\":\"name\",\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"version_id\":\"version_id\",\"ran_against_draft\":true,\"runs_diverged_from_version\":false,\"created_at_unix_secs\":5,\"test_run_count\":10,\"passed_count\":8,\"failed_count\":1,\"pending_count\":10,\"cancelled_count\":9,\"title\":\"title\",\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"repeat_count\":1,\"cancelled\":false,\"credits_used\":0,\"total_price\":0.6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TestInvocationSummaryResponseModel>(
             wire

@@ -194,6 +194,30 @@ public record ShareVoicesRequest
 public record FindSimilarVoicesVoicesRequest
 {
     [JsonIgnore]
+    public FindSimilarVoicesVoicesRequestCategory? Category { get; set; }
+
+    [JsonIgnore]
+    public string? Gender { get; set; }
+
+    [JsonIgnore]
+    public string? Age { get; set; }
+
+    [JsonIgnore]
+    public IEnumerable<string> UseCases { get; set; } = new List<string>();
+
+    [JsonIgnore]
+    public int? MinNoticePeriodDays { get; set; }
+
+    [JsonIgnore]
+    public bool? IncludeCustomRates { get; set; }
+
+    [JsonIgnore]
+    public bool? IncludeLiveModerated { get; set; }
+
+    [JsonIgnore]
+    public string? OwnerId { get; set; }
+
+    [JsonIgnore]
     public string? XiApiKey { get; set; }
 
     [JsonIgnore]

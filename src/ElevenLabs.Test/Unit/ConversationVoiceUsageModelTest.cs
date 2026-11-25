@@ -20,7 +20,7 @@ public class ConversationVoiceUsageModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"voice_id\":\"voice_id\",\"audio_output_seconds\":4.06}";
+        const string wire = "{\"voice_id\":\"voice_id\",\"audio_output_seconds\":3.7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationVoiceUsageModel>(wire);
         var serialized = TestJson.Serialize(instance);

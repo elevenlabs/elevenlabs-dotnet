@@ -21,7 +21,7 @@ public class UpdateWhatsAppAccountRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"assigned_agent_id\":\"assigned_agent_id\",\"enable_messaging\":true,\"enable_audio_message_response\":false,\"enable_typing_indicator\":false}";
+            "{\"assigned_agent_id\":\"assigned_agent_id\",\"enable_messaging\":false,\"enable_audio_message_response\":true,\"enable_typing_indicator\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Agents.UpdateWhatsAppAccountRequest>(
             wire

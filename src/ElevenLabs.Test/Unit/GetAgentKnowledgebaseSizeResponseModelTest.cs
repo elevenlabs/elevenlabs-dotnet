@@ -20,7 +20,7 @@ public class GetAgentKnowledgebaseSizeResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"number_of_pages\":6.22}";
+        const string wire = "{\"number_of_pages\":7.66}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.GetAgentKnowledgebaseSizeResponseModel>(wire);

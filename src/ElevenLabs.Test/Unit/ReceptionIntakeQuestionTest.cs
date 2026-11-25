@@ -21,7 +21,7 @@ public class ReceptionIntakeQuestionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"et laborum adi\",\"kind\":\"text\",\"options\":[\"laboris Lo\"],\"required\":true,\"is_active\":true}";
+            "{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"laboris Lo\",\"kind\":\"text\",\"options\":[\"ad reprehende\"],\"required\":false,\"is_active\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionIntakeQuestion>(wire);
         var serialized = TestJson.Serialize(instance);

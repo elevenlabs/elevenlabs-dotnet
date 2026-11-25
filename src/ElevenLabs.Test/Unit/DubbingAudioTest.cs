@@ -20,7 +20,7 @@ public class DubbingAudioTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"message_type\":\"audio\",\"data\":\"data\",\"sample_rate\":6}";
+        const string wire = "{\"message_type\":\"audio\",\"data\":\"data\",\"sample_rate\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingAudio>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -64,6 +64,10 @@ public record CustomLlm : IJsonOnDeserialized
     [JsonPropertyName("auth_connection")]
     public CustomLlmAuthConnection? AuthConnection { get; set; }
 
+    /// <value>Optional mTLS auth connection. When set, its client certificate is used for the TLS handshake with the LLM endpoint and, when auth_connection is OAuth2 client credentials or OAuth2 JWT, with its token endpoint too. Application auth stays on auth_connection or api_key. auth_connection must then be OAuth2 client credentials, OAuth2 JWT or bearer.</value>
+    [JsonPropertyName("mtls_auth_connection")]
+    public MtlsAuthConnection? MtlsAuthConnection { get; set; }
+
     /// <value>Headers that should be included in the request</value>
     [JsonPropertyName("request_headers")]
     public Dictionary<
@@ -119,6 +123,7 @@ public record CustomLlm : IJsonOnDeserialized
             && ValueEquality.AreEqual(ModelId, other.ModelId)
             && ValueEquality.AreEqual(ApiKey, other.ApiKey)
             && ValueEquality.AreEqual(AuthConnection, other.AuthConnection)
+            && ValueEquality.AreEqual(MtlsAuthConnection, other.MtlsAuthConnection)
             && ValueEquality.AreEqual(RequestHeaders, other.RequestHeaders)
             && ValueEquality.AreEqual(ApiVersion, other.ApiVersion)
             && ValueEquality.AreEqual(ApiType, other.ApiType)
@@ -135,6 +140,7 @@ public record CustomLlm : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ModelId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ApiKey);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AuthConnection);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MtlsAuthConnection);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(RequestHeaders);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ApiVersion);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ApiType);

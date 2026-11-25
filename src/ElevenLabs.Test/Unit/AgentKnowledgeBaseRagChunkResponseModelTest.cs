@@ -21,7 +21,7 @@ public class AgentKnowledgeBaseRagChunkResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"document_id\":\"document_id\",\"document_name\":\"document_name\",\"source_url\":\"source_url\",\"chunk_id\":\"chunk_id\",\"text\":\"text\",\"vector_distance\":5.73,\"content_format\":\"html\",\"document_type\":\"file\"}";
+            "{\"document_id\":\"document_id\",\"document_name\":\"document_name\",\"source_url\":\"source_url\",\"chunk_id\":\"chunk_id\",\"text\":\"text\",\"vector_distance\":9.88,\"content_format\":\"html\",\"document_type\":\"file\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentKnowledgeBaseRagChunkResponseModel>(wire);

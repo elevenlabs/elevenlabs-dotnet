@@ -20,7 +20,7 @@ public class McpServerMetadataResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"created_at\":2,\"owner_user_id\":\"owner_user_id\"}";
+        const string wire = "{\"created_at\":4,\"owner_user_id\":\"owner_user_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.McpServerMetadataResponseModel>(
             wire

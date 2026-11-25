@@ -20,7 +20,7 @@ public class AstBooleanNodeOutputTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"type\":\"boolean_literal\",\"value\":false}";
+        const string wire = "{\"type\":\"boolean_literal\",\"value\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AstBooleanNodeOutput>(wire);
         var serialized = TestJson.Serialize(instance);

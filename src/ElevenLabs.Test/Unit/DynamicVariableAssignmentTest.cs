@@ -21,7 +21,7 @@ public class DynamicVariableAssignmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"source\":\"response\",\"dynamic_variable\":\"dynamic_variable\",\"value_path\":\"value_path\",\"sanitize\":true,\"preserve_native_type\":true}";
+            "{\"source\":\"response\",\"dynamic_variable\":\"dynamic_variable\",\"value_path\":\"value_path\",\"sanitize\":false,\"preserve_native_type\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DynamicVariableAssignment>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class AuthSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enable_auth\":true,\"allowlist\":[{\"hostname\":\"hostname\"}],\"require_origin_header\":true,\"shareable_token\":\"shareable_token\"}";
+            "{\"enable_auth\":false,\"allowlist\":[{\"hostname\":\"hostname\"}],\"require_origin_header\":true,\"shareable_token\":\"shareable_token\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AuthSettings>(wire);
         var serialized = TestJson.Serialize(instance);

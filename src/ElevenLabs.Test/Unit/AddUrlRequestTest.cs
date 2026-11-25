@@ -20,7 +20,7 @@ public class AddUrlRequestTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"url\":\"https://example.com\",\"crawl_entire_site\":true}";
+        const string wire = "{\"url\":\"https://example.com\",\"crawl_entire_site\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Reception.AddUrlRequest>(wire);
         var serialized = TestJson.Serialize(instance);

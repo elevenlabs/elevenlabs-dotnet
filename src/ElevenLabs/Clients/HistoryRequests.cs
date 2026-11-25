@@ -71,6 +71,10 @@ public record ListHistoryRequest
     public ListHistoryRequestSource? Source { get; set; }
 
     [JsonIgnore]
+    public IEnumerable<ListHistoryRequestSourcesItem> Sources { get; set; } =
+        new List<ListHistoryRequestSourcesItem>();
+
+    [JsonIgnore]
     public string? XiApiKey { get; set; }
 
     /// <inheritdoc />

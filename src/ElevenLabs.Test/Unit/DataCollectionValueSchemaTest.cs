@@ -21,7 +21,7 @@ public class DataCollectionValueSchemaTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":false,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"in minim id u\",\"is_omitted\":true}";
+            "{\"type\":\"boolean\",\"description\":\"description\",\"enum\":[\"enum\"],\"is_system_provided\":false,\"dynamic_variable\":\"dynamic_variable\",\"allowed_values\":{\"dynamic_variable\":\"dynamic_variable\"},\"allowed_values_dynamic_variable\":\"allowed_values_dynamic_variable\",\"constant_value\":\"ut volu\",\"is_omitted\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DataCollectionValueSchema>(wire);
         var serialized = TestJson.Serialize(instance);

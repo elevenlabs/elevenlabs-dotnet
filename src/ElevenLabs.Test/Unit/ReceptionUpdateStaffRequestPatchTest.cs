@@ -21,7 +21,7 @@ public class ReceptionUpdateStaffRequestPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"groups\":[{\"label\":\"Ut minim c\",\"rank\":5}],\"ungrouped_rank\":4,\"name\":\"sit aliq\",\"description\":\"officia in\",\"is_active\":true,\"email\":\"jane@example.com\",\"phone\":\"reprehen\",\"sms_notifications_opted_in\":true,\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"working_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":9,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"display_on_booking_page\":true,\"customer_facing_name\":\"magna\"}";
+            "{\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":1,\"name\":\"officia in\",\"description\":\"quis adipi\",\"is_active\":false,\"email\":\"jane@example.com\",\"phone\":\"dolore pariat\",\"sms_notifications_opted_in\":false,\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"working_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"display_on_booking_page\":true,\"customer_facing_name\":\"do repre\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionUpdateStaffRequestPatch>(

@@ -20,7 +20,7 @@ public class SpeechToTextCharacterResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"start\":8.63,\"end\":3.58}";
+        const string wire = "{\"text\":\"text\",\"start\":8.5,\"end\":5.67}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeechToTextCharacterResponseModel>(
             wire

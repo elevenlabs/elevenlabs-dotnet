@@ -21,7 +21,7 @@ public class ReceptionProductTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"et laborum adi\",\"kind\":\"text\",\"options\":[\"laboris Lo\"],\"required\":true,\"is_active\":true}],\"groups\":[{\"label\":\"Ut minim c\",\"rank\":5}],\"ungrouped_rank\":2,\"name\":\"dolor nostrud\",\"description\":\"mollit velit \",\"price\":2.58,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"stock\":{\"key\":9},\"id\":\"product_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":6,\"updated_at_unix\":9}";
+            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"laboris Lo\",\"kind\":\"text\",\"options\":[\"ad reprehende\"],\"required\":false,\"is_active\":true}],\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":2,\"name\":\"mollit velit \",\"description\":\"dolore \",\"price\":1.33,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"stock\":{\"key\":9},\"id\":\"product_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":2,\"updated_at_unix\":9}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionProduct>(wire);
         var serialized = TestJson.Serialize(instance);

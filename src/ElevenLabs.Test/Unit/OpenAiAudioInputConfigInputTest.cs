@@ -21,7 +21,7 @@ public class OpenAiAudioInputConfigInputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"format\":{\"type\":\"audio/pcm\",\"rate\":24000},\"transcription\":{\"language\":\"language\"},\"turn_detection\":{\"type\":\"semantic_vad\",\"eagerness\":\"low\",\"create_response\":true,\"interrupt_response\":true,\"threshold\":9.7,\"prefix_padding_ms\":8,\"silence_duration_ms\":9,\"turn_timeout\":-1},\"pacing\":\"realtime\"}";
+            "{\"format\":{\"type\":\"audio/pcm\",\"rate\":24000},\"transcription\":{\"language\":\"language\"},\"turn_detection\":{\"type\":\"semantic_vad\",\"eagerness\":\"low\",\"create_response\":true,\"interrupt_response\":true,\"threshold\":7.17,\"prefix_padding_ms\":10,\"silence_duration_ms\":5,\"turn_timeout\":-1},\"pacing\":\"realtime\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OpenAiAudioInputConfigInput>(wire);
         var serialized = TestJson.Serialize(instance);

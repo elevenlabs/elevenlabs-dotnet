@@ -21,7 +21,7 @@ public class GenerationChunkOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"duration_ms\":3195,\"positive_styles\":[\"positive_styles\"],\"negative_styles\":[\"negative_styles\"],\"context_adherence\":\"low\",\"conditioning_ref\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":7,\"end_ms\":1}},\"condition_strength\":\"low\"}";
+            "{\"text\":\"text\",\"duration_ms\":67344,\"positive_styles\":[\"positive_styles\"],\"negative_styles\":[\"negative_styles\"],\"context_adherence\":\"low\",\"conditioning_ref\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":10,\"end_ms\":0}},\"condition_strength\":\"low\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GenerationChunkOutput>(wire);
         var serialized = TestJson.Serialize(instance);

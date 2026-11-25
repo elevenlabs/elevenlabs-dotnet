@@ -20,7 +20,7 @@ public class VadScoreTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"vad_score_event\":{\"vad_score\":1.5},\"type\":\"vad_score\"}";
+        const string wire = "{\"vad_score_event\":{\"vad_score\":2.22},\"type\":\"vad_score\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.VadScore>(wire);
         var serialized = TestJson.Serialize(instance);

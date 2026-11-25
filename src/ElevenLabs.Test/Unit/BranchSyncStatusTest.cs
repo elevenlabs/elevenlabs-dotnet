@@ -20,7 +20,7 @@ public class BranchSyncStatusTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"last_attempt\":{\"outcome\":\"succeeded\",\"attempted_at\":5}}";
+        const string wire = "{\"last_attempt\":{\"outcome\":\"succeeded\",\"attempted_at\":6}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.BranchSyncStatus>(wire);
         var serialized = TestJson.Serialize(instance);

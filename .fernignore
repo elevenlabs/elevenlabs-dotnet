@@ -3,9 +3,12 @@ README.md
 
 # Hand-written release and CI workflows. release.yml runs only when a GitHub release is published
 # (the generated one tagged and released on pushes to main) and publishes both packages.
-# aspnetcore.yml builds and tests the companion package, which the generated test.yml skips.
+# aspnetcore.yml builds and tests the companion package, which the generated CI skips.
+# ci.yml is the generated test job without its tag-triggered publish job, which would race
+# release.yml and publish only the core package.
 .github/workflows/release.yml
 .github/workflows/aspnetcore.yml
+.github/workflows/ci.yml
 
 # Hand-written NuGet package metadata (description, authors, tags) shared by both packages.
 Directory.Build.props

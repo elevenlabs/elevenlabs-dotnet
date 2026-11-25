@@ -21,7 +21,7 @@ public class CreateOrderResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"order_id\":\"prodorder_hfgspojdfno4fscx8zjb4wxlf9\",\"sandbox\":false}";
+            "{\"order_id\":\"prodorder_w3tvij8uzea42iqdmjobof4bec\",\"sandbox\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CreateOrderResponse>(wire);
         var serialized = TestJson.Serialize(instance);

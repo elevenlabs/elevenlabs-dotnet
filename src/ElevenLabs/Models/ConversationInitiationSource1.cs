@@ -47,6 +47,8 @@ public readonly record struct ConversationInitiationSource1 : IStringEnum
 
     public static readonly ConversationInitiationSource1 FlutterSdk = new(Values.FlutterSdk);
 
+    public static readonly ConversationInitiationSource1 UnitySdk = new(Values.UnitySdk);
+
     public static readonly ConversationInitiationSource1 ZendeskIntegration = new(
         Values.ZendeskIntegration
     );
@@ -221,6 +223,8 @@ public readonly record struct ConversationInitiationSource1 : IStringEnum
         public const string TwilioSms = "twilio_sms";
 
         public const string FlutterSdk = "flutter_sdk";
+
+        public const string UnitySdk = "unity_sdk";
 
         public const string ZendeskIntegration = "zendesk_integration";
 

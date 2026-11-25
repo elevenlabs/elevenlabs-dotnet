@@ -21,7 +21,7 @@ public class ConversationHistoryMultivoiceMessageModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"parts\":[{\"text\":\"text\",\"voice_label\":\"voice_label\",\"time_in_call_secs\":6}]}";
+            "{\"parts\":[{\"text\":\"text\",\"voice_label\":\"voice_label\",\"time_in_call_secs\":10}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryMultivoiceMessageModel>(

@@ -21,7 +21,7 @@ public class ClientToolCallClientEventDataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"tool_name\":\"tool_name\",\"tool_call_id\":\"tool_call_id\",\"parameters\":{\"key\":{}},\"event_id\":3,\"expects_response\":false}";
+            "{\"tool_name\":\"tool_name\",\"tool_call_id\":\"tool_call_id\",\"parameters\":{\"key\":{}},\"event_id\":7,\"expects_response\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ClientToolCallClientEventData>(wire);
         var serialized = TestJson.Serialize(instance);

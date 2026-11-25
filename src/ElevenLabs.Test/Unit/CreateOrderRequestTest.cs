@@ -20,7 +20,7 @@ public class CreateOrderRequestTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"sandbox\":false}";
+        const string wire = "{\"sandbox\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Productions.CreateOrderRequest>(
             wire

@@ -21,7 +21,7 @@ public class OrderMediaResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"media_id\":\"prodmedia_z8jh3g5e8j249pxq0junwpjgaa\",\"name\":\"name\",\"content_type\":\"content_type\",\"language\":\"language\",\"signed_url\":\"signed_url\"}";
+            "{\"media_id\":\"prodmedia_prtlwlnemnuiip38fw6oaxf9gz\",\"name\":\"name\",\"content_type\":\"content_type\",\"language\":\"language\",\"signed_url\":\"signed_url\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OrderMediaResponse>(wire);
         var serialized = TestJson.Serialize(instance);

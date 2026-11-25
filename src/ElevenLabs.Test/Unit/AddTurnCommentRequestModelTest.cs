@@ -20,7 +20,7 @@ public class AddTurnCommentRequestModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"turn_index\":1,\"comment\":\"comment\"}";
+        const string wire = "{\"turn_index\":8,\"comment\":\"comment\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Agents.AddTurnCommentRequestModel>(
             wire

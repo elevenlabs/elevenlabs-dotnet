@@ -20,7 +20,7 @@ public class CloseContextTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"context_id\":\"context_id\",\"close_context\":false}";
+        const string wire = "{\"context_id\":\"context_id\",\"close_context\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CloseContext>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -20,7 +20,7 @@ public class GuardrailsResultTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"triggered\":true}";
+        const string wire = "{\"triggered\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GuardrailsResult>(wire);
         var serialized = TestJson.Serialize(instance);

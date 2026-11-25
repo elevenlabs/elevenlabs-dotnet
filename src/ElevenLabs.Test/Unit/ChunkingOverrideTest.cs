@@ -21,7 +21,7 @@ public class ChunkingOverrideTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]}";
+            "{\"max_chunk_size\":8,\"overlap_percentage\":0,\"custom_separators\":[\"custom_separators\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ChunkingOverride>(wire);
         var serialized = TestJson.Serialize(instance);

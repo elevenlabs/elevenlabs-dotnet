@@ -21,7 +21,7 @@ public class ReceptionAddOnTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"addon_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"name\":\"sunt dolore\",\"description\":\"Excep\",\"add_duration_minutes\":10,\"add_price\":5}";
+            "{\"id\":\"addon_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"name\":\"Excep\",\"description\":\"ut ipsum\",\"add_duration_minutes\":10,\"add_price\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionAddOn>(wire);
         var serialized = TestJson.Serialize(instance);

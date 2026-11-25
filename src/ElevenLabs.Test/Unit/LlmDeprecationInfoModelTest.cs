@@ -21,7 +21,7 @@ public class LlmDeprecationInfoModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"llm\":\"gpt-4o-mini\",\"is_deprecated\":true,\"is_in_warning_period\":false,\"is_in_fallback_period\":false,\"fallback_percentage\":4,\"provider_deprecation_date\":\"2023-07-20T21:03:51.582Z\",\"replacement_model\":\"gpt-4o-mini\",\"deprecation_config\":{\"warning_start_days\":9,\"fallback_start_days\":4,\"fallback_complete_days\":0,\"fallback_start_percentage\":7,\"fallback_complete_percentage\":3}}";
+            "{\"llm\":\"gpt-4o-mini\",\"is_deprecated\":true,\"is_in_warning_period\":true,\"is_in_fallback_period\":false,\"fallback_percentage\":4,\"provider_deprecation_date\":\"2023-07-20T21:03:51.582Z\",\"replacement_model\":\"gpt-4o-mini\",\"deprecation_config\":{\"warning_start_days\":1,\"fallback_start_days\":6,\"fallback_complete_days\":2,\"fallback_start_percentage\":1,\"fallback_complete_percentage\":7}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LlmDeprecationInfoModel>(wire);
         var serialized = TestJson.Serialize(instance);

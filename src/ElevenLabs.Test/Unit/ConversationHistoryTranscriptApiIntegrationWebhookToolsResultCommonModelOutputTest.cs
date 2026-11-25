@@ -21,7 +21,7 @@ public class ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommon
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"request_id\":\"request_id\",\"tool_name\":\"tool_name\",\"tool_id\":\"tool_id\",\"result_value\":\"result_value\",\"is_error\":false,\"is_blocked\":false,\"tool_has_been_called\":true,\"tool_latency_secs\":6.82,\"error_type\":\"error_type\",\"raw_error_message\":\"raw_error_message\",\"dynamic_variable_updates\":[{\"variable_name\":\"variable_name\",\"old_value\":\"old_value\",\"new_value\":\"new_value\",\"updated_at\":7.21,\"tool_name\":\"tool_name\",\"tool_request_id\":\"tool_request_id\"}],\"type\":\"api_integration_webhook\",\"integration_id\":\"integration_id\",\"credential_id\":\"credential_id\",\"integration_connection_id\":\"integration_connection_id\"}";
+            "{\"request_id\":\"request_id\",\"tool_name\":\"tool_name\",\"tool_id\":\"tool_id\",\"result_value\":\"result_value\",\"is_error\":true,\"is_blocked\":true,\"tool_has_been_called\":false,\"tool_latency_secs\":2.83,\"error_type\":\"error_type\",\"raw_error_message\":\"raw_error_message\",\"dynamic_variable_updates\":[{\"variable_name\":\"variable_name\",\"old_value\":\"old_value\",\"new_value\":\"new_value\",\"updated_at\":7.5,\"tool_name\":\"tool_name\",\"tool_request_id\":\"tool_request_id\"}],\"type\":\"api_integration_webhook\",\"integration_id\":\"integration_id\",\"credential_id\":\"credential_id\",\"integration_connection_id\":\"integration_connection_id\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryTranscriptApiIntegrationWebhookToolsResultCommonModelOutput>(

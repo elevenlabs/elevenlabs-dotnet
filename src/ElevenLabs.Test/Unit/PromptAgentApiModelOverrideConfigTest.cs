@@ -21,7 +21,7 @@ public class PromptAgentApiModelOverrideConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"prompt\":true,\"llm\":false,\"reasoning_effort\":true,\"tool_ids\":false,\"tool_ids_strict\":true,\"native_mcp_server_ids\":false,\"knowledge_base\":true}";
+            "{\"prompt\":true,\"llm\":false,\"reasoning_effort\":true,\"tool_ids\":true,\"tool_ids_strict\":false,\"native_mcp_server_ids\":true,\"knowledge_base\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PromptAgentApiModelOverrideConfig>(
             wire

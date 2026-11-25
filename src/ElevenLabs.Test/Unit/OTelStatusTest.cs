@@ -20,7 +20,7 @@ public class OTelStatusTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"code\":6,\"message\":\"message\"}";
+        const string wire = "{\"code\":2,\"message\":\"message\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OTelStatus>(wire);
         var serialized = TestJson.Serialize(instance);

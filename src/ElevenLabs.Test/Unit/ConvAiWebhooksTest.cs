@@ -21,7 +21,7 @@ public class ConvAiWebhooksTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"post_call_webhook_id\":\"post_call_webhook_id\",\"events\":[\"transcript\"],\"transcript_format\":\"json\",\"exclude_transcript\":true,\"send_audio\":false}";
+            "{\"post_call_webhook_id\":\"post_call_webhook_id\",\"events\":[\"transcript\"],\"transcript_format\":\"json\",\"exclude_transcript\":false,\"send_audio\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConvAiWebhooks>(wire);
         var serialized = TestJson.Serialize(instance);

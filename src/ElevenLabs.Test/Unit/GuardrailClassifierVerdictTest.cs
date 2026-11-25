@@ -20,7 +20,7 @@ public class GuardrailClassifierVerdictTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"type\":\"classifier\",\"score\":2.83,\"threshold\":1.01}";
+        const string wire = "{\"type\":\"classifier\",\"score\":6.16,\"threshold\":4.06}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GuardrailClassifierVerdict>(wire);
         var serialized = TestJson.Serialize(instance);

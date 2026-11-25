@@ -20,7 +20,7 @@ public class AsrConversationalConfigOverrideConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"keywords\":true}";
+        const string wire = "{\"keywords\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AsrConversationalConfigOverrideConfig>(wire);

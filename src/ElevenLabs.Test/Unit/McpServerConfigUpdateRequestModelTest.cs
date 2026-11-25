@@ -21,7 +21,7 @@ public class McpServerConfigUpdateRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"approval_policy\":\"auto_approve_all\",\"force_pre_tool_speech\":false,\"pre_tool_speech\":\"auto\",\"disable_interruptions\":true,\"interruption_mode\":\"allow\",\"tool_call_sound\":\"typing\",\"tool_call_sound_behavior\":\"auto\",\"execution_mode\":\"immediate\",\"response_timeout_secs\":110,\"request_headers\":{\"key\":\"dolore adipisi\"},\"request_meta\":{\"key\":\"Ut exerc\"},\"disable_compression\":false,\"secret_token\":{\"secret_id\":\"secret_id\"},\"auth_connection\":{\"auth_connection_id\":\"auth_connection_id\"}}";
+            "{\"approval_policy\":\"auto_approve_all\",\"force_pre_tool_speech\":false,\"pre_tool_speech\":\"auto\",\"disable_interruptions\":false,\"interruption_mode\":\"allow\",\"tool_call_sound\":\"typing\",\"tool_call_sound_behavior\":\"auto\",\"execution_mode\":\"immediate\",\"response_timeout_secs\":226,\"request_headers\":{\"key\":\"eu adipi\"},\"request_meta\":{\"key\":\"aliquip\"},\"disable_compression\":false,\"secret_token\":{\"secret_id\":\"secret_id\"},\"auth_connection\":{\"auth_connection_id\":\"auth_connection_id\"}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.McpServerConfigUpdateRequestModel>(wire);

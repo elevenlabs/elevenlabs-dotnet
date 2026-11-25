@@ -20,7 +20,7 @@ public class DubbingTranscriptRevisionResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"revision\":9}";
+        const string wire = "{\"revision\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingTranscriptRevisionResponse>(
             wire

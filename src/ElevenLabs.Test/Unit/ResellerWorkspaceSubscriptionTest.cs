@@ -21,7 +21,7 @@ public class ResellerWorkspaceSubscriptionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"tier_id\":\"tier_id\",\"billing_period\":\"monthly_period\",\"billing_period_end_unix\":10,\"cancel_at_unix\":8,\"pending_downgrade_tier\":\"pending_downgrade_tier\",\"pending_downgrade_at_unix\":2}";
+            "{\"tier_id\":\"tier_id\",\"billing_period\":\"monthly_period\",\"billing_period_end_unix\":5,\"cancel_at_unix\":5,\"pending_downgrade_tier\":\"pending_downgrade_tier\",\"pending_downgrade_at_unix\":8}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ResellerWorkspaceSubscription>(wire);
         var serialized = TestJson.Serialize(instance);

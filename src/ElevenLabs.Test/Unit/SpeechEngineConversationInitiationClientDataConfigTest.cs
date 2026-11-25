@@ -20,7 +20,7 @@ public class SpeechEngineConversationInitiationClientDataConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"first_message\":true}";
+        const string wire = "{\"first_message\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.SpeechEngineConversationInitiationClientDataConfig>(

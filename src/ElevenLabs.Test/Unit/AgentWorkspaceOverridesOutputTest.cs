@@ -21,7 +21,7 @@ public class AgentWorkspaceOverridesOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"conversation_initiation_client_data_webhook\":{\"url\":\"url\",\"request_headers\":{\"key\":\"incididunt\"}},\"webhooks\":{\"post_call_webhook_id\":\"post_call_webhook_id\",\"events\":[\"transcript\"],\"transcript_format\":\"json\",\"exclude_transcript\":true,\"send_audio\":false}}";
+            "{\"conversation_initiation_client_data_webhook\":{\"url\":\"url\",\"request_headers\":{\"key\":\"ut occaecat\"}},\"webhooks\":{\"post_call_webhook_id\":\"post_call_webhook_id\",\"events\":[\"transcript\"],\"transcript_format\":\"json\",\"exclude_transcript\":false,\"send_audio\":false}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentWorkspaceOverridesOutput>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -1,0 +1,25 @@
+name: ci
+# Builds and tests every pull request and push to main. Publishing is release.yml's job: it runs when
+# a GitHub release is published and pushes both packages.
+on:
+  pull_request:
+  push:
+    branches: ['main']
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+      - name: Build
+        run: dotnet build "src/ElevenLabs/ElevenLabs.csproj" -c Release
+      - name: Test
+        run: dotnet test "src/ElevenLabs.Test/ElevenLabs.Test.csproj"

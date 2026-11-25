@@ -21,7 +21,7 @@ public class ContentConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"sexual\":{\"is_enabled\":true,\"threshold\":5.75},\"violence\":{\"is_enabled\":true,\"threshold\":5.75},\"harassment\":{\"is_enabled\":true,\"threshold\":5.75},\"self_harm\":{\"is_enabled\":true,\"threshold\":5.75},\"profanity\":{\"is_enabled\":true,\"threshold\":5.75},\"religion_or_politics\":{\"is_enabled\":true,\"threshold\":5.75},\"medical_and_legal_information\":{\"is_enabled\":true,\"threshold\":5.75}}";
+            "{\"sexual\":{\"is_enabled\":true,\"threshold\":6.5},\"violence\":{\"is_enabled\":true,\"threshold\":6.5},\"harassment\":{\"is_enabled\":true,\"threshold\":6.5},\"self_harm\":{\"is_enabled\":true,\"threshold\":6.5},\"profanity\":{\"is_enabled\":true,\"threshold\":6.5},\"religion_or_politics\":{\"is_enabled\":true,\"threshold\":6.5},\"medical_and_legal_information\":{\"is_enabled\":true,\"threshold\":6.5}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ContentConfig>(wire);
         var serialized = TestJson.Serialize(instance);

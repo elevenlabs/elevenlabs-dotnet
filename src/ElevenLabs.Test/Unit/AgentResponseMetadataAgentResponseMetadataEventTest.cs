@@ -20,7 +20,7 @@ public class AgentResponseMetadataAgentResponseMetadataEventTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"metadata\":{},\"event_id\":4}";
+        const string wire = "{\"metadata\":{},\"event_id\":8}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentResponseMetadataAgentResponseMetadataEvent>(

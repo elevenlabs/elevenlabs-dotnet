@@ -21,7 +21,7 @@ public class EffectsSpecOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"filter_preset_id\":\"filter_preset_id\",\"distance\":0.07,\"environment_id\":\"environment_id\",\"background_noise_id\":\"background_noise_id\",\"send_level\":1,\"pan\":-0.9}";
+            "{\"filter_preset_id\":\"filter_preset_id\",\"distance\":0.39,\"environment_id\":\"environment_id\",\"background_noise_id\":\"background_noise_id\",\"send_level\":1,\"pan\":0.09}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.EffectsSpecOutput>(wire);
         var serialized = TestJson.Serialize(instance);

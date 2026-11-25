@@ -314,6 +314,14 @@ public partial class VoicesClient
                 () =>
                     _service.FindSimilarVoicesAsync(
                         request.Body,
+                        request.Category,
+                        request.Gender,
+                        request.Age,
+                        request.UseCases?.ToList(),
+                        request.MinNoticePeriodDays,
+                        request.IncludeCustomRates,
+                        request.IncludeLiveModerated,
+                        request.OwnerId,
                         request.XiApiKey,
                         cancellationToken: cancellationToken
                     )

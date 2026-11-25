@@ -20,7 +20,7 @@ public class AgentDeploymentResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"traffic_percentage_branch_id_map\":{\"key\":6.24}}";
+        const string wire = "{\"traffic_percentage_branch_id_map\":{\"key\":6.88}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentDeploymentResponse>(wire);
         var serialized = TestJson.Serialize(instance);

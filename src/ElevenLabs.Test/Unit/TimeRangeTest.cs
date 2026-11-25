@@ -20,7 +20,7 @@ public class TimeRangeTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"start_ms\":7,\"end_ms\":1}";
+        const string wire = "{\"start_ms\":10,\"end_ms\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TimeRange>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ReceptionServiceVariantTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"variant_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"duration_minutes\":60,\"price\":9.01,\"is_active\":true}";
+            "{\"id\":\"variant_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"duration_minutes\":60,\"price\":1.91,\"is_active\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionServiceVariant>(wire);
         var serialized = TestJson.Serialize(instance);

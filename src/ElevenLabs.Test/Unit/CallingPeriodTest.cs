@@ -21,7 +21,7 @@ public class CallingPeriodTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"weekdays\":[1],\"intervals\":[{\"start\":\"04:28\",\"end\":\"24:00\"}]}";
+            "{\"weekdays\":[0],\"intervals\":[{\"start\":\"07:03\",\"end\":\"24:00\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CallingPeriod>(wire);
         var serialized = TestJson.Serialize(instance);

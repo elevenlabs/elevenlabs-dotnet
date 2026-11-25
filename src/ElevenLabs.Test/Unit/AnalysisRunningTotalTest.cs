@@ -21,7 +21,7 @@ public class AnalysisRunningTotalTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"price\":0.83,\"charge\":3,\"runs\":3,\"price_per_feature\":{\"key\":9.79},\"charge_per_feature\":{\"key\":9}}";
+            "{\"price\":9.34,\"charge\":5,\"runs\":3,\"price_per_feature\":{\"key\":9.25},\"charge_per_feature\":{\"key\":10}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AnalysisRunningTotal>(wire);
         var serialized = TestJson.Serialize(instance);

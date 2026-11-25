@@ -20,7 +20,7 @@ public class ReceptionGroupMembershipTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"label\":\"Ut minim c\",\"rank\":5}";
+        const string wire = "{\"label\":\"eu ullamco\",\"rank\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionGroupMembership>(wire);
         var serialized = TestJson.Serialize(instance);

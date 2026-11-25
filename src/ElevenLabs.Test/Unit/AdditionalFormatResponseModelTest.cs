@@ -21,7 +21,7 @@ public class AdditionalFormatResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"requested_format\":\"requested_format\",\"file_extension\":\"file_extension\",\"content_type\":\"content_type\",\"is_base64_encoded\":true,\"content\":\"content\"}";
+            "{\"requested_format\":\"requested_format\",\"file_extension\":\"file_extension\",\"content_type\":\"content_type\",\"is_base64_encoded\":false,\"content\":\"content\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AdditionalFormatResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

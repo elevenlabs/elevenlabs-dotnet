@@ -20,7 +20,7 @@ public class AutoRebaseAttemptTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"outcome\":\"succeeded\",\"attempted_at\":5}";
+        const string wire = "{\"outcome\":\"succeeded\",\"attempted_at\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AutoRebaseAttempt>(wire);
         var serialized = TestJson.Serialize(instance);

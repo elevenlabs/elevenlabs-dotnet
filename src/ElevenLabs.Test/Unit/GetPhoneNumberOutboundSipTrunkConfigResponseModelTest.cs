@@ -21,7 +21,7 @@ public class GetPhoneNumberOutboundSipTrunkConfigResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"address\":\"address\",\"transport\":\"auto\",\"media_encryption\":\"disabled\",\"headers\":{\"key\":\"headers\"},\"attributes_to_headers\":{\"key\":\"attributes_to_headers\"},\"has_auth_credentials\":true,\"username\":\"username\",\"has_outbound_trunk\":false,\"enabled_codecs\":[\"G722/8000\"]}";
+            "{\"address\":\"address\",\"transport\":\"auto\",\"media_encryption\":\"disabled\",\"headers\":{\"key\":\"headers\"},\"attributes_to_headers\":{\"key\":\"attributes_to_headers\"},\"has_auth_credentials\":false,\"username\":\"username\",\"has_outbound_trunk\":true,\"enabled_codecs\":[\"G722/8000\"]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.GetPhoneNumberOutboundSipTrunkConfigResponseModel>(

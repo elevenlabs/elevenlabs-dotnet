@@ -21,7 +21,7 @@ public class CallViewTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"intent_id\":\"intent_id\",\"lead_id\":\"lead_id\",\"intent_type\":\"initial\",\"cold_attempt\":6,\"status\":\"queued\",\"phone_number\":\"phone_number\",\"scheduled_time_unix\":0,\"conversation_id\":\"conversation_id\",\"outcome\":\"pending\",\"call_result\":\"answered\",\"outcome_at_unix\":8,\"decision_disposition\":\"completed\",\"collected_dynamic_variables\":{\"key\":{}},\"delivery\":{\"status\":\"pending\",\"stage\":\"queued\",\"sent_at_unix\":10,\"delivered_at_unix\":4,\"read_at_unix\":0,\"replied_at_unix\":7,\"failed_at_unix\":7,\"error_message\":\"error_message\"}}";
+            "{\"intent_id\":\"intent_id\",\"lead_id\":\"lead_id\",\"intent_type\":\"initial\",\"cold_attempt\":5,\"status\":\"queued\",\"phone_number\":\"phone_number\",\"scheduled_time_unix\":7,\"conversation_id\":\"conversation_id\",\"outcome\":\"pending\",\"call_result\":\"answered\",\"outcome_at_unix\":7,\"decision_disposition\":\"completed\",\"collected_dynamic_variables\":{\"key\":{}},\"delivery\":{\"status\":\"pending\",\"stage\":\"queued\",\"sent_at_unix\":5,\"delivered_at_unix\":10,\"read_at_unix\":2,\"replied_at_unix\":6,\"failed_at_unix\":7,\"error_message\":\"error_message\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CallView>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -20,7 +20,7 @@ public class ConversationVoiceRewardModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"voice_id\":\"voice_id\",\"reward_usd_cents\":7.17}";
+        const string wire = "{\"voice_id\":\"voice_id\",\"reward_usd_cents\":3.08}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationVoiceRewardModel>(wire);
         var serialized = TestJson.Serialize(instance);

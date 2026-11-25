@@ -20,7 +20,7 @@ public class ModelRatesResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"character_cost_multiplier\":9.89,\"cost_discount_multiplier\":1}";
+        const string wire = "{\"character_cost_multiplier\":6.53,\"cost_discount_multiplier\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ModelRatesResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

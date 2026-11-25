@@ -20,7 +20,7 @@ public class GetClientOrdersParamsTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"smb_tool_type\":\"get_client_orders\",\"include_cancelled\":false}";
+        const string wire = "{\"smb_tool_type\":\"get_client_orders\",\"include_cancelled\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetClientOrdersParams>(wire);
         var serialized = TestJson.Serialize(instance);

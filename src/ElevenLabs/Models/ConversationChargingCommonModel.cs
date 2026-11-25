@@ -96,7 +96,7 @@ public record ConversationChargingCommonModel : IJsonOnDeserialized
     [JsonPropertyName("analysis")]
     public AnalysisCharging? Analysis { get; set; }
 
-    /// <value>Credits charged as the voice actor reward for the Voice Library voices this conversation used. It is not included in `cost`.</value>
+    /// <value>Credits charged as the voice owner fee for the custom rate voices this conversation used. It is not included in `cost`.</value>
     [JsonPropertyName("voice_surcharge_charge")]
     public int? VoiceSurchargeCharge { get; set; }
 

@@ -20,7 +20,7 @@ public class PartialTranscriptWordsItemCharactersItemTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"start\":4.56,\"end\":5.7}";
+        const string wire = "{\"text\":\"text\",\"start\":7.81,\"end\":8.65}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.PartialTranscriptWordsItemCharactersItem>(wire);

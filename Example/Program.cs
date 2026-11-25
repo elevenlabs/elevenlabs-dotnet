@@ -14,6 +14,11 @@ await client.History.ListAsync(
         SortDirection = global::ElevenLabs.ListHistoryRequestSortDirection.Asc,
         Search = "search",
         Source = global::ElevenLabs.ListHistoryRequestSource.Tts,
+        Sources =
+            new global::System.Collections.Generic.List<global::ElevenLabs.ListHistoryRequestSourcesItem>()
+            {
+                global::ElevenLabs.ListHistoryRequestSourcesItem.Tts,
+            },
         XiApiKey = "xi-api-key",
     }
 );

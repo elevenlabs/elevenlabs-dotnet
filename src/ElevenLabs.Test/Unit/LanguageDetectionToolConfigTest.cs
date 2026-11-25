@@ -21,7 +21,7 @@ public class LanguageDetectionToolConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"system_tool_type\":\"language_detection\",\"only_at_conversation_start\":true}";
+            "{\"system_tool_type\":\"language_detection\",\"only_at_conversation_start\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LanguageDetectionToolConfig>(wire);
         var serialized = TestJson.Serialize(instance);

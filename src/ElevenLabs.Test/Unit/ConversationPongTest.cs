@@ -20,7 +20,7 @@ public class ConversationPongTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"type\":\"pong\",\"event_id\":6}";
+        const string wire = "{\"type\":\"pong\",\"event_id\":2}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationPong>(wire);
         var serialized = TestJson.Serialize(instance);

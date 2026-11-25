@@ -21,7 +21,7 @@ public class ReceptionUpdateAgentInfoRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"business_name\":\"Bloom Salon\",\"business_country\":\"officia\",\"business_description\":\"A hair salon offering cuts, color and styling.\",\"timezone\":\"America/New_York\",\"currency\":\"USD\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":9,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"tool_call_sound\":\"typing\"}";
+            "{\"business_name\":\"Bloom Salon\",\"business_country\":\"in qui \",\"business_description\":\"A hair salon offering cuts, color and styling.\",\"timezone\":\"America/New_York\",\"currency\":\"USD\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"tool_call_sound\":\"typing\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionUpdateAgentInfoRequest>(

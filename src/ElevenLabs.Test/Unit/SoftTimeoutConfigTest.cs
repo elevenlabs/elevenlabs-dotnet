@@ -21,7 +21,7 @@ public class SoftTimeoutConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"timeout_seconds\":-1,\"message\":\"Hhmmmm...yeah.\",\"additional_soft_timeout_messages\":[\"additional_soft_timeout_messages\"],\"use_llm_generated_message\":true,\"randomize_fillers\":true,\"max_soft_timeouts_per_generation\":1,\"llm_generated_message_prompt_override\":\"llm_generated_message_prompt_override\",\"disable_until_first_user_message\":true}";
+            "{\"timeout_seconds\":-1,\"message\":\"Hhmmmm...yeah.\",\"additional_soft_timeout_messages\":[\"additional_soft_timeout_messages\"],\"use_llm_generated_message\":false,\"randomize_fillers\":true,\"max_soft_timeouts_per_generation\":1,\"pause_after_filler\":false,\"llm_generated_message_prompt_override\":\"llm_generated_message_prompt_override\",\"disable_until_first_user_message\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SoftTimeoutConfig>(wire);
         var serialized = TestJson.Serialize(instance);

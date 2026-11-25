@@ -21,7 +21,7 @@ public class AgentChatResponsePartClientEventDataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"type\":\"start\",\"event_id\":4,\"response_id\":\"response_id\"}";
+            "{\"text\":\"text\",\"type\":\"start\",\"event_id\":0,\"response_id\":\"response_id\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentChatResponsePartClientEventData>(wire);

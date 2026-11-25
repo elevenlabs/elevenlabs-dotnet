@@ -21,7 +21,7 @@ public class FileRefreshStatusTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"status\":\"queued\",\"enqueued_at\":2,\"started_at\":9,\"completed_at\":6,\"last_synced_at\":9,\"error_message\":\"error_message\"}";
+            "{\"status\":\"queued\",\"enqueued_at\":6,\"started_at\":8,\"completed_at\":7,\"last_synced_at\":7,\"error_message\":\"error_message\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FileRefreshStatus>(wire);
         var serialized = TestJson.Serialize(instance);

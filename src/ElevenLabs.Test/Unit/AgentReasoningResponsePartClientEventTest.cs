@@ -21,7 +21,7 @@ public class AgentReasoningResponsePartClientEventTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"reasoning_response_part\":{\"text\":\"text\",\"type\":\"start\",\"event_id\":1},\"type\":\"agent_reasoning_response_part\"}";
+            "{\"reasoning_response_part\":{\"text\":\"text\",\"type\":\"start\",\"event_id\":4},\"type\":\"agent_reasoning_response_part\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentReasoningResponsePartClientEvent>(wire);

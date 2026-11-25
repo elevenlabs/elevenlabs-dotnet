@@ -21,7 +21,7 @@ public class ConversationAsrUsageModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"asr_model\":\"asr_model\",\"total_transcription_calls\":0,\"total_audio_input_seconds\":6.11}";
+            "{\"asr_model\":\"asr_model\",\"total_transcription_calls\":3,\"total_audio_input_seconds\":0.72}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationAsrUsageModel>(wire);
         var serialized = TestJson.Serialize(instance);

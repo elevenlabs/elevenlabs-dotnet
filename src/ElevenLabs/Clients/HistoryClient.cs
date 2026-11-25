@@ -136,6 +136,7 @@ public partial class HistoryClient
                         request.SortDirection,
                         request.Search,
                         request.Source,
+                        request.Sources?.ToList(),
                         request.XiApiKey,
                         cancellationToken: cancellationToken
                     )

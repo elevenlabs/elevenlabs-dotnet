@@ -21,7 +21,7 @@ public class SpeechEngineConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"ws_url\":\"ws_url\",\"request_headers\":{\"key\":\"qui dolor in\"}}";
+            "{\"ws_url\":\"ws_url\",\"request_headers\":{\"key\":\"non ea incidid\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeechEngineConfig>(wire);
         var serialized = TestJson.Serialize(instance);

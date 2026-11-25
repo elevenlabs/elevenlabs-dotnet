@@ -65,9 +65,13 @@ public record ResellerWorkspaceSummary : IJsonOnDeserialized
     [JsonPropertyName("created_at_unix")]
     public required int CreatedAtUnix { get; set; }
 
-    /// <value>The reseller-managed subscription, when this workspace has one. None means nothing is sold here yet and a tier can be assigned.</value>
+    /// <value>The reseller-managed subscription, when this workspace has one. None means the reseller sells nothing here: no tier is assigned yet, or the workspace pays for its own subscription (see charge_customer).</value>
     [JsonPropertyName("subscription")]
     public ResellerWorkspaceSubscription? Subscription { get; set; }
+
+    /// <value>The workspace pays for its own subscription, so its tier can't be assigned or changed here.</value>
+    [JsonPropertyName("charge_customer")]
+    public bool? ChargeCustomer { get; set; }
 
     /// <value>A charge for this workspace is unpaid. Assigning or changing a tier is refused until it clears, so surface it rather than letting it fail.</value>
     [JsonPropertyName("has_payment_issue")]
@@ -121,6 +125,7 @@ public record ResellerWorkspaceSummary : IJsonOnDeserialized
             && ValueEquality.AreEqual(CallsLast30Days, other.CallsLast30Days)
             && ValueEquality.AreEqual(CreatedAtUnix, other.CreatedAtUnix)
             && ValueEquality.AreEqual(Subscription, other.Subscription)
+            && ValueEquality.AreEqual(ChargeCustomer, other.ChargeCustomer)
             && ValueEquality.AreEqual(HasPaymentIssue, other.HasPaymentIssue)
             && ValueEquality.AreEqual(OnboardingCompletedAtUnix, other.OnboardingCompletedAtUnix)
             && AdditionalProperties.Equals(other.AdditionalProperties);
@@ -139,6 +144,7 @@ public record ResellerWorkspaceSummary : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(CallsLast30Days);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(CreatedAtUnix);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Subscription);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ChargeCustomer);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(HasPaymentIssue);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(OnboardingCompletedAtUnix);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();

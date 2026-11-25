@@ -59,6 +59,9 @@ public record LlmInputOutputTokensUsage : IJsonOnDeserialized
     [JsonPropertyName("output_total")]
     public LlmTokensCategoryUsage? OutputTotal { get; set; }
 
+    [JsonPropertyName("output_total_reasoning_portion")]
+    public LlmTokensCategoryUsage? OutputTotalReasoningPortion { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -100,6 +103,10 @@ public record LlmInputOutputTokensUsage : IJsonOnDeserialized
             && ValueEquality.AreEqual(InputCacheRead, other.InputCacheRead)
             && ValueEquality.AreEqual(InputCacheWrite, other.InputCacheWrite)
             && ValueEquality.AreEqual(OutputTotal, other.OutputTotal)
+            && ValueEquality.AreEqual(
+                OutputTotalReasoningPortion,
+                other.OutputTotalReasoningPortion
+            )
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -113,6 +120,7 @@ public record LlmInputOutputTokensUsage : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(InputCacheRead);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(InputCacheWrite);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(OutputTotal);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(OutputTotalReasoningPortion);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

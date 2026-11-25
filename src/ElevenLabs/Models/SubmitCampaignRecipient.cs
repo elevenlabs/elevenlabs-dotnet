@@ -63,6 +63,10 @@ public record SubmitCampaignRecipient : IJsonOnDeserialized
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
+    /// <value>IANA timezone to read the calling windows and callback times in for this recipient, overriding the campaign's.</value>
+    [JsonPropertyName("timezone_override")]
+    public string? TimezoneOverride { get; set; }
+
     /// <value>Dynamic variables and overrides for this recipient's calls.</value>
     [JsonPropertyName("conversation_initiation_client_data")]
     public ConversationInitiationClientDataRequestInput? ConversationInitiationClientData { get; set; }
@@ -108,6 +112,7 @@ public record SubmitCampaignRecipient : IJsonOnDeserialized
             && ValueEquality.AreEqual(PhoneNumbers, other.PhoneNumbers)
             && ValueEquality.AreEqual(WhatsappUserId, other.WhatsappUserId)
             && ValueEquality.AreEqual(Id, other.Id)
+            && ValueEquality.AreEqual(TimezoneOverride, other.TimezoneOverride)
             && ValueEquality.AreEqual(
                 ConversationInitiationClientData,
                 other.ConversationInitiationClientData
@@ -125,6 +130,7 @@ public record SubmitCampaignRecipient : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumbers);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(WhatsappUserId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Id);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TimezoneOverride);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ConversationInitiationClientData);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

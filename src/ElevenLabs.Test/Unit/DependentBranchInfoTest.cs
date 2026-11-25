@@ -21,7 +21,7 @@ public class DependentBranchInfoTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_id\":\"agent_id\",\"agent_name\":\"agent_name\",\"branch_id\":\"branch_id\",\"branch_name\":\"branch_name\",\"is_main\":true}";
+            "{\"agent_id\":\"agent_id\",\"agent_name\":\"agent_name\",\"branch_id\":\"branch_id\",\"branch_name\":\"branch_name\",\"is_main\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DependentBranchInfo>(wire);
         var serialized = TestJson.Serialize(instance);

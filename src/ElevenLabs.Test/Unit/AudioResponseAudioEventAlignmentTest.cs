@@ -21,7 +21,7 @@ public class AudioResponseAudioEventAlignmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"chars\":[\"chars\"],\"char_start_times_ms\":[3],\"char_durations_ms\":[4]}";
+            "{\"chars\":[\"chars\"],\"char_start_times_ms\":[8],\"char_durations_ms\":[5]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioResponseAudioEventAlignment>(
             wire

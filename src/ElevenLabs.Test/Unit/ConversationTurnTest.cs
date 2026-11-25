@@ -21,7 +21,7 @@ public class ConversationTurnTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"turn_id\":\"turn_id\",\"status\":\"in_progress\",\"output\":[{\"type\":\"text\",\"role\":\"agent\",\"id\":\"id\",\"text\":\"text\",\"created_at_unix_ms\":2}],\"error\":{\"type\":\"type\",\"code\":\"code\",\"message\":\"message\"},\"required_actions\":[{\"type\":\"client_tool_call\",\"tool_call_id\":\"tool_call_id\",\"tool_name\":\"tool_name\",\"parameters\":{\"key\":{}}}],\"stream_cursor\":\"stream_cursor\"}";
+            "{\"turn_id\":\"turn_id\",\"status\":\"in_progress\",\"output\":[{\"type\":\"text\",\"role\":\"agent\",\"id\":\"id\",\"text\":\"text\",\"created_at_unix_ms\":1}],\"error\":{\"type\":\"type\",\"code\":\"code\",\"message\":\"message\"},\"required_actions\":[{\"type\":\"client_tool_call\",\"tool_call_id\":\"tool_call_id\",\"tool_name\":\"tool_name\",\"parameters\":{\"key\":{}}}],\"stream_cursor\":\"stream_cursor\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationTurn>(wire);
         var serialized = TestJson.Serialize(instance);

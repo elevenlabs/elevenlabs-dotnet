@@ -20,7 +20,7 @@ public class ConversationInitiationClientDataWebhookTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"url\":\"url\",\"request_headers\":{\"key\":\"incididunt\"}}";
+        const string wire = "{\"url\":\"url\",\"request_headers\":{\"key\":\"ut occaecat\"}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationInitiationClientDataWebhook>(wire);

@@ -21,7 +21,7 @@ public class WhatsAppConversationInfoTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"direction\":\"inbound\",\"whatsapp_phone_number_id\":\"whatsapp_phone_number_id\",\"whatsapp_user_id\":\"whatsapp_user_id\",\"awaiting_first_user_message\":true,\"recipient\":{\"phone\":\"phone\",\"bsuid\":\"bsuid\"},\"call_permission_request\":{\"state\":\"blocked\",\"requested_at_unix\":2,\"responded_at_unix\":8,\"permanent\":true,\"granted_by_user_call\":false},\"call_result\":\"answered\",\"opening_message\":{\"template_name\":\"template_name\",\"wamid\":\"wamid\",\"sent_at_unix\":0,\"delivered_at_unix\":4,\"read_at_unix\":8,\"replied_at_unix\":5,\"failed_at_unix\":2,\"error_code\":\"error_code\",\"pricing_category\":\"pricing_category\",\"billable\":false}}";
+            "{\"direction\":\"inbound\",\"whatsapp_phone_number_id\":\"whatsapp_phone_number_id\",\"whatsapp_user_id\":\"whatsapp_user_id\",\"awaiting_first_user_message\":false,\"recipient\":{\"phone\":\"phone\",\"bsuid\":\"bsuid\"},\"call_permission_request\":{\"state\":\"blocked\",\"requested_at_unix\":3,\"responded_at_unix\":3,\"permanent\":true,\"granted_by_user_call\":false},\"call_result\":\"answered\",\"opening_message\":{\"template_name\":\"template_name\",\"wamid\":\"wamid\",\"sent_at_unix\":1,\"delivered_at_unix\":4,\"read_at_unix\":9,\"replied_at_unix\":4,\"failed_at_unix\":0,\"error_code\":\"error_code\",\"pricing_category\":\"pricing_category\",\"billable\":true}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WhatsAppConversationInfo>(wire);
         var serialized = TestJson.Serialize(instance);

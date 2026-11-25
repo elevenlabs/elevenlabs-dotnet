@@ -21,7 +21,7 @@ public class ConversationConfigWorkflowOverrideOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text_only\":true,\"max_duration_seconds\":5,\"client_events\":[\"conversation_initiation_metadata\"],\"file_input\":{\"enabled\":true,\"max_files_in_memory\":8,\"max_files_per_conversation\":10},\"monitoring_enabled\":false,\"monitoring_events\":[\"conversation_initiation_metadata\"],\"dtmf_input_settings\":{\"dtmf_input_timeout\":2,\"hash_terminator\":true,\"redact_input\":false},\"background_sound\":{\"source_type\":\"preset\",\"source_id\":\"office2\",\"volume\":0.6,\"crossfade_loop\":true},\"source_attribution\":true}";
+            "{\"text_only\":false,\"max_duration_seconds\":0,\"client_events\":[\"conversation_initiation_metadata\"],\"file_input\":{\"enabled\":true,\"max_files_in_memory\":1,\"max_files_per_conversation\":0},\"monitoring_enabled\":true,\"monitoring_events\":[\"conversation_initiation_metadata\"],\"dtmf_input_settings\":{\"dtmf_input_timeout\":2,\"hash_terminator\":true,\"redact_input\":true},\"background_sound\":{\"source_type\":\"preset\",\"source_id\":\"office2\",\"volume\":5.93,\"crossfade_loop\":false},\"source_attribution\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationConfigWorkflowOverrideOutput>(wire);

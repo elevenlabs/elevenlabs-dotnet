@@ -21,7 +21,7 @@ public class AnalysisChargingTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"total\":{\"price\":0.83,\"charge\":3,\"runs\":3,\"price_per_feature\":{\"key\":9.79},\"charge_per_feature\":{\"key\":9}},\"last_run\":{\"price\":9.44,\"charge\":5,\"price_per_feature\":{\"key\":5.33},\"charge_per_feature\":{\"key\":10}}}";
+            "{\"total\":{\"price\":9.34,\"charge\":5,\"runs\":3,\"price_per_feature\":{\"key\":9.25},\"charge_per_feature\":{\"key\":10}},\"last_run\":{\"price\":9.12,\"charge\":4,\"price_per_feature\":{\"key\":6.52},\"charge_per_feature\":{\"key\":5}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AnalysisCharging>(wire);
         var serialized = TestJson.Serialize(instance);

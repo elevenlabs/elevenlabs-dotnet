@@ -21,7 +21,7 @@ public class ConversationHistoryTranscriptOtherToolsResultCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"request_id\":\"request_id\",\"tool_name\":\"tool_name\",\"tool_id\":\"tool_id\",\"result_value\":\"result_value\",\"is_error\":true,\"is_blocked\":true,\"tool_has_been_called\":false,\"tool_latency_secs\":9.49,\"error_type\":\"error_type\",\"raw_error_message\":\"raw_error_message\",\"dynamic_variable_updates\":[{\"variable_name\":\"variable_name\",\"old_value\":\"old_value\",\"new_value\":\"new_value\",\"updated_at\":7.21,\"tool_name\":\"tool_name\",\"tool_request_id\":\"tool_request_id\"}],\"type\":\"client\"}";
+            "{\"request_id\":\"request_id\",\"tool_name\":\"tool_name\",\"tool_id\":\"tool_id\",\"result_value\":\"result_value\",\"is_error\":true,\"is_blocked\":false,\"tool_has_been_called\":true,\"tool_latency_secs\":9.25,\"error_type\":\"error_type\",\"raw_error_message\":\"raw_error_message\",\"dynamic_variable_updates\":[{\"variable_name\":\"variable_name\",\"old_value\":\"old_value\",\"new_value\":\"new_value\",\"updated_at\":7.5,\"tool_name\":\"tool_name\",\"tool_request_id\":\"tool_request_id\"}],\"type\":\"client\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryTranscriptOtherToolsResultCommonModel>(

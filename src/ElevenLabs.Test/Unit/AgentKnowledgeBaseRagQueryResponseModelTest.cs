@@ -21,7 +21,7 @@ public class AgentKnowledgeBaseRagQueryResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"strategy\":\"cat\",\"retrieval_query\":\"retrieval_query\",\"chunks\":[{\"document_id\":\"document_id\",\"document_name\":\"document_name\",\"source_url\":\"source_url\",\"chunk_id\":\"chunk_id\",\"text\":\"text\",\"vector_distance\":5.73,\"content_format\":\"html\",\"document_type\":\"file\"}],\"document\":{\"document_id\":\"document_id\",\"document_name\":\"document_name\",\"source_url\":\"source_url\",\"content\":\"content\",\"truncated\":false,\"content_format\":\"html\",\"document_type\":\"file\"},\"listing\":{\"entries\":[{\"id\":\"id\",\"name\":\"name\",\"is_folder\":true}],\"total_count\":8}}";
+            "{\"strategy\":\"cat\",\"retrieval_query\":\"retrieval_query\",\"chunks\":[{\"document_id\":\"document_id\",\"document_name\":\"document_name\",\"source_url\":\"source_url\",\"chunk_id\":\"chunk_id\",\"text\":\"text\",\"vector_distance\":9.88,\"content_format\":\"html\",\"document_type\":\"file\"}],\"document\":{\"document_id\":\"document_id\",\"document_name\":\"document_name\",\"source_url\":\"source_url\",\"content\":\"content\",\"truncated\":false,\"content_format\":\"html\",\"document_type\":\"file\"},\"listing\":{\"entries\":[{\"id\":\"id\",\"name\":\"name\",\"is_folder\":false}],\"total_count\":9}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentKnowledgeBaseRagQueryResponseModel>(wire);

@@ -21,7 +21,7 @@ public class LlmUsageCalculatorPublicRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"prompt_length\":5,\"number_of_pages\":1,\"rag_enabled\":true,\"service_tier\":\"standard\"}";
+            "{\"prompt_length\":1,\"number_of_pages\":8,\"rag_enabled\":false,\"service_tier\":\"standard\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.LlmUsageCalculatorPublicRequestModel>(

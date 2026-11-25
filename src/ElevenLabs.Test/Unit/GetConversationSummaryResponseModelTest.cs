@@ -21,7 +21,7 @@ public class GetConversationSummaryResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"status\":\"initiated\",\"call_summary_title\":\"call_summary_title\",\"transcript_summary\":\"transcript_summary\",\"call_successful\":\"success\",\"message_count\":0,\"messages\":[{\"role\":\"user\",\"message\":\"message\"}],\"messages_omitted\":false,\"note\":\"note\"}";
+            "{\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"status\":\"initiated\",\"call_summary_title\":\"call_summary_title\",\"transcript_summary\":\"transcript_summary\",\"call_successful\":\"success\",\"message_count\":10,\"messages\":[{\"role\":\"user\",\"message\":\"message\"}],\"messages_omitted\":true,\"note\":\"note\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetConversationSummaryResponseModel>(
             wire

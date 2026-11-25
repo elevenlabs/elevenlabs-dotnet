@@ -21,7 +21,7 @@ public class GetPronunciationDictionaryWithRulesResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"latest_version_id\":\"latest_version_id\",\"latest_version_rules_num\":7,\"name\":\"name\",\"permission_on_resource\":\"admin\",\"created_by\":\"created_by\",\"creation_time_unix\":6,\"archived_time_unix\":0,\"description\":\"description\",\"rules\":[{\"string_to_replace\":\"string_to_replace\",\"case_sensitive\":true,\"word_boundaries\":true,\"type\":\"alias\",\"alias\":\"alias\"}]}";
+            "{\"id\":\"id\",\"latest_version_id\":\"latest_version_id\",\"latest_version_rules_num\":1,\"name\":\"name\",\"permission_on_resource\":\"admin\",\"created_by\":\"created_by\",\"creation_time_unix\":8,\"archived_time_unix\":8,\"description\":\"description\",\"rules\":[{\"string_to_replace\":\"string_to_replace\",\"case_sensitive\":true,\"word_boundaries\":true,\"type\":\"alias\",\"alias\":\"alias\"}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.GetPronunciationDictionaryWithRulesResponseModel>(

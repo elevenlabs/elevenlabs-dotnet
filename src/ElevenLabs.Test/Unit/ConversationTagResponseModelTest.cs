@@ -21,7 +21,7 @@ public class ConversationTagResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"tag_id\":\"tag_id\",\"workspace_id\":\"workspace_id\",\"owner_user_id\":\"owner_user_id\",\"title\":\"title\",\"description\":\"description\",\"created_at_unix_secs\":7}";
+            "{\"tag_id\":\"tag_id\",\"workspace_id\":\"workspace_id\",\"owner_user_id\":\"owner_user_id\",\"title\":\"title\",\"description\":\"description\",\"created_at_unix_secs\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationTagResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

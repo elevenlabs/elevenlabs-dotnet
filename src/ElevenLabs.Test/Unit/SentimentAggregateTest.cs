@@ -21,7 +21,7 @@ public class SentimentAggregateTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"scored_conversation_count\":10,\"positive_count\":4,\"neutral_count\":5,\"negative_count\":10,\"average_sentiment_score\":7.64,\"average_frustration_score\":1.78,\"recent_scored_conversation_count\":10,\"recent_positive_count\":9,\"recent_neutral_count\":4,\"recent_negative_count\":0,\"recent_average_sentiment_score\":0.6,\"recent_average_frustration_score\":6.9}";
+            "{\"scored_conversation_count\":0,\"positive_count\":3,\"neutral_count\":7,\"negative_count\":8,\"average_sentiment_score\":9.28,\"average_frustration_score\":9.85,\"recent_scored_conversation_count\":3,\"recent_positive_count\":8,\"recent_neutral_count\":1,\"recent_negative_count\":0,\"recent_average_sentiment_score\":5.66,\"recent_average_frustration_score\":7.01}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SentimentAggregate>(wire);
         var serialized = TestJson.Serialize(instance);
