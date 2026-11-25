@@ -20,7 +20,7 @@ public class SpeakerCreatedResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"version\":3,\"speaker_id\":\"speaker_id\"}";
+        const string wire = "{\"version\":9,\"speaker_id\":\"speaker_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeakerCreatedResponse>(wire);
         var serialized = TestJson.Serialize(instance);

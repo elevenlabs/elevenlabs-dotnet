@@ -21,7 +21,7 @@ public class CampaignProgressResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"leads\":{\"total\":10,\"uncalled\":5,\"leads_needing_attention\":10,\"active\":0,\"finished\":10,\"finished_by_disposition\":{\"key\":1}},\"conversations\":{\"scheduled\":8,\"scheduled_by_type\":{\"key\":0},\"awaiting_permission\":9,\"in_progress\":3,\"awaiting_analysis\":4},\"next_call_time_unix\":8}";
+            "{\"leads\":{\"total\":2,\"uncalled\":6,\"leads_needing_attention\":7,\"active\":0,\"finished\":1,\"finished_by_disposition\":{\"key\":10}},\"conversations\":{\"scheduled\":10,\"scheduled_by_type\":{\"key\":10},\"awaiting_permission\":7,\"in_progress\":5,\"awaiting_analysis\":6},\"next_call_time_unix\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CampaignProgressResponse>(wire);
         var serialized = TestJson.Serialize(instance);

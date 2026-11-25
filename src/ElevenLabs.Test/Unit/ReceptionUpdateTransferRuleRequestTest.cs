@@ -21,7 +21,7 @@ public class ReceptionUpdateTransferRuleRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"label\":\"enimculp\",\"phone_number\":\"nostrud\",\"condition\":\"incididunt ut\",\"post_dial_digits\":\"w*71\"}";
+            "{\"label\":\"ad velit \",\"phone_number\":\"aliqua ex au\",\"condition\":\"Duis qui\",\"post_dial_digits\":\"W462\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.Receptionists.ReceptionUpdateTransferRuleRequest>(

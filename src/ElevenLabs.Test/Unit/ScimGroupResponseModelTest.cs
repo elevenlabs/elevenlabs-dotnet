@@ -21,7 +21,7 @@ public class ScimGroupResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"scim_external_id\":\"scim_external_id\",\"display_name\":\"display_name\",\"created_at_unix\":4,\"updated_at_unix\":10,\"seat_type\":\"workspace_admin\"}";
+            "{\"scim_external_id\":\"scim_external_id\",\"display_name\":\"display_name\",\"created_at_unix\":0,\"updated_at_unix\":9,\"seat_type\":\"workspace_admin\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ScimGroupResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

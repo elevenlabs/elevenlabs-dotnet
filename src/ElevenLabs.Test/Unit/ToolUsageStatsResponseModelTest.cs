@@ -20,7 +20,7 @@ public class ToolUsageStatsResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"total_calls\":0,\"avg_latency_secs\":5.28}";
+        const string wire = "{\"total_calls\":6,\"avg_latency_secs\":3.03}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ToolUsageStatsResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

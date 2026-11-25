@@ -21,7 +21,7 @@ public class ListWhatsAppAccountsResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"items\":[{\"business_account_id\":\"business_account_id\",\"phone_number_id\":\"phone_number_id\",\"business_account_name\":\"business_account_name\",\"phone_number_name\":\"phone_number_name\",\"phone_number\":\"phone_number\",\"account_type\":\"cloud_api\",\"assigned_agent_id\":\"assigned_agent_id\",\"enable_messaging\":true,\"enable_audio_message_response\":true,\"enable_typing_indicator\":true,\"assigned_agent_name\":\"assigned_agent_name\",\"is_token_expired\":true}]}";
+            "{\"items\":[{\"business_account_id\":\"business_account_id\",\"phone_number_id\":\"phone_number_id\",\"business_account_name\":\"business_account_name\",\"phone_number_name\":\"phone_number_name\",\"phone_number\":\"phone_number\",\"account_type\":\"cloud_api\",\"assigned_agent_id\":\"assigned_agent_id\",\"enable_messaging\":true,\"enable_audio_message_response\":true,\"enable_typing_indicator\":true,\"assigned_agent_name\":\"assigned_agent_name\",\"is_token_expired\":false}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ListWhatsAppAccountsResponse>(wire);
         var serialized = TestJson.Serialize(instance);

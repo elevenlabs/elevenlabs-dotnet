@@ -21,7 +21,7 @@ public class ReceptionServicePromotionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"promo_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"name\":\"ipsum tempor \",\"target\":\"service\",\"variant_id\":\"variant_id\",\"add_on_id\":\"add_on_id\",\"promotional_price\":35,\"days_of_week\":[6],\"start_date\":\"2026-12-01\",\"end_date\":\"2026-12-31\",\"is_active\":true}";
+            "{\"id\":\"promo_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"name\":\"Duis irure id o\",\"target\":\"service\",\"variant_id\":\"variant_id\",\"add_on_id\":\"add_on_id\",\"promotional_price\":35,\"days_of_week\":[1],\"start_date\":\"2026-12-01\",\"end_date\":\"2026-12-31\",\"is_active\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionServicePromotion>(wire);
         var serialized = TestJson.Serialize(instance);

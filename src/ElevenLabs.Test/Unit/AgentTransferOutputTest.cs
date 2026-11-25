@@ -21,7 +21,7 @@ public class AgentTransferOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"node_id\":\"node_id\",\"condition\":\"condition\",\"delay_ms\":2,\"transfer_message\":\"transfer_message\",\"enable_transferred_agent_first_message\":false,\"is_workflow_node_transfer\":true,\"preserve_client_tts_overrides\":false,\"preserve_voice_settings\":false}";
+            "{\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"node_id\":\"node_id\",\"condition\":\"condition\",\"delay_ms\":3,\"transfer_message\":\"transfer_message\",\"enable_transferred_agent_first_message\":false,\"is_workflow_node_transfer\":false,\"preserve_client_tts_overrides\":false,\"preserve_voice_settings\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentTransferOutput>(wire);
         var serialized = TestJson.Serialize(instance);

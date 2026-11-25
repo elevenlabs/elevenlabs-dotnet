@@ -21,7 +21,7 @@ public class ConversationHistoryFeedbackCommonModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"thumbs\",\"overall_score\":\"like\",\"likes\":0,\"dislikes\":1,\"rating\":1,\"comment\":\"comment\"}";
+            "{\"type\":\"thumbs\",\"overall_score\":\"like\",\"likes\":1,\"dislikes\":10,\"rating\":8,\"comment\":\"comment\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationHistoryFeedbackCommonModel>(wire);

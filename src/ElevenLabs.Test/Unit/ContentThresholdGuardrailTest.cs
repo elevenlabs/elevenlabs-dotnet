@@ -20,7 +20,7 @@ public class ContentThresholdGuardrailTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"is_enabled\":true,\"threshold\":5.75}";
+        const string wire = "{\"is_enabled\":true,\"threshold\":6.5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ContentThresholdGuardrail>(wire);
         var serialized = TestJson.Serialize(instance);

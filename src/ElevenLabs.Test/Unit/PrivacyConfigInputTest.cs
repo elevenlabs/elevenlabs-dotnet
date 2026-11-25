@@ -21,7 +21,7 @@ public class PrivacyConfigInputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"record_voice\":true,\"retention_days\":-1,\"delete_transcript_and_pii\":true,\"delete_audio\":true,\"apply_to_existing_conversations\":true,\"zero_retention_mode\":false,\"conversation_history_redaction\":{\"enabled\":true,\"entities\":[\"name\"],\"excluded_data_collection_ids\":[\"excluded_data_collection_ids\"]}}";
+            "{\"record_voice\":true,\"retention_days\":-1,\"delete_transcript_and_pii\":true,\"delete_audio\":false,\"apply_to_existing_conversations\":true,\"zero_retention_mode\":false,\"conversation_history_redaction\":{\"enabled\":false,\"entities\":[\"name\"],\"excluded_data_collection_ids\":[\"excluded_data_collection_ids\"]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PrivacyConfigInput>(wire);
         var serialized = TestJson.Serialize(instance);

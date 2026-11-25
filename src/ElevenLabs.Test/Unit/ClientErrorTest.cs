@@ -21,7 +21,7 @@ public class ClientErrorTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"error_event\":{\"code\":0,\"error_name\":\"error_name\",\"message\":\"message\"},\"type\":\"client_error\"}";
+            "{\"error_event\":{\"code\":8,\"error_name\":\"error_name\",\"message\":\"message\"},\"type\":\"client_error\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ClientError>(wire);
         var serialized = TestJson.Serialize(instance);

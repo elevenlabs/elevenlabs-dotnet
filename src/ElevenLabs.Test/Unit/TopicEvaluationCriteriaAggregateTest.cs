@@ -21,7 +21,7 @@ public class TopicEvaluationCriteriaAggregateTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"criteria_id\":\"criteria_id\",\"success_count\":7,\"failure_count\":6,\"unknown_count\":8}";
+            "{\"criteria_id\":\"criteria_id\",\"success_count\":2,\"failure_count\":4,\"unknown_count\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TopicEvaluationCriteriaAggregate>(
             wire

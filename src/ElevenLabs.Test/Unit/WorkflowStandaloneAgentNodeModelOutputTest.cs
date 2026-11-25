@@ -21,7 +21,7 @@ public class WorkflowStandaloneAgentNodeModelOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"standalone_agent\",\"position\":{\"x\":1.77,\"y\":7.09},\"edge_order\":[\"edge_order\"],\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"node_id\":\"node_id\",\"delay_ms\":1,\"transfer_message\":\"transfer_message\",\"enable_transferred_agent_first_message\":true,\"preserve_client_tts_overrides\":false,\"preserve_voice_settings\":true}";
+            "{\"type\":\"standalone_agent\",\"position\":{\"x\":5.61,\"y\":1.7},\"edge_order\":[\"edge_order\"],\"agent_id\":\"agent_id\",\"branch_id\":\"branch_id\",\"node_id\":\"node_id\",\"delay_ms\":1,\"transfer_message\":\"transfer_message\",\"enable_transferred_agent_first_message\":false,\"preserve_client_tts_overrides\":false,\"preserve_voice_settings\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.WorkflowStandaloneAgentNodeModelOutput>(wire);

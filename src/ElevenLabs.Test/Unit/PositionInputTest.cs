@@ -20,7 +20,7 @@ public class PositionInputTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"x\":0.28,\"y\":3.65}";
+        const string wire = "{\"x\":4.34,\"y\":3.74}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PositionInput>(wire);
         var serialized = TestJson.Serialize(instance);

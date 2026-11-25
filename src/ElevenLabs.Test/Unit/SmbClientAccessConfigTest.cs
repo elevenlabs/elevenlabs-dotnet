@@ -21,7 +21,7 @@ public class SmbClientAccessConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enable_secure_mode\":false,\"identity_verification_enabled\":false,\"identity_verification_email_enabled\":false,\"identity_verification_sms_enabled\":true}";
+            "{\"enable_secure_mode\":true,\"identity_verification_enabled\":false,\"identity_verification_email_enabled\":false,\"identity_verification_sms_enabled\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SmbClientAccessConfig>(wire);
         var serialized = TestJson.Serialize(instance);

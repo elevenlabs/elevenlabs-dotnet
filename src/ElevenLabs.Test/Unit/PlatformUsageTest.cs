@@ -21,7 +21,7 @@ public class PlatformUsageTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"category_usage\":{\"key\":{\"credits\":4,\"price\":4.4,\"quantity\":7.51}}}";
+            "{\"category_usage\":{\"key\":{\"credits\":4,\"price\":8.87,\"quantity\":0.18}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PlatformUsage>(wire);
         var serialized = TestJson.Serialize(instance);

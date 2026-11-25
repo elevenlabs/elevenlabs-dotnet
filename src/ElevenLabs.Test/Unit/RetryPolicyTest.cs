@@ -21,7 +21,7 @@ public class RetryPolicyTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"retry_delay_seconds\":600,\"max_short_retries\":1,\"max_total_calls\":6,\"max_callbacks\":2,\"max_redirects\":2,\"interval_placement\":\"start\",\"rotate_step_seconds\":900,\"max_consecutive_failures_per_number\":23}";
+            "{\"retry_delay_seconds\":600,\"max_short_retries\":1,\"max_total_calls\":6,\"max_callbacks\":2,\"max_redirects\":2,\"interval_placement\":\"start\",\"rotate_step_seconds\":900,\"max_consecutive_failures_per_number\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RetryPolicy>(wire);
         var serialized = TestJson.Serialize(instance);

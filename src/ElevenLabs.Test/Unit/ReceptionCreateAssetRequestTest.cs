@@ -21,7 +21,7 @@ public class ReceptionCreateAssetRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"groups\":[{\"label\":\"Ut minim c\",\"rank\":5}],\"ungrouped_rank\":7,\"name\":\"sit et sunt do\",\"description\":\"proiden\",\"is_active\":true,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":9,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"do dolo\"}";
+            "{\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":8,\"name\":\"proiden\",\"description\":\"do dolo\",\"is_active\":true,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"cupidatat \"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionCreateAssetRequest>(wire);

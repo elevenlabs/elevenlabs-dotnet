@@ -21,7 +21,7 @@ public class ReceptionProcedureTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"voluptate e\",\"trigger\":\"eu adipisi\",\"body\":\"1. Ask for the caller's name and order number.\\n2. Look up the order and read back its status.\",\"id\":\"agtprc_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":0,\"source_key\":\"source_key\"}";
+            "{\"name\":\"magna in\",\"trigger\":\"eu quis\",\"body\":\"1. Ask for the caller's name and order number.\\n2. Look up the order and read back its status.\",\"id\":\"agtprc_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":6,\"source_key\":\"source_key\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionProcedure>(wire);
         var serialized = TestJson.Serialize(instance);

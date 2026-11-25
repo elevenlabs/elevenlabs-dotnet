@@ -21,7 +21,7 @@ public class ConversationProgressTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"scheduled\":8,\"scheduled_by_type\":{\"key\":0},\"awaiting_permission\":9,\"in_progress\":3,\"awaiting_analysis\":4}";
+            "{\"scheduled\":10,\"scheduled_by_type\":{\"key\":10},\"awaiting_permission\":7,\"in_progress\":5,\"awaiting_analysis\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationProgress>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class BodyListApiRequestsV1WorkspaceAnalyticsRequestsPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_time\":2147483647,\"end_time\":2147483647,\"limit\":100,\"sort\":\"asc\",\"filters\":[{\"column\":\"column\",\"operation\":\"in\",\"values\":[\"Excepteur cu\"]}],\"search\":\"search\"}";
+            "{\"start_time\":2147483647,\"end_time\":2147483647,\"limit\":100,\"sort\":\"asc\",\"filters\":[{\"column\":\"column\",\"operation\":\"in\",\"values\":[\"esse \"]}],\"search\":\"search\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Workspace.Analytics.BodyListApiRequestsV1WorkspaceAnalyticsRequestsPost>(

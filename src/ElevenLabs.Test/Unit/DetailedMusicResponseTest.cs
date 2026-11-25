@@ -21,7 +21,7 @@ public class DetailedMusicResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"composition_plan\":{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":104477,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":7,\"end_ms\":1},\"negative_ranges\":[{\"start_ms\":7,\"end_ms\":1}]}}]},\"song_metadata\":{\"title\":\"title\",\"description\":\"description\",\"genres\":[\"genres\"],\"languages\":[\"languages\"],\"is_explicit\":true},\"words_timestamps\":[{\"word\":\"word\",\"start_ms\":1,\"end_ms\":9}],\"waveform_visual\":[3]}";
+            "{\"composition_plan\":{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":95666,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":10,\"end_ms\":0},\"negative_ranges\":[{\"start_ms\":10,\"end_ms\":0}]}}]},\"song_metadata\":{\"title\":\"title\",\"description\":\"description\",\"genres\":[\"genres\"],\"languages\":[\"languages\"],\"is_explicit\":false},\"words_timestamps\":[{\"word\":\"word\",\"start_ms\":1,\"end_ms\":7}],\"waveform_visual\":[1]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DetailedMusicResponse>(wire);
         var serialized = TestJson.Serialize(instance);

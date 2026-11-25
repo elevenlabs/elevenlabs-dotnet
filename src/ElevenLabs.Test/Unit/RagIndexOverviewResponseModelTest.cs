@@ -21,7 +21,7 @@ public class RagIndexOverviewResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"total_used_bytes\":1,\"total_max_bytes\":8,\"models\":[{\"model\":\"e5_mistral_7b_instruct\",\"used_bytes\":2}]}";
+            "{\"total_used_bytes\":0,\"total_max_bytes\":4,\"models\":[{\"model\":\"e5_mistral_7b_instruct\",\"used_bytes\":9}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RagIndexOverviewResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

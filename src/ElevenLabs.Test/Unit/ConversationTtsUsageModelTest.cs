@@ -21,7 +21,7 @@ public class ConversationTtsUsageModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"primary_tts_model\":\"primary_tts_model\",\"total_audio_output_seconds\":6.2,\"total_characters\":6,\"per_voice_usage\":[{\"voice_id\":\"voice_id\",\"audio_output_seconds\":4.06}]}";
+            "{\"primary_tts_model\":\"primary_tts_model\",\"total_audio_output_seconds\":3.91,\"total_characters\":2,\"per_voice_usage\":[{\"voice_id\":\"voice_id\",\"audio_output_seconds\":3.7}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationTtsUsageModel>(wire);
         var serialized = TestJson.Serialize(instance);

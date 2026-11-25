@@ -21,7 +21,7 @@ public class RagChunkMetadataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"document_id\":\"document_id\",\"chunk_id\":\"chunk_id\",\"vector_distance\":7.81}";
+            "{\"document_id\":\"document_id\",\"chunk_id\":\"chunk_id\",\"vector_distance\":0.96}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RagChunkMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

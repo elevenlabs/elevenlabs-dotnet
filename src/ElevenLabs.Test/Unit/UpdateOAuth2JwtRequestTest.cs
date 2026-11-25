@@ -21,7 +21,7 @@ public class UpdateOAuth2JwtRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"auth_type\":\"oauth2_jwt\",\"provider\":\"provider\",\"algorithm\":\"HS256\",\"key_id\":\"key_id\",\"issuer\":\"issuer\",\"audience\":\"audience\",\"subject\":\"subject\",\"expiration_seconds\":43462,\"extra_params\":{\"key\":\"extra_params\"},\"scopes\":[\"scopes\"],\"token_response_field\":\"access_token\",\"jwt_usage\":\"authorization_grant\",\"extra_headers\":{\"key\":\"extra_headers\"},\"secret_key\":\"secret_key\"}";
+            "{\"auth_type\":\"oauth2_jwt\",\"provider\":\"provider\",\"algorithm\":\"HS256\",\"key_id\":\"key_id\",\"issuer\":\"issuer\",\"audience\":\"audience\",\"subject\":\"subject\",\"expiration_seconds\":77272,\"extra_params\":{\"key\":\"extra_params\"},\"scopes\":[\"scopes\"],\"token_response_field\":\"access_token\",\"jwt_usage\":\"authorization_grant\",\"extra_headers\":{\"key\":\"extra_headers\"},\"secret_key\":\"secret_key\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UpdateOAuth2JwtRequest>(wire);
         var serialized = TestJson.Serialize(instance);

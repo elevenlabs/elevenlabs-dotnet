@@ -21,7 +21,7 @@ public class StreamEnvelopeTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"conversation_id\":\"conversation_id\",\"turn_id\":\"turn_id\",\"created_at_unix_ms\":3,\"event\":{\"type\":\"stream_ended\",\"stream_ended_event\":{\"status\":\"in_progress\",\"error\":{\"type\":\"type\",\"code\":\"code\",\"message\":\"message\"},\"required_actions\":[{\"type\":\"client_tool_call\",\"tool_call_id\":\"tool_call_id\",\"tool_name\":\"tool_name\",\"parameters\":{\"key\":{}}}]}}}";
+            "{\"conversation_id\":\"conversation_id\",\"turn_id\":\"turn_id\",\"created_at_unix_ms\":9,\"event\":{\"type\":\"stream_ended\",\"stream_ended_event\":{\"status\":\"in_progress\",\"error\":{\"type\":\"type\",\"code\":\"code\",\"message\":\"message\"},\"required_actions\":[{\"type\":\"client_tool_call\",\"tool_call_id\":\"tool_call_id\",\"tool_name\":\"tool_name\",\"parameters\":{\"key\":{}}}]}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.StreamEnvelope>(wire);
         var serialized = TestJson.Serialize(instance);

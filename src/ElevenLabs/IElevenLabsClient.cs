@@ -23,9 +23,9 @@ public partial interface IElevenLabsClient
     public IUserClient User { get; }
     public IStudioClient Studio { get; }
     public ElevenLabs.IPronunciationDictionariesClient PronunciationDictionaries { get; }
+    public IAudioNativeClient AudioNative { get; }
     public ISpeechToTextClient SpeechToText { get; }
     public IModelsClient Models { get; }
-    public IAudioNativeClient AudioNative { get; }
     public IContentProvenanceClient ContentProvenance { get; }
     public IReceptionClient Reception { get; }
     public ElevenLabs.IWorkspacesClient Workspaces { get; }
@@ -55,5 +55,6 @@ public partial interface IElevenLabsClient
     );
     ITranslationApi CreateTranslationApi(TranslationApi.Options options);
     IDubbingApi CreateDubbingApi(DubbingApi.Options options);
+    ISubtitlingApi CreateSubtitlingApi(SubtitlingApi.Options options);
     IAgentsApi CreateAgentsApi(AgentsApi.Options options);
 }

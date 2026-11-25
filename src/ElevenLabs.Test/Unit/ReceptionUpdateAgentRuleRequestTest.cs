@@ -21,7 +21,7 @@ public class ReceptionUpdateAgentRuleRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"eliteu ip\",\"description\":\"ea proiden\",\"priority\":\"strict\"}";
+            "{\"title\":\"ad esse Lo\",\"description\":\"minim cupidatat\",\"priority\":\"strict\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.Receptionists.ReceptionUpdateAgentRuleRequest>(

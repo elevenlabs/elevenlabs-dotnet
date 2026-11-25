@@ -21,7 +21,7 @@ public class TicketPriorityChangeResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"priority\":\"low\",\"changed_by_user_id\":\"changed_by_user_id\",\"changed_at_unix_secs\":4}";
+            "{\"priority\":\"low\",\"changed_by_user_id\":\"changed_by_user_id\",\"changed_at_unix_secs\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TicketPriorityChangeResponseModel>(
             wire

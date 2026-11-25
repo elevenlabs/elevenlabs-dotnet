@@ -21,7 +21,7 @@ public class WorkspaceApiKeyListResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"api-keys\":[{\"name\":\"name\",\"hint\":\"hint\",\"key_id\":\"key_id\",\"service_account_user_id\":\"service_account_user_id\",\"created_at_unix\":0,\"is_disabled\":false,\"permissions\":[\"text_to_speech\"],\"disable_reason\":\"trial_ended\",\"character_limit\":2,\"character_count\":9,\"hashed_xi_api_key\":\"hashed_xi_api_key\",\"allowed_ips\":[\"allowed_ips\"],\"third_party_disable_allowed\":false,\"platform_limits\":{\"credits\":{\"limit\":2,\"usage\":2},\"pvc\":{\"limit\":4},\"concurrency\":{\"limit\":4},\"dubbing_concurrency\":{\"limit\":4},\"music_concurrency\":{\"limit\":4}},\"expires_at_unix\":5}]}";
+            "{\"api-keys\":[{\"name\":\"name\",\"hint\":\"hint\",\"key_id\":\"key_id\",\"service_account_user_id\":\"service_account_user_id\",\"created_at_unix\":9,\"is_disabled\":false,\"permissions\":[\"text_to_speech\"],\"disable_reason\":\"trial_ended\",\"character_limit\":2,\"character_count\":2,\"hashed_xi_api_key\":\"hashed_xi_api_key\",\"allowed_ips\":[\"allowed_ips\"],\"third_party_disable_allowed\":false,\"platform_limits\":{\"credits\":{\"limit\":5,\"usage\":7},\"pvc\":{\"limit\":1},\"concurrency\":{\"limit\":1},\"dubbing_concurrency\":{\"limit\":1},\"music_concurrency\":{\"limit\":1}},\"expires_at_unix\":1}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkspaceApiKeyListResponseModel>(
             wire

@@ -20,7 +20,7 @@ public class AstNumberNodeInputTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"type\":\"number_literal\",\"value\":4.39}";
+        const string wire = "{\"type\":\"number_literal\",\"value\":6.04}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AstNumberNodeInput>(wire);
         var serialized = TestJson.Serialize(instance);

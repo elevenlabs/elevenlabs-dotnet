@@ -21,7 +21,7 @@ public class DubbingProjectResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"project_id\":\"project_id\",\"status\":\"queued\",\"reference\":\"reference\",\"source_language\":\"source_language\",\"model_id\":\"model_id\",\"media\":{\"filename\":\"filename\",\"duration_s\":0.99,\"has_video\":false,\"mime_type\":\"mime_type\"},\"language_ids\":[\"language_ids\"],\"webhook_ids\":[\"webhook_ids\"],\"revision\":4,\"error\":{\"code\":\"code\",\"message\":\"message\",\"retryable\":false},\"warnings\":[{\"type\":\"voices_not_permitted\",\"speaker_ids\":[\"speaker_ids\"],\"message\":\"message\"}],\"created_at\":\"2023-11-14T12:55:00.697Z\",\"updated_at\":\"2023-01-05T09:58:00.458Z\"}";
+            "{\"project_id\":\"project_id\",\"status\":\"queued\",\"reference\":\"reference\",\"source_language\":\"source_language\",\"model_id\":\"model_id\",\"media\":{\"filename\":\"filename\",\"duration_s\":3.84,\"has_video\":false,\"mime_type\":\"mime_type\"},\"language_ids\":[\"language_ids\"],\"webhook_ids\":[\"webhook_ids\"],\"revision\":0,\"error\":{\"code\":\"code\",\"message\":\"message\",\"retryable\":false},\"warnings\":[{\"type\":\"voices_not_permitted\",\"speaker_ids\":[\"speaker_ids\"],\"message\":\"message\"}],\"created_at\":\"2023-11-14T12:55:00.697Z\",\"updated_at\":\"2023-01-05T09:58:00.458Z\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingProjectResponse>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -20,7 +20,7 @@ public class DoDubbingResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"dubbing_id\":\"dubbing_id\",\"expected_duration_sec\":9.8}";
+        const string wire = "{\"dubbing_id\":\"dubbing_id\",\"expected_duration_sec\":6.97}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DoDubbingResponse>(wire);
         var serialized = TestJson.Serialize(instance);

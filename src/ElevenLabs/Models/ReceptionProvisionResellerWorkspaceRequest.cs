@@ -54,6 +54,10 @@ public record ReceptionProvisionResellerWorkspaceRequest : IJsonOnDeserialized
     [JsonPropertyName("vertical")]
     public ReceptionVertical? Vertical { get; set; }
 
+    /// <value>Bill the workspace's own customer instead of the reseller: it checks out and sees its billing itself, and the reseller earns a commission. Only for a reseller on standard billing.</value>
+    [JsonPropertyName("charge_customer")]
+    public bool? ChargeCustomer { get; set; }
+
     /// <value>Paid tier to subscribe to. Omitted leaves the workspace with no subscription.</value>
     [JsonPropertyName("subscription")]
     public ProvisionResellerWorkspaceSubscription? Subscription { get; set; }
@@ -113,6 +117,7 @@ public record ReceptionProvisionResellerWorkspaceRequest : IJsonOnDeserialized
         return true
             && ValueEquality.AreEqual(BusinessName, other.BusinessName)
             && ValueEquality.AreEqual(Vertical, other.Vertical)
+            && ValueEquality.AreEqual(ChargeCustomer, other.ChargeCustomer)
             && ValueEquality.AreEqual(Subscription, other.Subscription)
             && ValueEquality.AreEqual(PhoneNumber, other.PhoneNumber)
             && ValueEquality.AreEqual(Members, other.Members)
@@ -129,6 +134,7 @@ public record ReceptionProvisionResellerWorkspaceRequest : IJsonOnDeserialized
             var hash = 17;
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(BusinessName);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Vertical);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ChargeCustomer);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Subscription);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumber);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Members);

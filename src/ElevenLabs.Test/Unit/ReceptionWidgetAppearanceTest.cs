@@ -21,7 +21,7 @@ public class ReceptionWidgetAppearanceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"orb_color_1\":\"#2792dc\",\"orb_color_2\":\"#9ce6e6\",\"variant\":\"tiny\",\"placement\":\"top-left\",\"dismissible\":true,\"main_label\":\"main_label\",\"start_call\":\"start_call\"}";
+            "{\"orb_color_1\":\"#2792dc\",\"orb_color_2\":\"#9ce6e6\",\"variant\":\"tiny\",\"placement\":\"top-left\",\"dismissible\":false,\"main_label\":\"main_label\",\"start_call\":\"start_call\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionWidgetAppearance>(wire);
         var serialized = TestJson.Serialize(instance);

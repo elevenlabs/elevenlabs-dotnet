@@ -21,7 +21,7 @@ public class GetAgentTopicsResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"topics\":[{\"topic_id\":\"topic_id\",\"label\":\"label\",\"description\":\"description\",\"conversation_count\":4,\"parent_topic_id\":\"parent_topic_id\",\"x_2d\":9.9,\"y_2d\":5.14,\"metrics\":{\"conversation_count\":1,\"sentiment\":{\"sentiment\":{\"count\":10,\"sum\":8.3,\"min\":5.76,\"max\":0.3},\"frustration\":{\"count\":10,\"sum\":8.3,\"min\":5.76,\"max\":0.3},\"positive_count\":8,\"neutral_count\":4,\"negative_count\":10},\"evaluation_criteria\":[{\"criteria_id\":\"criteria_id\",\"success_count\":7,\"failure_count\":6,\"unknown_count\":8}]},\"success_rate\":2.82}],\"window_start_unix_secs\":8,\"window_end_unix_secs\":3,\"aggregated_run_count\":2,\"has_more\":true,\"next_cursor\":\"next_cursor\"}";
+            "{\"topics\":[{\"topic_id\":\"topic_id\",\"label\":\"label\",\"description\":\"description\",\"conversation_count\":2,\"parent_topic_id\":\"parent_topic_id\",\"x_2d\":2.5,\"y_2d\":3.56,\"metrics\":{\"conversation_count\":7,\"sentiment\":{\"sentiment\":{\"count\":0,\"sum\":7.83,\"min\":2.07,\"max\":0.43},\"frustration\":{\"count\":0,\"sum\":7.83,\"min\":2.07,\"max\":0.43},\"positive_count\":5,\"neutral_count\":7,\"negative_count\":10},\"evaluation_criteria\":[{\"criteria_id\":\"criteria_id\",\"success_count\":2,\"failure_count\":4,\"unknown_count\":5}]},\"success_rate\":5.33}],\"window_start_unix_secs\":6,\"window_end_unix_secs\":8,\"aggregated_run_count\":3,\"has_more\":true,\"next_cursor\":\"next_cursor\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetAgentTopicsResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

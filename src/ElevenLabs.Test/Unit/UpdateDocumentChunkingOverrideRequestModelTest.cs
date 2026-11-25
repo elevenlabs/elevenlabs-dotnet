@@ -21,7 +21,7 @@ public class UpdateDocumentChunkingOverrideRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"chunking_override\":{\"max_chunk_size\":2147483647,\"overlap_percentage\":6,\"custom_separators\":[\"custom_separators\"]}}";
+            "{\"chunking_override\":{\"max_chunk_size\":2147483647,\"overlap_percentage\":9,\"custom_separators\":[\"custom_separators\"]}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.KnowledgeBase.UpdateDocumentChunkingOverrideRequestModel>(

@@ -21,7 +21,7 @@ public class ReceptionProvisionResellerWorkspaceRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"business_name\":\"business_name\",\"vertical\":\"salon_barbershop\",\"subscription\":{\"tier_id\":\"tier_id\",\"billing_period\":\"monthly_period\"},\"phone_number\":\"phone_number\",\"members\":[{\"email\":\"sam@example.com\",\"role\":\"workspace_admin\"}],\"complete_onboarding\":false,\"idempotency_key\":\"idempotency_key\"}";
+            "{\"business_name\":\"business_name\",\"vertical\":\"salon_barbershop\",\"charge_customer\":true,\"subscription\":{\"tier_id\":\"tier_id\",\"billing_period\":\"monthly_period\"},\"phone_number\":\"phone_number\",\"members\":[{\"email\":\"sam@example.com\",\"role\":\"workspace_admin\"}],\"complete_onboarding\":true,\"idempotency_key\":\"idempotency_key\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionProvisionResellerWorkspaceRequest>(

@@ -71,6 +71,10 @@ public record SoftTimeoutConfigWorkflowOverride : IJsonOnDeserialized
     [JsonPropertyName("max_soft_timeouts_per_generation")]
     public int? MaxSoftTimeoutsPerGeneration { get; set; }
 
+    /// <value>If enabled, leave a short pause after a filler message before the agent's response, so the two do not run together.</value>
+    [JsonPropertyName("pause_after_filler")]
+    public bool? PauseAfterFiller { get; set; }
+
     /// <value>Custom prompt for generating the soft timeout filler message when use_llm_generated_message is enabled. Recent conversation context is provided as a separate user message. If not set, the default prompt will be used. Supports dynamic variables (e.g., {{system__time}}, {{custom_variable}}).</value>
     [JsonPropertyName("llm_generated_message_prompt_override")]
     public string? LlmGeneratedMessagePromptOverride { get; set; }
@@ -128,6 +132,7 @@ public record SoftTimeoutConfigWorkflowOverride : IJsonOnDeserialized
                 MaxSoftTimeoutsPerGeneration,
                 other.MaxSoftTimeoutsPerGeneration
             )
+            && ValueEquality.AreEqual(PauseAfterFiller, other.PauseAfterFiller)
             && ValueEquality.AreEqual(
                 LlmGeneratedMessagePromptOverride,
                 other.LlmGeneratedMessagePromptOverride
@@ -151,6 +156,7 @@ public record SoftTimeoutConfigWorkflowOverride : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(UseLlmGeneratedMessage);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(RandomizeFillers);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MaxSoftTimeoutsPerGeneration);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(PauseAfterFiller);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(LlmGeneratedMessagePromptOverride);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DisableUntilFirstUserMessage);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();

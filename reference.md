@@ -19,6 +19,7 @@ Get generated items
 - `sortDirection`
 - `search`
 - `source`
+- `sources`
 
 ### `GetAsync`
 
@@ -650,6 +651,17 @@ Add shared voice
 
 List similar voices
 
+**Parameters:**
+
+- `category`
+- `gender`
+- `age`
+- `useCases`
+- `minNoticePeriodDays`
+- `includeCustomRates`
+- `includeLiveModerated`
+- `ownerId`
+
 ### `GetSharedAsync`
 
 `GET /v1/shared-voices`
@@ -985,6 +997,40 @@ Convert Chapter
 - `projectId` (required)
 - `chapterId` (required)
 
+## AudioNativeService
+
+### `CreateAsync`
+
+`POST /v1/audio-native`
+
+Create audio native project
+
+### `GetSettingsAsync`
+
+`GET /v1/audio-native/{project_id}/settings`
+
+Get Audio Native Project Settings
+
+**Parameters:**
+
+- `projectId` (required)
+
+### `UpdateAsync`
+
+`POST /v1/audio-native/{project_id}/content`
+
+Update audio native project
+
+**Parameters:**
+
+- `projectId` (required)
+
+### `UpdateContentFromUrlAsync`
+
+`POST /v1/audio-native/content`
+
+Update Audio-Native Content From Url
+
 ## ProjectService
 
 ### `ListAsync`
@@ -1260,40 +1306,6 @@ Delete Transcript By Id
 `GET /v1/models`
 
 List models
-
-## AudioNativeService
-
-### `CreateAsync`
-
-`POST /v1/audio-native`
-
-Create audio native project
-
-### `GetSettingsAsync`
-
-`GET /v1/audio-native/{project_id}/settings`
-
-Get Audio Native Project Settings
-
-**Parameters:**
-
-- `projectId` (required)
-
-### `UpdateAsync`
-
-`POST /v1/audio-native/{project_id}/content`
-
-Update audio native project
-
-**Parameters:**
-
-- `projectId` (required)
-
-### `UpdateContentFromUrlAsync`
-
-`POST /v1/audio-native/content`
-
-Update Audio-Native Content From Url
 
 ## ContentProvenanceService
 

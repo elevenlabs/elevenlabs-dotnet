@@ -21,7 +21,7 @@ public class DateOverridePolicyTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_date\":\"2023-01-18\",\"end_date\":\"2023-05-02\",\"intervals\":[{\"start\":\"04:28\",\"end\":\"24:00\"}],\"name\":\"name\"}";
+            "{\"start_date\":\"2023-01-18\",\"end_date\":\"2023-05-02\",\"intervals\":[{\"start\":\"07:03\",\"end\":\"24:00\"}],\"name\":\"name\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DateOverridePolicy>(wire);
         var serialized = TestJson.Serialize(instance);

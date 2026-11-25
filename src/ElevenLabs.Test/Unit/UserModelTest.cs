@@ -21,7 +21,7 @@ public class UserModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"uid\":\"uid\",\"type_id\":1,\"type\":\"type\",\"email_addr\":\"email_addr\",\"full_name\":\"full_name\",\"domain\":\"domain\"}";
+            "{\"name\":\"name\",\"uid\":\"uid\",\"type_id\":4,\"type\":\"type\",\"email_addr\":\"email_addr\",\"full_name\":\"full_name\",\"domain\":\"domain\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UserModel>(wire);
         var serialized = TestJson.Serialize(instance);

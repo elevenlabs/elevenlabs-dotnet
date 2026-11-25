@@ -20,7 +20,7 @@ public class GetLiveCountResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"count\":2}";
+        const string wire = "{\"count\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetLiveCountResponse>(wire);
         var serialized = TestJson.Serialize(instance);

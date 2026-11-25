@@ -21,7 +21,7 @@ public class WhatsAppCallPermissionRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"state\":\"blocked\",\"requested_at_unix\":2,\"responded_at_unix\":8,\"permanent\":true,\"granted_by_user_call\":false}";
+            "{\"state\":\"blocked\",\"requested_at_unix\":3,\"responded_at_unix\":3,\"permanent\":true,\"granted_by_user_call\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WhatsAppCallPermissionRequest>(wire);
         var serialized = TestJson.Serialize(instance);

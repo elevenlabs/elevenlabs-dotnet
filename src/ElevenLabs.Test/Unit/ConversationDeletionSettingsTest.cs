@@ -21,7 +21,7 @@ public class ConversationDeletionSettingsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"deletion_time_unix_secs\":9,\"deleted_logs_at_time_unix_secs\":2,\"deleted_audio_at_time_unix_secs\":5,\"deleted_transcript_at_time_unix_secs\":10,\"delete_transcript_and_pii\":false,\"delete_audio\":true}";
+            "{\"deletion_time_unix_secs\":4,\"deleted_logs_at_time_unix_secs\":3,\"deleted_audio_at_time_unix_secs\":10,\"deleted_transcript_at_time_unix_secs\":6,\"delete_transcript_and_pii\":true,\"delete_audio\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationDeletionSettings>(wire);
         var serialized = TestJson.Serialize(instance);

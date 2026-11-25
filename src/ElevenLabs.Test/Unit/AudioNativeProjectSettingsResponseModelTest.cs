@@ -21,7 +21,7 @@ public class AudioNativeProjectSettingsResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"title\",\"image\":\"image\",\"author\":\"author\",\"small\":true,\"text_color\":\"text_color\",\"background_color\":\"background_color\",\"sessionization\":10,\"audio_path\":\"audio_path\",\"audio_url\":\"audio_url\",\"status\":\"processing\"}";
+            "{\"title\":\"title\",\"image\":\"image\",\"author\":\"author\",\"small\":true,\"text_color\":\"text_color\",\"background_color\":\"background_color\",\"sessionization\":8,\"audio_path\":\"audio_path\",\"audio_url\":\"audio_url\",\"status\":\"processing\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AudioNativeProjectSettingsResponseModel>(wire);

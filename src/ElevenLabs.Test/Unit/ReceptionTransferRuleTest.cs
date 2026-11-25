@@ -21,7 +21,7 @@ public class ReceptionTransferRuleTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"label\":\"docillum ut \",\"phone_number\":\"laboris\",\"condition\":\"repreh\",\"post_dial_digits\":\"#8W17*067#\",\"id\":\"transferrule_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":4}";
+            "{\"label\":\"conse\",\"phone_number\":\"Duisest e\",\"condition\":\"conse\",\"post_dial_digits\":\"00w767w\",\"id\":\"transferrule_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionTransferRule>(wire);
         var serialized = TestJson.Serialize(instance);

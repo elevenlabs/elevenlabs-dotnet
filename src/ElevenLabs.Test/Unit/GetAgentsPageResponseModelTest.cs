@@ -21,7 +21,7 @@ public class GetAgentsPageResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agents\":[{\"agent_id\":\"agent_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"tags\":[\"tags\"],\"created_at_unix_secs\":7,\"updated_at_unix_secs\":9,\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"last_call_time_unix_secs\":8,\"archived\":true}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
+            "{\"agents\":[{\"agent_id\":\"agent_id\",\"name\":\"name\",\"voice_id\":\"voice_id\",\"tags\":[\"tags\"],\"created_at_unix_secs\":8,\"updated_at_unix_secs\":10,\"access_info\":{\"is_creator\":true,\"creator_name\":\"creator_name\",\"creator_email\":\"creator_email\",\"role\":\"admin\",\"anonymous_access_level_override\":\"admin\",\"access_source\":\"creator\"},\"last_call_time_unix_secs\":1,\"archived\":true}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetAgentsPageResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

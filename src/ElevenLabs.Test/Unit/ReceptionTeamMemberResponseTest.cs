@@ -21,7 +21,7 @@ public class ReceptionTeamMemberResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"user_id\":\"Xr8bG2kQ9PZt4vLmN1aY6cDe3Hf2\",\"email\":\"jane@example.com\",\"first_name\":\"first_name\",\"is_owner\":false,\"is_admin\":false,\"picture_url\":\"picture_url\",\"is_suspended\":true}";
+            "{\"user_id\":\"Xr8bG2kQ9PZt4vLmN1aY6cDe3Hf2\",\"email\":\"jane@example.com\",\"first_name\":\"first_name\",\"is_owner\":true,\"is_admin\":true,\"picture_url\":\"picture_url\",\"is_suspended\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionTeamMemberResponse>(wire);
         var serialized = TestJson.Serialize(instance);

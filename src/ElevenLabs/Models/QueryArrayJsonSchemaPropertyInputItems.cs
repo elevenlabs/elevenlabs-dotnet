@@ -52,6 +52,13 @@ public class QueryArrayJsonSchemaPropertyInputItems
     ) => new("arrayJsonSchemaPropertyInput", value);
 
     /// <summary>
+    /// Create a QueryArrayJsonSchemaPropertyInputItems from a AnyOfJsonSchemaPropertyInput value.
+    /// </summary>
+    public static QueryArrayJsonSchemaPropertyInputItems FromAnyOfJsonSchemaPropertyInput(
+        global::ElevenLabs.AnyOfJsonSchemaPropertyInput value
+    ) => new("anyOfJsonSchemaPropertyInput", value);
+
+    /// <summary>
     /// Returns true if <see cref="Type"/> is "literalJsonSchemaProperty".
     /// </summary>
     public bool IsLiteralJsonSchemaProperty() => Type == "literalJsonSchemaProperty";
@@ -65,6 +72,11 @@ public class QueryArrayJsonSchemaPropertyInputItems
     /// Returns true if <see cref="Type"/> is "arrayJsonSchemaPropertyInput".
     /// </summary>
     public bool IsArrayJsonSchemaPropertyInput() => Type == "arrayJsonSchemaPropertyInput";
+
+    /// <summary>
+    /// Returns true if <see cref="Type"/> is "anyOfJsonSchemaPropertyInput".
+    /// </summary>
+    public bool IsAnyOfJsonSchemaPropertyInput() => Type == "anyOfJsonSchemaPropertyInput";
 
     /// <summary>
     /// Returns the value as a LiteralJsonSchemaProperty if <see cref="Type"/> is "literalJsonSchemaProperty", otherwise throws.
@@ -95,6 +107,17 @@ public class QueryArrayJsonSchemaPropertyInputItems
             ? (global::ElevenLabs.ArrayJsonSchemaPropertyInput)Value!
             : throw new ElevenLabsClientException(
                 "Union type is not 'arrayJsonSchemaPropertyInput'"
+            );
+
+    /// <summary>
+    /// Returns the value as a AnyOfJsonSchemaPropertyInput if <see cref="Type"/> is "anyOfJsonSchemaPropertyInput", otherwise throws.
+    /// </summary>
+    /// <exception cref="ElevenLabsClientException">Thrown when <see cref="Type"/> is not 'anyOfJsonSchemaPropertyInput'.</exception>
+    public global::ElevenLabs.AnyOfJsonSchemaPropertyInput AsAnyOfJsonSchemaPropertyInput() =>
+        IsAnyOfJsonSchemaPropertyInput()
+            ? (global::ElevenLabs.AnyOfJsonSchemaPropertyInput)Value!
+            : throw new ElevenLabsClientException(
+                "Union type is not 'anyOfJsonSchemaPropertyInput'"
             );
 
     /// <summary>
@@ -145,6 +168,22 @@ public class QueryArrayJsonSchemaPropertyInputItems
         return false;
     }
 
+    /// <summary>
+    /// Attempts to cast the value to a AnyOfJsonSchemaPropertyInput and returns true if successful.
+    /// </summary>
+    public bool TryGetAnyOfJsonSchemaPropertyInput(
+        out global::ElevenLabs.AnyOfJsonSchemaPropertyInput? value
+    )
+    {
+        if (Type == "anyOfJsonSchemaPropertyInput")
+        {
+            value = (global::ElevenLabs.AnyOfJsonSchemaPropertyInput)Value!;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
     public T Match<T>(
         global::System.Func<
             global::ElevenLabs.LiteralJsonSchemaProperty,
@@ -157,7 +196,11 @@ public class QueryArrayJsonSchemaPropertyInputItems
         global::System.Func<
             global::ElevenLabs.ArrayJsonSchemaPropertyInput,
             T
-        > onArrayJsonSchemaPropertyInput
+        > onArrayJsonSchemaPropertyInput,
+        global::System.Func<
+            global::ElevenLabs.AnyOfJsonSchemaPropertyInput,
+            T
+        > onAnyOfJsonSchemaPropertyInput
     )
     {
         return Type switch
@@ -171,6 +214,9 @@ public class QueryArrayJsonSchemaPropertyInputItems
             "arrayJsonSchemaPropertyInput" => onArrayJsonSchemaPropertyInput(
                 AsArrayJsonSchemaPropertyInput()
             ),
+            "anyOfJsonSchemaPropertyInput" => onAnyOfJsonSchemaPropertyInput(
+                AsAnyOfJsonSchemaPropertyInput()
+            ),
             _ => throw new ElevenLabsClientException($"Unknown union type: {Type}"),
         };
     }
@@ -178,7 +224,8 @@ public class QueryArrayJsonSchemaPropertyInputItems
     public void Visit(
         global::System.Action<global::ElevenLabs.LiteralJsonSchemaProperty> onLiteralJsonSchemaProperty,
         global::System.Action<global::ElevenLabs.ObjectJsonSchemaPropertyInput> onObjectJsonSchemaPropertyInput,
-        global::System.Action<global::ElevenLabs.ArrayJsonSchemaPropertyInput> onArrayJsonSchemaPropertyInput
+        global::System.Action<global::ElevenLabs.ArrayJsonSchemaPropertyInput> onArrayJsonSchemaPropertyInput,
+        global::System.Action<global::ElevenLabs.AnyOfJsonSchemaPropertyInput> onAnyOfJsonSchemaPropertyInput
     )
     {
         switch (Type)
@@ -191,6 +238,9 @@ public class QueryArrayJsonSchemaPropertyInputItems
                 break;
             case "arrayJsonSchemaPropertyInput":
                 onArrayJsonSchemaPropertyInput(AsArrayJsonSchemaPropertyInput());
+                break;
+            case "anyOfJsonSchemaPropertyInput":
+                onAnyOfJsonSchemaPropertyInput(AsAnyOfJsonSchemaPropertyInput());
                 break;
             default:
                 throw new ElevenLabsClientException($"Unknown union type: {Type}");
@@ -239,6 +289,10 @@ public class QueryArrayJsonSchemaPropertyInputItems
     public static implicit operator QueryArrayJsonSchemaPropertyInputItems(
         global::ElevenLabs.ArrayJsonSchemaPropertyInput value
     ) => new("arrayJsonSchemaPropertyInput", value);
+
+    public static implicit operator QueryArrayJsonSchemaPropertyInputItems(
+        global::ElevenLabs.AnyOfJsonSchemaPropertyInput value
+    ) => new("anyOfJsonSchemaPropertyInput", value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<QueryArrayJsonSchemaPropertyInputItems>
@@ -351,6 +405,11 @@ public class QueryArrayJsonSchemaPropertyInputItems
                             "items",
                         }
                     ),
+                    (
+                        "anyOfJsonSchemaPropertyInput",
+                        typeof(global::ElevenLabs.AnyOfJsonSchemaPropertyInput),
+                        global::System.Array.Empty<string>()
+                    ),
                 };
 
                 foreach (var (key, type, anyOfKeys) in types)
@@ -395,6 +454,7 @@ public class QueryArrayJsonSchemaPropertyInputItems
             }
 
             value.Visit(
+                obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options)

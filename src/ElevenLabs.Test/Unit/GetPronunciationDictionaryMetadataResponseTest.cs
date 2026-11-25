@@ -21,7 +21,7 @@ public class GetPronunciationDictionaryMetadataResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"latest_version_id\":\"latest_version_id\",\"latest_version_rules_num\":7,\"name\":\"name\",\"permission_on_resource\":\"admin\",\"created_by\":\"created_by\",\"creation_time_unix\":5,\"archived_time_unix\":2,\"description\":\"description\"}";
+            "{\"id\":\"id\",\"latest_version_id\":\"latest_version_id\",\"latest_version_rules_num\":1,\"name\":\"name\",\"permission_on_resource\":\"admin\",\"created_by\":\"created_by\",\"creation_time_unix\":7,\"archived_time_unix\":9,\"description\":\"description\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.GetPronunciationDictionaryMetadataResponse>(

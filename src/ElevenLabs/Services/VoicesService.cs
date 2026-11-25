@@ -564,9 +564,25 @@ internal class VoicesService : BaseService
     }
 
     /// <summary>Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.</summary>
+    /// <param name="category">Voice category used for filtering</param>
+    /// <param name="gender">Gender used for filtering</param>
+    /// <param name="age">Age used for filtering</param>
+    /// <param name="useCases">Use-case used for filtering</param>
+    /// <param name="minNoticePeriodDays">Filter voices with a minimum notice period of the given number of days.</param>
+    /// <param name="includeCustomRates">Include/exclude voices with custom rates</param>
+    /// <param name="includeLiveModerated">Include/exclude voices that are live moderated</param>
+    /// <param name="ownerId">Filter voices by public owner ID</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.GetLibraryVoicesResponse> FindSimilarVoicesAsync(
         global::ElevenLabs.ListSimilarVoicesRequest input,
+        global::ElevenLabs.FindSimilarVoicesVoicesRequestCategory? category = null,
+        string? gender = null,
+        string? age = null,
+        List<string>? useCases = null,
+        long? minNoticePeriodDays = null,
+        bool? includeCustomRates = null,
+        bool? includeLiveModerated = null,
+        string? ownerId = null,
         string? xiApiKey = null,
         RequestConfig? requestConfig = null,
         CancellationToken cancellationToken = default
@@ -578,6 +594,14 @@ internal class VoicesService : BaseService
         var resolvedConfig = GetResolvedConfig(_findSimilarVoicesAsyncConfig, requestConfig);
 
         var request = new RequestBuilder(HttpMethod.Post, "v1/similar-voices")
+            .SetOptionalQueryParameter("category", category?.Value)
+            .SetOptionalQueryParameter("gender", gender)
+            .SetOptionalQueryParameter("age", age)
+            .SetOptionalQueryParameter("use_cases", useCases)
+            .SetOptionalQueryParameter("min_notice_period_days", minNoticePeriodDays)
+            .SetOptionalQueryParameter("include_custom_rates", includeCustomRates)
+            .SetOptionalQueryParameter("include_live_moderated", includeLiveModerated)
+            .SetOptionalQueryParameter("owner_id", ownerId)
             .SetOptionalHeader("xi-api-key", xiApiKey)
             .SetContentAsMultipartFormData(input, _jsonSerializerOptions)
             .Build();

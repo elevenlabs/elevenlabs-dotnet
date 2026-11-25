@@ -21,7 +21,7 @@ public class DubbingMetadataResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"dubbing_id\":\"dubbing_id\",\"name\":\"name\",\"status\":\"preparing\",\"source_language\":\"source_language\",\"target_languages\":[\"target_languages\"],\"editable\":true,\"created_at\":\"2023-08-02T07:39:50.163Z\",\"media_metadata\":{\"content_type\":\"content_type\",\"duration\":3.17},\"error\":\"error\"}";
+            "{\"dubbing_id\":\"dubbing_id\",\"name\":\"name\",\"status\":\"preparing\",\"source_language\":\"source_language\",\"target_languages\":[\"target_languages\"],\"editable\":true,\"created_at\":\"2023-08-02T07:39:50.163Z\",\"media_metadata\":{\"content_type\":\"content_type\",\"duration\":7.54},\"error\":\"error\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingMetadataResponse>(wire);
         var serialized = TestJson.Serialize(instance);

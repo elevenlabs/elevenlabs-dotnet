@@ -20,7 +20,7 @@ public class WorkflowResultConditionModelInputTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"label\":\"label\",\"type\":\"result\",\"successful\":true}";
+        const string wire = "{\"label\":\"label\",\"type\":\"result\",\"successful\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkflowResultConditionModelInput>(
             wire

@@ -20,8 +20,7 @@ public class ColumnFilterTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire =
-            "{\"column\":\"column\",\"operation\":\"in\",\"values\":[\"Excepteur cu\"]}";
+        const string wire = "{\"column\":\"column\",\"operation\":\"in\",\"values\":[\"esse \"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ColumnFilter>(wire);
         var serialized = TestJson.Serialize(instance);

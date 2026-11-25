@@ -21,7 +21,7 @@ public class AgentMetadataDbModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"created_at_unix_secs\":5,\"updated_at_unix_secs\":2,\"created_from\":\"cli\",\"last_updated_from\":\"cli\"}";
+            "{\"created_at_unix_secs\":2,\"updated_at_unix_secs\":10,\"created_from\":\"cli\",\"last_updated_from\":\"cli\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentMetadataDbModel>(wire);
         var serialized = TestJson.Serialize(instance);

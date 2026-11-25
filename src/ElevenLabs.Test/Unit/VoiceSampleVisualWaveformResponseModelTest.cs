@@ -20,7 +20,7 @@ public class VoiceSampleVisualWaveformResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"sample_id\":\"sample_id\",\"visual_waveform\":[3.9]}";
+        const string wire = "{\"sample_id\":\"sample_id\",\"visual_waveform\":[3.53]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.VoiceSampleVisualWaveformResponseModel>(wire);

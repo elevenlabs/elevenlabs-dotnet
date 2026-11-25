@@ -20,7 +20,7 @@ public class ConversationInitiationClientDataConversationConfigOverrideConversat
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text_only\":false,\"max_duration_seconds\":6}";
+        const string wire = "{\"text_only\":false,\"max_duration_seconds\":1}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationInitiationClientDataConversationConfigOverrideConversation>(

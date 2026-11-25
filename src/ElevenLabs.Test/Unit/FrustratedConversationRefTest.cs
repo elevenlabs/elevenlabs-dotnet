@@ -21,7 +21,7 @@ public class FrustratedConversationRefTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"start_time_unix_secs\":1,\"overall_label\":\"positive\",\"overall_sentiment_score\":0.8,\"overall_frustration_score\":7.64}";
+            "{\"conversation_id\":\"conversation_id\",\"agent_id\":\"agent_id\",\"start_time_unix_secs\":7,\"overall_label\":\"positive\",\"overall_sentiment_score\":5.86,\"overall_frustration_score\":8.44}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.FrustratedConversationRef>(wire);
         var serialized = TestJson.Serialize(instance);

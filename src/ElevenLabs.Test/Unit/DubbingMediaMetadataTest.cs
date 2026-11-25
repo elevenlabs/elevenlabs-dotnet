@@ -20,7 +20,7 @@ public class DubbingMediaMetadataTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"content_type\":\"content_type\",\"duration\":3.17}";
+        const string wire = "{\"content_type\":\"content_type\",\"duration\":7.54}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingMediaMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

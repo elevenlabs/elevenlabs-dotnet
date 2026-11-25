@@ -21,7 +21,7 @@ public class DubbingBulkTargetSegmentUpdateResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"segments\":[{\"id\":\"id\",\"speaker_id\":\"speaker_id\",\"start_s\":5.07,\"end_s\":2.74,\"source_text\":\"source_text\",\"translation\":\"translation\"}],\"revision\":10}";
+            "{\"segments\":[{\"id\":\"id\",\"speaker_id\":\"speaker_id\",\"start_s\":7.6,\"end_s\":3.86,\"source_text\":\"source_text\",\"translation\":\"translation\"}],\"revision\":9}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.DubbingBulkTargetSegmentUpdateResponse>(wire);

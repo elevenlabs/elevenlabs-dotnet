@@ -21,7 +21,7 @@ public class ReceptionUpdateHolidayRequestPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"Christmas Eve\",\"start_date\":{\"year\":2026,\"month\":12,\"day\":25},\"end_date\":{\"year\":2026,\"month\":12,\"day\":25},\"holiday_type\":\"closed\",\"override_hours\":[{\"start_hour\":9,\"start_minute\":9,\"end_hour\":17,\"end_minute\":30}],\"time_off_type\":\"staff\",\"resource_id\":\"resource_id\",\"location_id\":\"location_id\",\"reason\":\"reason\"}";
+            "{\"name\":\"Christmas Eve\",\"start_date\":{\"year\":2026,\"month\":12,\"day\":25},\"end_date\":{\"year\":2026,\"month\":12,\"day\":25},\"holiday_type\":\"closed\",\"override_hours\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}],\"time_off_type\":\"staff\",\"resource_id\":\"resource_id\",\"location_id\":\"location_id\",\"reason\":\"reason\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionUpdateHolidayRequestPatch>(

@@ -21,7 +21,7 @@ public class AgentToolResponseClientEventDataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"tool_name\":\"tool_name\",\"tool_call_id\":\"tool_call_id\",\"tool_type\":\"tool_type\",\"is_error\":true,\"is_blocked\":true,\"event_id\":8,\"is_called\":true}";
+            "{\"tool_name\":\"tool_name\",\"tool_call_id\":\"tool_call_id\",\"tool_type\":\"tool_type\",\"is_error\":false,\"is_blocked\":false,\"event_id\":9,\"is_called\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentToolResponseClientEventData>(
             wire

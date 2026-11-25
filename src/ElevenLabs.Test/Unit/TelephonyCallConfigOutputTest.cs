@@ -21,7 +21,7 @@ public class TelephonyCallConfigOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"ringing_timeout_secs\":60,\"twilio_call_recording_enabled\":false,\"twilio_machine_detection\":{\"mode\":\"enable\",\"actions\":[{\"action\":\"hang_up\",\"answered_by\":[\"human\"]}]}}";
+            "{\"ringing_timeout_secs\":60,\"twilio_call_recording_enabled\":true,\"twilio_machine_detection\":{\"mode\":\"enable\",\"actions\":[{\"action\":\"hang_up\",\"answered_by\":[\"human\"]}]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TelephonyCallConfigOutput>(wire);
         var serialized = TestJson.Serialize(instance);

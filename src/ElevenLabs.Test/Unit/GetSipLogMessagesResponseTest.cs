@@ -21,7 +21,7 @@ public class GetSipLogMessagesResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"sip_messages\":[{\"call_id\":\"call_id\",\"phone_numbers\":[\"phone_numbers\"],\"local_address\":\"local_address\",\"remote_address\":\"remote_address\",\"transport\":\"transport\",\"raw_message\":\"raw_message\",\"error_message\":\"error_message\",\"direction\":\"in\",\"created_at_unix_micro\":7}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"sip_messages\":[{\"call_id\":\"call_id\",\"phone_numbers\":[\"phone_numbers\"],\"local_address\":\"local_address\",\"remote_address\":\"remote_address\",\"transport\":\"transport\",\"raw_message\":\"raw_message\",\"error_message\":\"error_message\",\"direction\":\"in\",\"created_at_unix_micro\":2}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetSipLogMessagesResponse>(wire);
         var serialized = TestJson.Serialize(instance);

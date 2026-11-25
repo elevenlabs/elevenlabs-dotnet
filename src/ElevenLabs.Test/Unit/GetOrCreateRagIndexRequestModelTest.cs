@@ -21,7 +21,7 @@ public class GetOrCreateRagIndexRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"document_id\":\"document_id\",\"create_if_missing\":true,\"model\":\"e5_mistral_7b_instruct\"}";
+            "{\"document_id\":\"document_id\",\"create_if_missing\":false,\"model\":\"e5_mistral_7b_instruct\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.GetOrCreateRagIndexRequestModel>(
             wire

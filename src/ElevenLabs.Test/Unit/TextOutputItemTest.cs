@@ -21,7 +21,7 @@ public class TextOutputItemTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"text\",\"role\":\"agent\",\"id\":\"id\",\"text\":\"text\",\"created_at_unix_ms\":2}";
+            "{\"type\":\"text\",\"role\":\"agent\",\"id\":\"id\",\"text\":\"text\",\"created_at_unix_ms\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TextOutputItem>(wire);
         var serialized = TestJson.Serialize(instance);

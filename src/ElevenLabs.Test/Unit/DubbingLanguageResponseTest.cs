@@ -21,7 +21,7 @@ public class DubbingLanguageResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"language_id\":\"language_id\",\"project_id\":\"project_id\",\"target_language\":\"target_language\",\"status\":\"queued\",\"model_id\":\"model_id\",\"voice_settings\":{\"cloning_strength\":7},\"outputs\":{\"lossless_audio\":\"lossless_audio\",\"subtitles\":\"subtitles\"},\"revision\":6,\"output_revision\":6,\"error\":{\"code\":\"code\",\"message\":\"message\",\"retryable\":false},\"warnings\":[{\"type\":\"voices_not_permitted\",\"speaker_ids\":[\"speaker_ids\"],\"message\":\"message\"}],\"created_at\":\"2023-02-27T12:13:35.426Z\",\"updated_at\":\"2023-01-11T06:53:39.574Z\"}";
+            "{\"language_id\":\"language_id\",\"project_id\":\"project_id\",\"target_language\":\"target_language\",\"status\":\"queued\",\"model_id\":\"model_id\",\"voice_settings\":{\"cloning_strength\":7},\"outputs\":{\"lossless_audio\":\"lossless_audio\",\"subtitles\":\"subtitles\"},\"revision\":8,\"output_revision\":5,\"error\":{\"code\":\"code\",\"message\":\"message\",\"retryable\":false},\"warnings\":[{\"type\":\"voices_not_permitted\",\"speaker_ids\":[\"speaker_ids\"],\"message\":\"message\"}],\"created_at\":\"2023-02-27T12:13:35.426Z\",\"updated_at\":\"2023-01-11T06:53:39.574Z\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingLanguageResponse>(wire);
         var serialized = TestJson.Serialize(instance);

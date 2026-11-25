@@ -20,7 +20,7 @@ public class RagDocumentIndexUsageTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"used_bytes\":9}";
+        const string wire = "{\"used_bytes\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RagDocumentIndexUsage>(wire);
         var serialized = TestJson.Serialize(instance);

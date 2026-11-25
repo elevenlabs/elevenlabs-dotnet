@@ -20,7 +20,7 @@ public class UserFeedbackTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"score\":\"like\",\"time_in_call_secs\":1}";
+        const string wire = "{\"score\":\"like\",\"time_in_call_secs\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UserFeedback>(wire);
         var serialized = TestJson.Serialize(instance);

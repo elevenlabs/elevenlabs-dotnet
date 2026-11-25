@@ -21,7 +21,7 @@ public class LlmDeprecationConfigModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"warning_start_days\":9,\"fallback_start_days\":4,\"fallback_complete_days\":0,\"fallback_start_percentage\":7,\"fallback_complete_percentage\":3}";
+            "{\"warning_start_days\":1,\"fallback_start_days\":6,\"fallback_complete_days\":2,\"fallback_start_percentage\":1,\"fallback_complete_percentage\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LlmDeprecationConfigModel>(wire);
         var serialized = TestJson.Serialize(instance);

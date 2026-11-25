@@ -20,7 +20,7 @@ public class SpeechEngineAuthConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"enable_auth\":true}";
+        const string wire = "{\"enable_auth\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeechEngineAuthConfig>(wire);
         var serialized = TestJson.Serialize(instance);

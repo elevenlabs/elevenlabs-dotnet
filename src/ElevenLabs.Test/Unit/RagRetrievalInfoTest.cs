@@ -21,7 +21,7 @@ public class RagRetrievalInfoTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"chunks\":[{\"document_id\":\"document_id\",\"chunk_id\":\"chunk_id\",\"vector_distance\":7.81}],\"embedding_model\":\"e5_mistral_7b_instruct\",\"retrieval_query\":\"retrieval_query\",\"rag_latency_secs\":2.55,\"used_chunk_ids\":[\"used_chunk_ids\"]}";
+            "{\"chunks\":[{\"document_id\":\"document_id\",\"chunk_id\":\"chunk_id\",\"vector_distance\":0.96}],\"embedding_model\":\"e5_mistral_7b_instruct\",\"retrieval_query\":\"retrieval_query\",\"rag_latency_secs\":0.01,\"used_chunk_ids\":[\"used_chunk_ids\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RagRetrievalInfo>(wire);
         var serialized = TestJson.Serialize(instance);

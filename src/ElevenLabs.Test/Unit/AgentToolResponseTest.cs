@@ -21,7 +21,7 @@ public class AgentToolResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_tool_response\":{\"tool_name\":\"tool_name\",\"tool_call_id\":\"tool_call_id\",\"tool_type\":\"tool_type\",\"is_error\":false,\"is_blocked\":true,\"event_id\":10,\"is_called\":true},\"type\":\"agent_tool_response\"}";
+            "{\"agent_tool_response\":{\"tool_name\":\"tool_name\",\"tool_call_id\":\"tool_call_id\",\"tool_type\":\"tool_type\",\"is_error\":false,\"is_blocked\":false,\"event_id\":0,\"is_called\":true},\"type\":\"agent_tool_response\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentToolResponse>(wire);
         var serialized = TestJson.Serialize(instance);

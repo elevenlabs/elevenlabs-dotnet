@@ -21,7 +21,7 @@ public class AnalysisRunSnapshotTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"price\":9.44,\"charge\":5,\"price_per_feature\":{\"key\":5.33},\"charge_per_feature\":{\"key\":10}}";
+            "{\"price\":9.12,\"charge\":4,\"price_per_feature\":{\"key\":6.52},\"charge_per_feature\":{\"key\":5}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AnalysisRunSnapshot>(wire);
         var serialized = TestJson.Serialize(instance);

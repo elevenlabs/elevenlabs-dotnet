@@ -26,9 +26,9 @@ public partial class ElevenLabsClient : IElevenLabsClient
     public IUserClient User { get; }
     public IStudioClient Studio { get; }
     public ElevenLabs.IPronunciationDictionariesClient PronunciationDictionaries { get; }
+    public IAudioNativeClient AudioNative { get; }
     public ISpeechToTextClient SpeechToText { get; }
     public IModelsClient Models { get; }
-    public IAudioNativeClient AudioNative { get; }
     public IContentProvenanceClient ContentProvenance { get; }
     public IReceptionClient Reception { get; }
     public ElevenLabs.IWorkspacesClient Workspaces { get; }
@@ -56,6 +56,60 @@ public partial class ElevenLabsClient : IElevenLabsClient
                     string?
                 >>()
         );
+        if (
+            !global::System.Linq.Enumerable.Any(
+                defaultHeaders,
+                header =>
+                    global::System.StringComparer.OrdinalIgnoreCase.Equals(
+                        header.Key,
+                        "X-Fern-Language"
+                    )
+            )
+        )
+        {
+            defaultHeaders.Add(
+                new global::System.Collections.Generic.KeyValuePair<string, string?>(
+                    "X-Fern-Language",
+                    "C#"
+                )
+            );
+        }
+        if (
+            !global::System.Linq.Enumerable.Any(
+                defaultHeaders,
+                header =>
+                    global::System.StringComparer.OrdinalIgnoreCase.Equals(
+                        header.Key,
+                        "X-Fern-SDK-Name"
+                    )
+            )
+        )
+        {
+            defaultHeaders.Add(
+                new global::System.Collections.Generic.KeyValuePair<string, string?>(
+                    "X-Fern-SDK-Name",
+                    "ElevenLabs"
+                )
+            );
+        }
+        if (
+            !global::System.Linq.Enumerable.Any(
+                defaultHeaders,
+                header =>
+                    global::System.StringComparer.OrdinalIgnoreCase.Equals(
+                        header.Key,
+                        "X-Fern-SDK-Version"
+                    )
+            )
+        )
+        {
+            defaultHeaders.Add(
+                new global::System.Collections.Generic.KeyValuePair<string, string?>(
+                    "X-Fern-SDK-Version",
+                    "1.0.0"
+                )
+            );
+        }
         if (
             !global::System.Linq.Enumerable.Any(
                 defaultHeaders,
@@ -106,9 +160,9 @@ public partial class ElevenLabsClient : IElevenLabsClient
         User = new UserClient(_httpClient);
         Studio = new StudioClient(_httpClient);
         PronunciationDictionaries = new ElevenLabs.PronunciationDictionariesClient(_httpClient);
+        AudioNative = new AudioNativeClient(_httpClient);
         SpeechToText = new SpeechToTextClient(_httpClient);
         Models = new ModelsClient(_httpClient);
-        AudioNative = new AudioNativeClient(_httpClient);
         ContentProvenance = new ContentProvenanceClient(_httpClient);
         Reception = new ReceptionClient(_httpClient);
         Workspaces = new ElevenLabs.WorkspacesClient(_httpClient);
@@ -254,6 +308,19 @@ public partial class ElevenLabsClient : IElevenLabsClient
             options.BaseUrl = _httpClient.WebSocketBaseUrl;
         }
         return new DubbingApi(
+            options,
+            _httpClient.DefaultHeaders,
+            _httpClient.HandshakeCredentials
+        );
+    }
+
+    public ISubtitlingApi CreateSubtitlingApi(SubtitlingApi.Options options)
+    {
+        if (string.IsNullOrWhiteSpace(options.BaseUrl))
+        {
+            options.BaseUrl = _httpClient.WebSocketBaseUrl;
+        }
+        return new SubtitlingApi(
             options,
             _httpClient.DefaultHeaders,
             _httpClient.HandshakeCredentials

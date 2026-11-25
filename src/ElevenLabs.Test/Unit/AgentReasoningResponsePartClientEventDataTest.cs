@@ -20,7 +20,7 @@ public class AgentReasoningResponsePartClientEventDataTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"type\":\"start\",\"event_id\":1}";
+        const string wire = "{\"text\":\"text\",\"type\":\"start\",\"event_id\":4}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentReasoningResponsePartClientEventData>(

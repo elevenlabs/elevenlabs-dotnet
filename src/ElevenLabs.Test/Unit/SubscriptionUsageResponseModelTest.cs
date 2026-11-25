@@ -21,7 +21,7 @@ public class SubscriptionUsageResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"rollover_credits_quota\":2,\"subscription_cycle_credits_quota\":10,\"manually_gifted_credits_quota\":6,\"payg_credits_quota\":4,\"rollover_credits_used\":5,\"subscription_cycle_credits_used\":10,\"manually_gifted_credits_used\":1,\"payg_credits_used\":10,\"paid_usage_based_credits_used\":5,\"actual_reported_credits\":3}";
+            "{\"rollover_credits_quota\":4,\"subscription_cycle_credits_quota\":10,\"manually_gifted_credits_quota\":9,\"payg_credits_quota\":3,\"rollover_credits_used\":4,\"subscription_cycle_credits_used\":8,\"manually_gifted_credits_used\":10,\"payg_credits_used\":2,\"paid_usage_based_credits_used\":2,\"actual_reported_credits\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SubscriptionUsageResponseModel>(
             wire

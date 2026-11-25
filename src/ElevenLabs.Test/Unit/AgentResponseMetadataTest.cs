@@ -21,7 +21,7 @@ public class AgentResponseMetadataTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_response_metadata_event\":{\"metadata\":{},\"event_id\":4},\"type\":\"agent_response_metadata\"}";
+            "{\"agent_response_metadata_event\":{\"metadata\":{},\"event_id\":8},\"type\":\"agent_response_metadata\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentResponseMetadata>(wire);
         var serialized = TestJson.Serialize(instance);

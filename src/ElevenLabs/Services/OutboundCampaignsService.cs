@@ -172,7 +172,7 @@ internal class OutboundCampaignsService : BaseService
     /// <param name="agentId">Only campaigns run by this agent.</param>
     /// <param name="channel">Only campaigns on this channel.</param>
     /// <param name="mode">Only voice or only message campaigns.</param>
-    /// <param name="search">Only campaigns whose name contains this text.</param>
+    /// <param name="search">Only campaigns whose name contains this text, or whose ID is exactly this text.</param>
     /// <param name="cursor">Used for fetching next page. Cursor is returned in the response.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.CampaignPageResponse> ListAsync(

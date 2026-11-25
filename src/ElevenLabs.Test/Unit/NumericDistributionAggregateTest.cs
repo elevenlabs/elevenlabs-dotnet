@@ -20,7 +20,7 @@ public class NumericDistributionAggregateTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"count\":10,\"sum\":8.3,\"min\":5.76,\"max\":0.3}";
+        const string wire = "{\"count\":0,\"sum\":7.83,\"min\":2.07,\"max\":0.43}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.NumericDistributionAggregate>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class AttachedUserEvaluationRefTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"source\":\"user\",\"analysis_item_id\":\"analysis_item_id\",\"version_id\":\"latest\",\"additional_version_ids\":[\"additional_version_ids\"],\"scope\":\"conversation\",\"weight\":0.86}";
+            "{\"source\":\"user\",\"analysis_item_id\":\"analysis_item_id\",\"version_id\":\"latest\",\"additional_version_ids\":[\"additional_version_ids\"],\"scope\":\"conversation\",\"weight\":8.32}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AttachedUserEvaluationRef>(wire);
         var serialized = TestJson.Serialize(instance);

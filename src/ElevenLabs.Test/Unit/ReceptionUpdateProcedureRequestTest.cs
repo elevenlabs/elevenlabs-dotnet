@@ -21,7 +21,7 @@ public class ReceptionUpdateProcedureRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"commod\",\"trigger\":\"in sin\",\"body\":\"1. Ask for the caller's name and order number.\\n2. Look up the order and read back its status.\"}";
+            "{\"name\":\"estla\",\"trigger\":\"occaecat\",\"body\":\"1. Ask for the caller's name and order number.\\n2. Look up the order and read back its status.\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.Receptionists.ReceptionUpdateProcedureRequest>(

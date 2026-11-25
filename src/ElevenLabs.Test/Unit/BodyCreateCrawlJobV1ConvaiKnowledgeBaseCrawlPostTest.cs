@@ -21,7 +21,7 @@ public class BodyCreateCrawlJobV1ConvaiKnowledgeBaseCrawlPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"url\":\"url\",\"max_depth\":3,\"max_pages\":1000,\"pattern\":\"pattern\",\"exclude_patterns\":[\"exclude_patterns\"],\"sitemap_urls\":[\"sitemap_urls\"],\"parent_folder_id\":\"parent_folder_id\",\"enable_auto_sync\":false,\"auto_remove\":false,\"auto_discover\":false,\"minimum_frequency_days\":113}";
+            "{\"url\":\"url\",\"max_depth\":3,\"max_pages\":1000,\"pattern\":\"pattern\",\"exclude_patterns\":[\"exclude_patterns\"],\"sitemap_urls\":[\"sitemap_urls\"],\"parent_folder_id\":\"parent_folder_id\",\"enable_auto_sync\":false,\"auto_remove\":true,\"auto_discover\":false,\"minimum_frequency_days\":21}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.KnowledgeBase.BodyCreateCrawlJobV1ConvaiKnowledgeBaseCrawlPost>(

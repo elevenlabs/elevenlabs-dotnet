@@ -21,7 +21,7 @@ public class BodyCreateUrlDocumentV1ConvaiKnowledgeBaseUrlPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"url\":\"url\",\"name\":\"name\",\"parent_folder_id\":\"parent_folder_id\",\"enable_auto_sync\":false,\"auto_remove\":true,\"minimum_frequency_days\":50}";
+            "{\"url\":\"url\",\"name\":\"name\",\"parent_folder_id\":\"parent_folder_id\",\"enable_auto_sync\":true,\"auto_remove\":true,\"minimum_frequency_days\":49}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.KnowledgeBase.BodyCreateUrlDocumentV1ConvaiKnowledgeBaseUrlPost>(

@@ -20,7 +20,7 @@ public class ForcedAlignmentCharacterResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"start\":6.39,\"end\":6.58}";
+        const string wire = "{\"text\":\"text\",\"start\":9.63,\"end\":5.6}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ForcedAlignmentCharacterResponseModel>(wire);

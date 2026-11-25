@@ -20,7 +20,7 @@ public class AgentResponseCompleteAgentResponseCompleteEventTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"event_id\":5}";
+        const string wire = "{\"event_id\":4}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentResponseCompleteAgentResponseCompleteEvent>(

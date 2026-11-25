@@ -21,7 +21,7 @@ public class AlertingSettingsResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"monitor_configs\":{\"key\":{\"enabled\":false,\"threshold\":0.83,\"relative_increase_threshold\":7.96,\"min_failure_count\":3,\"min_history_bucket_count\":2,\"min_sample_count\":7,\"suspect_trigger_threshold\":4,\"auto_resolve_after_inactive_minutes\":1}},\"auto_resolve_after_inactive_minutes\":3,\"environments\":[\"environments\"],\"notifiers\":[{\"type\":\"webhook\",\"webhook_id\":\"webhook_id\"}]}";
+            "{\"monitor_configs\":{\"key\":{\"enabled\":true,\"threshold\":0.63,\"relative_increase_threshold\":2.45,\"min_failure_count\":5,\"min_history_bucket_count\":9,\"min_sample_count\":9,\"suspect_trigger_threshold\":1,\"auto_resolve_after_inactive_minutes\":7}},\"auto_resolve_after_inactive_minutes\":3,\"environments\":[\"environments\"],\"notifiers\":[{\"type\":\"webhook\",\"webhook_id\":\"webhook_id\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AlertingSettingsResponse>(wire);
         var serialized = TestJson.Serialize(instance);

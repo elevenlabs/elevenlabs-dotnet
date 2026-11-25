@@ -21,7 +21,7 @@ public class ResellerTierResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"tier_id\":\"tier_id\",\"display_name\":\"display_name\",\"tier_economics\":{\"monthly_price_usd\":99,\"annual_price_usd\":2.12,\"included_minutes_per_month\":300,\"overage_price_per_minute_usd\":8.84,\"max_phone_numbers\":2,\"concurrent_calls\":3,\"max_active_locations\":1,\"max_customer_facing_agents\":1,\"max_team_members\":5,\"assistant_daily_messages\":100}}";
+            "{\"tier_id\":\"tier_id\",\"display_name\":\"display_name\",\"currency\":\"USD\",\"tier_economics\":{\"monthly_price_usd\":99,\"annual_price_usd\":6.83,\"included_minutes_per_month\":300,\"overage_price_per_minute_usd\":3.87,\"max_phone_numbers\":2,\"concurrent_calls\":3,\"max_active_locations\":1,\"max_customer_facing_agents\":1,\"max_team_members\":5,\"assistant_daily_messages\":100}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ResellerTierResponse>(wire);
         var serialized = TestJson.Serialize(instance);

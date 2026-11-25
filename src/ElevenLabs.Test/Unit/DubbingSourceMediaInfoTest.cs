@@ -21,7 +21,7 @@ public class DubbingSourceMediaInfoTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"filename\":\"filename\",\"duration_s\":0.99,\"has_video\":false,\"mime_type\":\"mime_type\"}";
+            "{\"filename\":\"filename\",\"duration_s\":3.84,\"has_video\":false,\"mime_type\":\"mime_type\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingSourceMediaInfo>(wire);
         var serialized = TestJson.Serialize(instance);

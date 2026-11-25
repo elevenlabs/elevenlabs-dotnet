@@ -21,7 +21,7 @@ public class AgentResponseCorrectionTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_response_correction_event\":{\"original_agent_response\":\"original_agent_response\",\"corrected_agent_response\":\"corrected_agent_response\",\"event_id\":7,\"response_id\":\"response_id\"},\"type\":\"agent_response_correction\"}";
+            "{\"agent_response_correction_event\":{\"original_agent_response\":\"original_agent_response\",\"corrected_agent_response\":\"corrected_agent_response\",\"event_id\":0,\"response_id\":\"response_id\"},\"type\":\"agent_response_correction\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentResponseCorrection>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdAp
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"is_enabled\":false,\"name\":\"name\",\"permissions\":[\"text_to_speech\"],\"character_limit\":6,\"allowed_ips\":[\"sit aliqu\"],\"third_party_disable_allowed\":false,\"tts_concurrency_limit\":7,\"dubbing_concurrency_limit\":10,\"music_concurrency_limit\":4,\"expires_at_unix\":2}";
+            "{\"is_enabled\":true,\"name\":\"name\",\"permissions\":[\"text_to_speech\"],\"character_limit\":5,\"allowed_ips\":[\"dolore in\"],\"third_party_disable_allowed\":false,\"tts_concurrency_limit\":2,\"dubbing_concurrency_limit\":8,\"music_concurrency_limit\":9,\"expires_at_unix\":1}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ServiceAccounts.BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatch>(

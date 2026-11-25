@@ -21,7 +21,7 @@ public class GetDocumentChunkingOverrideResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]},\"effective_chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]},\"inherited_chunking_override\":{\"max_chunk_size\":5,\"overlap_percentage\":8,\"custom_separators\":[\"custom_separators\"]}}";
+            "{\"id\":\"id\",\"chunking_override\":{\"max_chunk_size\":8,\"overlap_percentage\":0,\"custom_separators\":[\"custom_separators\"]},\"effective_chunking_override\":{\"max_chunk_size\":8,\"overlap_percentage\":0,\"custom_separators\":[\"custom_separators\"]},\"inherited_chunking_override\":{\"max_chunk_size\":8,\"overlap_percentage\":0,\"custom_separators\":[\"custom_separators\"]}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.GetDocumentChunkingOverrideResponseModel>(wire);

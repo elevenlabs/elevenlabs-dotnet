@@ -21,7 +21,7 @@ public class ConversationConfigClientOverrideConfigOutputTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"asr\":{\"keywords\":true},\"turn\":{\"soft_timeout_config\":{\"message\":true,\"additional_soft_timeout_messages\":true},\"noisy_environment_message\":false},\"tts\":{\"model_id\":true,\"voice_id\":true,\"supported_voices\":false,\"stability\":false,\"speed\":false,\"similarity_boost\":true,\"clone_strength\":true,\"pronunciation_dictionary_locators\":false},\"conversation\":{\"text_only\":true,\"max_duration_seconds\":true},\"agent\":{\"first_message\":false,\"language\":false,\"max_conversation_duration_message\":true,\"prompt\":{\"prompt\":true,\"llm\":false,\"reasoning_effort\":true,\"tool_ids\":false,\"tool_ids_strict\":true,\"native_mcp_server_ids\":false,\"knowledge_base\":true}}}";
+            "{\"asr\":{\"keywords\":false},\"turn\":{\"soft_timeout_config\":{\"message\":true,\"additional_soft_timeout_messages\":false},\"noisy_environment_message\":true},\"tts\":{\"model_id\":true,\"voice_id\":true,\"supported_voices\":false,\"stability\":true,\"speed\":false,\"similarity_boost\":true,\"clone_strength\":false,\"pronunciation_dictionary_locators\":true},\"conversation\":{\"text_only\":true,\"max_duration_seconds\":false},\"agent\":{\"first_message\":true,\"language\":true,\"max_conversation_duration_message\":false,\"prompt\":{\"prompt\":true,\"llm\":false,\"reasoning_effort\":true,\"tool_ids\":true,\"tool_ids_strict\":false,\"native_mcp_server_ids\":true,\"knowledge_base\":true}}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationConfigClientOverrideConfigOutput>(

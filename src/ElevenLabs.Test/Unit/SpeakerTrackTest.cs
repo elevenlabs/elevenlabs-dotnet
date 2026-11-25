@@ -21,7 +21,7 @@ public class SpeakerTrackTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":8.28,\"is_audio\":false,\"url\":\"url\"},\"speaker_name\":\"speaker_name\",\"voices\":{\"key\":\"voices\"},\"segments\":[\"segments\"]}";
+            "{\"id\":\"id\",\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":9.21,\"is_audio\":true,\"url\":\"url\"},\"speaker_name\":\"speaker_name\",\"voices\":{\"key\":\"voices\"},\"segments\":[\"segments\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SpeakerTrack>(wire);
         var serialized = TestJson.Serialize(instance);

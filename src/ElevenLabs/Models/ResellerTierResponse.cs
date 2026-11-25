@@ -54,6 +54,10 @@ public record ResellerTierResponse : IJsonOnDeserialized
     [JsonPropertyName("display_name")]
     public required string DisplayName { get; set; }
 
+    /// <value>What the prices are in. The same for every tier on a ladder.</value>
+    [JsonPropertyName("currency")]
+    public required ResellerTierResponseCurrency Currency { get; set; }
+
     /// <value>A tier's prices and the limits shown on its tier card.</value>
     [JsonPropertyName("tier_economics")]
     public required ResellerTierEconomics TierEconomics { get; set; }
@@ -97,6 +101,7 @@ public record ResellerTierResponse : IJsonOnDeserialized
         return true
             && ValueEquality.AreEqual(TierId, other.TierId)
             && ValueEquality.AreEqual(DisplayName, other.DisplayName)
+            && ValueEquality.AreEqual(Currency, other.Currency)
             && ValueEquality.AreEqual(TierEconomics, other.TierEconomics)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -109,6 +114,7 @@ public record ResellerTierResponse : IJsonOnDeserialized
             var hash = 17;
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TierId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DisplayName);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Currency);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TierEconomics);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

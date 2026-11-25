@@ -21,7 +21,7 @@ public class ReceptionUpdateProductRequestPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"et laborum adi\",\"kind\":\"text\",\"options\":[\"laboris Lo\"],\"required\":true,\"is_active\":true}],\"groups\":[{\"label\":\"Ut minim c\",\"rank\":5}],\"ungrouped_rank\":2,\"name\":\"nulla offici\",\"description\":\"officia nisi ve\",\"price\":5.34,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"track_quantity\":false}";
+            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"laboris Lo\",\"kind\":\"text\",\"options\":[\"ad reprehende\"],\"required\":false,\"is_active\":true}],\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":3,\"name\":\"dolor la\",\"description\":\"sunt d\",\"price\":9.58,\"is_active\":false,\"orderable\":false,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"track_quantity\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionUpdateProductRequestPatch>(

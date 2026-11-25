@@ -20,7 +20,7 @@ public class InterruptionInterruptionEventTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"event_id\":2}";
+        const string wire = "{\"event_id\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InterruptionInterruptionEvent>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ReceptionKnowledgeSourceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"source_type\":\"file\",\"source_url\":\"source_url\",\"last_scraped_at_unix\":4,\"original_filename\":\"price-list.pdf\",\"content_type\":\"application/pdf\",\"file_size_bytes\":204800,\"status\":\"processing\",\"error_message\":\"error_message\",\"failure_reason\":\"blocked_url\",\"crawl_entire_site\":true,\"scraped_pages_count\":12,\"content_preview\":\"content_preview\",\"processing_started_at_unix\":10,\"id\":\"ksource_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":10,\"updated_at_unix\":7}";
+            "{\"source_type\":\"file\",\"source_url\":\"source_url\",\"last_scraped_at_unix\":2,\"original_filename\":\"price-list.pdf\",\"content_type\":\"application/pdf\",\"file_size_bytes\":204800,\"status\":\"processing\",\"error_message\":\"error_message\",\"failure_reason\":\"blocked_url\",\"crawl_entire_site\":true,\"scraped_pages_count\":12,\"content_preview\":\"content_preview\",\"processing_started_at_unix\":3,\"id\":\"ksource_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":0,\"updated_at_unix\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionKnowledgeSource>(wire);
         var serialized = TestJson.Serialize(instance);

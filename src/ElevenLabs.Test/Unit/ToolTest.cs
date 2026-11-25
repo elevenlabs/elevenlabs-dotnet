@@ -21,7 +21,7 @@ public class ToolTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"title\":\"title\",\"description\":\"description\",\"inputSchema\":{\"key\":{}},\"execution\":{\"taskSupport\":\"forbidden\"},\"outputSchema\":{\"key\":{}},\"icons\":[{\"src\":\"src\",\"mimeType\":\"mimeType\",\"sizes\":[\"sizes\"],\"theme\":\"light\"}],\"annotations\":{\"title\":\"title\",\"readOnlyHint\":false,\"destructiveHint\":false,\"idempotentHint\":false,\"openWorldHint\":true},\"_meta\":{\"key\":{}}}";
+            "{\"name\":\"name\",\"title\":\"title\",\"description\":\"description\",\"inputSchema\":{\"key\":{}},\"execution\":{\"taskSupport\":\"forbidden\"},\"outputSchema\":{\"key\":{}},\"icons\":[{\"src\":\"src\",\"mimeType\":\"mimeType\",\"sizes\":[\"sizes\"],\"theme\":\"light\"}],\"annotations\":{\"title\":\"title\",\"readOnlyHint\":true,\"destructiveHint\":false,\"idempotentHint\":false,\"openWorldHint\":true},\"_meta\":{\"key\":{}}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Tool>(wire);
         var serialized = TestJson.Serialize(instance);

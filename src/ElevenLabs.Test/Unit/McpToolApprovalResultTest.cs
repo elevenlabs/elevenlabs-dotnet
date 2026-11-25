@@ -21,7 +21,7 @@ public class McpToolApprovalResultTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"mcp_tool_approval_result\",\"tool_call_id\":\"tool_call_id\",\"is_approved\":false}";
+            "{\"type\":\"mcp_tool_approval_result\",\"tool_call_id\":\"tool_call_id\",\"is_approved\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.McpToolApprovalResult>(wire);
         var serialized = TestJson.Serialize(instance);

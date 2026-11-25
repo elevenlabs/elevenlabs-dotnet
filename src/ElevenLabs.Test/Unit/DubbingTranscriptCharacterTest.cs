@@ -20,7 +20,7 @@ public class DubbingTranscriptCharacterTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"start_s\":1.07,\"end_s\":9.18}";
+        const string wire = "{\"text\":\"text\",\"start_s\":7.36,\"end_s\":2.01}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingTranscriptCharacter>(wire);
         var serialized = TestJson.Serialize(instance);

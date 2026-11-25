@@ -21,7 +21,7 @@ public class DubbingBulkSegmentUpdateRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"segments\":{\"key\":{\"text\":\"text\",\"speaker_id\":\"speaker_id\",\"start_s\":2.07,\"end_s\":4.59}}}";
+            "{\"segments\":{\"key\":{\"text\":\"text\",\"speaker_id\":\"speaker_id\",\"start_s\":9.82,\"end_s\":9.28}}}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Dubbing.Project.DubbingBulkSegmentUpdateRequest>(

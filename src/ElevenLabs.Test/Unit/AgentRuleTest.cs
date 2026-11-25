@@ -21,7 +21,7 @@ public class AgentRuleTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"commo\",\"description\":\"laborum nisi \",\"priority\":\"strict\",\"id\":\"rule_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":1}";
+            "{\"title\":\"elitin\",\"description\":\"do fugiat c\",\"priority\":\"strict\",\"id\":\"rule_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentRule>(wire);
         var serialized = TestJson.Serialize(instance);

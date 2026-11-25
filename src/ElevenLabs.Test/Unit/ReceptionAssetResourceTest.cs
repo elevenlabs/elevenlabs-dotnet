@@ -21,7 +21,7 @@ public class ReceptionAssetResourceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"groups\":[{\"label\":\"Ut minim c\",\"rank\":5}],\"ungrouped_rank\":9,\"name\":\"in ea\",\"description\":\"aliquip\",\"is_active\":true,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":9,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"reprehender\",\"id\":\"asset_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":8,\"updated_at_unix\":9}";
+            "{\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":10,\"name\":\"aliquip\",\"description\":\"officia dolore \",\"is_active\":true,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"occaecat culp\",\"id\":\"asset_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":0,\"updated_at_unix\":10}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionAssetResource>(wire);
         var serialized = TestJson.Serialize(instance);

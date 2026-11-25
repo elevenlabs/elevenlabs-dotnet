@@ -20,7 +20,7 @@ public class EvaluationCriteriaSummaryResultTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"result\":\"success\",\"score\":3,\"max_score\":6}";
+        const string wire = "{\"result\":\"success\",\"score\":8,\"max_score\":2}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.EvaluationCriteriaSummaryResult>(
             wire

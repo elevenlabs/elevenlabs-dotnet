@@ -21,7 +21,7 @@ public class UpdateMemberRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"email\":\"email\",\"is_locked\":false,\"workspace_role\":\"workspace_admin\",\"workspace_seat_type\":\"workspace_admin\",\"allow_downgrade_to_basic_seat\":false}";
+            "{\"email\":\"email\",\"is_locked\":true,\"workspace_role\":\"workspace_admin\",\"workspace_seat_type\":\"workspace_admin\",\"allow_downgrade_to_basic_seat\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Workspace.UpdateMemberRequest>(wire);
         var serialized = TestJson.Serialize(instance);

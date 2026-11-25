@@ -21,7 +21,7 @@ public class TurnConfigOverrideConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"soft_timeout_config\":{\"message\":true,\"additional_soft_timeout_messages\":true},\"noisy_environment_message\":false}";
+            "{\"soft_timeout_config\":{\"message\":true,\"additional_soft_timeout_messages\":false},\"noisy_environment_message\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TurnConfigOverrideConfig>(wire);
         var serialized = TestJson.Serialize(instance);

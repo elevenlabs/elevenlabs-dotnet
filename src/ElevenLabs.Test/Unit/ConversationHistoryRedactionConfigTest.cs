@@ -21,7 +21,7 @@ public class ConversationHistoryRedactionConfigTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"enabled\":true,\"entities\":[\"name\"],\"excluded_data_collection_ids\":[\"excluded_data_collection_ids\"]}";
+            "{\"enabled\":false,\"entities\":[\"name\"],\"excluded_data_collection_ids\":[\"excluded_data_collection_ids\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationHistoryRedactionConfig>(
             wire

@@ -21,7 +21,7 @@ public class RealtimeConversationGroupSharingSummaryTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"people_count\":4,\"shared_with_everyone\":false,\"everyone_role\":\"admin\"}";
+            "{\"people_count\":3,\"shared_with_everyone\":true,\"everyone_role\":\"admin\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.RealtimeConversationGroupSharingSummary>(wire);

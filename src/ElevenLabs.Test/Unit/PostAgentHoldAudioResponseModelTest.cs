@@ -21,7 +21,7 @@ public class PostAgentHoldAudioResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_id\":\"agent_id\",\"hold_audio\":{\"audio_path\":\"audio_path\",\"audio_url\":\"audio_url\",\"original_filename\":\"original_filename\",\"duration_secs\":8.35,\"size_bytes\":8}}";
+            "{\"agent_id\":\"agent_id\",\"hold_audio\":{\"audio_path\":\"audio_path\",\"audio_url\":\"audio_url\",\"original_filename\":\"original_filename\",\"duration_secs\":9.17,\"size_bytes\":9}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PostAgentHoldAudioResponseModel>(
             wire

@@ -21,7 +21,7 @@ public class AgentResponseCompleteTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"agent_response_complete_event\":{\"event_id\":5},\"type\":\"agent_response_complete\"}";
+            "{\"agent_response_complete_event\":{\"event_id\":4},\"type\":\"agent_response_complete\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentResponseComplete>(wire);
         var serialized = TestJson.Serialize(instance);

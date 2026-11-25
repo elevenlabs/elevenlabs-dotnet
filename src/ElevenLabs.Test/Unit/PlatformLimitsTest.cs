@@ -21,7 +21,7 @@ public class PlatformLimitsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"credits\":{\"limit\":2,\"usage\":2},\"pvc\":{\"limit\":4},\"concurrency\":{\"limit\":4},\"dubbing_concurrency\":{\"limit\":4},\"music_concurrency\":{\"limit\":4}}";
+            "{\"credits\":{\"limit\":5,\"usage\":7},\"pvc\":{\"limit\":1},\"concurrency\":{\"limit\":1},\"dubbing_concurrency\":{\"limit\":1},\"music_concurrency\":{\"limit\":1}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PlatformLimits>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class DubbingTranscriptWordTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"word_type\":\"unknown\",\"start_s\":5.54,\"end_s\":7.22,\"characters\":[{\"text\":\"text\",\"start_s\":1.07,\"end_s\":9.18}]}";
+            "{\"text\":\"text\",\"word_type\":\"unknown\",\"start_s\":6.06,\"end_s\":7.92,\"characters\":[{\"text\":\"text\",\"start_s\":7.36,\"end_s\":2.01}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingTranscriptWord>(wire);
         var serialized = TestJson.Serialize(instance);

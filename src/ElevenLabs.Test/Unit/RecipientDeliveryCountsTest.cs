@@ -20,7 +20,7 @@ public class RecipientDeliveryCountsTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"sent\":6,\"delivered\":9,\"read\":2,\"replied\":0,\"failed\":5}";
+        const string wire = "{\"sent\":0,\"delivered\":4,\"read\":5,\"replied\":3,\"failed\":5}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RecipientDeliveryCounts>(wire);
         var serialized = TestJson.Serialize(instance);

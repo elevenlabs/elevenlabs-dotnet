@@ -66,6 +66,10 @@ public record LeadDetailResponse : IJsonOnDeserialized
     [JsonPropertyName("phone_numbers_index")]
     public required int PhoneNumbersIndex { get; set; }
 
+    /// <value>The timezone the recipient's calling windows are read in; unset when the lead follows the campaign's.</value>
+    [JsonPropertyName("timezone_override")]
+    public string? TimezoneOverride { get; set; }
+
     /// <value>The contact's identity: the `user_id` submitted in `conversation_initiation_client_data`, else the lead's phone number.</value>
     [JsonPropertyName("user_id")]
     public required string UserId { get; set; }
@@ -155,6 +159,7 @@ public record LeadDetailResponse : IJsonOnDeserialized
             && ValueEquality.AreEqual(PhoneNumber, other.PhoneNumber)
             && ValueEquality.AreEqual(PhoneNumbers, other.PhoneNumbers)
             && ValueEquality.AreEqual(PhoneNumbersIndex, other.PhoneNumbersIndex)
+            && ValueEquality.AreEqual(TimezoneOverride, other.TimezoneOverride)
             && ValueEquality.AreEqual(UserId, other.UserId)
             && ValueEquality.AreEqual(AttemptCount, other.AttemptCount)
             && ValueEquality.AreEqual(FailureCount, other.FailureCount)
@@ -181,6 +186,7 @@ public record LeadDetailResponse : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumber);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumbers);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumbersIndex);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TimezoneOverride);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(UserId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AttemptCount);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FailureCount);

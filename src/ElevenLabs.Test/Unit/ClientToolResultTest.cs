@@ -21,7 +21,7 @@ public class ClientToolResultTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"client_tool_result\",\"tool_call_id\":\"tool_call_id\",\"result\":\"result\",\"is_error\":false,\"error_type\":\"user_rejected\"}";
+            "{\"type\":\"client_tool_result\",\"tool_call_id\":\"tool_call_id\",\"result\":\"result\",\"is_error\":true,\"error_type\":\"user_rejected\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ClientToolResult>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class AudioNativeCreateProjectResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"project_id\":\"project_id\",\"converting\":true,\"html_snippet\":\"html_snippet\"}";
+            "{\"project_id\":\"project_id\",\"converting\":false,\"html_snippet\":\"html_snippet\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AudioNativeCreateProjectResponseModel>(wire);

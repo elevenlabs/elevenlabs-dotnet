@@ -21,7 +21,7 @@ public class WorkspaceMemberResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"user_id\":\"user_id\",\"email\":\"email\",\"first_name\":\"first_name\",\"seat_type\":\"workspace_admin\",\"is_owner\":true,\"is_locked\":false}";
+            "{\"user_id\":\"user_id\",\"email\":\"email\",\"first_name\":\"first_name\",\"seat_type\":\"workspace_admin\",\"is_owner\":false,\"is_locked\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkspaceMemberResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

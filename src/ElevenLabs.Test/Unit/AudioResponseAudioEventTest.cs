@@ -21,7 +21,7 @@ public class AudioResponseAudioEventTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"audio_base_64\":\"audio_base_64\",\"event_id\":4,\"alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[3],\"char_durations_ms\":[4]},\"is_final\":false}";
+            "{\"audio_base_64\":\"audio_base_64\",\"event_id\":10,\"alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[8],\"char_durations_ms\":[5]},\"is_final\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioResponseAudioEvent>(wire);
         var serialized = TestJson.Serialize(instance);

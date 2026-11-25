@@ -21,7 +21,7 @@ public class DubbingRegenerateResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"regenerated_segment_ids\":[\"regenerated_segment_ids\"],\"regenerated_seconds\":9.28,\"charged_seconds\":6.43,\"free_regeneration_seconds_remaining\":5.99}";
+            "{\"regenerated_segment_ids\":[\"regenerated_segment_ids\"],\"regenerated_seconds\":3.19,\"charged_seconds\":4.06,\"free_regeneration_seconds_remaining\":2.38}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbingRegenerateResponse>(wire);
         var serialized = TestJson.Serialize(instance);
