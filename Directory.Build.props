@@ -10,5 +10,10 @@
     <Description>The official C# SDK for ElevenLabs.</Description>
     <PackageProjectUrl>https://elevenlabs.io/docs</PackageProjectUrl>
     <PackageTags>elevenlabs;text-to-speech;speech-to-text;tts;stt;voice;audio;agents;ai</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
 </Project>
