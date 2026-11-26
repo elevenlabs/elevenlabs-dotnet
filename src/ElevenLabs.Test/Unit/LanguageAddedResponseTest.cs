@@ -20,7 +20,7 @@ public class LanguageAddedResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"version\":4}";
+        const string wire = "{\"version\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.LanguageAddedResponse>(wire);
         var serialized = TestJson.Serialize(instance);

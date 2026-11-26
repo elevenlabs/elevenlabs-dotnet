@@ -10,6 +10,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Config;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -333,7 +335,7 @@ internal class BranchesService : BaseService
         return result;
     }
 
-    /// <summary>Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main</summary>
+    /// <summary>Update agent branch properties such as name, description, archiving status, protection level, auto-rebase, and the branch it is kept in sync with</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="branchId">Unique identifier for the branch.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
@@ -624,7 +626,7 @@ internal class BranchesService : BaseService
         return result;
     }
 
-    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.</summary>
+    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports. Callers with only propose access can pull into their own branch from its parent branch (their default source).</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="branchId">Unique identifier for the source branch to merge from.</param>
     /// <param name="sourceBranchId">The ID of the branch to pull changes from. Defaults to the agent's main branch.</param>

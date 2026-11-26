@@ -20,7 +20,7 @@ public class SendTextGenerationConfigTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"chunk_length_schedule\":[1]}";
+        const string wire = "{\"chunk_length_schedule\":[3]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SendTextGenerationConfig>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class MetronomeUsageColumnFilterTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"column\":\"model\",\"operation\":\"eq\",\"values\":[\"mollit aute ci\"]}";
+            "{\"column\":\"model\",\"operation\":\"eq\",\"values\":[\"elit offic\"]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MetronomeUsageColumnFilter>(wire);
         var serialized = TestJson.Serialize(instance);

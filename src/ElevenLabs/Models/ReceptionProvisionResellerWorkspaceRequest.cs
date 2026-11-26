@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -74,6 +76,10 @@ public record ReceptionProvisionResellerWorkspaceRequest : IJsonOnDeserialized
     [JsonPropertyName("complete_onboarding")]
     public bool? CompleteOnboarding { get; set; }
 
+    /// <value>Your own key-value pairs for the workspace, such as your customer or contract id. Up to 20 keys of up to 40 characters, without `.` or `$`, and values of up to 500 characters. Not shown to the workspace's members.</value>
+    [JsonPropertyName("metadata")]
+    public Dictionary<string, string>? Metadata { get; set; }
+
     /// <value>Client-generated key that makes a retry safe. The same key and body within 24 hours returns the first result without running again. While that first request is still running, a retry gets 409 `idempotency_key_in_progress`; a different body with the same key gets 400 `idempotency_key_reused`. A request that fails is not saved, so it can be retried with the same key.</value>
     [JsonPropertyName("idempotency_key")]
     public string? IdempotencyKey { get; set; }
@@ -122,6 +128,7 @@ public record ReceptionProvisionResellerWorkspaceRequest : IJsonOnDeserialized
             && ValueEquality.AreEqual(PhoneNumber, other.PhoneNumber)
             && ValueEquality.AreEqual(Members, other.Members)
             && ValueEquality.AreEqual(CompleteOnboarding, other.CompleteOnboarding)
+            && ValueEquality.AreEqual(Metadata, other.Metadata)
             && ValueEquality.AreEqual(IdempotencyKey, other.IdempotencyKey)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -139,6 +146,7 @@ public record ReceptionProvisionResellerWorkspaceRequest : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(PhoneNumber);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Members);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(CompleteOnboarding);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Metadata);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(IdempotencyKey);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

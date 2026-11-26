@@ -21,7 +21,7 @@ public class ResellerWorkspacesResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"workspaces\":[{\"workspace_id\":\"workspace_id\",\"business_name\":\"business_name\",\"billing_tier\":\"billing_tier\",\"receptionist_count\":3,\"calls_last_30_days\":6,\"created_at_unix\":10,\"subscription\":{\"tier_id\":\"tier_id\",\"billing_period\":\"monthly_period\",\"billing_period_end_unix\":5,\"cancel_at_unix\":5,\"pending_downgrade_tier\":\"pending_downgrade_tier\",\"pending_downgrade_at_unix\":8},\"charge_customer\":true,\"has_payment_issue\":true,\"onboarding_completed_at_unix\":9}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
+            "{\"workspaces\":[{\"workspace_id\":\"workspace_id\",\"business_name\":\"business_name\",\"billing_tier\":\"billing_tier\",\"receptionist_count\":1,\"calls_last_30_days\":6,\"created_at_unix\":7,\"subscription\":{\"tier_id\":\"tier_id\",\"billing_period\":\"monthly_period\",\"billing_period_end_unix\":1,\"cancel_at_unix\":7,\"pending_downgrade_tier\":\"pending_downgrade_tier\",\"pending_downgrade_at_unix\":4},\"charge_customer\":false,\"has_payment_issue\":false,\"onboarding_completed_at_unix\":10,\"metadata\":{\"key\":\"metadata\"}}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ResellerWorkspacesResponse>(wire);
         var serialized = TestJson.Serialize(instance);

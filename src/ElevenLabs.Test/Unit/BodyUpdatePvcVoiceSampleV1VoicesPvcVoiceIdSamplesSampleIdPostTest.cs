@@ -21,7 +21,7 @@ public class BodyUpdatePvcVoiceSampleV1VoicesPvcVoiceIdSamplesSampleIdPostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"remove_background_noise\":true,\"selected_speaker_ids\":[\"selected_speaker_ids\"],\"trim_start_time\":8,\"trim_end_time\":3,\"file_name\":\"file_name\"}";
+            "{\"remove_background_noise\":true,\"selected_speaker_ids\":[\"selected_speaker_ids\"],\"trim_start_time\":0,\"trim_end_time\":0,\"file_name\":\"file_name\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Voices.Pvc.BodyUpdatePvcVoiceSampleV1VoicesPvcVoiceIdSamplesSampleIdPost>(

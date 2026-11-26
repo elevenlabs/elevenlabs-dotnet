@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;

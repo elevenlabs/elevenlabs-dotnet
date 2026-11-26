@@ -21,7 +21,7 @@ public class SubtitlingCommittedSubtitleTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message_type\":\"committed_subtitle\",\"cue_index\":10,\"lines\":[\"lines\"],\"start_ms\":2,\"end_ms\":6}";
+            "{\"message_type\":\"committed_subtitle\",\"cue_index\":10,\"lines\":[\"lines\"],\"start_ms\":2,\"end_ms\":1}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SubtitlingCommittedSubtitle>(wire);
         var serialized = TestJson.Serialize(instance);

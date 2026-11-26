@@ -21,7 +21,7 @@ public class InitializeConnectionMultiTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\" \",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":8.01,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[7]},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\",\"context_id\":\"context_id\"}";
+            "{\"text\":\" \",\"voice_settings\":{\"stability\":0.5,\"similarity_boost\":0.75,\"style\":5.27,\"use_speaker_boost\":true,\"speed\":1},\"generation_config\":{\"chunk_length_schedule\":[8]},\"pronunciation_dictionary_locators\":[{\"pronunciation_dictionary_id\":\"pronunciation_dictionary_id\",\"version_id\":\"version_id\"}],\"xi_api_key\":\"xi_api_key\",\"authorization\":\"authorization\",\"context_id\":\"context_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InitializeConnectionMulti>(wire);
         var serialized = TestJson.Serialize(instance);

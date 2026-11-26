@@ -10,6 +10,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Config;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -210,7 +212,7 @@ internal class MergeProposalsService : BaseService
         return result;
     }
 
-    /// <summary>Record a request to merge a source branch into a target branch. Anyone with edit access can open one; merging it later is gated on write access to the target branch, so this is how a change reaches a protected branch the author cannot merge into themselves.</summary>
+    /// <summary>Create a request to merge a source branch into a target branch. Callers with only propose access can open a proposal from a branch they own into its parent. Merging requires write access to the target branch.</summary>
     /// <param name="agentId">The id of an agent. This is returned on agent creation.</param>
     /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
     public async global::System.Threading.Tasks.Task<global::ElevenLabs.CreateAgentMergeProposalResponseModel> CreateAsync(

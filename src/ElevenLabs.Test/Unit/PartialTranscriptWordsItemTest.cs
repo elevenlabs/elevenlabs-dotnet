@@ -21,7 +21,7 @@ public class PartialTranscriptWordsItemTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"start\":6.1,\"end\":1.61,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":0.53,\"characters\":[{\"text\":\"text\",\"start\":7.81,\"end\":8.65}],\"channel_index\":1}";
+            "{\"text\":\"text\",\"start\":4.4,\"end\":2.03,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":4.29,\"characters\":[{\"text\":\"text\",\"start\":5.43,\"end\":3.98}],\"channel_index\":4}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.PartialTranscriptWordsItem>(wire);
         var serialized = TestJson.Serialize(instance);

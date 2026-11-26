@@ -46,6 +46,15 @@ public record AgentWorkflowResponseModelNodes
     }
 
     /// <summary>
+    /// Create an instance of AgentWorkflowResponseModelNodes with <see cref="AgentWorkflowResponseModelNodes.Say"/>.
+    /// </summary>
+    public AgentWorkflowResponseModelNodes(AgentWorkflowResponseModelNodes.Say value)
+    {
+        Type = "say";
+        Value = value.Value;
+    }
+
+    /// <summary>
     /// Create an instance of AgentWorkflowResponseModelNodes with <see cref="AgentWorkflowResponseModelNodes.StandaloneAgent"/>.
     /// </summary>
     public AgentWorkflowResponseModelNodes(AgentWorkflowResponseModelNodes.StandaloneAgent value)
@@ -78,15 +87,6 @@ public record AgentWorkflowResponseModelNodes
     public AgentWorkflowResponseModelNodes(AgentWorkflowResponseModelNodes.Tool value)
     {
         Type = "tool";
-        Value = value.Value;
-    }
-
-    /// <summary>
-    /// Create an instance of AgentWorkflowResponseModelNodes with <see cref="AgentWorkflowResponseModelNodes.Say"/>.
-    /// </summary>
-    public AgentWorkflowResponseModelNodes(AgentWorkflowResponseModelNodes.Say value)
-    {
-        Type = "say";
         Value = value.Value;
     }
 
@@ -126,6 +126,11 @@ public record AgentWorkflowResponseModelNodes
     public bool IsPhoneNumber => Type == "phone_number";
 
     /// <summary>
+    /// Returns true if <see cref="Type"/> is "say"
+    /// </summary>
+    public bool IsSay => Type == "say";
+
+    /// <summary>
     /// Returns true if <see cref="Type"/> is "standalone_agent"
     /// </summary>
     public bool IsStandaloneAgent => Type == "standalone_agent";
@@ -144,11 +149,6 @@ public record AgentWorkflowResponseModelNodes
     /// Returns true if <see cref="Type"/> is "tool"
     /// </summary>
     public bool IsTool => Type == "tool";
-
-    /// <summary>
-    /// Returns true if <see cref="Type"/> is "say"
-    /// </summary>
-    public bool IsSay => Type == "say";
 
     /// <summary>
     /// Returns true if <see cref="Type"/> is "update_state"
@@ -186,6 +186,17 @@ public record AgentWorkflowResponseModelNodes
             ? (global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput)Value!
             : throw new global::System.Exception(
                 "AgentWorkflowResponseModelNodes.Type is not 'phone_number'"
+            );
+
+    /// <summary>
+    /// Returns the value as a <see cref="global::ElevenLabs.WorkflowSayNodeModelOutput"/> if <see cref="Type"/> is 'say', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'say'.</exception>
+    public global::ElevenLabs.WorkflowSayNodeModelOutput AsSay() =>
+        IsSay
+            ? (global::ElevenLabs.WorkflowSayNodeModelOutput)Value!
+            : throw new global::System.Exception(
+                "AgentWorkflowResponseModelNodes.Type is not 'say'"
             );
 
     /// <summary>
@@ -233,17 +244,6 @@ public record AgentWorkflowResponseModelNodes
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="global::ElevenLabs.WorkflowSayNodeModelOutput"/> if <see cref="Type"/> is 'say', otherwise throws an exception.
-    /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'say'.</exception>
-    public global::ElevenLabs.WorkflowSayNodeModelOutput AsSay() =>
-        IsSay
-            ? (global::ElevenLabs.WorkflowSayNodeModelOutput)Value!
-            : throw new global::System.Exception(
-                "AgentWorkflowResponseModelNodes.Type is not 'say'"
-            );
-
-    /// <summary>
     /// Returns the value as a <see cref="global::ElevenLabs.WorkflowUpdateStateNodeModelOutput"/> if <see cref="Type"/> is 'update_state', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'update_state'.</exception>
@@ -258,11 +258,11 @@ public record AgentWorkflowResponseModelNodes
         Func<global::ElevenLabs.WorkflowEndNodeModelOutput, T> onEnd,
         Func<global::ElevenLabs.WorkflowOverrideAgentNodeModelOutput, T> onOverrideAgent,
         Func<global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput, T> onPhoneNumber,
+        Func<global::ElevenLabs.WorkflowSayNodeModelOutput, T> onSay,
         Func<global::ElevenLabs.WorkflowStandaloneAgentNodeModelOutput, T> onStandaloneAgent,
         Func<global::ElevenLabs.WorkflowStartNodeModelOutput, T> onStart,
         Func<global::ElevenLabs.WorkflowStartProcedureNodeModelOutput, T> onStartProcedure,
         Func<global::ElevenLabs.WorkflowToolNodeModelOutput, T> onTool,
-        Func<global::ElevenLabs.WorkflowSayNodeModelOutput, T> onSay,
         Func<global::ElevenLabs.WorkflowUpdateStateNodeModelOutput, T> onUpdateState,
         Func<string, object?, T> onUnknown_
     )
@@ -272,11 +272,11 @@ public record AgentWorkflowResponseModelNodes
             "end" => onEnd(AsEnd()),
             "override_agent" => onOverrideAgent(AsOverrideAgent()),
             "phone_number" => onPhoneNumber(AsPhoneNumber()),
+            "say" => onSay(AsSay()),
             "standalone_agent" => onStandaloneAgent(AsStandaloneAgent()),
             "start" => onStart(AsStart()),
             "start_procedure" => onStartProcedure(AsStartProcedure()),
             "tool" => onTool(AsTool()),
-            "say" => onSay(AsSay()),
             "update_state" => onUpdateState(AsUpdateState()),
             _ => onUnknown_(Type, Value),
         };
@@ -286,11 +286,11 @@ public record AgentWorkflowResponseModelNodes
         Action<global::ElevenLabs.WorkflowEndNodeModelOutput> onEnd,
         Action<global::ElevenLabs.WorkflowOverrideAgentNodeModelOutput> onOverrideAgent,
         Action<global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput> onPhoneNumber,
+        Action<global::ElevenLabs.WorkflowSayNodeModelOutput> onSay,
         Action<global::ElevenLabs.WorkflowStandaloneAgentNodeModelOutput> onStandaloneAgent,
         Action<global::ElevenLabs.WorkflowStartNodeModelOutput> onStart,
         Action<global::ElevenLabs.WorkflowStartProcedureNodeModelOutput> onStartProcedure,
         Action<global::ElevenLabs.WorkflowToolNodeModelOutput> onTool,
-        Action<global::ElevenLabs.WorkflowSayNodeModelOutput> onSay,
         Action<global::ElevenLabs.WorkflowUpdateStateNodeModelOutput> onUpdateState,
         Action<string, object?> onUnknown_
     )
@@ -306,6 +306,9 @@ public record AgentWorkflowResponseModelNodes
             case "phone_number":
                 onPhoneNumber(AsPhoneNumber());
                 break;
+            case "say":
+                onSay(AsSay());
+                break;
             case "standalone_agent":
                 onStandaloneAgent(AsStandaloneAgent());
                 break;
@@ -317,9 +320,6 @@ public record AgentWorkflowResponseModelNodes
                 break;
             case "tool":
                 onTool(AsTool());
-                break;
-            case "say":
-                onSay(AsSay());
                 break;
             case "update_state":
                 onUpdateState(AsUpdateState());
@@ -368,6 +368,20 @@ public record AgentWorkflowResponseModelNodes
         if (Type == "phone_number")
         {
             value = (global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput)Value!;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to cast the value to a <see cref="global::ElevenLabs.WorkflowSayNodeModelOutput"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsSay(out global::ElevenLabs.WorkflowSayNodeModelOutput? value)
+    {
+        if (Type == "say")
+        {
+            value = (global::ElevenLabs.WorkflowSayNodeModelOutput)Value!;
             return true;
         }
         value = null;
@@ -435,20 +449,6 @@ public record AgentWorkflowResponseModelNodes
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="global::ElevenLabs.WorkflowSayNodeModelOutput"/> and returns true if successful.
-    /// </summary>
-    public bool TryAsSay(out global::ElevenLabs.WorkflowSayNodeModelOutput? value)
-    {
-        if (Type == "say")
-        {
-            value = (global::ElevenLabs.WorkflowSayNodeModelOutput)Value!;
-            return true;
-        }
-        value = null;
-        return false;
-    }
-
-    /// <summary>
     /// Attempts to cast the value to a <see cref="global::ElevenLabs.WorkflowUpdateStateNodeModelOutput"/> and returns true if successful.
     /// </summary>
     public bool TryAsUpdateState(out global::ElevenLabs.WorkflowUpdateStateNodeModelOutput? value)
@@ -477,6 +477,10 @@ public record AgentWorkflowResponseModelNodes
     ) => new(value);
 
     public static implicit operator AgentWorkflowResponseModelNodes(
+        AgentWorkflowResponseModelNodes.Say value
+    ) => new(value);
+
+    public static implicit operator AgentWorkflowResponseModelNodes(
         AgentWorkflowResponseModelNodes.StandaloneAgent value
     ) => new(value);
 
@@ -490,10 +494,6 @@ public record AgentWorkflowResponseModelNodes
 
     public static implicit operator AgentWorkflowResponseModelNodes(
         AgentWorkflowResponseModelNodes.Tool value
-    ) => new(value);
-
-    public static implicit operator AgentWorkflowResponseModelNodes(
-        AgentWorkflowResponseModelNodes.Say value
     ) => new(value);
 
     public static implicit operator AgentWorkflowResponseModelNodes(
@@ -553,6 +553,10 @@ public record AgentWorkflowResponseModelNodes
                         ?? throw new JsonException(
                             "Failed to deserialize global::ElevenLabs.WorkflowPhoneNumberNodeModelOutput"
                         ),
+                "say" => json.Deserialize<global::ElevenLabs.WorkflowSayNodeModelOutput?>(options)
+                    ?? throw new JsonException(
+                        "Failed to deserialize global::ElevenLabs.WorkflowSayNodeModelOutput"
+                    ),
                 "standalone_agent" =>
                     json.Deserialize<global::ElevenLabs.WorkflowStandaloneAgentNodeModelOutput?>(
                         options
@@ -576,10 +580,6 @@ public record AgentWorkflowResponseModelNodes
                 "tool" => json.Deserialize<global::ElevenLabs.WorkflowToolNodeModelOutput?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize global::ElevenLabs.WorkflowToolNodeModelOutput"
-                    ),
-                "say" => json.Deserialize<global::ElevenLabs.WorkflowSayNodeModelOutput?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize global::ElevenLabs.WorkflowSayNodeModelOutput"
                     ),
                 "update_state" =>
                     json.Deserialize<global::ElevenLabs.WorkflowUpdateStateNodeModelOutput?>(
@@ -605,11 +605,11 @@ public record AgentWorkflowResponseModelNodes
                     "end" => JsonSerializer.SerializeToNode(value.Value, options),
                     "override_agent" => JsonSerializer.SerializeToNode(value.Value, options),
                     "phone_number" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "say" => JsonSerializer.SerializeToNode(value.Value, options),
                     "standalone_agent" => JsonSerializer.SerializeToNode(value.Value, options),
                     "start" => JsonSerializer.SerializeToNode(value.Value, options),
                     "start_procedure" => JsonSerializer.SerializeToNode(value.Value, options),
                     "tool" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "say" => JsonSerializer.SerializeToNode(value.Value, options),
                     "update_state" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
@@ -700,6 +700,26 @@ public record AgentWorkflowResponseModelNodes
     }
 
     /// <summary>
+    /// Discriminated union type for say
+    /// </summary>
+    [Serializable]
+    public struct Say
+    {
+        public Say(global::ElevenLabs.WorkflowSayNodeModelOutput value)
+        {
+            Value = value;
+        }
+
+        internal global::ElevenLabs.WorkflowSayNodeModelOutput Value { get; set; }
+
+        public override string ToString() => Value.ToString() ?? "null";
+
+        public static implicit operator AgentWorkflowResponseModelNodes.Say(
+            global::ElevenLabs.WorkflowSayNodeModelOutput value
+        ) => new(value);
+    }
+
+    /// <summary>
     /// Discriminated union type for standalone_agent
     /// </summary>
     [Serializable]
@@ -776,26 +796,6 @@ public record AgentWorkflowResponseModelNodes
 
         public static implicit operator AgentWorkflowResponseModelNodes.Tool(
             global::ElevenLabs.WorkflowToolNodeModelOutput value
-        ) => new(value);
-    }
-
-    /// <summary>
-    /// Discriminated union type for say
-    /// </summary>
-    [Serializable]
-    public struct Say
-    {
-        public Say(global::ElevenLabs.WorkflowSayNodeModelOutput value)
-        {
-            Value = value;
-        }
-
-        internal global::ElevenLabs.WorkflowSayNodeModelOutput Value { get; set; }
-
-        public override string ToString() => Value.ToString() ?? "null";
-
-        public static implicit operator AgentWorkflowResponseModelNodes.Say(
-            global::ElevenLabs.WorkflowSayNodeModelOutput value
         ) => new(value);
     }
 

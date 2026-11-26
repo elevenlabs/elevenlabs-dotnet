@@ -21,7 +21,7 @@ public class MusicFinetuneResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"name\":\"name\",\"tags\":[\"tags\"],\"primary_genre\":\"primary_genre\",\"model_id\":\"music_v1\",\"created_at\":\"2023-05-26T02:07:38.965Z\",\"visibility\":\"private\",\"created_by\":\"self\",\"status\":\"pending\",\"training_progress\":0.58,\"failure_reason\":\"audio_processing_failed\"}";
+            "{\"id\":\"id\",\"name\":\"name\",\"tags\":[\"tags\"],\"primary_genre\":\"primary_genre\",\"model_id\":\"music_v1\",\"created_at\":\"2023-05-26T02:07:38.965Z\",\"visibility\":\"private\",\"created_by\":\"self\",\"status\":\"pending\",\"training_progress\":1.9,\"failure_reason\":\"audio_processing_failed\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MusicFinetuneResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

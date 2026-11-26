@@ -20,7 +20,7 @@ public class ConversationPingPingEventTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"event_id\":10,\"ping_ms\":10}";
+        const string wire = "{\"event_id\":8,\"ping_ms\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationPingPingEvent>(wire);
         var serialized = TestJson.Serialize(instance);

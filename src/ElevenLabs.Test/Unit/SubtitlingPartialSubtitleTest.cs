@@ -21,7 +21,7 @@ public class SubtitlingPartialSubtitleTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message_type\":\"partial_subtitle\",\"cue_index\":5,\"lines\":[\"lines\"],\"start_ms\":6}";
+            "{\"message_type\":\"partial_subtitle\",\"cue_index\":9,\"lines\":[\"lines\"],\"start_ms\":0}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SubtitlingPartialSubtitle>(wire);
         var serialized = TestJson.Serialize(instance);

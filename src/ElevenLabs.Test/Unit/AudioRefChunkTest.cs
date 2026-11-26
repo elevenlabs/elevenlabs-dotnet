@@ -20,7 +20,7 @@ public class AudioRefChunkTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"song_id\":\"song_id\",\"range\":{\"start_ms\":10,\"end_ms\":0}}";
+        const string wire = "{\"song_id\":\"song_id\",\"range\":{\"start_ms\":1,\"end_ms\":1}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioRefChunk>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ReceptionStaffResourceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":7,\"name\":\"fugiat\",\"description\":\"et do\",\"is_active\":true,\"email\":\"jane@example.com\",\"phone\":\"aliqu\",\"sms_notifications_opted_in\":false,\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"working_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"display_on_booking_page\":true,\"customer_facing_name\":\"Duis \",\"id\":\"staff_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":5,\"updated_at_unix\":5}";
+            "{\"groups\":[{\"label\":\"voluptate magna\",\"rank\":2}],\"ungrouped_rank\":3,\"name\":\"reprehender\",\"description\":\"esse aute no\",\"is_active\":true,\"email\":\"jane@example.com\",\"phone\":\"dolor\",\"sms_notifications_opted_in\":false,\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"working_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"display_on_booking_page\":true,\"customer_facing_name\":\"elit no\",\"id\":\"staff_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":9,\"updated_at_unix\":4}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionStaffResource>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -169,7 +171,7 @@ public partial class MergeProposalsClient
             )
         );
 
-    /// <summary>Record a request to merge a source branch into a target branch. Anyone with edit access can open one; merging it later is gated on write access to the target branch, so this is how a change reaches a protected branch the author cannot merge into themselves.</summary>
+    /// <summary>Create a request to merge a source branch into a target branch. Callers with only propose access can open a proposal from a branch they own into its parent. Merging requires write access to the target branch.</summary>
     public WithRawResponseTask<CreateAgentMergeProposalResponseModel> CreateAsync(
         string agentId,
         CreateMergeProposalsRequest request,

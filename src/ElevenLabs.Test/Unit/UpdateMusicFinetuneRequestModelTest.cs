@@ -21,7 +21,7 @@ public class UpdateMusicFinetuneRequestModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"cillum\",\"tags\":[\"tags\"],\"primary_genre\":\"primary_genre\",\"visibility\":\"private\"}";
+            "{\"name\":\"in ad culpa\",\"tags\":[\"tags\"],\"primary_genre\":\"primary_genre\",\"visibility\":\"private\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Music.UpdateMusicFinetuneRequestModel>(wire);

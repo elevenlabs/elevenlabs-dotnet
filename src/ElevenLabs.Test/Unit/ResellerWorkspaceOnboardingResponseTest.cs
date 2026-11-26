@@ -21,7 +21,7 @@ public class ResellerWorkspaceOnboardingResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"onboarding_completed_at_unix\":2,\"customer_facing_agent_id\":\"customer_facing_agent_id\"}";
+            "{\"onboarding_completed_at_unix\":4,\"customer_facing_agent_id\":\"customer_facing_agent_id\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ResellerWorkspaceOnboardingResponse>(
             wire

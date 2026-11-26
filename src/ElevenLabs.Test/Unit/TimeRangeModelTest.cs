@@ -21,7 +21,7 @@ public class TimeRangeModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}";
+            "{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TimeRangeModel>(wire);
         var serialized = TestJson.Serialize(instance);

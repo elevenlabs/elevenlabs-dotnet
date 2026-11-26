@@ -21,7 +21,7 @@ public class AudioChunkNormalizedAlignmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"chars\":[\"chars\"],\"char_start_times_ms\":[2],\"char_durations_ms\":[2]}";
+            "{\"chars\":[\"chars\"],\"char_start_times_ms\":[7],\"char_durations_ms\":[6]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioChunkNormalizedAlignment>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ReceptionCreateProductRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"laboris Lo\",\"kind\":\"text\",\"options\":[\"ad reprehende\"],\"required\":false,\"is_active\":true}],\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":4,\"name\":\"ea nulla nostr\",\"description\":\"sintamet u\",\"price\":7.47,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"track_quantity\":true}";
+            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"ut nisi\",\"kind\":\"text\",\"options\":[\"nisi o\"],\"required\":false,\"is_active\":true}],\"groups\":[{\"label\":\"voluptate magna\",\"rank\":2}],\"ungrouped_rank\":2,\"name\":\"esse non e\",\"description\":\"sunt co\",\"price\":9.52,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"track_quantity\":false}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionCreateProductRequest>(wire);

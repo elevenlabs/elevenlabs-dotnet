@@ -21,7 +21,7 @@ public class ConversationUserTranscriptTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"user_transcription_event\":{\"user_transcript\":\"user_transcript\",\"event_id\":0},\"type\":\"user_transcript\"}";
+            "{\"user_transcription_event\":{\"user_transcript\":\"user_transcript\",\"event_id\":10},\"type\":\"user_transcript\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ConversationUserTranscript>(wire);
         var serialized = TestJson.Serialize(instance);

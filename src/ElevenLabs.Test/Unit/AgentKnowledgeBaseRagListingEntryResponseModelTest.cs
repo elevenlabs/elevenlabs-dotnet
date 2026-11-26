@@ -20,7 +20,7 @@ public class AgentKnowledgeBaseRagListingEntryResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"id\":\"id\",\"name\":\"name\",\"is_folder\":false}";
+        const string wire = "{\"id\":\"id\",\"name\":\"name\",\"is_folder\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.AgentKnowledgeBaseRagListingEntryResponseModel>(

@@ -21,7 +21,7 @@ public class UpsertOrderItemResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"item_id\":\"proditem_xj8zubn7rexrwpqq6wvf21lwlh\",\"quote\":{\"amount_usd\":0.06}}";
+            "{\"item_id\":\"proditem_tw8bnuc48f630g94hprtlwlnem\",\"quote\":{\"amount_usd\":5.19}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UpsertOrderItemResponse>(wire);
         var serialized = TestJson.Serialize(instance);

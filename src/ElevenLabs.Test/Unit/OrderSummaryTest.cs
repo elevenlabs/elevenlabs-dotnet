@@ -21,7 +21,7 @@ public class OrderSummaryTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"order_id\":\"prodorder_9pp4826gmvqv1vo0d4t8ftttni\",\"name\":\"name\",\"state\":\"open\",\"total_amount_usd\":6.45,\"sandbox\":false,\"submitted_at\":\"2023-07-20T21:03:51.582Z\",\"updated_at\":\"2023-07-20T21:03:51.582Z\",\"cancel_reason\":\"cancel_reason\"}";
+            "{\"order_id\":\"prodorder_jvab26xp96f0zhrcoa9myzi9rc\",\"name\":\"name\",\"state\":\"open\",\"total_amount_usd\":1.31,\"sandbox\":true,\"submitted_at\":\"2023-07-20T21:03:51.582Z\",\"updated_at\":\"2023-07-20T21:03:51.582Z\",\"cancel_reason\":\"cancel_reason\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OrderSummary>(wire);
         var serialized = TestJson.Serialize(instance);

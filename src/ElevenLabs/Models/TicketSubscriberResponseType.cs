@@ -4,13 +4,13 @@ using global::System.Text.Json.Serialization;
 
 namespace ElevenLabs;
 
-[JsonConverter(typeof(SpeakerNamesMessageType.SpeakerNamesMessageTypeSerializer))]
+[JsonConverter(typeof(TicketSubscriberResponseType.TicketSubscriberResponseTypeSerializer))]
 [Serializable]
-public readonly record struct SpeakerNamesMessageType : IStringEnum
+public readonly record struct TicketSubscriberResponseType : IStringEnum
 {
-    public static readonly SpeakerNamesMessageType SpeakerNames = new(Values.SpeakerNames);
+    public static readonly TicketSubscriberResponseType HumanAgent = new(Values.HumanAgent);
 
-    public SpeakerNamesMessageType(string value)
+    public TicketSubscriberResponseType(string value)
     {
         Value = value;
     }
@@ -23,9 +23,9 @@ public readonly record struct SpeakerNamesMessageType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SpeakerNamesMessageType FromCustom(string value)
+    public static TicketSubscriberResponseType FromCustom(string value)
     {
-        return new SpeakerNamesMessageType(value);
+        return new TicketSubscriberResponseType(value);
     }
 
     public bool Equals(string? other)
@@ -41,19 +41,20 @@ public readonly record struct SpeakerNamesMessageType : IStringEnum
         return Value;
     }
 
-    public static bool operator ==(SpeakerNamesMessageType value1, string value2) =>
+    public static bool operator ==(TicketSubscriberResponseType value1, string value2) =>
         value1.Value.Equals(value2);
 
-    public static bool operator !=(SpeakerNamesMessageType value1, string value2) =>
+    public static bool operator !=(TicketSubscriberResponseType value1, string value2) =>
         !value1.Value.Equals(value2);
 
-    public static explicit operator string(SpeakerNamesMessageType value) => value.Value;
+    public static explicit operator string(TicketSubscriberResponseType value) => value.Value;
 
-    public static explicit operator SpeakerNamesMessageType(string value) => new(value);
+    public static explicit operator TicketSubscriberResponseType(string value) => new(value);
 
-    internal class SpeakerNamesMessageTypeSerializer : JsonConverter<SpeakerNamesMessageType>
+    internal class TicketSubscriberResponseTypeSerializer
+        : JsonConverter<TicketSubscriberResponseType>
     {
-        public override SpeakerNamesMessageType Read(
+        public override TicketSubscriberResponseType Read(
             ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
             JsonSerializerOptions options
@@ -64,19 +65,19 @@ public readonly record struct SpeakerNamesMessageType : IStringEnum
                 ?? throw new global::System.Exception(
                     "The JSON value could not be read as a string."
                 );
-            return new SpeakerNamesMessageType(stringValue);
+            return new TicketSubscriberResponseType(stringValue);
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            SpeakerNamesMessageType value,
+            TicketSubscriberResponseType value,
             JsonSerializerOptions options
         )
         {
             writer.WriteStringValue(value.Value);
         }
 
-        public override SpeakerNamesMessageType ReadAsPropertyName(
+        public override TicketSubscriberResponseType ReadAsPropertyName(
             ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
             JsonSerializerOptions options
@@ -87,12 +88,12 @@ public readonly record struct SpeakerNamesMessageType : IStringEnum
                 ?? throw new global::System.Exception(
                     "The JSON property name could not be read as a string."
                 );
-            return new SpeakerNamesMessageType(stringValue);
+            return new TicketSubscriberResponseType(stringValue);
         }
 
         public override void WriteAsPropertyName(
             Utf8JsonWriter writer,
-            SpeakerNamesMessageType value,
+            TicketSubscriberResponseType value,
             JsonSerializerOptions options
         )
         {
@@ -106,6 +107,6 @@ public readonly record struct SpeakerNamesMessageType : IStringEnum
     [Serializable]
     public static class Values
     {
-        public const string SpeakerNames = "speaker_names";
+        public const string HumanAgent = "human_agent";
     }
 }

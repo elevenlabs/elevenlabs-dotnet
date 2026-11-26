@@ -21,7 +21,7 @@ public class RenderTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"id\":\"id\",\"version\":1,\"language\":\"language\",\"type\":\"mp4\",\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":9.21,\"is_audio\":true,\"url\":\"url\"},\"status\":\"complete\"}";
+            "{\"id\":\"id\",\"version\":2,\"language\":\"language\",\"type\":\"mp4\",\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":7.8,\"is_audio\":true,\"url\":\"url\"},\"status\":\"complete\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Render>(wire);
         var serialized = TestJson.Serialize(instance);

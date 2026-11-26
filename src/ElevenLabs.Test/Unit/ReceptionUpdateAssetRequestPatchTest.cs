@@ -21,7 +21,7 @@ public class ReceptionUpdateAssetRequestPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":0,\"name\":\"ullamco dolore\",\"description\":\"quis \",\"is_active\":false,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"sunt i\"}";
+            "{\"groups\":[{\"label\":\"voluptate magna\",\"rank\":2}],\"ungrouped_rank\":6,\"name\":\"in ir\",\"description\":\"dolore com\",\"is_active\":true,\"available_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"photo_url\":\"https://male-coal.com/\",\"location_id\":\"location_id\",\"customer_facing_name\":\"mollit\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionUpdateAssetRequestPatch>(

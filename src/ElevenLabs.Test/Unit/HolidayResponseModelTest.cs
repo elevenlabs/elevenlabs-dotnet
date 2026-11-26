@@ -21,7 +21,7 @@ public class HolidayResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"Christmas Eve\",\"start_date\":{\"year\":2026,\"month\":12,\"day\":25},\"end_date\":{\"year\":2026,\"month\":12,\"day\":25},\"holiday_type\":\"closed\",\"override_hours\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}],\"time_off_type\":\"staff\",\"resource_id\":\"resource_id\",\"location_id\":\"location_id\",\"reason\":\"reason\",\"id\":\"holiday_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":1767225600,\"updated_at_unix\":1767225600}";
+            "{\"name\":\"Christmas Eve\",\"start_date\":{\"year\":2026,\"month\":12,\"day\":25},\"end_date\":{\"year\":2026,\"month\":12,\"day\":25},\"holiday_type\":\"closed\",\"override_hours\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}],\"time_off_type\":\"staff\",\"resource_id\":\"resource_id\",\"location_id\":\"location_id\",\"reason\":\"reason\",\"id\":\"holiday_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":1767225600,\"updated_at_unix\":1767225600}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.HolidayResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

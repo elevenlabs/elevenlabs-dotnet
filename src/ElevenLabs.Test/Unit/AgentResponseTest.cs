@@ -21,7 +21,7 @@ public class AgentResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"type\":\"agent_response\",\"event_id\":1,\"content\":\"content\",\"is_final\":false}";
+            "{\"type\":\"agent_response\",\"event_id\":9,\"content\":\"content\",\"is_final\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentResponse>(wire);
         var serialized = TestJson.Serialize(instance);

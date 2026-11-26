@@ -21,7 +21,7 @@ public class ModerationStatusResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"is_in_probation\":false,\"enterprise_check_nogo_voice\":true,\"enterprise_check_block_nogo_voice\":false,\"never_live_moderate\":true,\"nogo_voice_similar_voice_upload_count\":5,\"enterprise_background_moderation_enabled\":false,\"is_ivc_captcha_required\":true,\"safety_status\":\"appeal_approved\",\"warning_status\":\"warning\",\"on_watchlist\":false}";
+            "{\"is_in_probation\":false,\"enterprise_check_nogo_voice\":false,\"enterprise_check_block_nogo_voice\":false,\"never_live_moderate\":false,\"nogo_voice_similar_voice_upload_count\":4,\"enterprise_background_moderation_enabled\":true,\"is_ivc_captcha_required\":true,\"safety_status\":\"appeal_approved\",\"warning_status\":\"warning\",\"on_watchlist\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ModerationStatusResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

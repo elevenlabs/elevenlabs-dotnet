@@ -21,7 +21,7 @@ public class OTelTracePayloadTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"resourceSpans\":[{\"resource\":{\"attributes\":[{\"key\":\"key\",\"value\":{\"key\":\"tempor eius\"}}]},\"scopeSpans\":[{\"scope\":{\"name\":\"name\",\"version\":\"version\"},\"spans\":[{\"traceId\":\"traceId\",\"spanId\":\"spanId\",\"parentSpanId\":\"parentSpanId\",\"name\":\"name\",\"kind\":0,\"startTimeUnixNano\":\"startTimeUnixNano\",\"endTimeUnixNano\":\"endTimeUnixNano\",\"attributes\":[{\"key\":\"key\",\"value\":{\"key\":\"tempor eius\"}}],\"status\":{\"code\":2,\"message\":\"message\"}}]}]}]}";
+            "{\"resourceSpans\":[{\"resource\":{\"attributes\":[{\"key\":\"key\",\"value\":{\"key\":\"ea exercitati\"}}]},\"scopeSpans\":[{\"scope\":{\"name\":\"name\",\"version\":\"version\"},\"spans\":[{\"traceId\":\"traceId\",\"spanId\":\"spanId\",\"parentSpanId\":\"parentSpanId\",\"name\":\"name\",\"kind\":9,\"startTimeUnixNano\":\"startTimeUnixNano\",\"endTimeUnixNano\":\"endTimeUnixNano\",\"attributes\":[{\"key\":\"key\",\"value\":{\"key\":\"ea exercitati\"}}],\"status\":{\"code\":8,\"message\":\"message\"}}]}]}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OTelTracePayload>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ConversationInitiationClientDataConversationConfigOverrideTtsSuppor
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"label\":\"label\",\"voice_id\":\"voice_id\",\"description\":\"description\",\"language\":\"language\",\"model_family\":\"turbo\",\"optimize_streaming_latency\":4,\"stability\":0.9,\"speed\":0.78,\"similarity_boost\":0.82,\"clone_strength\":0.6}";
+            "{\"label\":\"label\",\"voice_id\":\"voice_id\",\"description\":\"description\",\"language\":\"language\",\"model_family\":\"turbo\",\"optimize_streaming_latency\":3,\"stability\":0.98,\"speed\":1.12,\"similarity_boost\":0.69,\"clone_strength\":0.96}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationInitiationClientDataConversationConfigOverrideTtsSupportedVoicesItem>(

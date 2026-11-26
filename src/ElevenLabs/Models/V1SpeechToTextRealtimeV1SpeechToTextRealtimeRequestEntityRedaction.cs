@@ -7,7 +7,7 @@ using global::System.Text.Json.Serialization;
 
 namespace ElevenLabs;
 
-/// <summary>Redact entities from committed transcripts. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi', 'pci', 'other', 'offensive_language'), or specific entity types. The redacted text is delivered in a separate 'redacted_transcript' event after the committed transcript. If entity detection fails, an 'error' event is sent and the connection is closed. Cannot be combined with transcript_edit or infer_speaker_names.</summary>
+/// <summary>Redact entities from committed transcripts. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi', 'pci', 'other', 'offensive_language'), or specific entity types. The redacted text is delivered in a separate 'redacted_transcript' event after the committed transcript. If entity detection fails, an 'error' event is sent and the connection is closed. Cannot be combined with transcript_edit.</summary>
 [JsonConverter(
     typeof(V1SpeechToTextRealtimeV1SpeechToTextRealtimeRequestEntityRedaction.JsonConverter)
 )]

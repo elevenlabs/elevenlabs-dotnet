@@ -21,7 +21,7 @@ public class CommittedTranscriptEntitiesEntitiesItemTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"text\":\"text\",\"entity_type\":\"entity_type\",\"start_char\":3,\"end_char\":3}";
+            "{\"text\":\"text\",\"entity_type\":\"entity_type\",\"start_char\":1,\"end_char\":2}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.CommittedTranscriptEntitiesEntitiesItem>(wire);

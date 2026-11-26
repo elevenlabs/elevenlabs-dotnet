@@ -21,7 +21,7 @@ public class ResellerInvoiceLineTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"kind\":\"plan\",\"description\":\"description\",\"quantity\":10,\"amount_cents\":10,\"period_start_unix\":7,\"period_end_unix\":0}";
+            "{\"kind\":\"plan\",\"description\":\"description\",\"quantity\":2,\"amount_cents\":10,\"period_start_unix\":10,\"period_end_unix\":2}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ResellerInvoiceLine>(wire);
         var serialized = TestJson.Serialize(instance);

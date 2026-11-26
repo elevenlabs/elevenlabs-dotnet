@@ -10,6 +10,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Config;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -59,6 +61,9 @@ internal class TagsService : BaseService
     private RequestConfig? _getAsyncConfig;
     private RequestConfig? _updateAsyncConfig;
     private RequestConfig? _deleteAsyncConfig;
+    private RequestConfig? _listAsync1Config;
+    private RequestConfig? _createAsync1Config;
+    private RequestConfig? _updateAsync1Config;
 
     internal TagsService(global::ElevenLabs.Http.Client httpClient)
         : base(httpClient) { }
@@ -130,6 +135,36 @@ internal class TagsService : BaseService
     public TagsService SetDeleteAsyncConfig(RequestConfig config)
     {
         _deleteAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>ListAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public TagsService SetListAsync1Config(RequestConfig config)
+    {
+        _listAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>CreateAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public TagsService SetCreateAsync1Config(RequestConfig config)
+    {
+        _createAsync1Config = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateAsync1</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public TagsService SetUpdateAsync1Config(RequestConfig config)
+    {
+        _updateAsync1Config = config;
         return this;
     }
 
@@ -439,5 +474,181 @@ internal class TagsService : BaseService
 
         var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    /// <summary>List active ticket tags for the workspace, newest first. Requires support read permission.</summary>
+    /// <param name="ids">Only return ticket tags with these IDs.</param>
+    /// <param name="includeArchived">Whether to include archived ticket tags.</param>
+    /// <param name="pageSize">Number of ticket tags to return.</param>
+    /// <param name="cursor">Used for fetching next page. Cursor is returned in the response.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.PaginatedResultTicketTagResponse_> ListAsync1(
+        List<string>? ids = null,
+        bool? includeArchived = false,
+        long? pageSize = 100,
+        string? cursor = null,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var resolvedConfig = GetResolvedConfig(_listAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Get, "v1/support/tags")
+            .SetOptionalQueryParameter("ids", ids)
+            .SetOptionalQueryParameter("include_archived", includeArchived)
+            .SetOptionalQueryParameter("page_size", pageSize)
+            .SetOptionalQueryParameter("cursor", cursor)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.PaginatedResultTicketTagResponse_ result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.PaginatedResultTicketTagResponse_>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Create a ticket tag for the workspace. Requires support write permission.</summary>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.TicketTagResponse> CreateAsync1(
+        global::ElevenLabs.CustomerSupport.CreateTicketTagRequest input,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+
+        var resolvedConfig = GetResolvedConfig(_createAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(HttpMethod.Post, "v1/support/tags")
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.TicketTagResponse result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.TicketTagResponse>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Update a ticket tag. Requires support write permission.</summary>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.TicketTagResponse> UpdateAsync1(
+        global::ElevenLabs.CustomerSupport.UpdateTicketTagRequest input,
+        string tagId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (tagId is null)
+            throw new ArgumentNullException(nameof(tagId));
+
+        var resolvedConfig = GetResolvedConfig(_updateAsync1Config, requestConfig);
+
+        var request = new RequestBuilder(new HttpMethod("PATCH"), "v1/support/tags/{tag_id}")
+            .SetPathParameter("tag_id", tagId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.TicketTagResponse result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.TicketTagResponse>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
     }
 }

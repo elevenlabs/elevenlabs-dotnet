@@ -20,7 +20,7 @@ public class DiarizedTranscriptWordsItemCharactersItemTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"text\":\"text\",\"start\":5.13,\"end\":6.88}";
+        const string wire = "{\"text\":\"text\",\"start\":2.35,\"end\":7.77}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.DiarizedTranscriptWordsItemCharactersItem>(

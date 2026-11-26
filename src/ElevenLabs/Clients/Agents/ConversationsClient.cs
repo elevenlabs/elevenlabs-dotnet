@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -59,7 +61,7 @@ public partial class ConversationsClient
         Files = new FilesClient(httpClient);
         Feedback = new FeedbackClient(httpClient);
         Messages = new MessagesClient(httpClient);
-        Tags = new TagsClient(httpClient);
+        Tags = new ElevenLabs.Agents.Conversations.TagsClient(httpClient);
         Topics = new TopicsClient(httpClient);
         Analysis = new AnalysisClient(httpClient);
     }
@@ -68,7 +70,7 @@ public partial class ConversationsClient
     public IFilesClient Files { get; }
     public IFeedbackClient Feedback { get; }
     public IMessagesClient Messages { get; }
-    public ITagsClient Tags { get; }
+    public ElevenLabs.Agents.Conversations.ITagsClient Tags { get; }
     public ITopicsClient Topics { get; }
     public IAnalysisClient Analysis { get; }
 

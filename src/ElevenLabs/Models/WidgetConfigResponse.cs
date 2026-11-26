@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -233,6 +235,9 @@ public record WidgetConfigResponse : IJsonOnDeserialized
     [JsonPropertyName("transcript_speech_sync_enabled")]
     public bool? TranscriptSpeechSyncEnabled { get; set; }
 
+    [JsonPropertyName("layout")]
+    public WidgetLayout? Layout { get; set; }
+
     [JsonPropertyName("language")]
     public required string Language { get; set; }
 
@@ -352,6 +357,7 @@ public record WidgetConfigResponse : IJsonOnDeserialized
                 TranscriptSpeechSyncEnabled,
                 other.TranscriptSpeechSyncEnabled
             )
+            && ValueEquality.AreEqual(Layout, other.Layout)
             && ValueEquality.AreEqual(Language, other.Language)
             && ValueEquality.AreEqual(SupportedLanguageOverrides, other.SupportedLanguageOverrides)
             && ValueEquality.AreEqual(LanguagePresets, other.LanguagePresets)
@@ -417,6 +423,7 @@ public record WidgetConfigResponse : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndConfirmationEnabled);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MobileFullscreen);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TranscriptSpeechSyncEnabled);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Layout);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Language);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SupportedLanguageOverrides);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(LanguagePresets);

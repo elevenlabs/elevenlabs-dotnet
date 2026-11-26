@@ -20,7 +20,7 @@ public class AgentBanTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"at_unix\":9,\"reason\":\"reason\",\"reason_type\":\"safety\"}";
+        const string wire = "{\"at_unix\":10,\"reason\":\"reason\",\"reason_type\":\"safety\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AgentBan>(wire);
         var serialized = TestJson.Serialize(instance);

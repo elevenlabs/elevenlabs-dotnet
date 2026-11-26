@@ -21,7 +21,7 @@ public class AssetResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"asset_id\":\"asset_id\",\"name\":\"name\",\"mime_type\":\"mime_type\",\"created_at_unix\":1,\"content_url\":\"content_url\"}";
+            "{\"asset_id\":\"asset_id\",\"name\":\"name\",\"mime_type\":\"mime_type\",\"created_at_unix\":7,\"content_url\":\"content_url\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AssetResponse>(wire);
         var serialized = TestJson.Serialize(instance);

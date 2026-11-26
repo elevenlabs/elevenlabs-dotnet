@@ -18,6 +18,8 @@ public readonly record struct WorkspaceWebhookEventType : IStringEnum
 
     public static readonly WorkspaceWebhookEventType Flows = new(Values.Flows);
 
+    public static readonly WorkspaceWebhookEventType SupportTicket = new(Values.SupportTicket);
+
     public WorkspaceWebhookEventType(string value)
     {
         Value = value;
@@ -121,5 +123,7 @@ public readonly record struct WorkspaceWebhookEventType : IStringEnum
         public const string AgentQa = "agent_qa";
 
         public const string Flows = "flows";
+
+        public const string SupportTicket = "support_ticket";
     }
 }

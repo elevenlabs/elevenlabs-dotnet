@@ -20,7 +20,7 @@ public class ConversationUserTranscriptUserTranscriptionEventTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"user_transcript\":\"user_transcript\",\"event_id\":0}";
+        const string wire = "{\"user_transcript\":\"user_transcript\",\"event_id\":10}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationUserTranscriptUserTranscriptionEvent>(

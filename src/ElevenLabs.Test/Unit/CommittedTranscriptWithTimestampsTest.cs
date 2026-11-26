@@ -21,7 +21,7 @@ public class CommittedTranscriptWithTimestampsTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message_type\":\"committed_transcript_with_timestamps\",\"text\":\"text\",\"language_code\":\"language_code\",\"words\":[{\"text\":\"text\",\"start\":7.5,\"end\":4.14,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":2.48,\"characters\":[{\"text\":\"text\",\"start\":3.45,\"end\":9.18}],\"channel_index\":0}]}";
+            "{\"message_type\":\"committed_transcript_with_timestamps\",\"text\":\"text\",\"language_code\":\"language_code\",\"words\":[{\"text\":\"text\",\"start\":9.62,\"end\":8.17,\"type\":\"word\",\"speaker_id\":\"speaker_id\",\"logprob\":4.46,\"characters\":[{\"text\":\"text\",\"start\":9.62,\"end\":0.75}],\"channel_index\":4}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CommittedTranscriptWithTimestamps>(
             wire

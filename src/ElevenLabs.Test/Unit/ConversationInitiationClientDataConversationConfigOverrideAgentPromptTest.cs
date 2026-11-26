@@ -21,7 +21,7 @@ public class ConversationInitiationClientDataConversationConfigOverrideAgentProm
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"prompt\":\"prompt\",\"llm\":\"gpt-4o-mini\",\"reasoning_effort\":\"none\",\"tool_ids\":[\"tool_ids\"],\"tool_ids_strict\":false,\"native_mcp_server_ids\":[\"native_mcp_server_ids\"],\"knowledge_base\":[{\"type\":\"file\",\"name\":\"name\",\"id\":\"id\",\"usage_mode\":\"prompt\"}]}";
+            "{\"prompt\":\"prompt\",\"llm\":\"gpt-4o-mini\",\"reasoning_effort\":\"none\",\"tool_ids\":[\"tool_ids\"],\"tool_ids_strict\":true,\"native_mcp_server_ids\":[\"native_mcp_server_ids\"],\"knowledge_base\":[{\"type\":\"file\",\"name\":\"name\",\"id\":\"id\",\"usage_mode\":\"prompt\"}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.ConversationInitiationClientDataConversationConfigOverrideAgentPrompt>(

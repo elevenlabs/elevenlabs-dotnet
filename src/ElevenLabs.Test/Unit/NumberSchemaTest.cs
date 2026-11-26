@@ -21,7 +21,7 @@ public class NumberSchemaTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"title\":\"title\",\"description\":\"description\",\"type\":\"number\",\"enum\":[4.85]}";
+            "{\"title\":\"title\",\"description\":\"description\",\"type\":\"number\",\"enum\":[5.6]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.NumberSchema>(wire);
         var serialized = TestJson.Serialize(instance);

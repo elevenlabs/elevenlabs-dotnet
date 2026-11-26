@@ -20,7 +20,7 @@ public class RemoveOrderItemResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"success\":false}";
+        const string wire = "{\"success\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.RemoveOrderItemResponse>(wire);
         var serialized = TestJson.Serialize(instance);

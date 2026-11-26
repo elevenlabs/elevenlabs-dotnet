@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -40,24 +42,23 @@ using global::System.Text.Json.Serialization;
 
 namespace ElevenLabs;
 
-/// <summary>
-/// With infer_speaker_names, the names inferred so far for diarized speakers, keyed
-/// by speaker_id. Sent in full each time a speaker is named or a merge changes the
-/// names.
-/// </summary>
 [Serializable]
-public record SpeakerNames : IJsonOnDeserialized
+public record PaginatedResultTicketListItemResponse_ : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("message_type")]
-    public SpeakerNamesMessageType? MessageType { get; set; }
+    [JsonPropertyName("results")]
+    public IEnumerable<TicketListItemResponse> Results { get; set; } =
+        new List<TicketListItemResponse>();
 
-    [JsonPropertyName("speaker_names")]
-    public Dictionary<string, string> SpeakerNames1 { get; set; } =
-        new Dictionary<string, string>();
+    [JsonPropertyName("next_cursor")]
+    public string? NextCursor { get; set; }
+
+    [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("has_more")]
+    public bool? HasMore { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -74,7 +75,7 @@ public record SpeakerNames : IJsonOnDeserialized
     /// it is a transient deserialization sink whose contents are copied into
     /// AdditionalProperties, which IS compared here.
     /// </remarks>
-    public virtual bool Equals(SpeakerNames? other)
+    public virtual bool Equals(PaginatedResultTicketListItemResponse_? other)
     {
         if (other is null)
         {
@@ -96,8 +97,9 @@ public record SpeakerNames : IJsonOnDeserialized
         // large collections. Anchored on `true` so a model with no declared properties still emits
         // a valid expression.
         return true
-            && ValueEquality.AreEqual(MessageType, other.MessageType)
-            && ValueEquality.AreEqual(SpeakerNames1, other.SpeakerNames1)
+            && ValueEquality.AreEqual(Results, other.Results)
+            && ValueEquality.AreEqual(NextCursor, other.NextCursor)
+            && ValueEquality.AreEqual(HasMore, other.HasMore)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -107,8 +109,9 @@ public record SpeakerNames : IJsonOnDeserialized
         unchecked
         {
             var hash = 17;
-            hash = (hash * 31) + ValueEquality.GetHashCodeOf(MessageType);
-            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SpeakerNames1);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Results);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(NextCursor);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(HasMore);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

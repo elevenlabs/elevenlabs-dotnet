@@ -21,7 +21,7 @@ public class CueOptionsRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"min_duration_ms\":1000,\"max_duration_ms\":7000,\"max_lines_per_cue\":2,\"max_chars_per_line\":42,\"max_chars_per_s\":25,\"min_gap_between_cues_frames\":4}";
+            "{\"min_duration_ms\":1000,\"max_duration_ms\":7000,\"max_lines_per_cue\":2,\"max_chars_per_line\":42,\"max_chars_per_s\":23,\"min_gap_between_cues_frames\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CueOptionsRequest>(wire);
         var serialized = TestJson.Serialize(instance);
