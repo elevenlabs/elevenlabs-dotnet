@@ -10,8 +10,9 @@ README.md
 .github/workflows/aspnetcore.yml
 .github/workflows/ci.yml
 
-# Hand-written NuGet package metadata (description, authors, tags) shared by both packages.
+# Hand-written NuGet package metadata (description, authors, tags, icon) shared by both packages.
 Directory.Build.props
+icon.png
 
 # Hand-written agent workflows-as-code builder (see docs/agents-as-code/workflow-spec.md)
 src/ElevenLabs/AgentWorkflows/
