@@ -8,8 +8,8 @@ namespace ElevenLabs.SpeechEngine;
 
 /// <summary>
 /// ASP.NET Core integration for <see cref="SpeechEngineResource"/>, shipped in the
-/// <c>elevenlabs-dotnet-aspnetcore</c> package. These are extension methods rather than members of
-/// the core type so that the core <c>elevenlabs-dotnet-sdk</c> package carries no dependency on the
+/// <c>ElevenLabs.AspNetCore</c> package. These are extension methods rather than members of
+/// the core type so that the core <c>ElevenLabs.Net</c> package carries no dependency on the
 /// ASP.NET Core shared framework. The call sites are unchanged — <c>resource.Attach(app, path,
 /// callbacks)</c> and <c>resource.VerifyRequest(httpRequest)</c> still work once this package is
 /// referenced and <c>ElevenLabs.SpeechEngine</c> is in scope.

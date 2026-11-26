@@ -70,7 +70,7 @@
       "pathParameterStyle": "wrapped"
     },
     "package": {
-      "packageName": "elevenlabs-dotnet-sdk",
+      "packageName": "ElevenLabs.Net",
       "namespace": "ElevenLabs",
       "description": "The official C# SDK for ElevenLabs.",
       "repository": "https://github.com/elevenlabs/elevenlabs-dotnet",

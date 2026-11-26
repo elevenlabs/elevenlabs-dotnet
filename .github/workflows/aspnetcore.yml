@@ -1,7 +1,7 @@
 name: ASP.NET Core package
 
 # Hand-written and listed in .fernignore. The generated test.yml builds only the core test project,
-# so a break in the companion package (elevenlabs-dotnet-aspnetcore) went unnoticed. This builds and
+# so a break in the companion package (ElevenLabs.AspNetCore) went unnoticed. This builds and
 # tests it on every pull request and push.
 on:
   pull_request:

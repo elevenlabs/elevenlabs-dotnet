@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace ElevenLabs.AspNetCore.Tests;
 
 /// <summary>
-/// Coverage for the ASP.NET Core attach helpers shipped in the <c>elevenlabs-dotnet-aspnetcore</c>
+/// Coverage for the ASP.NET Core attach helpers shipped in the <c>ElevenLabs.AspNetCore</c>
 /// companion package: the <c>VerifyRequest(HttpRequest)</c> and <c>Attach</c> extension methods on
 /// <see cref="SpeechEngineResource"/>.
 /// </summary>
