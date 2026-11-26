@@ -1,0 +1,249 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ElevenLabs.AspNetCore/1.0.0": {
+        "dependencies": {
+          "ElevenLabs.Net": "1.0.0",
+          "ElevenLabs": "1.0.0.0"
+        },
+        "runtime": {
+          "ElevenLabs.AspNetCore.dll": {}
+        }
+      },
+      "FluentValidation/11.5.0": {
+        "runtime": {
+          "lib/net7.0/FluentValidation.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.5.0.0",
+            "localPath": "FluentValidation.dll"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/9.0.13": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.1326.6317",
+            "localPath": "Microsoft.Extensions.DependencyInjection.Abstractions.dll"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/9.0.13": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.13",
+          "System.Diagnostics.DiagnosticSource": "9.0.13"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.1326.6317",
+            "localPath": "Microsoft.Extensions.Logging.Abstractions.dll"
+          }
+        }
+      },
+      "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+        "runtime": {
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0",
+            "localPath": "Microsoft.IO.RecyclableMemoryStream.dll"
+          }
+        }
+      },
+      "OneOf/3.0.271": {
+        "runtime": {
+          "lib/netstandard2.0/OneOf.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0",
+            "localPath": "OneOf.dll"
+          }
+        }
+      },
+      "OneOf.Extended/3.0.271": {
+        "dependencies": {
+          "OneOf": "3.0.271"
+        },
+        "runtime": {
+          "lib/netstandard1.3/OneOf.Extended.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0",
+            "localPath": "OneOf.Extended.dll"
+          }
+        }
+      },
+      "Polly/8.2.1": {
+        "dependencies": {
+          "Polly.Core": "8.2.1"
+        },
+        "runtime": {
+          "lib/net6.0/Polly.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.2.1.2874",
+            "localPath": "Polly.dll"
+          }
+        }
+      },
+      "Polly.Core/8.2.1": {
+        "runtime": {
+          "lib/net8.0/Polly.Core.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.2.1.2874",
+            "localPath": "Polly.Core.dll"
+          }
+        }
+      },
+      "System.Diagnostics.DiagnosticSource/9.0.13": {
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.DiagnosticSource.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.1326.6317",
+            "localPath": "System.Diagnostics.DiagnosticSource.dll"
+          }
+        }
+      },
+      "System.Net.ServerSentEvents/9.0.18": {
+        "runtime": {
+          "lib/net8.0/System.Net.ServerSentEvents.dll": {
+            "assemblyVersion": "9.0.0.18",
+            "fileVersion": "9.0.1826.31522",
+            "localPath": "System.Net.ServerSentEvents.dll"
+          }
+        }
+      },
+      "System.Threading.Channels/9.0.13": {
+        "runtime": {
+          "lib/net8.0/System.Threading.Channels.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.1326.6317",
+            "localPath": "System.Threading.Channels.dll"
+          }
+        }
+      },
+      "ElevenLabs.Net/1.0.0": {
+        "dependencies": {
+          "FluentValidation": "11.5.0",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.13",
+          "Microsoft.IO.RecyclableMemoryStream": "3.0.1",
+          "OneOf": "3.0.271",
+          "OneOf.Extended": "3.0.271",
+          "Polly": "8.2.1",
+          "System.Net.ServerSentEvents": "9.0.18",
+          "System.Threading.Channels": "9.0.13"
+        },
+        "runtime": {
+          "ElevenLabs.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ElevenLabs/1.0.0.0": {
+        "runtime": {
+          "ElevenLabs.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ElevenLabs.AspNetCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FluentValidation/11.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DExajJh+cguLk1XodH+LVVFuSsCqoEmXOQsxqP5rvVeUD1hIda59cyuL73LHJAYIrFatR8ZZ1H7kfejHN9XFWw==",
+      "path": "fluentvalidation/11.5.0",
+      "hashPath": "fluentvalidation.11.5.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/9.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HyJoV/UcJr71gPs9ot3GFJG2yyYxoBNTvp48xVJn37FRLeJZithg74aUNZQRCJgk0yG6LbgDlXDJJwG3QFnoyQ==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/9.0.13",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.9.0.13.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/9.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DjxxzZzkQLRJ6d9FLj7n513UvqYREl0ygN//SYA+N4+QWM1UvSJjpv3+zrlIraUyui0NXRbeJSU/hruR7lTw/g==",
+      "path": "microsoft.extensions.logging.abstractions/9.0.13",
+      "hashPath": "microsoft.extensions.logging.abstractions.9.0.13.nupkg.sha512"
+    },
+    "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s/s20YTVY9r9TPfTrN5g8zPF1YhwxyqO6PxUkrYTGI2B+OGPe9AdajWZrLhFqXIvqIW23fnUE4+ztrUWNU1+9g==",
+      "path": "microsoft.io.recyclablememorystream/3.0.1",
+      "hashPath": "microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512"
+    },
+    "OneOf/3.0.271": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pqpqeK8xQGggExhr4tesVgJkjdn+9HQAO0QgrYV2hFjE3y90okzk1kQMntMiUOGfV7FrCUfKPaVvPBD4IANqKg==",
+      "path": "oneof/3.0.271",
+      "hashPath": "oneof.3.0.271.nupkg.sha512"
+    },
+    "OneOf.Extended/3.0.271": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-brfuTRgtka/LPsctuZ5MGOrm7jOWteJFg8aAJOBbGA0UOQ/owKJhefOOxs/5AlJCf+ZP/dnGyNMRLWN6Y4jV8g==",
+      "path": "oneof.extended/3.0.271",
+      "hashPath": "oneof.extended.3.0.271.nupkg.sha512"
+    },
+    "Polly/8.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tVHvP5Z0fNoZCE9mpKAsh0IaValwsTGPrqjlWqkWR/Gpl5jL05HWC/AVGSL+jkAqkl1Jn7uBUOArnRD+dK5PfQ==",
+      "path": "polly/8.2.1",
+      "hashPath": "polly.8.2.1.nupkg.sha512"
+    },
+    "Polly.Core/8.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Z3EspfWBdTla4I9IAcQn32/7kB5WS3rSnOYloz8YlVyClu8h7uuYf4pfUvffOYVbxmDX/mFRfxwzqW2Zs96ZA==",
+      "path": "polly.core/8.2.1",
+      "hashPath": "polly.core.8.2.1.nupkg.sha512"
+    },
+    "System.Diagnostics.DiagnosticSource/9.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4UOSOj/lq46yHG1fd5c/rZM8BVGr8Arz8WdRxN9kgiUUmw9pxnBBaitBmvyJb0bEvuXdN3C20GfiSNQmQ3eeLA==",
+      "path": "system.diagnostics.diagnosticsource/9.0.13",
+      "hashPath": "system.diagnostics.diagnosticsource.9.0.13.nupkg.sha512"
+    },
+    "System.Net.ServerSentEvents/9.0.18": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Em0c9bSDxW2RQx/pgktOme5NpSJP5ulXOH7VBAdNkS6/rqdaUsLwMaMFf0xsd7Yk+yVZmyHi81XU75RSqJ6NHw==",
+      "path": "system.net.serversentevents/9.0.18",
+      "hashPath": "system.net.serversentevents.9.0.18.nupkg.sha512"
+    },
+    "System.Threading.Channels/9.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IAV1As2nRQVH+tvGuWyi0+mG8mvtzE/CHi08lf/eWSUky0MUbuj//Xa8qd3UjBnLnMJsdodjXp75ntBX/iE+Dg==",
+      "path": "system.threading.channels/9.0.13",
+      "hashPath": "system.threading.channels.9.0.13.nupkg.sha512"
+    },
+    "ElevenLabs.Net/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ElevenLabs/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

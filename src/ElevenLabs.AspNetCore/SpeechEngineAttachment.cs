@@ -5,7 +5,7 @@ namespace ElevenLabs.SpeechEngine;
 
 /// <summary>
 /// Returned by <c>SpeechEngineResource.Attach</c> (an extension method in the
-/// <c>elevenlabs-dotnet-aspnetcore</c> package). Call <see cref="Close"/> to stop accepting new
+/// <c>ElevenLabs.AspNetCore</c> package). Call <see cref="Close"/> to stop accepting new
 /// connections and cancel in-flight sessions without affecting the host ASP.NET Core application.
 /// </summary>
 public sealed class SpeechEngineAttachment : IDisposable

@@ -5,7 +5,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com/?utm_source=fern-elevenlabs/elevenlabs-dotnet/readme)
 [![Discord](https://badgen.net/badge/black/ElevenLabs/icon?icon=discord&label)](https://discord.gg/elevenlabs)
 [![Twitter](https://badgen.net/badge/black/elevenlabsio/icon?icon=twitter&label)](https://twitter.com/elevenlabsio)
-[![nuget shield](https://img.shields.io/nuget/v/elevenlabs-dotnet-sdk)](https://nuget.org/packages/elevenlabs-dotnet-sdk)
+[![nuget shield](https://img.shields.io/nuget/v/ElevenLabs.Net)](https://nuget.org/packages/ElevenLabs.Net)
 
 The official C# SDK for [ElevenLabs](https://elevenlabs.io/). ElevenLabs brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
@@ -16,7 +16,7 @@ Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference)
 ## Install
 
 ```sh
-dotnet add package elevenlabs-dotnet-sdk
+dotnet add package ElevenLabs.Net
 ```
 
 ## Usage

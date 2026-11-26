@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!--
     Hand-written companion package. The ASP.NET Core attach helper lives here, not in the core SDK,
-    so that ordinary (console/worker/desktop) consumers of elevenlabs-dotnet-sdk do not inherit a
+    so that ordinary (console/worker/desktop) consumers of ElevenLabs.Net do not inherit a
     FrameworkReference on Microsoft.AspNetCore.App and are not forced to run on the ASP.NET Core
     shared framework. Only apps that opt into the attach helper reference this package.
   -->
@@ -19,7 +19,7 @@
     <Version>1.0.0</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <PackageId>elevenlabs-dotnet-aspnetcore</PackageId>
+    <PackageId>ElevenLabs.AspNetCore</PackageId>
     <Description>ASP.NET Core integration for the ElevenLabs .NET SDK: attach a Speech Engine server to your app's request pipeline.</Description>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/elevenlabs/elevenlabs-dotnet</RepositoryUrl>

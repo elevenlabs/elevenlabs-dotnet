@@ -12,7 +12,7 @@
     <Version>1.0.0</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
-    <PackageId>elevenlabs-dotnet-sdk</PackageId>
+    <PackageId>ElevenLabs.Net</PackageId>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/elevenlabs/elevenlabs-dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

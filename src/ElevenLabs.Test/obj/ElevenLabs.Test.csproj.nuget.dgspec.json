@@ -1,0 +1,475 @@
+{
+  "format": 1,
+  "restore": {
+    "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs.Test/ElevenLabs.Test.csproj": {}
+  },
+  "projects": {
+    "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs.Test/ElevenLabs.Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs.Test/ElevenLabs.Test.csproj",
+        "projectName": "ElevenLabs.Test",
+        "projectPath": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs.Test/ElevenLabs.Test.csproj",
+        "packagesPath": "/Users/pma/.nuget/packages/",
+        "outputPath": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs.Test/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/pma/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "framework": "net8.0",
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs/ElevenLabs.csproj": {
+                "projectPath": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs/ElevenLabs.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "11.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "framework": "net8.0",
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.11.1, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[4.2.2, )"
+            },
+            "NUnit.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.34, 8.0.34]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.34, 8.0.34]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/sdk/11.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs/ElevenLabs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs/ElevenLabs.csproj",
+        "projectName": "ElevenLabs.Net",
+        "projectPath": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs/ElevenLabs.csproj",
+        "packagesPath": "/Users/pma/.nuget/packages/",
+        "outputPath": "/private/tmp/claude-501/-Users-pma-code-elevenlabs-dx--claude-worktrees-nifty-sanderson-ab56d5/d71654a7-49a8-41cb-a4f0-2332e25561a0/scratchpad/dotnet/src/ElevenLabs/obj/",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "configFilePaths": [
+          "/Users/pma/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net462",
+          "net8.0",
+          "net9.0",
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net462": {
+            "framework": "net462",
+            "targetAlias": "net462",
+            "projectReferences": {}
+          },
+          "net8.0": {
+            "framework": "net8.0",
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          },
+          "net9.0": {
+            "framework": "net9.0",
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          },
+          "netstandard2.0": {
+            "framework": "netstandard2.0",
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "11.0.100"
+      },
+      "frameworks": {
+        "net462": {
+          "framework": "net462",
+          "targetAlias": "net462",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.5.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            },
+            "Microsoft.IO.RecyclableMemoryStream": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.2.1, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.15.0, )"
+            },
+            "Portable.System.DateTimeOnly": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "System.Net.ServerSentEvents": {
+              "target": "Package",
+              "version": "[9.0.18, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "System.Text.RegularExpressions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Threading.Channels": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/sdk/11.0.100/RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "framework": "net8.0",
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.5.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            },
+            "Microsoft.IO.RecyclableMemoryStream": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.2.1, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.15.0, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "System.Net.ServerSentEvents": {
+              "target": "Package",
+              "version": "[9.0.18, )"
+            },
+            "System.Text.RegularExpressions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Threading.Channels": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.34, 8.0.34]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.34, 8.0.34]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/sdk/11.0.100/PortableRuntimeIdentifierGraph.json"
+        },
+        "net9.0": {
+          "framework": "net9.0",
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.5.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            },
+            "Microsoft.IO.RecyclableMemoryStream": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.2.1, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.15.0, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "System.Net.ServerSentEvents": {
+              "target": "Package",
+              "version": "[9.0.18, )"
+            },
+            "System.Text.RegularExpressions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Threading.Channels": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.23, 9.0.23]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.23, 9.0.23]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/sdk/11.0.100/PortableRuntimeIdentifierGraph.json"
+        },
+        "netstandard2.0": {
+          "framework": "netstandard2.0",
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.5.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            },
+            "Microsoft.IO.RecyclableMemoryStream": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "OneOf.Extended": {
+              "target": "Package",
+              "version": "[3.0.271, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.2.1, )"
+            },
+            "PolySharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.15.0, )"
+            },
+            "Portable.System.DateTimeOnly": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "System.Net.ServerSentEvents": {
+              "target": "Package",
+              "version": "[9.0.18, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "System.Text.RegularExpressions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Threading.Channels": {
+              "target": "Package",
+              "version": "[9.0.13, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/11.0.100/libexec/sdk/11.0.100/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ namespace ElevenLabs.SpeechEngine;
 /// <remarks>
 /// <para>
 /// Use <see cref="ServeAsync"/> to run a standalone WebSocket server for this engine, the
-/// <c>Attach</c> extension in the <c>elevenlabs-dotnet-aspnetcore</c> package to add it to an
+/// <c>Attach</c> extension in the <c>ElevenLabs.AspNetCore</c> package to add it to an
 /// existing ASP.NET Core application, or
 /// <see cref="VerifyRequest(System.Collections.Generic.IReadOnlyDictionary{string,string})"/> plus
 /// <see cref="CreateSession"/> to drive a connection you manage yourself.
@@ -115,7 +115,7 @@ public sealed class SpeechEngineResource
     ) => new SpeechEngineServer(port, path, _apiKey, callbacks).StartAsync(cancellationToken);
 
     // The ASP.NET Core attach helper (Attach / VerifyRequest(HttpRequest)) lives in the companion
-    // package elevenlabs-dotnet-aspnetcore as extension methods, so this core package carries no
+    // package ElevenLabs.AspNetCore as extension methods, so this core package carries no
     // dependency on the ASP.NET Core shared framework.
 #endif
 }

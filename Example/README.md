@@ -1,6 +1,6 @@
-# elevenlabs-dotnet-sdk
+# ElevenLabs.Net
 
-A basic example of how to use the elevenlabs-dotnet-sdk package.
+A basic example of how to use the ElevenLabs.Net package.
 
 ## Build and Run
 
