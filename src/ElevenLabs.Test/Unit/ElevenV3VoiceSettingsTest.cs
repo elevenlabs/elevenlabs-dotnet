@@ -20,7 +20,7 @@ public class ElevenV3VoiceSettingsTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"stability\":0.34}";
+        const string wire = "{\"stability\":0.12}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ElevenV3VoiceSettings>(wire);
         var serialized = TestJson.Serialize(instance);

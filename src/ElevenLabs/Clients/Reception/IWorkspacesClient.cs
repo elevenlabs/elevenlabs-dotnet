@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -65,6 +67,12 @@ public partial interface IWorkspacesClient
     IWorkspacesClient SetCreateAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
 
     /// <summary>
+    /// Sets method-level configuration for <c>UpdateAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    IWorkspacesClient SetUpdateAsyncConfig(global::ElevenLabs.Config.RequestConfig config);
+
+    /// <summary>
     /// Sets method-level configuration for <c>CompleteOnboardingAsync</c>.
     /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
     /// </summary>
@@ -82,6 +90,14 @@ public partial interface IWorkspacesClient
     /// <summary>Create a workspace for one of your customers, optionally with a tier, a phone number and team invites.</summary>
     WithRawResponseTask<ProvisionResellerWorkspaceResponse> CreateAsync(
         CreateWorkspacesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>Update a customer workspace. Only the fields sent are changed.</summary>
+    WithRawResponseTask<ResellerWorkspaceSummary> UpdateAsync(
+        string workspaceId,
+        UpdateWorkspacesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

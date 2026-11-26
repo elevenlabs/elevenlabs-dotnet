@@ -21,7 +21,7 @@ public class ReceptionLocationResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"minim\",\"address\":\"sunt veniam Exc\",\"notes\":\"anim ut\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"customer_facing_name\":\"dolore n\",\"max_concurrent_appointments\":3,\"id\":\"location_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"deactivated_at_unix\":6,\"deactivation_reason\":\"tier_downgrade\"}";
+            "{\"name\":\"consequa\",\"address\":\"aliqua ipsum \",\"notes\":\"consequat la\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"customer_facing_name\":\"aliquip\",\"max_concurrent_appointments\":3,\"id\":\"location_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"deactivated_at_unix\":3,\"deactivation_reason\":\"tier_downgrade\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionLocationResponse>(wire);
         var serialized = TestJson.Serialize(instance);

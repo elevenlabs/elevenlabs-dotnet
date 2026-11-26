@@ -21,7 +21,7 @@ public class CompositionPlanTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"chunks\":[{\"text\":\"text\",\"duration_ms\":111318,\"positive_styles\":[\"positive_styles\"],\"negative_styles\":[\"negative_styles\"],\"context_adherence\":\"low\",\"conditioning_ref\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":10,\"end_ms\":0}},\"condition_strength\":\"low\"}]}";
+            "{\"chunks\":[{\"text\":\"text\",\"duration_ms\":64746,\"positive_styles\":[\"positive_styles\"],\"negative_styles\":[\"negative_styles\"],\"context_adherence\":\"low\",\"conditioning_ref\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":1,\"end_ms\":1}},\"condition_strength\":\"low\"}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.CompositionPlan>(wire);
         var serialized = TestJson.Serialize(instance);

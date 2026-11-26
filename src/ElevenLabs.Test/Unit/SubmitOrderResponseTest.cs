@@ -21,7 +21,7 @@ public class SubmitOrderResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"order_id\":\"prodorder_w0zaouovm1tk2ia6vh8jlaex67\",\"state\":\"open\",\"submitted_at\":\"2023-05-21T14:35:00.333Z\"}";
+            "{\"order_id\":\"prodorder_rwpqq6wvf21lwlhim1dh7g4qha\",\"state\":\"open\",\"submitted_at\":\"2023-05-21T14:35:00.333Z\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SubmitOrderResponse>(wire);
         var serialized = TestJson.Serialize(instance);

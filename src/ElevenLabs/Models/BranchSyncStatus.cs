@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -46,6 +48,10 @@ public record BranchSyncStatus : IJsonOnDeserialized
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
+
+    /// <value>ID of the branch this branch is kept in sync with: its new versions are pulled in automatically while `auto_rebase` is on. The main branch unless another was chosen. While the chosen branch is archived this still names it, and main is used in its place.</value>
+    [JsonPropertyName("branch_id")]
+    public required string BranchId { get; set; }
 
     /// <value>Latest automatic attempt to pull the synced branch's new versions in, run after each of them. Null when none has run since sync was turned on.</value>
     [JsonPropertyName("last_attempt")]
@@ -88,6 +94,7 @@ public record BranchSyncStatus : IJsonOnDeserialized
         // large collections. Anchored on `true` so a model with no declared properties still emits
         // a valid expression.
         return true
+            && ValueEquality.AreEqual(BranchId, other.BranchId)
             && ValueEquality.AreEqual(LastAttempt, other.LastAttempt)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
@@ -98,6 +105,7 @@ public record BranchSyncStatus : IJsonOnDeserialized
         unchecked
         {
             var hash = 17;
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(BranchId);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(LastAttempt);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;

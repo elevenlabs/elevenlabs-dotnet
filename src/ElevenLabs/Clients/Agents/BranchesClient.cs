@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -213,7 +215,7 @@ public partial class BranchesClient
             )
         );
 
-    /// <summary>Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main</summary>
+    /// <summary>Update agent branch properties such as name, description, archiving status, protection level, auto-rebase, and the branch it is kept in sync with</summary>
     public WithRawResponseTask<AgentBranchResponse> UpdateAsync(
         string agentId,
         string branchId,
@@ -305,7 +307,7 @@ public partial class BranchesClient
             )
         );
 
-    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.</summary>
+    /// <summary>Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports. Callers with only propose access can pull into their own branch from its parent branch (their default source).</summary>
     public WithRawResponseTask<object> RebaseAsync(
         string agentId,
         string branchId,

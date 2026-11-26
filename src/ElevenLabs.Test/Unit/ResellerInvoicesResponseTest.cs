@@ -21,7 +21,7 @@ public class ResellerInvoicesResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"invoices\":[{\"invoice_id\":\"invoice_id\",\"workspace_id\":\"workspace_id\",\"workspace_name\":\"workspace_name\",\"status\":\"paid\",\"amount_cents\":7,\"currency\":\"currency\",\"created_unix\":4,\"paid_unix\":7,\"pay_url\":\"pay_url\",\"pdf_url\":\"pdf_url\"}],\"next_cursor\":\"next_cursor\",\"has_more\":true}";
+            "{\"invoices\":[{\"invoice_id\":\"invoice_id\",\"workspace_id\":\"workspace_id\",\"workspace_name\":\"workspace_name\",\"status\":\"paid\",\"amount_cents\":6,\"currency\":\"currency\",\"created_unix\":9,\"paid_unix\":7,\"pay_url\":\"pay_url\",\"pdf_url\":\"pdf_url\"}],\"next_cursor\":\"next_cursor\",\"has_more\":false}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ResellerInvoicesResponse>(wire);
         var serialized = TestJson.Serialize(instance);

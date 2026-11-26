@@ -21,7 +21,7 @@ public class VoiceSamplePreviewResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"audio_base_64\":\"audio_base_64\",\"voice_id\":\"voice_id\",\"sample_id\":\"sample_id\",\"media_type\":\"media_type\",\"duration_secs\":5.05}";
+            "{\"audio_base_64\":\"audio_base_64\",\"voice_id\":\"voice_id\",\"sample_id\":\"sample_id\",\"media_type\":\"media_type\",\"duration_secs\":3.31}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.VoiceSamplePreviewResponseModel>(
             wire

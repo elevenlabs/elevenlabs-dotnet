@@ -21,7 +21,7 @@ public class OTelResourceTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"attributes\":[{\"key\":\"key\",\"value\":{\"key\":\"tempor eius\"}}]}";
+            "{\"attributes\":[{\"key\":\"key\",\"value\":{\"key\":\"ea exercitati\"}}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.OTelResource>(wire);
         var serialized = TestJson.Serialize(instance);

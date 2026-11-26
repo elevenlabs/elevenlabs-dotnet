@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -67,6 +69,22 @@ public record CreateWorkspacesRequest
 
     [JsonIgnore]
     public required global::ElevenLabs.Reception.ReceptionProvisionResellerWorkspaceRequest Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
+
+[Serializable]
+public record UpdateWorkspacesRequest
+{
+    [JsonIgnore]
+    public string? XiApiKey { get; set; }
+
+    [JsonIgnore]
+    public required global::ElevenLabs.Reception.UpdateResellerWorkspaceRequest Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

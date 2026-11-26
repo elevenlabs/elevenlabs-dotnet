@@ -20,7 +20,7 @@ public class ExpiresAfterTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"anchor\":\"created_at\",\"seconds\":10}";
+        const string wire = "{\"anchor\":\"created_at\",\"seconds\":3}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ExpiresAfter>(wire);
         var serialized = TestJson.Serialize(instance);

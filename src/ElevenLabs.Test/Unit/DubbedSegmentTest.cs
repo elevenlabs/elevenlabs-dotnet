@@ -21,7 +21,7 @@ public class DubbedSegmentTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_time\":4.44,\"end_time\":4.23,\"text\":\"text\",\"subtitles\":[{\"start_time\":6.98,\"end_time\":0.15,\"lines\":[\"lines\"]}],\"audio_stale\":true,\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":9.21,\"is_audio\":true,\"url\":\"url\"}}";
+            "{\"start_time\":8.86,\"end_time\":8.57,\"text\":\"text\",\"subtitles\":[{\"start_time\":8.22,\"end_time\":5.44,\"lines\":[\"lines\"]}],\"audio_stale\":false,\"media_ref\":{\"src\":\"src\",\"content_type\":\"content_type\",\"bucket_name\":\"bucket_name\",\"random_path_slug\":\"random_path_slug\",\"duration_secs\":7.8,\"is_audio\":true,\"url\":\"url\"}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.DubbedSegment>(wire);
         var serialized = TestJson.Serialize(instance);

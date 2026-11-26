@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -87,6 +89,16 @@ public partial class WorkspacesClient
     }
 
     /// <summary>
+    /// Sets method-level configuration for <c>UpdateAsync</c>.
+    /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
+    /// </summary>
+    public IWorkspacesClient SetUpdateAsyncConfig(global::ElevenLabs.Config.RequestConfig config)
+    {
+        _service.SetUpdateAsyncConfig(config);
+        return this;
+    }
+
+    /// <summary>
     /// Sets method-level configuration for <c>CompleteOnboardingAsync</c>.
     /// Overrides service-level configuration; overridden by per-call <c>RequestOptions</c>.
     /// </summary>
@@ -129,6 +141,26 @@ public partial class WorkspacesClient
                 () =>
                     _service.CreateAsync(
                         request.Body,
+                        request.XiApiKey,
+                        cancellationToken: cancellationToken
+                    )
+            )
+        );
+
+    /// <summary>Update a customer workspace. Only the fields sent are changed.</summary>
+    public WithRawResponseTask<ResellerWorkspaceSummary> UpdateAsync(
+        string workspaceId,
+        UpdateWorkspacesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    ) =>
+        new WithRawResponseTask<ResellerWorkspaceSummary>(
+            WithRawResponseAdapter.Wrap(
+                options,
+                () =>
+                    _service.UpdateAsync(
+                        request.Body,
+                        workspaceId,
                         request.XiApiKey,
                         cancellationToken: cancellationToken
                     )

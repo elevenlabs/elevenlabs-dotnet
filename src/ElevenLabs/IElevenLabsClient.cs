@@ -35,6 +35,7 @@ public partial interface IElevenLabsClient
     public IMusicClient Music { get; }
     public ITokensClient Tokens { get; }
     public IForcedAlignmentClient ForcedAlignment { get; }
+    public ICustomerSupportClient CustomerSupport { get; }
     public ISpeechEngineClient SpeechEngine { get; }
     public IEnvironmentVariablesClient EnvironmentVariables { get; }
     public IEnvironmentsClient Environments { get; }

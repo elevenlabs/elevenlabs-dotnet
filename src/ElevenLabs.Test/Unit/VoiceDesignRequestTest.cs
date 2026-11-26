@@ -21,7 +21,7 @@ public class VoiceDesignRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"voice_description\":\"A sassy squeaky mouse\",\"text\":\"sedcillum sunt minimut ut mollit cupidatatautenisinon enimtempor ipsum utamet quislaboris ex veniam officia\",\"auto_generate_text\":false,\"loudness\":0.5,\"quality\":0.9,\"seed\":616015729,\"guidance_scale\":5,\"should_enhance\":true}";
+            "{\"voice_description\":\"A sassy squeaky mouse\",\"text\":\"eu amet ipsumDuis dolore et fugiatvelitproident officia auteesse non sedutdolor cillum reprehenderit enim\",\"auto_generate_text\":true,\"loudness\":0.5,\"quality\":0.9,\"seed\":1930156217,\"guidance_scale\":5,\"should_enhance\":true}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.VoiceDesignRequest>(wire);
         var serialized = TestJson.Serialize(instance);

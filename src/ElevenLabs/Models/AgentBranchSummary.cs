@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -74,7 +76,7 @@ public record AgentBranchSummary : IJsonOnDeserialized
     [JsonPropertyName("auto_rebase")]
     public bool? AutoRebase { get; set; }
 
-    /// <value>Set while the branch is kept in sync with another branch (Main today), pulling in its new versions automatically. Null when it is not synced.</value>
+    /// <value>Set while the branch is kept in sync with another branch: automatically (`auto_rebase`), or with a chosen branch other than main. Null otherwise.</value>
     [JsonPropertyName("sync_status")]
     public BranchSyncStatus? SyncStatus { get; set; }
 

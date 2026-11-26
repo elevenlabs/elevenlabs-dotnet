@@ -65,12 +65,6 @@ public class ReceiveTranscription
     ) => new("speakersMerged", value);
 
     /// <summary>
-    /// Create a ReceiveTranscription from a SpeakerNames value.
-    /// </summary>
-    public static ReceiveTranscription FromSpeakerNames(global::ElevenLabs.SpeakerNames value) =>
-        new("speakerNames", value);
-
-    /// <summary>
     /// Create a ReceiveTranscription from a CommittedTranscriptWithTimestamps value.
     /// </summary>
     public static ReceiveTranscription FromCommittedTranscriptWithTimestamps(
@@ -227,11 +221,6 @@ public class ReceiveTranscription
     public bool IsSpeakersMerged() => Type == "speakersMerged";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "speakerNames".
-    /// </summary>
-    public bool IsSpeakerNames() => Type == "speakerNames";
-
-    /// <summary>
     /// Returns true if <see cref="Type"/> is "committedTranscriptWithTimestamps".
     /// </summary>
     public bool IsCommittedTranscriptWithTimestamps() =>
@@ -373,15 +362,6 @@ public class ReceiveTranscription
         IsSpeakersMerged()
             ? (global::ElevenLabs.SpeakersMerged)Value!
             : throw new ElevenLabsClientException("Union type is not 'speakersMerged'");
-
-    /// <summary>
-    /// Returns the value as a SpeakerNames if <see cref="Type"/> is "speakerNames", otherwise throws.
-    /// </summary>
-    /// <exception cref="ElevenLabsClientException">Thrown when <see cref="Type"/> is not 'speakerNames'.</exception>
-    public global::ElevenLabs.SpeakerNames AsSpeakerNames() =>
-        IsSpeakerNames()
-            ? (global::ElevenLabs.SpeakerNames)Value!
-            : throw new ElevenLabsClientException("Union type is not 'speakerNames'");
 
     /// <summary>
     /// Returns the value as a CommittedTranscriptWithTimestamps if <see cref="Type"/> is "committedTranscriptWithTimestamps", otherwise throws.
@@ -630,20 +610,6 @@ public class ReceiveTranscription
         if (Type == "speakersMerged")
         {
             value = (global::ElevenLabs.SpeakersMerged)Value!;
-            return true;
-        }
-        value = null;
-        return false;
-    }
-
-    /// <summary>
-    /// Attempts to cast the value to a SpeakerNames and returns true if successful.
-    /// </summary>
-    public bool TryGetSpeakerNames(out global::ElevenLabs.SpeakerNames? value)
-    {
-        if (Type == "speakerNames")
-        {
-            value = (global::ElevenLabs.SpeakerNames)Value!;
             return true;
         }
         value = null;
@@ -942,7 +908,6 @@ public class ReceiveTranscription
         global::System.Func<global::ElevenLabs.CommittedTranscript, T> onCommittedTranscript,
         global::System.Func<global::ElevenLabs.DiarizedTranscript, T> onDiarizedTranscript,
         global::System.Func<global::ElevenLabs.SpeakersMerged, T> onSpeakersMerged,
-        global::System.Func<global::ElevenLabs.SpeakerNames, T> onSpeakerNames,
         global::System.Func<
             global::ElevenLabs.CommittedTranscriptWithTimestamps,
             T
@@ -1001,7 +966,6 @@ public class ReceiveTranscription
             "committedTranscript" => onCommittedTranscript(AsCommittedTranscript()),
             "diarizedTranscript" => onDiarizedTranscript(AsDiarizedTranscript()),
             "speakersMerged" => onSpeakersMerged(AsSpeakersMerged()),
-            "speakerNames" => onSpeakerNames(AsSpeakerNames()),
             "committedTranscriptWithTimestamps" => onCommittedTranscriptWithTimestamps(
                 AsCommittedTranscriptWithTimestamps()
             ),
@@ -1047,7 +1011,6 @@ public class ReceiveTranscription
         global::System.Action<global::ElevenLabs.CommittedTranscript> onCommittedTranscript,
         global::System.Action<global::ElevenLabs.DiarizedTranscript> onDiarizedTranscript,
         global::System.Action<global::ElevenLabs.SpeakersMerged> onSpeakersMerged,
-        global::System.Action<global::ElevenLabs.SpeakerNames> onSpeakerNames,
         global::System.Action<global::ElevenLabs.CommittedTranscriptWithTimestamps> onCommittedTranscriptWithTimestamps,
         global::System.Action<global::ElevenLabs.CommittedTranscriptEntities> onCommittedTranscriptEntities,
         global::System.Action<global::ElevenLabs.RedactedTranscript> onRedactedTranscript,
@@ -1085,9 +1048,6 @@ public class ReceiveTranscription
                 break;
             case "speakersMerged":
                 onSpeakersMerged(AsSpeakersMerged());
-                break;
-            case "speakerNames":
-                onSpeakerNames(AsSpeakerNames());
                 break;
             case "committedTranscriptWithTimestamps":
                 onCommittedTranscriptWithTimestamps(AsCommittedTranscriptWithTimestamps());
@@ -1199,9 +1159,6 @@ public class ReceiveTranscription
 
     public static implicit operator ReceiveTranscription(global::ElevenLabs.SpeakersMerged value) =>
         new("speakersMerged", value);
-
-    public static implicit operator ReceiveTranscription(global::ElevenLabs.SpeakerNames value) =>
-        new("speakerNames", value);
 
     public static implicit operator ReceiveTranscription(
         global::ElevenLabs.CommittedTranscriptWithTimestamps value
@@ -1390,26 +1347,6 @@ public class ReceiveTranscription
                         if (value != null)
                         {
                             return new ReceiveTranscription("speakersMerged", value);
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // Try the next member that pins the same literal.
-                    }
-                }
-
-                if (HasLiteral(document, "message_type", "speaker_names"))
-                {
-                    matchedLiteral = true;
-                    try
-                    {
-                        var value = document.Deserialize(
-                            typeof(global::ElevenLabs.SpeakerNames),
-                            options
-                        );
-                        if (value != null)
-                        {
-                            return new ReceiveTranscription("speakerNames", value);
                         }
                     }
                     catch (JsonException)
@@ -1801,7 +1738,6 @@ public class ReceiveTranscription
                     ("committedTranscript", typeof(global::ElevenLabs.CommittedTranscript)),
                     ("diarizedTranscript", typeof(global::ElevenLabs.DiarizedTranscript)),
                     ("speakersMerged", typeof(global::ElevenLabs.SpeakersMerged)),
-                    ("speakerNames", typeof(global::ElevenLabs.SpeakerNames)),
                     (
                         "committedTranscriptWithTimestamps",
                         typeof(global::ElevenLabs.CommittedTranscriptWithTimestamps)
@@ -1888,7 +1824,6 @@ public class ReceiveTranscription
             }
 
             value.Visit(
-                obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),

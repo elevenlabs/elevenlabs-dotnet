@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -63,9 +65,13 @@ public record BodyUpdateAgentBranchV1ConvaiAgentsAgentIdBranchesBranchIdPatch : 
     [JsonPropertyName("protection_status")]
     public BranchProtectionStatus? ProtectionStatus { get; set; }
 
-    /// <value>When true, rebase this branch onto main automatically after each new main version. Cannot be enabled on the main branch.</value>
+    /// <value>When true, rebase this branch automatically after each new version of the branch it is kept in sync with (`sync_branch_id`, main by default). Cannot be enabled on the main branch, or while this branch is more protected than a non-main branch it is kept in sync with.</value>
     [JsonPropertyName("auto_rebase")]
     public bool? AutoRebase { get; set; }
+
+    /// <value>ID of the branch to keep this branch in sync with: its new versions are pulled in automatically while `auto_rebase` is on. Pass the main branch's ID to sync with main again. Must be the main branch or the active branch this branch was created from (`parent_branch_id`). At most 10 branches can be kept in sync with one another in a row. Cannot be set on the main branch.</value>
+    [JsonPropertyName("sync_branch_id")]
+    public string? SyncBranchId { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -111,6 +117,7 @@ public record BodyUpdateAgentBranchV1ConvaiAgentsAgentIdBranchesBranchIdPatch : 
             && ValueEquality.AreEqual(IsArchived, other.IsArchived)
             && ValueEquality.AreEqual(ProtectionStatus, other.ProtectionStatus)
             && ValueEquality.AreEqual(AutoRebase, other.AutoRebase)
+            && ValueEquality.AreEqual(SyncBranchId, other.SyncBranchId)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -125,6 +132,7 @@ public record BodyUpdateAgentBranchV1ConvaiAgentsAgentIdBranchesBranchIdPatch : 
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(IsArchived);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ProtectionStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AutoRebase);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(SyncBranchId);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

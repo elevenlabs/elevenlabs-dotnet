@@ -21,7 +21,7 @@ public class BodyUpdateAgentBranchV1ConvaiAgentsAgentIdBranchesBranchIdPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"name\",\"description\":\"description\",\"is_archived\":true,\"protection_status\":\"writer_perms_required\",\"auto_rebase\":true}";
+            "{\"name\":\"name\",\"description\":\"description\",\"is_archived\":true,\"protection_status\":\"writer_perms_required\",\"auto_rebase\":true,\"sync_branch_id\":\"sync_branch_id\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Agents.BodyUpdateAgentBranchV1ConvaiAgentsAgentIdBranchesBranchIdPatch>(

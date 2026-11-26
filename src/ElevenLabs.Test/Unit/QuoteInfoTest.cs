@@ -20,7 +20,7 @@ public class QuoteInfoTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"amount_usd\":0.06}";
+        const string wire = "{\"amount_usd\":5.19}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.QuoteInfo>(wire);
         var serialized = TestJson.Serialize(instance);

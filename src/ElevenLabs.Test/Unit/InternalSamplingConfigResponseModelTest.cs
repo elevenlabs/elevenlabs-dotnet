@@ -20,7 +20,7 @@ public class InternalSamplingConfigResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"focus\":0.06,\"similarity\":0.18,\"stability\":0.13}";
+        const string wire = "{\"focus\":0.71,\"similarity\":0.29,\"stability\":0.76}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.InternalSamplingConfigResponseModel>(
             wire

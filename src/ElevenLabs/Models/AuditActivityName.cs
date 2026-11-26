@@ -13,6 +13,10 @@ public readonly record struct AuditActivityName : IStringEnum
         Values.AccountSecurityChange
     );
 
+    public static readonly AuditActivityName AgentsUserDeleted = new(Values.AgentsUserDeleted);
+
+    public static readonly AuditActivityName AgentsUserExported = new(Values.AgentsUserExported);
+
     public static readonly AuditActivityName AgentsUserMemoryEntityDeleted = new(
         Values.AgentsUserMemoryEntityDeleted
     );
@@ -580,6 +584,10 @@ public readonly record struct AuditActivityName : IStringEnum
     public static class Values
     {
         public const string AccountSecurityChange = "Account Security Change";
+
+        public const string AgentsUserDeleted = "Agents User Deleted";
+
+        public const string AgentsUserExported = "Agents User Exported";
 
         public const string AgentsUserMemoryEntityDeleted = "Agents User Memory Entity Deleted";
 

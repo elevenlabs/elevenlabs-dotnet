@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace ElevenLabs.Tests;
 
 /// <summary>
-/// Round-trip coverage for <c>global::ElevenLabs.SpeakerNames</c>.
+/// Round-trip coverage for <c>global::ElevenLabs.TicketRequesterBySlackRequest</c>.
 /// </summary>
 /// <remarks>
 /// Asserts the wire document the model was built from comes back out of it unchanged — not merely
@@ -15,21 +15,21 @@ namespace ElevenLabs.Tests;
 /// compared an instance to itself.
 /// </remarks>
 [TestFixture]
-public class SpeakerNamesTest
+public class TicketRequesterBySlackRequestTest
 {
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"message_type\":\"speaker_names\",\"speaker_names\":{\"key\":\"speaker_names\"}}";
+            "{\"type\":\"slack\",\"team_id\":\"team_id\",\"user_id\":\"user_id\",\"full_name\":\"full_name\"}";
 
-        var instance = TestJson.Deserialize<global::ElevenLabs.SpeakerNames>(wire);
+        var instance = TestJson.Deserialize<global::ElevenLabs.TicketRequesterBySlackRequest>(wire);
         var serialized = TestJson.Serialize(instance);
 
         JsonAssert.AreEquivalent(
             wire,
             serialized,
-            "global::ElevenLabs.SpeakerNames did not round-trip."
+            "global::ElevenLabs.TicketRequesterBySlackRequest did not round-trip."
         );
     }
 }

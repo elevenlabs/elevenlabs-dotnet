@@ -21,7 +21,7 @@ public class ReceptionProductTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"laboris Lo\",\"kind\":\"text\",\"options\":[\"ad reprehende\"],\"required\":false,\"is_active\":true}],\"groups\":[{\"label\":\"eu ullamco\",\"rank\":3}],\"ungrouped_rank\":2,\"name\":\"mollit velit \",\"description\":\"dolore \",\"price\":1.33,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"stock\":{\"key\":9},\"id\":\"product_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":2,\"updated_at_unix\":9}";
+            "{\"pricing_mode\":\"fixed\",\"intake_questions\":[{\"id\":\"intakeq_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"label\":\"ut nisi\",\"kind\":\"text\",\"options\":[\"nisi o\"],\"required\":false,\"is_active\":true}],\"groups\":[{\"label\":\"voluptate magna\",\"rank\":2}],\"ungrouped_rank\":3,\"name\":\"ex pariatu\",\"description\":\"ullam\",\"price\":0.63,\"is_active\":true,\"orderable\":true,\"allowed_fulfillment_types\":[\"pickup\"],\"location_ids\":[\"location_ids\"],\"stock\":{\"key\":3},\"id\":\"product_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":0,\"updated_at_unix\":7}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionProduct>(wire);
         var serialized = TestJson.Serialize(instance);

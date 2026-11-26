@@ -20,7 +20,7 @@ public class UsageCharactersResponseModelTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"time\":[7],\"usage\":{\"key\":[3.32]}}";
+        const string wire = "{\"time\":[4],\"usage\":{\"key\":[9.01]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.UsageCharactersResponseModel>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -51,7 +53,7 @@ public partial interface IConversationsClient
     public IFilesClient Files { get; }
     public IFeedbackClient Feedback { get; }
     public IMessagesClient Messages { get; }
-    public ITagsClient Tags { get; }
+    public ElevenLabs.Agents.Conversations.ITagsClient Tags { get; }
     public ITopicsClient Topics { get; }
     public IAnalysisClient Analysis { get; }
 

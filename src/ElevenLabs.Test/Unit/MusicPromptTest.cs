@@ -21,7 +21,7 @@ public class MusicPromptTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":95666,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":10,\"end_ms\":0},\"negative_ranges\":[{\"start_ms\":10,\"end_ms\":0}]}}]}";
+            "{\"positive_global_styles\":[\"positive_global_styles\"],\"negative_global_styles\":[\"negative_global_styles\"],\"sections\":[{\"section_name\":\"section_name\",\"positive_local_styles\":[\"positive_local_styles\"],\"negative_local_styles\":[\"negative_local_styles\"],\"duration_ms\":32300,\"lines\":[\"lines\"],\"source_from\":{\"song_id\":\"song_id\",\"range\":{\"start_ms\":1,\"end_ms\":1},\"negative_ranges\":[{\"start_ms\":1,\"end_ms\":1}]}}]}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.MusicPrompt>(wire);
         var serialized = TestJson.Serialize(instance);

@@ -21,7 +21,7 @@ public class ReceptionLocationRequestPatchTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"name\":\"enim tempor\",\"address\":\"ut of\",\"notes\":\"utadipis\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"customer_facing_name\":\"tempor qui eu \",\"max_concurrent_appointments\":3,\"is_active\":true}";
+            "{\"name\":\"adipisicin\",\"address\":\"dolor a\",\"notes\":\"eu nulla\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"customer_facing_name\":\"ut quis aliqua \",\"max_concurrent_appointments\":3,\"is_active\":true}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Reception.ReceptionLocationRequestPatch>(wire);

@@ -26,6 +26,8 @@ public readonly record struct WebhookUsageType : IStringEnum
 
     public static readonly WebhookUsageType Dubbing = new(Values.Dubbing);
 
+    public static readonly WebhookUsageType SupportTickets = new(Values.SupportTickets);
+
     public WebhookUsageType(string value)
     {
         Value = value;
@@ -137,5 +139,7 @@ public readonly record struct WebhookUsageType : IStringEnum
         public const string Flows = "Flows";
 
         public const string Dubbing = "Dubbing";
+
+        public const string SupportTickets = "Support Tickets";
     }
 }

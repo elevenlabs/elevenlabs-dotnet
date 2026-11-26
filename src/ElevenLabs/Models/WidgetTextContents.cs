@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -63,9 +65,17 @@ public record WidgetTextContents : IJsonOnDeserialized
     [JsonPropertyName("new_call")]
     public string? NewCall { get; set; }
 
+    /// <value>Text and ARIA label for the button that resumes the conversation.</value>
+    [JsonPropertyName("resume_call")]
+    public string? ResumeCall { get; set; }
+
     /// <value>Text and ARIA label for the end call button.</value>
     [JsonPropertyName("end_call")]
     public string? EndCall { get; set; }
+
+    /// <value>Text and ARIA label for the end chat button.</value>
+    [JsonPropertyName("end_chat")]
+    public string? EndChat { get; set; }
 
     /// <value>ARIA label for the mute microphone button.</value>
     [JsonPropertyName("mute_microphone")]
@@ -83,6 +93,22 @@ public record WidgetTextContents : IJsonOnDeserialized
     [JsonPropertyName("expand")]
     public string? Expand { get; set; }
 
+    /// <value>ARIA label for the header button that expands the widget.</value>
+    [JsonPropertyName("expand_widget")]
+    public string? ExpandWidget { get; set; }
+
+    /// <value>ARIA label for the header button that collapses the widget back to its compact size.</value>
+    [JsonPropertyName("collapse_widget")]
+    public string? CollapseWidget { get; set; }
+
+    /// <value>ARIA label for the button that hides a dismissible widget.</value>
+    [JsonPropertyName("dismiss")]
+    public string? Dismiss { get; set; }
+
+    /// <value>ARIA label for the launcher button that reopens a dismissed widget.</value>
+    [JsonPropertyName("open_chat")]
+    public string? OpenChat { get; set; }
+
     /// <value>Text displayed when the user copies a value using the copy button.</value>
     [JsonPropertyName("copied")]
     public string? Copied { get; set; }
@@ -95,6 +121,30 @@ public record WidgetTextContents : IJsonOnDeserialized
     [JsonPropertyName("dismiss_terms")]
     public string? DismissTerms { get; set; }
 
+    /// <value>Title displayed in the confirmation dialog before ending a chat.</value>
+    [JsonPropertyName("end_chat_confirmation_title")]
+    public string? EndChatConfirmationTitle { get; set; }
+
+    /// <value>Description displayed in the confirmation dialog before ending a chat.</value>
+    [JsonPropertyName("end_chat_confirmation_description")]
+    public string? EndChatConfirmationDescription { get; set; }
+
+    /// <value>Title displayed in the confirmation dialog before ending a call.</value>
+    [JsonPropertyName("end_call_confirmation_title")]
+    public string? EndCallConfirmationTitle { get; set; }
+
+    /// <value>Description displayed in the confirmation dialog before ending a call.</value>
+    [JsonPropertyName("end_call_confirmation_description")]
+    public string? EndCallConfirmationDescription { get; set; }
+
+    /// <value>Text and ARIA label for the button that confirms ending a call.</value>
+    [JsonPropertyName("end_call_confirm")]
+    public string? EndCallConfirm { get; set; }
+
+    /// <value>Text and ARIA label for the button that cancels ending a chat or call.</value>
+    [JsonPropertyName("cancel_end_confirmation")]
+    public string? CancelEndConfirmation { get; set; }
+
     /// <value>Status displayed when the agent is listening.</value>
     [JsonPropertyName("listening_status")]
     public string? ListeningStatus { get; set; }
@@ -106,6 +156,10 @@ public record WidgetTextContents : IJsonOnDeserialized
     /// <value>Status displayed when the agent is connecting.</value>
     [JsonPropertyName("connecting_status")]
     public string? ConnectingStatus { get; set; }
+
+    /// <value>Status displayed when the agent is reconnecting.</value>
+    [JsonPropertyName("reconnecting_status")]
+    public string? ReconnectingStatus { get; set; }
 
     /// <value>Status displayed when the agent is chatting (text only)</value>
     [JsonPropertyName("chatting_status")]
@@ -199,6 +253,14 @@ public record WidgetTextContents : IJsonOnDeserialized
     [JsonPropertyName("voice_mode")]
     public string? VoiceMode { get; set; }
 
+    /// <value>Label for the voice option in the conversation mode toggle.</value>
+    [JsonPropertyName("voice_mode_label")]
+    public string? VoiceModeLabel { get; set; }
+
+    /// <value>Label for the text option in the conversation mode toggle.</value>
+    [JsonPropertyName("text_mode_label")]
+    public string? TextModeLabel { get; set; }
+
     /// <value>Toast notification displayed when switching to text mode.</value>
     [JsonPropertyName("switched_to_text_mode")]
     public string? SwitchedToTextMode { get; set; }
@@ -259,9 +321,29 @@ public record WidgetTextContents : IJsonOnDeserialized
     [JsonPropertyName("typing_indicator")]
     public string? TypingIndicator { get; set; }
 
+    /// <value>Status text displayed while the agent is thinking.</value>
+    [JsonPropertyName("thinking_status")]
+    public string? ThinkingStatus { get; set; }
+
     /// <value>Fallback message displayed when rich content cannot be rendered.</value>
     [JsonPropertyName("rich_content_unavailable")]
     public string? RichContentUnavailable { get; set; }
+
+    /// <value>ARIA label for the previous button in a rich content carousel.</value>
+    [JsonPropertyName("carousel_previous")]
+    public string? CarouselPrevious { get; set; }
+
+    /// <value>ARIA label for the next button in a rich content carousel.</value>
+    [JsonPropertyName("carousel_next")]
+    public string? CarouselNext { get; set; }
+
+    /// <value>Label for the button that scrolls to one new message.</value>
+    [JsonPropertyName("new_message")]
+    public string? NewMessage { get; set; }
+
+    /// <value>Label for the button that scrolls to new messages. Keep the count placeholder from the default, which is replaced with the number of messages.</value>
+    [JsonPropertyName("new_messages")]
+    public string? NewMessages { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -304,17 +386,36 @@ public record WidgetTextContents : IJsonOnDeserialized
             && ValueEquality.AreEqual(StartCall, other.StartCall)
             && ValueEquality.AreEqual(StartChat, other.StartChat)
             && ValueEquality.AreEqual(NewCall, other.NewCall)
+            && ValueEquality.AreEqual(ResumeCall, other.ResumeCall)
             && ValueEquality.AreEqual(EndCall, other.EndCall)
+            && ValueEquality.AreEqual(EndChat, other.EndChat)
             && ValueEquality.AreEqual(MuteMicrophone, other.MuteMicrophone)
             && ValueEquality.AreEqual(ChangeLanguage, other.ChangeLanguage)
             && ValueEquality.AreEqual(Collapse, other.Collapse)
             && ValueEquality.AreEqual(Expand, other.Expand)
+            && ValueEquality.AreEqual(ExpandWidget, other.ExpandWidget)
+            && ValueEquality.AreEqual(CollapseWidget, other.CollapseWidget)
+            && ValueEquality.AreEqual(Dismiss, other.Dismiss)
+            && ValueEquality.AreEqual(OpenChat, other.OpenChat)
             && ValueEquality.AreEqual(Copied, other.Copied)
             && ValueEquality.AreEqual(AcceptTerms, other.AcceptTerms)
             && ValueEquality.AreEqual(DismissTerms, other.DismissTerms)
+            && ValueEquality.AreEqual(EndChatConfirmationTitle, other.EndChatConfirmationTitle)
+            && ValueEquality.AreEqual(
+                EndChatConfirmationDescription,
+                other.EndChatConfirmationDescription
+            )
+            && ValueEquality.AreEqual(EndCallConfirmationTitle, other.EndCallConfirmationTitle)
+            && ValueEquality.AreEqual(
+                EndCallConfirmationDescription,
+                other.EndCallConfirmationDescription
+            )
+            && ValueEquality.AreEqual(EndCallConfirm, other.EndCallConfirm)
+            && ValueEquality.AreEqual(CancelEndConfirmation, other.CancelEndConfirmation)
             && ValueEquality.AreEqual(ListeningStatus, other.ListeningStatus)
             && ValueEquality.AreEqual(SpeakingStatus, other.SpeakingStatus)
             && ValueEquality.AreEqual(ConnectingStatus, other.ConnectingStatus)
+            && ValueEquality.AreEqual(ReconnectingStatus, other.ReconnectingStatus)
             && ValueEquality.AreEqual(ChattingStatus, other.ChattingStatus)
             && ValueEquality.AreEqual(QueueWaitingStatus, other.QueueWaitingStatus)
             && ValueEquality.AreEqual(QueueWaitingStatusShort, other.QueueWaitingStatusShort)
@@ -344,6 +445,8 @@ public record WidgetTextContents : IJsonOnDeserialized
             && ValueEquality.AreEqual(SendMessage, other.SendMessage)
             && ValueEquality.AreEqual(TextMode, other.TextMode)
             && ValueEquality.AreEqual(VoiceMode, other.VoiceMode)
+            && ValueEquality.AreEqual(VoiceModeLabel, other.VoiceModeLabel)
+            && ValueEquality.AreEqual(TextModeLabel, other.TextModeLabel)
             && ValueEquality.AreEqual(SwitchedToTextMode, other.SwitchedToTextMode)
             && ValueEquality.AreEqual(SwitchedToVoiceMode, other.SwitchedToVoiceMode)
             && ValueEquality.AreEqual(Copy, other.Copy)
@@ -359,7 +462,12 @@ public record WidgetTextContents : IJsonOnDeserialized
             && ValueEquality.AreEqual(FileTooLarge, other.FileTooLarge)
             && ValueEquality.AreEqual(FileLimitReached, other.FileLimitReached)
             && ValueEquality.AreEqual(TypingIndicator, other.TypingIndicator)
+            && ValueEquality.AreEqual(ThinkingStatus, other.ThinkingStatus)
             && ValueEquality.AreEqual(RichContentUnavailable, other.RichContentUnavailable)
+            && ValueEquality.AreEqual(CarouselPrevious, other.CarouselPrevious)
+            && ValueEquality.AreEqual(CarouselNext, other.CarouselNext)
+            && ValueEquality.AreEqual(NewMessage, other.NewMessage)
+            && ValueEquality.AreEqual(NewMessages, other.NewMessages)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -373,17 +481,30 @@ public record WidgetTextContents : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(StartCall);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(StartChat);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(NewCall);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ResumeCall);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndCall);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndChat);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(MuteMicrophone);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ChangeLanguage);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Collapse);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Expand);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ExpandWidget);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(CollapseWidget);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Dismiss);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(OpenChat);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Copied);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(AcceptTerms);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(DismissTerms);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndChatConfirmationTitle);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndChatConfirmationDescription);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndCallConfirmationTitle);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndCallConfirmationDescription);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(EndCallConfirm);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(CancelEndConfirmation);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ListeningStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SpeakingStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ConnectingStatus);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ReconnectingStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ChattingStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(QueueWaitingStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(QueueWaitingStatusShort);
@@ -407,6 +528,8 @@ public record WidgetTextContents : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SendMessage);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TextMode);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(VoiceMode);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(VoiceModeLabel);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(TextModeLabel);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SwitchedToTextMode);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(SwitchedToVoiceMode);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(Copy);
@@ -422,7 +545,12 @@ public record WidgetTextContents : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FileTooLarge);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(FileLimitReached);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(TypingIndicator);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(ThinkingStatus);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(RichContentUnavailable);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(CarouselPrevious);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(CarouselNext);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(NewMessage);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(NewMessages);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

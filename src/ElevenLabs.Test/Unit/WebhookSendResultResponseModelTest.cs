@@ -21,7 +21,7 @@ public class WebhookSendResultResponseModelTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"delivery_id\":\"delivery_id\",\"outcome\":\"delivered\",\"response_code\":6,\"latency_ms\":4,\"response_content_type\":\"response_content_type\",\"response_body_bytes\":9,\"failure_origin\":\"failure_origin\"}";
+            "{\"delivery_id\":\"delivery_id\",\"outcome\":\"delivered\",\"response_code\":2,\"latency_ms\":7,\"response_content_type\":\"response_content_type\",\"response_body_bytes\":10,\"failure_origin\":\"failure_origin\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WebhookSendResultResponseModel>(
             wire

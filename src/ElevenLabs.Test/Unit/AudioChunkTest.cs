@@ -21,7 +21,7 @@ public class AudioChunkTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"audio\":\"audio\",\"alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[8],\"char_durations_ms\":[1]},\"normalized_alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[2],\"char_durations_ms\":[2]}}";
+            "{\"audio\":\"audio\",\"alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[3],\"char_durations_ms\":[3]},\"normalized_alignment\":{\"chars\":[\"chars\"],\"char_start_times_ms\":[7],\"char_durations_ms\":[6]}}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.AudioChunk>(wire);
         var serialized = TestJson.Serialize(instance);

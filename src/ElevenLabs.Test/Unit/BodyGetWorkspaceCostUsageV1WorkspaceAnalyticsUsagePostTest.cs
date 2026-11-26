@@ -21,7 +21,7 @@ public class BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_time\":2147483647,\"end_time\":2147483647,\"interval_seconds\":2147483647,\"group_by\":[\"model\"],\"filters\":[{\"column\":\"model\",\"operation\":\"eq\",\"values\":[\"mollit aute ci\"]}]}";
+            "{\"start_time\":2147483647,\"end_time\":2147483647,\"interval_seconds\":2147483647,\"group_by\":[\"model\"],\"filters\":[{\"column\":\"model\",\"operation\":\"eq\",\"values\":[\"elit offic\"]}]}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Workspace.BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePost>(

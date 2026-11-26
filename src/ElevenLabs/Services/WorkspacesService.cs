@@ -10,6 +10,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Config;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -54,6 +56,7 @@ internal class WorkspacesService : BaseService
 {
     private RequestConfig? _listAsyncConfig;
     private RequestConfig? _createAsyncConfig;
+    private RequestConfig? _updateAsyncConfig;
     private RequestConfig? _completeOnboardingAsyncConfig;
 
     internal WorkspacesService(global::ElevenLabs.Http.Client httpClient)
@@ -76,6 +79,16 @@ internal class WorkspacesService : BaseService
     public WorkspacesService SetCreateAsyncConfig(RequestConfig config)
     {
         _createAsyncConfig = config;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets method-level configuration for <c>UpdateAsync</c>.
+    /// Method-level config overrides service-level config but is overridden by per-request config.
+    /// </summary>
+    public WorkspacesService SetUpdateAsyncConfig(RequestConfig config)
+    {
+        _updateAsyncConfig = config;
         return this;
     }
 
@@ -182,6 +195,69 @@ internal class WorkspacesService : BaseService
         {
             result =
                 global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ProvisionResellerWorkspaceResponse>(
+                    responseBody,
+                    _jsonSerializerOptions
+                )!;
+        }
+        catch (global::System.Text.Json.JsonException exception)
+        {
+            throw new ElevenLabs.ElevenLabsClientApiException(
+                "Failed to deserialize response",
+                (int)response.StatusCode,
+                responseBody,
+                exception,
+                rawResponse: ElevenLabs.Core.RawResponseFactory.FromHttpResponseMessage(response)
+            );
+        }
+
+        return result;
+    }
+
+    /// <summary>Update a customer workspace. Only the fields sent are changed.</summary>
+    /// <param name="workspaceId">ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.</param>
+    /// <param name="xiApiKey">Your API key. This is required by most endpoints to access our API programmatically. You can view your xi-api-key using the 'Profile' tab on the website.</param>
+    public async global::System.Threading.Tasks.Task<global::ElevenLabs.ResellerWorkspaceSummary> UpdateAsync(
+        global::ElevenLabs.Reception.UpdateResellerWorkspaceRequest input,
+        string workspaceId,
+        string? xiApiKey = null,
+        RequestConfig? requestConfig = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (input is null)
+            throw new ArgumentNullException(nameof(input));
+        if (workspaceId is null)
+            throw new ArgumentNullException(nameof(workspaceId));
+
+        var resolvedConfig = GetResolvedConfig(_updateAsyncConfig, requestConfig);
+
+        var request = new RequestBuilder(
+            new HttpMethod("PATCH"),
+            "v1/reception/reseller/workspaces/{workspace_id}"
+        )
+            .SetPathParameter("workspace_id", workspaceId)
+            .SetOptionalHeader("xi-api-key", xiApiKey)
+            .SetContentAsJson(input, _jsonSerializerOptions)
+            .Build();
+
+        var response = await ExecuteAsync(request, resolvedConfig, cancellationToken)
+            .ConfigureAwait(false);
+
+        // Standard deserialization
+        // Read the body first so a decode failure can report the bytes that caused it.
+        var responseBody = await response
+            .Content
+#if NET5_0_OR_GREATER
+            .ReadAsStringAsync(cancellationToken)
+#else
+        .ReadAsStringAsync()
+#endif
+            .ConfigureAwait(false);
+        global::ElevenLabs.ResellerWorkspaceSummary result;
+        try
+        {
+            result =
+                global::System.Text.Json.JsonSerializer.Deserialize<global::ElevenLabs.ResellerWorkspaceSummary>(
                     responseBody,
                     _jsonSerializerOptions
                 )!;

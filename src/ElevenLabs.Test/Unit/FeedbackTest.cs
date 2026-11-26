@@ -20,7 +20,7 @@ public class FeedbackTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"type\":\"feedback\",\"event_id\":9,\"score\":\"like\"}";
+        const string wire = "{\"type\":\"feedback\",\"event_id\":6,\"score\":\"like\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.Feedback>(wire);
         var serialized = TestJson.Serialize(instance);

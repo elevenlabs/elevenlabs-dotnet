@@ -21,7 +21,7 @@ public class TranscriptionOrderItemRequestTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"kind\":\"transcription\",\"media_ids\":[\"prodmedia_qohp42vqjk180vfetxnfh6c7w0\"],\"source_language\":\"source_language\",\"verbatim\":true,\"instructions\":\"instructions\"}";
+            "{\"kind\":\"transcription\",\"media_ids\":[\"prodmedia_c7tg1ee3227nsadhy4rizmu7wa\"],\"source_language\":\"source_language\",\"verbatim\":true,\"instructions\":\"instructions\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.TranscriptionOrderItemRequest>(wire);
         var serialized = TestJson.Serialize(instance);

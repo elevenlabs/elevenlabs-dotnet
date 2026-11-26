@@ -21,7 +21,7 @@ public class WorkingHoursTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"}";
+            "{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.WorkingHours>(wire);
         var serialized = TestJson.Serialize(instance);

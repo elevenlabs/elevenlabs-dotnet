@@ -9,6 +9,8 @@ using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
 using ElevenLabs.Core.WebSockets;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -110,7 +112,7 @@ public partial class SpeechToTextApi
             );
         }
         var uri = new UriBuilder(_options.BaseUrl);
-        var query = new ElevenLabs.Core.QueryStringBuilder.Builder(capacity: 24)
+        var query = new ElevenLabs.Core.QueryStringBuilder.Builder(capacity: 23)
             .AddDeepObject("model_id", _options.ModelId)
             .Add("token", _options.Token)
             .Add("audio_format", _options.AudioFormat)
@@ -127,7 +129,6 @@ public partial class SpeechToTextApi
             .Add("no_verbatim", _options.NoVerbatim)
             .Add("multilang_mode", _options.MultilangMode)
             .Add("diarize", _options.Diarize)
-            .Add("infer_speaker_names", _options.InferSpeakerNames)
             .AddDeepObject("entity_detection", _options.EntityDetection)
             .AddDeepObject("entity_redaction", _options.EntityRedaction)
             .AddDeepObject("entity_redaction_mode", _options.EntityRedactionMode)
@@ -435,8 +436,6 @@ public partial class SpeechToTextApi
         public bool? MultilangMode { get; set; }
 
         public bool? Diarize { get; set; }
-
-        public bool? InferSpeakerNames { get; set; }
 
         public V1SpeechToTextRealtimeV1SpeechToTextRealtimeRequestEntityDetection? EntityDetection { get; set; }
 

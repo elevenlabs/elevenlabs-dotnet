@@ -20,7 +20,7 @@ public class SegmentDeleteResponseTest
     [Test]
     public void RoundTripsThroughTheWireDocument()
     {
-        const string wire = "{\"version\":5}";
+        const string wire = "{\"version\":6}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.SegmentDeleteResponse>(wire);
         var serialized = TestJson.Serialize(instance);

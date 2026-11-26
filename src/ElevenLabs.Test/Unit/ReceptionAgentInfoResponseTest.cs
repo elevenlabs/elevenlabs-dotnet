@@ -21,7 +21,7 @@ public class ReceptionAgentInfoResponseTest
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"business_name\":\"Bloom Salon\",\"business_country\":\"quis i\",\"business_description\":\"A hair salon offering cuts, color and styling.\",\"timezone\":\"America/New_York\",\"currency\":\"USD\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":4,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"tool_call_sound\":\"typing\",\"id\":\"agentinfo_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":1767225600,\"updated_at_unix\":1767225600}";
+            "{\"business_name\":\"Bloom Salon\",\"business_country\":\"eu lab\",\"business_description\":\"A hair salon offering cuts, color and styling.\",\"timezone\":\"America/New_York\",\"currency\":\"USD\",\"operating_hours\":{\"hours\":{\"key\":[{\"start_hour\":9,\"start_minute\":6,\"end_hour\":17,\"end_minute\":30}]},\"timezone\":\"timezone\"},\"tool_call_sound\":\"typing\",\"id\":\"agentinfo_4801jx8k3m5n7p9q2r4s6t8v0w2y\",\"created_at_unix\":1767225600,\"updated_at_unix\":1767225600}";
 
         var instance = TestJson.Deserialize<global::ElevenLabs.ReceptionAgentInfoResponse>(wire);
         var serialized = TestJson.Serialize(instance);

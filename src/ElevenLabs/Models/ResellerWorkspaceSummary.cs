@@ -8,6 +8,8 @@ using ElevenLabs.Agents.Procedures;
 using ElevenLabs.Agents.Tests;
 using ElevenLabs.Agents.Widget;
 using ElevenLabs.Core;
+using ElevenLabs.CustomerSupport;
+using ElevenLabs.CustomerSupport.Requesters;
 using ElevenLabs.Dubbing;
 using ElevenLabs.Dubbing.Project;
 using ElevenLabs.Dubbing.Project.Language;
@@ -81,6 +83,10 @@ public record ResellerWorkspaceSummary : IJsonOnDeserialized
     [JsonPropertyName("onboarding_completed_at_unix")]
     public int? OnboardingCompletedAtUnix { get; set; }
 
+    /// <value>Your own key-value pairs for the workspace.</value>
+    [JsonPropertyName("metadata")]
+    public Dictionary<string, string>? Metadata { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
@@ -128,6 +134,7 @@ public record ResellerWorkspaceSummary : IJsonOnDeserialized
             && ValueEquality.AreEqual(ChargeCustomer, other.ChargeCustomer)
             && ValueEquality.AreEqual(HasPaymentIssue, other.HasPaymentIssue)
             && ValueEquality.AreEqual(OnboardingCompletedAtUnix, other.OnboardingCompletedAtUnix)
+            && ValueEquality.AreEqual(Metadata, other.Metadata)
             && AdditionalProperties.Equals(other.AdditionalProperties);
     }
 
@@ -147,6 +154,7 @@ public record ResellerWorkspaceSummary : IJsonOnDeserialized
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(ChargeCustomer);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(HasPaymentIssue);
             hash = (hash * 31) + ValueEquality.GetHashCodeOf(OnboardingCompletedAtUnix);
+            hash = (hash * 31) + ValueEquality.GetHashCodeOf(Metadata);
             hash = (hash * 31) + AdditionalProperties.GetHashCode();
             return hash;
         }

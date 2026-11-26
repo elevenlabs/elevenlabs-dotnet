@@ -21,7 +21,7 @@ public class BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTim
     public void RoundTripsThroughTheWireDocument()
     {
         const string wire =
-            "{\"start_time\":2147483647,\"end_time\":2147483647,\"interval_seconds\":60,\"group_by\":[\"product_type\"],\"filters\":[{\"column\":\"column\",\"operation\":\"in\",\"values\":[\"esse \"]}],\"time_zone\":\"UTC\"}";
+            "{\"start_time\":2147483647,\"end_time\":2147483647,\"interval_seconds\":60,\"group_by\":[\"product_type\"],\"filters\":[{\"column\":\"column\",\"operation\":\"in\",\"values\":[\"Duisnu\"]}],\"time_zone\":\"UTC\"}";
 
         var instance =
             TestJson.Deserialize<global::ElevenLabs.Workspace.BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePost>(

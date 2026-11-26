@@ -2718,6 +2718,35 @@ Delete Conversation Tag
 
 - `tagId` (required)
 
+### `ListAsync1`
+
+`GET /v1/support/tags`
+
+List Ticket Tags
+
+**Parameters:**
+
+- `ids`
+- `includeArchived`
+- `pageSize`
+- `cursor`
+
+### `CreateAsync1`
+
+`POST /v1/support/tags`
+
+Create Ticket Tag
+
+### `UpdateAsync1`
+
+`PATCH /v1/support/tags/{tag_id}`
+
+Update Ticket Tag
+
+**Parameters:**
+
+- `tagId` (required)
+
 ## TriageTicketsService
 
 ### `ListAsync`
@@ -4504,6 +4533,136 @@ Delete Environment
 
 - `environment` (required)
 
+## RequestersService
+
+### `ListAsync`
+
+`GET /v1/support/requesters`
+
+List Support Requesters
+
+**Parameters:**
+
+- `ids`
+- `pageSize`
+- `cursor`
+
+### `SyncSlackAsync`
+
+`POST /v1/support/requesters/sync/slack`
+
+Sync Slack Requesters
+
+## SlaPoliciesService
+
+### `ListAsync`
+
+`GET /v1/support/sla-policies`
+
+List Ticket Sla Policies
+
+**Parameters:**
+
+- `includeArchived`
+- `pageSize`
+- `cursor`
+
+### `CreateAsync`
+
+`POST /v1/support/sla-policies`
+
+Create Ticket Sla Policy
+
+### `GetAsync`
+
+`GET /v1/support/sla-policies/{policy_id}`
+
+Get Ticket Sla Policy
+
+**Parameters:**
+
+- `policyId` (required)
+
+### `UpdateAsync`
+
+`PATCH /v1/support/sla-policies/{policy_id}`
+
+Update Ticket Sla Policy
+
+**Parameters:**
+
+- `policyId` (required)
+
+## TicketsService
+
+### `ListAsync`
+
+`GET /v1/support/tickets`
+
+List Tickets
+
+**Parameters:**
+
+- `pageSize`
+- `cursor`
+- `search`
+- `status`
+- `priority`
+- `slaStatus`
+- `deadlineStatus`
+- `requesterUserId`
+- `assigneeId`
+- `tagIds`
+- `unassigned`
+- `sortBy`
+- `sortDirection`
+
+### `CreateAsync`
+
+`POST /v1/support/tickets`
+
+Create Ticket
+
+### `CreateMessageAsync`
+
+`POST /v1/support/tickets/{ticket_id}/messages`
+
+Create Ticket Message
+
+**Parameters:**
+
+- `ticketId` (required)
+
+### `GetAsync`
+
+`GET /v1/support/tickets/{ticket_id}`
+
+Get Ticket
+
+**Parameters:**
+
+- `ticketId` (required)
+
+### `UpdateAsync`
+
+`PATCH /v1/support/tickets/{ticket_id}`
+
+Update Ticket
+
+**Parameters:**
+
+- `ticketId` (required)
+
+### `DeleteAsync`
+
+`DELETE /v1/support/tickets/{ticket_id}`
+
+Delete Ticket
+
+**Parameters:**
+
+- `ticketId` (required)
+
 ## RealtimeService
 
 ### `ListConversationGroupsAsync`
@@ -5501,6 +5660,16 @@ List Reseller Workspaces
 `POST /v1/reception/reseller/workspaces`
 
 Create Reseller Workspace
+
+### `UpdateAsync`
+
+`PATCH /v1/reception/reseller/workspaces/{workspace_id}`
+
+Update Reseller Workspace
+
+**Parameters:**
+
+- `workspaceId` (required)
 
 ### `CompleteOnboardingAsync`
 

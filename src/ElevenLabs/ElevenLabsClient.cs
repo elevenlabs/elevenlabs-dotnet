@@ -38,6 +38,7 @@ public partial class ElevenLabsClient : IElevenLabsClient
     public IMusicClient Music { get; }
     public ITokensClient Tokens { get; }
     public IForcedAlignmentClient ForcedAlignment { get; }
+    public ICustomerSupportClient CustomerSupport { get; }
     public ISpeechEngineClient SpeechEngine { get; }
     public IEnvironmentVariablesClient EnvironmentVariables { get; }
     public IEnvironmentsClient Environments { get; }
@@ -172,6 +173,7 @@ public partial class ElevenLabsClient : IElevenLabsClient
         Music = new MusicClient(_httpClient);
         Tokens = new TokensClient(_httpClient);
         ForcedAlignment = new ForcedAlignmentClient(_httpClient);
+        CustomerSupport = new CustomerSupportClient(_httpClient);
         SpeechEngine = new SpeechEngineClient(_httpClient);
         EnvironmentVariables = new EnvironmentVariablesClient(_httpClient);
         Environments = new EnvironmentsClient(_httpClient);
